@@ -1,0 +1,229 @@
+.nav.nav--main {
+  .nav__toggle {
+    border: none;
+    background-color: transparent;
+
+    .icon {
+      width: 1.5rem;
+      height: 1.5rem;
+      color: $black;
+    }
+  }
+
+  .nav__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nav__item {
+    &.menu-item-lang {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+
+      .nav__image {
+        width: 1.25rem;
+      }
+    }
+  }
+
+  .nav__link {
+    display: block;
+    color: $black;
+    text-decoration: none;
+    font-size: 1.125rem;
+    line-height: 1.33333;
+  }
+}
+
+@include media-breakpoint-down(xl) {
+  .nav.nav--main {
+    display: flex;
+    align-items: center;
+    width: auto;
+
+    .nav__list {
+      width: 100%;
+      flex-direction: column;
+
+      &:not(.level0) {
+        padding: 0 0 0.5rem 1rem;
+      }
+
+      &.level0 {
+        margin-bottom: 1rem;
+      }
+    }
+
+    .nav__item {
+      border-top: 1px solid rgba($white, 0.2);
+
+      &:first-child {
+        border-top: none;
+      }
+
+      &.level1 {
+        &:not(.has-children) {
+          > .nav__link {
+            &::after {
+              display: none;
+            }
+          }
+        }
+
+        &.has-children {
+          > .nav__link {
+            display: flex;
+          }
+        }
+      }
+
+      &.is-product {
+        &:has(.nav__image) {
+          display: none;
+        }
+      }
+    }
+
+    .nav__link {
+      padding: 0.5rem 0;
+
+      &.level0 {
+        padding: 0.5rem 0;
+        font-weight: 700;
+        transition: $transition-base;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  .nav.nav--main {
+    .nav__toggle {
+      display: none;
+    }
+
+    .nav__list {
+      &.level0 {
+        display: flex;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      &.level1 {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: -1rem;
+        width: 200px;
+        padding: 1rem;
+        gap: 1rem;
+        z-index: 1;
+        background-color: rgba($white, 0.8);
+        border: 1px solid rgba($white, 0.8);
+        border-radius: 15px;
+        backdrop-filter: blur(30px);
+      }
+
+      &.level2 {
+        margin-top: 0.5rem;
+      }
+    }
+
+    .nav__item {
+      &.level0 {
+        margin-right: 1rem;
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        &.has-children {
+          display: flex;
+          align-items: center;
+          gap: 0.625rem;
+
+          &::after {
+            display: block;
+            content: "";
+            width: 0.625rem;
+            height: 0.625rem;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M.4 4.7c.3-.3.6-.4 1-.4s.7.2 1 .4l7.6 7.6 7.6-7.6c.3-.3.6-.4 1-.4s.7.2 1 .4c.3.3.4.6.4 1s-.1.7-.4 1L11 15.3c-.3.3-.6.4-1 .4s-.7-.2-1-.4L.4 6.7c-.2-.3-.4-.6-.4-1s.2-.7.4-1Z"/></svg>');
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: 0.625rem;
+          }
+        }
+
+        &:hover {
+          > .nav__list {
+            display: flex;
+          }
+        }
+      }
+
+      &.featured {
+        & > .nav__link {
+          padding: 0.625rem 1.25rem;
+          border-radius: 1.375rem;
+          background-color: $white;
+        }
+      }
+
+      &:hover,
+      &.is-current {
+        &:not(.featured) {
+          .nav__link {
+            &.level0 {
+              &::before {
+                width: 100%;
+              }
+            }
+          }
+        }
+
+        &.featured {
+          .nav__link {
+            &.level0 {
+              background-color: $secondary;
+              color: $white;
+            }
+          }
+        }
+      }
+    }
+
+    .nav__link {
+      &.level0 {
+        position: relative;
+        padding: 0.625rem 0;
+
+        &::before {
+          display: block;
+          position: absolute;
+          inset: auto 0 0.75rem;
+          width: 0;
+          height: 1px;
+          background-color: $secondary;
+          content: "";
+          transition: $transition-base;
+        }
+      }
+    }
+
+    .nav__button {
+      display: none;
+    }
+  }
+}
+
+@include media-breakpoint-up(xxl) {
+  .nav.nav--main {
+    .nav__item {
+      &.level0 {
+        margin-right: 1.875rem;
+      }
+    }
+  }
+}

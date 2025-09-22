@@ -1,0 +1,23 @@
+.card.card--download {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    .card__icon {
+        margin-left: 1rem;
+    }
+
+    .card__lead {
+        margin: 0;
+    }
+
+    .card__meta {
+        text-transform: uppercase;
+        padding-right: 8.5rem;
+    }
+
+    .card__button {
+        inset: auto 1.25rem 1.25rem auto;
+    }
+}

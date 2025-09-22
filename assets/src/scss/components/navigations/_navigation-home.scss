@@ -1,0 +1,114 @@
+.nav.nav--home {
+    .nav__list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        &.level0 {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+    }
+
+    .nav__item {
+        &.level0 {
+            display: flex;
+            flex: 0 0 100%;
+            max-width: 100%;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1rem 1.5rem;
+            border: 1px solid rgba($white, .3);
+            border-radius: 15px;
+            background-color: rgba($primary, .5);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+        }
+    }
+
+    .nav__link {
+        display: block;
+        text-decoration: none;
+        color: $white;
+
+        &.level0 {
+            font-family: $headings-font-family;
+            font-weight: 800;
+            font-size: 1.625rem;
+            line-height: 1.1;
+            text-wrap: balance;
+        }
+
+        &.level1 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            column-gap: 0.625rem;
+            padding: 0.25rem 0;
+            font-size: 1rem;
+            line-height: 1.5;
+
+            &::after {
+                flex: 0 0 auto;
+                display: block;
+                content: "";
+                width: 1.5rem;
+                height: 1.5rem;
+                background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.5 19h-1c0-.7.5-1.8 1.6-3.1 1-1.3 2.2-2.4 3.5-3.2.1 0 .3-.2.4-.2H0v-1h21c-.1 0-.3-.2-.4-.2-1.3-.8-2.5-1.9-3.5-3.2C16 6.8 15.5 5.8 15.5 5h1c0 .2.1.9 1.4 2.5 1 1.2 2.1 2.2 3.3 2.9 1.2.7 2.2 1.1 2.9 1.1v1c-.7 0-1.7.4-2.9 1.1-1.2.7-2.3 1.7-3.3 2.9-1.2 1.5-1.4 2.2-1.4 2.5Z" fill="%23ffffff"/></svg>');
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-size: 1.5rem 1.5rem;
+            }
+        }
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    .nav.nav--home {
+        .nav__list {
+            &.level1 {
+                padding-top: 1rem;
+                transition: $transition-base;
+            }
+        }
+
+        .nav__item {
+            &.level0 {
+                min-height: 200px;
+                padding: 0.75rem 1rem;
+                flex: 0 0 calc(50% - 0.75rem);
+                max-width: calc(50% - 0.75rem);
+                overflow: hidden;
+            }
+        }
+    }
+}
+
+@include media-breakpoint-up(xxl) {
+    .nav.nav--home {
+        .nav__item {
+            &.level0 {
+                min-height: 260px;
+                padding: 1.125rem 2rem;
+
+                &:nth-child(1),
+                &:nth-child(2) {
+                    flex: 0 0 calc(50% - 0.75rem);
+                    max-width: calc(50% - 0.75rem);
+
+                    .nav__link {
+                        &.level0 {
+                            font-size: 2.25rem;
+                        }
+                    }
+                }
+    
+                &:nth-child(n+3) {
+                    flex: 0 0 calc(25% - 1.125rem);
+                    max-width: calc(25% - 1.125rem);
+                }
+            }
+        }
+    }
+}

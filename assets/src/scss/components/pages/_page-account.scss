@@ -1,0 +1,164 @@
+.page.page--account.user-logged-out {
+  .woocommerce-form-login__rememberme {
+    margin: 0;
+  }
+}
+
+.page.page--account.user-logged-in {
+  .woocommerce {
+    @extend .row;
+  }
+
+  // Account navigation sidebar
+  .woocommerce-MyAccount-navigation {
+    @extend .col-12;
+    @extend .col-md-3;
+    margin-bottom: 2rem;
+  
+    ul {
+      @extend .list-group;
+  
+      li {
+        @extend .list-group-item;
+  
+        a {
+          display: flex;
+          align-items: center;
+          color: var(--bs-body-color);
+          text-decoration: none;
+  
+          &:hover {
+            color: var(--bs-primary);
+          }
+
+          &::before {
+            content: "";
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            margin-right: 8px;
+            vertical-align: middle;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+          }
+        }
+  
+        &.is-active a {
+          font-weight: 600;
+          color: var(--bs-primary);
+        }
+
+        /* Dashboard */
+        &.woocommerce-MyAccount-navigation-link--dashboard a:before {
+          background-image: url('#{$svg-path}/home-user.svg');
+        }
+
+        /* Beauty profile */
+        &.woocommerce-MyAccount-navigation-link--beauty-profile a:before {
+          background-image: url('#{$svg-path}/id-card.svg');
+        }
+
+        /* Bookmarks */
+        &.woocommerce-MyAccount-navigation-link--bookmarks a:before {
+          background-image: url('#{$svg-path}/bookmark-empty.svg');
+        }
+
+        /* Orders */
+        &.woocommerce-MyAccount-navigation-link--orders a:before {
+          background-image: url('#{$svg-path}/box.svg');
+        }
+
+        /* My Membership */
+        &.woocommerce-MyAccount-navigation-link--members-area a:before {
+          background-image: url('#{$svg-path}/user.svg');
+        }
+
+        /* My Subscription */
+        &.woocommerce-MyAccount-navigation-link--subscriptions a:before {
+          background-image: url('#{$svg-path}/receipt.svg');
+        }
+
+        /* Downloads */
+        &.woocommerce-MyAccount-navigation-link--downloads a:before {
+          background-image: url('#{$svg-path}/download.svg');
+        }
+
+        /* Addresses */
+        &.woocommerce-MyAccount-navigation-link--edit-address a:before {
+          background-image: url('#{$svg-path}/location-pen.svg');
+        }
+
+        /* Account details */
+        &.woocommerce-MyAccount-navigation-link--edit-account a:before {
+          background-image: url('#{$svg-path}/user-pen.svg');
+        }
+
+        /* Logout */
+        &.woocommerce-MyAccount-navigation-link--customer-logout a:before {
+          background-image: url('#{$svg-path}/right-from-bracket.svg');
+        }
+      }
+    }
+  }
+  
+  // Content area
+  .woocommerce-MyAccount-content {
+    @extend .col-12;
+    @extend .col-md-9;
+  
+    h2 {
+      margin-bottom: 1rem;
+    }
+
+    p:first-child {
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+
+    .section {
+      padding: 0;
+    }
+  }
+  
+  // Address blocks
+  .woocommerce-Address {
+    @extend .card;
+    height: auto !important;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+  
+    .woocommerce-Address-title {
+      display: flex;
+      flex-wrap: wrap-reverse;
+      justify-content: space-between;
+      align-items: center;
+      gap: .5rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: .75rem;
+      
+      h2 {
+        margin: 0;
+      }
+    }
+  
+    .edit {
+      @extend .btn;
+      @extend .btn-sm;
+      @extend .btn-outline-primary;
+    }
+  }
+  
+  // Password reset & account forms
+  .woocommerce-ResetPassword,
+  .woocommerce-EditAccountForm,
+  .woocommerce-address-fields {
+    margin-bottom: 2rem;
+  
+    .button {
+      @extend .btn;
+      @extend .btn-primary;
+    }
+  }
+}

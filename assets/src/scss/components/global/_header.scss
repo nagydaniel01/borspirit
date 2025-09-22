@@ -1,0 +1,75 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: $primary;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.25s ease-in-out, box-shadow 0.25s ease, background-color 0.25s ease;
+
+  &.is-hidden {
+    transform: translateY(-100%); // slide up to hide
+    box-shadow: none; // optional: hide shadow when hidden
+  }
+
+  &.is-sticky {
+    transform: translateY(0); // slide down to show
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); // restore shadow
+
+    &.is-open {
+      transition: none !important;
+      transform: none !important;
+    }
+  }
+
+  .navbar {
+    width: 100%;
+
+    .navbar-nav {
+      .menu-item {
+        line-height: 44px;
+        margin-right: 1rem;
+
+        a {
+          text-decoration: none;
+          font-weight: 300;
+          line-height: 20px;
+          color: $primary;
+        }
+      }
+    }
+
+    .header-actions__item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: .25rem;
+      font-weight: 300;
+      text-decoration: none;
+      color: $white;
+      border: none;
+      outline: none;
+    }
+
+    .btn {
+      .icon {
+        color: $white;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  .header {
+    .navbar {
+      .navbar-nav {
+        .menu-item {
+          a {
+            color: $white;
+          }
+        }
+      }
+    }
+  }
+}

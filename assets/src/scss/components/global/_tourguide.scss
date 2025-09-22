@@ -1,0 +1,35 @@
+.tg-dialog {
+    border-radius: $border-radius;
+    background: $primary-light;
+    color: $body-color;
+
+    .tg-dialog-progress-bar {
+        > .tg-bar {
+            background: $secondary;
+        }
+    }
+
+    .tg-dialog-dots {
+        > span.tg-dot {
+            background: $secondary;
+
+            &.tg-dot-active {
+                background: $primary;
+            }
+        }
+    }
+
+    .tg-dialog-footer {
+        button.tg-dialog-btn {
+            width: 2.5rem;
+            height: 2.5rem;
+            background-color: $primary;
+            border: none;
+            border-radius: 50%;
+        }
+    }
+
+    .tg-arrow {
+        background: $primary-light;
+    }
+}

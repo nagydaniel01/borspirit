@@ -1,0 +1,22 @@
+.nav.nav-tabs,
+.nav.nav-pills,
+.woocommerce-tabs ul.tabs {
+  @extend .nav;
+  @extend .nav-tabs;
+  justify-content: flex-start;
+  column-gap: 1rem;
+  margin-bottom: 1rem;
+
+  li {
+    @extend .nav-item;
+
+    a {
+      @extend .nav-link;
+      font-weight: 600;
+    }
+
+    &.active a {
+      @extend .active;
+    }
+  }
+}

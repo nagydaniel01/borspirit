@@ -1,0 +1,13 @@
+@include media-breakpoint-up(xl) {
+    .container-fluid {
+        padding-left: calc($grid-gutter-width * 2);
+        padding-right: calc($grid-gutter-width * 2);
+    }
+}
+
+@include media-breakpoint-up(xxl) {
+    .col-xxl-2-5 {
+        flex: 0 0 auto;
+        width: 20%;
+    }
+}

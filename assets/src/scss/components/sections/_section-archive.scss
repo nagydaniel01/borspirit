@@ -1,0 +1,27 @@
+.section.section--archive {
+    .section__title-wrapper {
+        display: flex;
+        flex-direction: column;
+
+        .filter--search {
+            flex: 0 0 100%;   // default full width
+            max-width: 100%;
+            height: max-content;
+            margin-left: auto;
+        }
+    }
+}
+
+@include media-breakpoint-up(md) {
+    .section.section--archive {
+        .section__title-wrapper {
+            flex-direction: row;
+            align-items: center;
+
+            .filter--search {
+                flex: 0 0 33.333333%;
+                max-width: calc(33.333333% - ($grid-gutter-width * 0.5));
+            }
+        }
+    }
+}

@@ -1,0 +1,59 @@
+.slider.slider--gallery {
+    .slick-list,
+    .slick-track,
+    .slick-slide,
+    .slick-slide > div {
+        display: flex;
+        flex: 1;
+    }
+
+    .slick-list {
+        margin-left: calc($grid-gutter-width * -1);
+    }
+
+    .slick-slide {
+        padding-left: $grid-gutter-width;
+    }
+
+    .slider__list {
+        margin-top: 1rem;
+    }
+
+    .slider__controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 1rem;
+
+        .icon {
+            width: 2rem;
+            height: 2rem;
+        }
+    }
+
+    .slider__figure {
+        display: block !important;
+    }
+
+    .slider__image {
+        display: block;
+        width: auto;
+        max-width: initial;
+        height: 250px;
+        border-radius: 15px;
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    .slider.slider--gallery {
+        position: relative;
+
+        .slider__controls {
+            position: absolute;
+            right: 0;
+            top: -3.5rem;
+            margin-top: 0;
+        }
+    }
+}

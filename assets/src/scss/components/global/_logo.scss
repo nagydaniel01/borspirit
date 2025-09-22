@@ -1,0 +1,32 @@
+.logo {
+  .logo__image {
+    display: block;
+    width: auto;
+    transition: $transition-base;
+  }
+
+  &.logo--header {
+    flex: 0 0 auto;
+    margin-right: auto;
+    
+    .logo__image {
+      height: 50px;
+    }
+  }
+  
+  &.logo--footer {
+    padding-bottom: 1.25rem;
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  .logo {
+    &.logo--header {
+      margin-right: 2.5rem;
+    }
+
+    &.logo--footer {
+      padding-bottom: 0;
+    }
+  }
+}

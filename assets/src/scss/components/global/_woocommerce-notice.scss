@@ -1,0 +1,106 @@
+.woocommerce-message,
+.woocommerce-info,
+.woocommerce-error {
+  @extend .alert;
+  position: relative;
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin-bottom: 1rem;
+  padding: .75rem 1.25rem .75rem 3rem;
+  border-radius: var(--bs-alert-border-radius, 0.375rem);
+  outline: none;
+
+  &::before {
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: contain;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+
+  /*
+  & > li {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  */
+
+  .button {
+    @extend .btn-sm;
+    margin-left: auto;
+  }
+
+  a {
+    font-weight: 500;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  &.is-dismissible {
+    @extend .alert-dismissible;
+    padding-right: 3rem;
+
+    .close,
+    .btn-close {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.75rem;
+    }
+  }
+
+  &::before {
+    position: absolute;
+    top: 50%;
+    left: 1.25rem;
+    transform: translateY(-50%);
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+    content: "";
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    background-color: currentColor;
+  }
+
+  &.woocommerce-message {
+    @extend .alert-success;
+
+    &::before {
+      mask-image: url('#{$svg-path}/circle-check.svg');
+      -webkit-mask-image: url('#{$svg-path}/circle-check.svg');
+    }
+  }
+
+  &.woocommerce-info {
+    @extend .alert-info;
+
+    &::before {
+      mask-image: url('#{$svg-path}/circle-info.svg');
+      -webkit-mask-image: url('#{$svg-path}/circle-info.svg');
+    }
+  }
+
+  &.woocommerce-error {
+    @extend .alert-danger;
+
+    &::before {
+      mask-image: url('#{$svg-path}/circle-xmark.svg');
+      -webkit-mask-image: url('#{$svg-path}/circle-xmark.svg');
+    }
+  }
+}

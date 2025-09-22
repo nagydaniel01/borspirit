@@ -1,0 +1,46 @@
+.woocommerce-order {
+  .woocommerce-order-overview {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+    list-style: none;
+    margin: 0 0 2rem 0;
+    padding: 0;
+
+    li {
+      background: $gray-100;
+      border: 1px solid $gray-300;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: $border-radius;
+      font-size: 0.95rem;
+
+      strong {
+        display: block;
+        font-weight: 600;
+        margin-top: 0.25rem;
+      }
+    }
+  }
+
+  .woocommerce-order-details {
+    margin-bottom: 2rem;
+
+    .woocommerce-order-details__title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .woocommerce-customer-details {
+    margin-top: 2rem;
+
+    .woocommerce-column__title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+  }
+}

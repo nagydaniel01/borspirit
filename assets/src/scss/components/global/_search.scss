@@ -1,0 +1,49 @@
+div.asl_w {
+    .probox {
+        display: flex;
+        height: auto !important;
+        padding: 0 !important;
+        border: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+
+        .proinput {
+            flex: 1;
+            margin: 0 !important;
+            padding: 1rem 1.5rem !important;
+            background: $white !important;
+
+            input {
+                font-size: 1rem !important;
+                line-height: 1.5 !important;
+            }
+        }
+
+        .promagnifier {
+            flex: 0 0 auto;
+            width: auto !important;
+            background: $black !important;
+            color: $white !important;
+            padding: 1rem 1.5rem !important;
+            border-radius: 0 30px 30px 0;
+            box-shadow: none !important;
+
+            &::before {
+                display: block;
+                content: 'Keresés';
+                font-family: $font-family-base;
+                font-size: 1rem;
+                white-space: nowrap;
+            }
+
+            .innericon {
+                display: none !important;
+            }
+        }
+
+        .proloading,
+        .proclose {
+            display: none !important;
+        }
+    }
+}

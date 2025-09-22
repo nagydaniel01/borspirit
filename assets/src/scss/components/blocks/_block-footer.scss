@@ -1,0 +1,17 @@
+.block.block--footer {
+  .block__title {
+    margin-bottom: 0;
+    color: $primary;
+    //font-family: $font-family-base;
+    font-size: 1.125rem;
+    line-height: 1.75;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .block.block--footer {
+    .block__title {
+      margin-bottom: 0.75rem;
+    }
+  }
+}

@@ -1,0 +1,297 @@
+// Textual inputs
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="url"],
+input[type="tel"],
+input[type="search"],
+input[type="file"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="week"],
+input[type="time"],
+input[type="color"],
+textarea {
+  @extend .form-control;
+}
+
+select {
+  @extend .form-select;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  @extend .form-check-input;
+}
+
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  @extend .btn, .btn-primary;
+}
+
+label {
+  @extend .form-label;
+
+  &:not(.form-check-label) {
+    font-weight: 600;
+  }
+}
+
+legend {
+  @extend .form-label;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: $primary;
+}
+
+.form-control {
+  caret-color: $primary;
+  
+  &::placeholder {
+    color: $primary;
+    opacity: 1;
+  }
+}
+
+.required {
+  color: $danger;
+}
+
+// WooCommerce password field wrapper
+.password-input {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  .show-password-input {
+    position: absolute;
+    top: 50%;
+    right: 0.75rem;
+    transform: translateY(-50%);
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0.25rem;
+    color: rgba($dark, 0.6);
+
+    &::before {
+      content: "\1F441";
+      display: inline-block;
+      margin-right: 0;
+      font-size: 1rem;
+    }
+
+    &:hover {
+      color: rgba($dark, 0.8);
+    }
+  }
+}
+
+.select2-container--bootstrap-5 {
+  &.select2-container--focus,
+  &.select2-container--open {
+    .select2-selection {
+      box-shadow: none;
+    }
+  }
+
+  .select2-selection {
+    padding-right: 2.5rem;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M.4 4.7c.3-.3.6-.4 1-.4s.7.2 1 .4l7.6 7.6 7.6-7.6c.3-.3.6-.4 1-.4s.7.2 1 .4c.3.3.4.6.4 1s-.1.7-.4 1L11 15.3c-.3.3-.6.4-1 .4s-.7-.2-1-.4L.4 6.7c-.2-.3-.4-.6-.4-1s.2-.7.4-1Z" fill="%239b9b9b" /></svg>');
+    background-position: center right 0.75rem;
+    background-size: 15px auto;
+    background-repeat: no-repeat;
+
+    &.select2-selection--multiple {
+      display: flex;
+      align-items: center;
+
+      .select2-selection__clear {
+        display: none;
+      }
+
+      .select2-selection__rendered {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.625rem;
+
+        .select2-selection__choice {
+          display: flex;
+          flex-direction: row-reverse;
+          align-items: center;
+          margin-bottom: 0;
+          margin-right: 0;
+          padding: 0 0.5rem;
+          border: none;
+          border-radius: 5px;
+          background-color: rgba($primary, 0.32);
+
+          .select2-selection__choice__remove {
+            display: block;
+            width: 0.5rem;
+            height: 0.5rem;
+            margin-right: 0;
+            margin-left: 0.5rem;
+            background-size: 0.5rem;
+          }
+        }
+      }
+      
+      textarea {
+        min-height: auto;
+      }
+
+      .select2-search {
+        //width: auto;
+      }
+    }
+  }
+
+  .select2-dropdown {
+    &.select2-dropdown--below,
+    &.select2-dropdown--above {
+      //transform: translateY(32px); // fix production site
+    }
+
+    &.select2-dropdown--grid {
+      max-width: 250px;
+
+      .select2-results__options {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(1.25rem, 1fr));
+        gap: 0.625rem;
+        padding: 0.625rem;
+      }
+      
+      .select2-results__option {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        aspect-ratio: 1 / 1;
+        width: 100%;
+        padding: 0;
+        font-size: 0.875rem;
+
+        &.select2-results__option--selected {
+          background-color: rgba($primary, 0.32) !important;
+          border-radius: 5px !important;
+        }
+      }
+    }
+
+  }
+}
+
+// Gravity Forms
+.gform_wrapper.gravity-theme {
+  font-family: var(--bs-font-sans-serif, sans-serif);
+  max-width: 100%;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  // Labels
+  .gfield_label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  // Inputs, textareas, selects
+  input[type="text"],
+  input[type="email"],
+  input[type="url"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="password"],
+  textarea,
+  select {
+    @extend .form-control;
+    width: 100%;
+  }
+
+  // Radio and checkbox
+  .gfield--type-choice {
+    .ginput_container {
+      @extend .form-check;
+    }
+
+    input[type="checkbox"],
+    input[type="radio"] {
+      @extend .form-check-input;
+    }
+
+    label {
+      @extend .form-check-label;
+    }
+  }
+
+  .gform_footer,
+  .gform_page_footer {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  // Submit button
+  .gform_footer input[type="submit"],
+  .gform_page_footer input[type="submit"] {
+    @extend .btn;
+    @extend .btn-primary;
+  }
+
+  // Validation errors
+  .gfield_error {
+    .gfield_label {
+      color: $danger;
+    }
+
+    input,
+    textarea,
+    select {
+      border-color: $danger;
+    }
+
+    .validation_message {
+      color: $danger;
+      font-size: 0.875rem;
+    }
+  }
+}
+
+// Success message
+.gform_confirmation_message {
+  @extend .alert;
+  @extend .alert-success;
+}
+
+// Contact Form 7
+.wpcf7 {
+  .wpcf7-form-control-wrap {
+    display: block;
+  }
+
+  .wpcf7-text,
+  .wpcf7-email,
+  .wpcf7-textarea {
+    @extend .form-control;
+  }
+
+  .wpcf7-select {
+    @extend .form-select;
+  }
+
+  .wpcf7-submit {
+    @extend .btn, .btn-primary;
+  }
+}

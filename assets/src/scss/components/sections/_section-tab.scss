@@ -1,0 +1,18 @@
+.section.section--tab {
+    &.section--vertical {
+        .nav {
+            &.nav-tabs {
+                margin: 0 !important;
+
+                .nav-link {
+                    border-top-right-radius: 0;
+                    border-bottom-left-radius: var(--bs-nav-tabs-border-radius);
+                }
+            }
+
+            .nav-link {
+                width: 100%;
+            }
+        }
+    }
+}

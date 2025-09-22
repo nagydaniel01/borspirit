@@ -1,0 +1,120 @@
+.star-rating {
+  margin-bottom: 0;
+  overflow: hidden;
+  position: relative;
+  height: 0.875rem;
+  line-height: 1;
+  width: 5rem;
+  background-image: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14"><path fill="%23ffd200" d="M15.1 5.4H9.3L7.5 0 5.8 5.4H0l4.7 3.3L2.9 14l4.7-3.3 4.7 3.3-1.8-5.4 4.6-3.2zm-4 7.2L7.5 10 4 12.6l1.4-4.1-3.7-2.6h4.4l1.4-4.1 1.4 4.1h4.4L9.7 8.4l1.4 4.2z"/></svg>');
+  background-position: left center;
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  font-size: 0;
+}
+
+.star-rating span {
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-image: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14"><path fill="%23ffd200" d="M14 5.2H8.6L7 0 5.4 5.2H0l4.3 3.3L2.6 14 7 10.5l4.4 3.5-1.7-5.5z"/></svg>');
+  background-position: left center;
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+}
+
+.stars {
+  margin-bottom: 0;
+
+  &:hover,
+  &.selected {
+    a {
+      background-image: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14"><path fill="%23ffd200" d="M14 5.2H8.6L7 0 5.4 5.2H0l4.3 3.3L2.6 14 7 10.5l4.4 3.5-1.7-5.5z"/></svg>');
+    }
+  }
+
+  > span {
+    display: flex;
+    gap: 0.25rem;
+  }
+
+  a {
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+    text-decoration: none;
+    background-image: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14"><path d="M15.1 5.4H9.3L7.5 0 5.8 5.4H0l4.7 3.3L2.9 14l4.7-3.3 4.7 3.3-1.8-5.4 4.6-3.2zm-4 7.2L7.5 10 4 12.6l1.4-4.1-3.7-2.6h4.4l1.4-4.1 1.4 4.1h4.4L9.7 8.4l1.4 4.2z"/></svg>');
+    background-position: left top;
+    background-repeat: no-repeat;
+    background-size: 1.5rem;
+    font-size: 0;
+    line-height: 0;
+
+    &:hover,
+    &.active {
+      ~ a {
+        background-image: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 14"><path d="M15.1 5.4H9.3L7.5 0 5.8 5.4H0l4.7 3.3L2.9 14l4.7-3.3 4.7 3.3-1.8-5.4 4.6-3.2zm-4 7.2L7.5 10 4 12.6l1.4-4.1-3.7-2.6h4.4l1.4-4.1 1.4 4.1h4.4L9.7 8.4l1.4 4.2z"/></svg>');
+      }
+    }
+  }
+}
+
+.stars {
+	font-size: 0;
+	display: flex;
+	justify-content: flex-end;
+	flex-direction: row-reverse;
+}
+
+.stars * {
+	font-size: 1.4rem;
+}
+
+.stars > input {
+	//display: none;
+	width: 0;
+	border: 0;
+  box-shadow: none !important;
+}
+
+.stars > input + label {
+	/* only enough room for the star */
+	font-family: 'dashicons';
+	display: inline-block;
+	overflow: hidden;
+	text-indent: 9999px;
+	width: 1em;
+	white-space: nowrap;
+	cursor: pointer;
+	margin: 0;
+}
+
+.stars > input + label:before {
+	display: inline-block;
+	text-indent: -9999px;
+	content: "\f154";
+	color: $gray-300;
+}
+
+.stars > input:checked ~ label:before,
+.stars > input + label:hover ~ label:before,
+.stars > input + label:hover:before {
+	content: "\f155";
+	color: $primary;
+	text-shadow: 0 0 1px $primary;
+}
+
+.stars:hover > input + label:before {
+	content: "\f154";
+	color: $gray-300;
+	text-shadow: none;
+}
+
+.stars:hover > input + label:hover ~ label:before,
+.stars:hover > input + label:hover:before {
+	content: "\f155";
+	color: $primary;
+	text-shadow: 0 0 1px $primary;
+}

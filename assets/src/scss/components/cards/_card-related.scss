@@ -1,0 +1,17 @@
+.card.card--related {
+	.card__link {
+		display: flex;
+	}
+
+	.card__image {
+		aspect-ratio: 1 / 1;
+	}
+}
+
+@include media-breakpoint-up(xl) {
+	.card.card--related {
+		.card__link {
+			flex-direction: row;
+		}
+	}
+}

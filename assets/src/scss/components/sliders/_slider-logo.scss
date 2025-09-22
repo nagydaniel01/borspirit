@@ -1,0 +1,28 @@
+.slider.slider--logo {
+    .slick-list,
+    .slick-track,
+    .slick-slide,
+    .slick-slide > div {
+        display: flex;
+        flex: 1;
+    }
+
+    .slick-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+
+        .icon {
+            color: $white;
+        }
+
+        &.slick-prev {
+            left: -3rem;
+        }
+
+        &.slick-next {
+            right: -3rem;
+        }
+    }
+}

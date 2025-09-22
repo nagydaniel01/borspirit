@@ -1,0 +1,52 @@
+.block.block--product-sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    padding: 8px 0 20px;
+    background-color: $secondary;
+    box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.15);
+    z-index: 999;
+    transform: translateY(0);
+    transition: all 0.2s ease-in-out;
+
+    .block__inner {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        gap: 1rem;
+
+        & > * {
+            margin: 0;
+        }
+    }
+
+    .block__image {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 0.25rem;
+    }
+
+    .block__title {
+        flex: 1;
+        font-size: 1rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .block__rating {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.85rem;
+
+        .rating-count {
+            color: #6c757d;
+        }
+    }
+
+    &.is-sticky {
+        transform: translateY(-100%);
+    }
+}

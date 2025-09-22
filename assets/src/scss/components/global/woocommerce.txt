@@ -1,0 +1,127 @@
+// ---------------------------------------------
+// WooCommerce Buttons
+// ---------------------------------------------
+
+$wc-btn-base-selectors: (
+  // Generic Woo buttons
+  'a.button',
+  'button.button',
+  'input.button',
+  '.woocommerce a.button',
+  '.woocommerce button.button',
+  '.woocommerce input.button',
+  '.woocommerce .button',
+  '.woocommerce .wp-element-button',
+  // Core actions
+  '.woocommerce #respond input#submit',
+  '.woocommerce a.add_to_cart_button',
+  '.woocommerce button.single_add_to_cart_button',
+  '.woocommerce .checkout-button',
+  '.woocommerce .woocommerce-Button',
+  '.woocommerce .woocommerce-button',
+  // Forms
+  '.woocommerce .woocommerce-form-login__submit',
+  '.woocommerce .woocommerce-form-register__submit',
+  '.woocommerce .woocommerce-Button--next',
+  '.woocommerce .woocommerce-Button--previous'
+);
+
+@each $sel in $wc-btn-base-selectors {
+  #{$sel} {
+    @extend .btn;
+    line-height: 1.5;
+  }
+}
+
+// WordPress/Gutenberg block buttons
+.wc-block-components-button:not(.is-link) {
+  @extend .btn;
+  @extend .btn-primary;
+  @extend .btn-lg;
+  width: 100%;
+  margin-top: 1rem;
+
+  &:disabled,
+  &.disabled,
+  &.is-loading {
+    opacity: 0.65;
+    pointer-events: none;
+  }
+
+  &.is-loading {
+    position: relative;
+
+    &::after {
+      content: "";
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      margin-left: 0.5rem;
+      border: 0.15em solid currentColor;
+      border-right-color: transparent;
+      border-radius: 50%;
+      animation: wcspin 0.6s linear infinite;
+      vertical-align: -0.125em;
+    }
+  }
+}
+
+@keyframes wcspin { to { transform: rotate(360deg); } }
+
+// ---------------------------------------------
+// Button Contextual Styles
+// ---------------------------------------------
+$btn-contexts: (
+  primary: (
+    '.woocommerce a.add_to_cart_button',
+    '.woocommerce button.single_add_to_cart_button',
+    '.woocommerce .checkout-button',
+    '.woocommerce .button.alt',
+    '.woocommerce a.button.alt',
+    '.woocommerce #respond input#submit.alt',
+    '.woocommerce #place_order',
+    '.woocommerce .woocommerce-Button--primary',
+    '.wp-block-button.is-style-fill .wp-block-button__link',
+    '.wp-element-button.is-primary'
+  ),
+  secondary: (
+    '.woocommerce a.button',
+    '.woocommerce button.button',
+    '.woocommerce input.button',
+    '.woocommerce .woocommerce-Button',
+    '.woocommerce .woocommerce-button',
+    '.wp-block-button.is-style-outline .wp-block-button__link',
+    '.wp-element-button.is-secondary'
+  ),
+  success: (
+    '.woocommerce-message .button',
+    '.woocommerce a.added_to_cart'
+  ),
+  danger: (
+    '.woocommerce a.remove',
+    '.woocommerce .button.cancel',
+    '.woocommerce .woocommerce-Button--danger',
+    '.woocommerce-error .button'
+  ),
+  link: (
+    '.woocommerce .button.link',
+    '.woocommerce .woocommerce-Button--link',
+    '.woocommerce-small-print .button'
+  ),
+  info: (
+    '.woocommerce-info .button'
+  )
+);
+
+@each $context, $selectors in $btn-contexts {
+  @each $sel in $selectors {
+    #{$sel} {
+      @if $context == primary { @extend .btn-primary; }
+      @else if $context == secondary { @extend .btn-outline-secondary; }
+      @else if $context == success { @extend .btn-success; }
+      @else if $context == danger { @extend .btn-danger; }
+      @else if $context == link { @extend .btn-link; padding-left: 0; padding-right: 0; }
+      @else if $context == info { @extend .btn-outline-primary; }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+// Bootstrap override
+@import 'variables';
+
+// Vendors
+@import 'vendors/bootstrap';
+@import 'vendors/select2';
+@import 'vendors/slick';
+@import 'vendors/fancybox';
+@import 'vendors/aos';
+@import 'vendors/perfect-srollbar';
+@import 'vendors/tourguide';
+
+// Components
+@import 'components/global';
+@import 'components/pages';
+@import 'components/sections';
+@import 'components/blocks';
+@import 'components/cards';
+@import 'components/navigation';
+@import 'components/headlines';
+@import 'components/sidebars';
+@import 'components/sliders';

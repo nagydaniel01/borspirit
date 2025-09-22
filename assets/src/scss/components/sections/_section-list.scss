@@ -1,0 +1,48 @@
+.section.section--list {
+    .section__list {
+        padding-left: 0;
+        margin-left: 0;
+
+        .section__listitem {
+            position: relative;
+            padding-left: 3rem;
+            margin: 0 0 1.5rem 2rem;
+        }
+
+        &.section__list--ordered {
+            counter-reset: list-counter;
+            list-style: none;
+
+            .section__listitem {
+                &::before {
+                    counter-increment: list-counter;
+                    content: counter(list-counter) ".";
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    font-size: 1.25rem;
+                    font-weight: 700;
+                    color: $primary;
+                }
+            }
+        }
+
+        &.section__list--unordered {
+            list-style: none;
+
+            .section__listitem {
+                &::before {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    top: .5rem;
+                    width: 1rem;
+                    height: 1rem;
+                    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="%23FFBE98"/></svg>');
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                }
+            }
+        }
+    }
+}

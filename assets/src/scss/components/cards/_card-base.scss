@@ -1,0 +1,184 @@
+.card {
+	position: relative;
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+	background-color: $white;
+	border-radius: $border-radius-xl;
+	box-shadow: 0 8px 20px 0 rgba(0, 0, 0, .15);
+	box-shadow: 8px 16px 20px -8px rgba(0, 0, 0, .15);
+
+	.card__link {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		color: $black;
+		text-decoration: none;
+
+		&:hover {
+			.card__image {
+				transform: scale(1.2);
+			}
+		}
+	}
+
+	.card__header {
+		flex: 0 0 auto;
+		position: relative;
+		overflow: hidden;
+		border-radius: $border-radius-xl;
+	}
+
+	.card__content {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		padding: 1.25rem;
+	}
+
+	.card__image {
+		display: block;
+		width: 100%;
+		height: 100%;
+		aspect-ratio: 3 / 2;
+		object-fit: cover;
+		transition: $transition-base;
+	}
+
+	.card__icon {
+        width: 64px;
+        height: 64px;
+		margin-top: 1.25rem;
+		margin-right: auto;
+		margin-bottom: 1.25rem;
+        margin-left: auto;
+        color: $black;
+    }
+
+	.card__title {
+		font-size: 1.5rem;
+		font-weight: 600;
+
+		&:has(.icon) {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 1rem;
+
+			.icon {
+				flex: 0 0 auto;
+				width: 1.5rem;
+				height: 1.5rem;
+			}
+		}
+	}
+
+	.card__lead {
+		margin-top: .875rem;
+		margin-bottom: .75rem;
+		font-size: 1rem;
+        color: rgba($black, .5);
+
+		&.card__lead--no-trim {
+			p {
+				display: block;
+			}
+		}
+
+		p {
+			display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+		}
+	}
+
+	.card__button {
+		position: absolute;
+		inset: auto .75rem .875rem auto;
+
+		.icon {
+			width: 1.5rem;
+			height: 1.5rem;
+		}
+	}
+
+	.card__meta {
+		display: flex;
+		align-items: center;
+		gap: .5rem;
+		margin-top: auto;
+		padding-top: .625rem;
+		padding-right: 1.5rem;
+		font-size: .875rem;
+		color: rgba($black, .5);
+	}
+
+	.card__categories {
+		display: flex;
+		align-items: center;
+		gap: .25rem;
+	}
+
+	.card__category {
+		display: block;
+		padding: 0 .625rem;
+		border-radius: 10px;
+		font-size: .875rem;
+		line-height: 1.25rem;
+		background-color: $primary;
+		color: $white;
+	}
+
+	.card__date-wrapper {
+		color: rgba($black, .4);
+		font-size: .875rem;
+		line-height: 1;
+	}
+
+	.card__badge {
+		position: absolute;
+		top: 0;
+		left: 0;
+		display: block;
+        width: 180px;
+        padding: .5rem 3rem .5rem 1.75rem;
+        background-color: $primary;
+        color: $white;
+        font-size: 1rem;
+		line-height: 1.1;
+		text-align: center;
+        transform-origin: right top;
+        transform: rotate(-34deg) translateX(-25px) translateY(-68px);
+		z-index: 10;
+	}
+
+	.card__bookmark {
+		position: absolute;
+		top: .5rem;
+		right: .5rem;
+		width: 2rem;
+		height: 2rem;
+		display: grid;
+		place-items: center;
+		background-color: rgba($white, .8);
+		border-radius: 2rem;
+
+		.icon {
+			margin: 0;
+		}
+
+		span {
+			@extend .visually-hidden;
+		}
+	}
+}
+
+@include media-breakpoint-only(xl) {
+	.card {
+		.card__meta {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+	}
+}

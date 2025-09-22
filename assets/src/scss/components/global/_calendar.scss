@@ -1,0 +1,145 @@
+.calendar {
+    margin-bottom: 1.75rem;
+    padding: 0.25rem 0.625rem 0.625rem;
+    border: 1px solid $gray-500;
+    border-radius: 15px;
+
+    .calendar__controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        padding: 0.625rem 0;
+        border-bottom: 1px dashed $gray-500;
+    
+        #current-month,
+        #current-week {
+            display: block;
+            width: 100%;
+            color: $primary;
+            font-weight: 600;
+            font-size: 1rem;
+            line-height: 1.5;
+            text-align: center;
+        }
+    
+        .btn {
+            padding: 0.75rem;
+            cursor: pointer;
+
+            .icon {
+                width: 0.75rem;
+                height: 0.75rem;
+                margin: 0;
+            }
+        }
+    }
+
+    .calendar__row {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .calendar__cell {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        padding: 0;
+        text-align: center;
+    
+        &.calendar__cell--has-posts {
+            .day-number {
+                width: 1.75rem;
+                height: 1.75rem;
+                border: 1px solid $gray-500;
+                border-radius: 5px;
+            }
+        }
+    
+        &.calendar__cell--today {
+            .day-number {
+                padding: 0.25rem;
+                background-color: $primary;
+                color: $white;
+            }
+        }
+    }
+    
+    .day-name {
+        color: $gray-900;
+        font-size: 0.75rem;
+        font-weight: 400;
+        text-transform: uppercase;
+    }
+    
+    .day-number {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 1.5rem;
+        height: 1.5rem;
+        padding: 0;
+        color: $gray-900;
+        border-radius: 50%;
+        font-size: 0.75rem;
+        line-height: 1;
+    }
+    
+    .post-count {
+        position: absolute;
+        top: 0.25rem;
+        right: 0.25rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 1rem;
+        height: 1rem;
+        padding: 0;
+        background-color: $gray-500;
+        color: $black;
+        border-radius: 50%;
+        font-size: 0.75rem;
+        line-height: 1;
+    }
+    
+    .posts-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.625rem;
+        list-style: none;
+        margin: 1rem 0;
+        padding: 0;
+        font-size: 0.825rem;
+    }
+    
+    .post {
+        padding: 0.25rem;
+        border-radius: 0.5rem;
+    
+        &.uncategorised {
+            background-color: red;
+            color: white;
+        }
+    
+        .post__link {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .post__title {
+            display: block;
+            font-size: 0.825rem;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+        
+        .post__date {
+            display: block;
+            line-height: normal;
+        }
+    }
+}

@@ -1,0 +1,101 @@
+.footer {
+  background-color: $primary-light;
+  background: linear-gradient(180deg, rgba($secondary, 0.75), rgba($primary, 0.4)), url('../images/footer.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  .footer__top {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .footer__bottom {
+    padding-bottom: 2rem;
+  }
+
+  .footer__block {
+    margin-bottom: 1.25rem;
+  }
+
+  .footer__title {
+    margin-bottom: 0.625rem;
+    color: $primary;
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .footer__logo {
+    margin-top: 0.5rem;
+    padding: 0.75rem 3.125rem;
+    border-radius: 20px;
+    background-color: rgba($white, .15);
+
+    .footer__logoitem {
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        display: block;
+        width: auto;
+        max-height: 70px;
+      }
+    }
+  }
+}
+
+.copyright {
+  margin-bottom: 0;
+  color: $white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  padding: 1.5rem 0;
+  border-top: 0.0625rem solid $white;
+  margin-top: 1.5rem;
+}
+
+.back-to-top {
+  position: fixed;
+  right: calc($grid-gutter-width * 0.5);
+  bottom: calc($grid-gutter-width * 0.5);
+  width: 2rem;
+  height: 2rem;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  display: grid;
+  place-items: center;
+  background-color: rgba($white, 0.8);
+  border-radius: 2rem;
+
+  &.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  .footer {
+    .footer__top {
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+    }
+
+    .footer__bottom {
+      padding-bottom: 2rem;
+    }
+
+    .footer__block {
+      margin-bottom: 0;
+    }
+
+    .footer__title {
+      margin-bottom: 1.75rem;
+      font-size: 2rem;
+    }
+  }
+}

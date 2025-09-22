@@ -1,0 +1,10 @@
+.card.card--event {
+    .card__link {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .card__content {
+        padding: 1.5rem;
+    }
+}

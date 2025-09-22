@@ -1,0 +1,105 @@
+.block.block--timeline {
+    .block__list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.625rem;
+        position: relative;
+        margin: 0;
+        padding: 0.625rem 3rem 0.875rem;
+        list-style: none;
+
+        &::before {
+            display: block;
+            width: 1px;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            content: "";
+            background-color: $black;
+        }
+    }
+
+    .block__item {
+        display: flex;
+
+        &:nth-child(even) {
+            justify-content: flex-end;
+
+            span {
+                text-align: right;
+
+                &::before,
+                &::after {
+                    right: auto;
+                }
+
+                &::before {
+                    left: -0.25rem;
+                }
+
+                &::after {
+                    left: -0.375rem;
+                }
+            }
+        }
+
+        &.active {
+            span {
+                color: $primary;
+
+                &::before {
+                    background-color: $primary;
+                }
+
+                &::after {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+        }
+
+        span {
+            display: block;
+            position: relative;
+            width: 50%;
+            color: $black;
+            font-family: $headings-font-family;
+            font-size: 2rem;
+            line-height: 1.1;
+            cursor: pointer;
+            transition: $transition-base;
+
+            &::before,
+            &::after {
+                display: block;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                border-radius: 50%;
+                content: "";
+                transition: $transition-base;
+            }
+
+            &::before {
+                right: -0.25rem;
+                z-index: 2;
+                width: 0.5rem;
+                height: 0.5rem;
+                background-color: $black;
+            }
+
+            &::after {
+                right: -0.375rem;
+                z-index: 1;
+                width: 0.75rem;
+                height: 0.75rem;
+                background-color: $white;
+                border: 1px solid $primary;
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+    }
+}

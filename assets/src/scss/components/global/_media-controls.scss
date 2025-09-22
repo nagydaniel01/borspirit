@@ -1,0 +1,126 @@
+// https://chromium.googlesource.com/chromium/blink/+/72fef91ac1ef679207f51def8133b336a6f6588f/Source/core/css/mediaControls.css
+
+.audio-controls__button {
+    font: inherit;
+    line-height: normal;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    background: transparent;
+    border: none;
+    overflow: visible;
+
+    .icon {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+audio,
+video {
+    display: block;
+    width: 100%;
+}
+
+audio::-webkit-media-controls,
+video::-webkit-media-controls {
+}
+
+audio::-webkit-media-controls-enclosure,
+video::-webkit-media-controls-enclosure {}
+
+video::-webkit-media-controls-panel,
+audio::-webkit-media-controls-panel {
+    padding: 0;
+    background-color: $white;
+}
+
+audio:-webkit-full-page-media,
+video:-webkit-full-page-media {}
+
+audio:-webkit-full-page-media::-webkit-media-controls-panel,
+video:-webkit-full-page-media::-webkit-media-controls-panel {}
+
+audio::-webkit-media-controls-mute-button,
+video::-webkit-media-controls-mute-button {}
+
+audio::-webkit-media-controls-overlay-enclosure {}
+
+video::-webkit-media-controls-overlay-enclosure {}
+
+video::-webkit-media-controls-overlay-play-button {}
+
+audio::-webkit-media-controls-play-button,
+video::-webkit-media-controls-play-button {
+    background-color: #bda18d;
+    color: $white;
+    filter: invert(1);
+    border-radius: 50%;
+}
+
+audio::-webkit-media-controls-timeline-container,
+video::-webkit-media-controls-timeline-container {
+}
+
+audio::-webkit-media-controls-current-time-display,
+video::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display,
+video::-webkit-media-controls-time-remaining-display {
+}
+
+audio::-webkit-media-controls-timeline,
+video::-webkit-media-controls-timeline {
+}
+
+audio::-webkit-media-controls-volume-slider,
+video::-webkit-media-controls-volume-slider {
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+}
+
+input[type="range" i]::-webkit-media-slider-container {
+}
+
+input[type="range" i]::-webkit-media-slider-container > div {
+}
+
+input[type="range" i]::-webkit-media-slider-thumb {
+}
+
+audio::-webkit-media-controls-fullscreen-button,
+video::-webkit-media-controls-fullscreen-button {}
+
+audio::-webkit-media-controls-toggle-closed-captions-button {}
+
+video::-webkit-media-controls-toggle-closed-captions-button {}
+
+audio::-webkit-media-controls-fullscreen-volume-slider,
+video::-webkit-media-controls-fullscreen-volume-slider {}
+
+audio::-webkit-media-controls-fullscreen-volume-min-button,
+video::-webkit-media-controls-fullscreen-volume-min-button {}
+
+audio::-webkit-media-controls-fullscreen-volume-max-button,
+video::-webkit-media-controls-fullscreen-volume-max-button {}
+
+video::-webkit-media-text-track-container {}
+
+video::cue {}
+
+video::-webkit-media-text-track-region {}
+
+video::-webkit-media-text-track-region-container {}
+
+video::-webkit-media-text-track-region-container.scrolling {}
+
+video::-webkit-media-text-track-display {}
+
+video::cue(:future) {}
+
+video::-webkit-media-text-track-container b {}
+
+video::-webkit-media-text-track-container u {}
+
+video::-webkit-media-text-track-container i {}
