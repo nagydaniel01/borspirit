@@ -43,15 +43,16 @@
 
     // ACF Fields (Logo, Placeholder)
     if ( function_exists( 'get_field' ) ) {
-        $under_construction_mode = get_field( 'under_construction_mode', 'option' );
-        $placeholder_image       = get_field( 'placeholder_image', 'option' );
+        $under_construction_mode = get_field( 'under_construction_mode', 'option' ) ?? false;
+        $placeholder_image       = get_field( 'placeholder_image', 'option' ) ?? [];
         
         if ( ! defined( 'UNDER_CONSTRUCTION_MODE' ) ) {
             define( 'UNDER_CONSTRUCTION_MODE', $under_construction_mode );
         }
         
         if ( ! defined( 'PLACEHOLDER_IMAGE_ID' ) ) {
-            define( 'PLACEHOLDER_IMAGE_ID', $placeholder_image['ID'] );
+            $placeholder_id = is_array( $placeholder_image ) && isset( $placeholder_image['ID'] ) ? $placeholder_image['ID'] : null;
+            define( 'PLACEHOLDER_IMAGE_ID', $placeholder_id );
         }
     }
 

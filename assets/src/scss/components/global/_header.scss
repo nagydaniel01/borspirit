@@ -6,7 +6,7 @@
   z-index: 100;
   background-color: $primary;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  transition: transform 0.25s ease-in-out, box-shadow 0.25s ease, background-color 0.25s ease;
+  transition: $transition-base;
 
   &.is-hidden {
     transform: translateY(-100%); // slide up to hide

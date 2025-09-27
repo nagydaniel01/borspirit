@@ -16,12 +16,15 @@
             wp_localize_script( 'theme', 'localize', array(
                 'ajaxurl'      => admin_url( 'admin-ajax.php' ),
                 'resturl'      => esc_url( rest_url( 'wp/v2/posts' ) ),
-                'start_time'   => current_time( 'c' ),
                 'themeurl'     => TEMPLATE_DIR_URI,
                 'siteurl'      => SITE_URL,
+                'ag_min_age'      => get_option('ag_min_age', 18),
+                'ag_cookie_days'  => get_option('ag_cookie_days', 30),
+                'ag_redirect_url' => get_option('ag_redirect_url', 'https://www.google.com'),
+                //'start_time'   => current_time( 'c' ),
                 'translations' => array(
-                    'read_more' => __( 'Read more', TEXT_DOMAIN ),
-                    'read_less' => __( 'Read less', TEXT_DOMAIN ),
+                    'read_more' => __( 'Show more', TEXT_DOMAIN ),
+                    'read_less' => __( 'Show less', TEXT_DOMAIN ),
                 ),
             ) );
 
@@ -50,6 +53,10 @@
                 }
             }
             */
+
+            // Disable WooCommerce brands CSS (handle may vary depending on plugin/theme)
+            wp_dequeue_style( 'brands-styles' );
+            wp_deregister_style( 'brands-styles' );
         }
         add_action( 'wp_enqueue_scripts', 'theme_scripts', 100 );
     }

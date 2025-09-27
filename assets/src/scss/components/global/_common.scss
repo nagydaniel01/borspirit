@@ -39,7 +39,7 @@ body {
 }
 
 .icon {
-  display: block;
+  display: inline-block;
   width: 16px;
   height: 16px;
   color: $black;
@@ -256,8 +256,8 @@ blockquote {
       height: 6rem;
       background-image: linear-gradient(
         to bottom,
-        rgba($white, 0) 0%,
-        rgba($white, 1) 100%
+        rgba($body-bg, 0) 0%,
+        rgba($body-bg, 1) 100%
       );
       content: "";
       opacity: 0;
@@ -277,8 +277,8 @@ blockquote {
       display: inline-flex;
       align-items: baseline;
       margin: 0;
-      padding: 0 0 0.125rem;
-      border-bottom: 1px solid $primary;
+      padding: 0;
+      border-bottom: 0;
       font-family: $font-family-base;
       font-weight: 400;
       line-height: 1;

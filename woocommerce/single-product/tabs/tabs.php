@@ -29,42 +29,15 @@ $product_tabs = apply_filters( 'woocommerce_product_tabs', array() );
 if ( ! empty( $product_tabs ) ) : ?>
 
 	<?php foreach ( $product_tabs as $key => $product_tab ) : ?>
-		<section class="section section--product--<?php echo esc_attr( $key ); ?> wc-section" id="<?php echo esc_attr( $key ); ?>">
+		<div class="section section--product--<?php echo esc_attr( $key ); ?> wc-section" id="<?php echo esc_attr( $key ); ?>">
 			<div class="container">
-				<h2 class="woocommerce-Section-title">
-					<?php
-					// Use review count/title for the "reviews" section
-					if ( 'reviews' === $key ) {
-						$count = $product->get_review_count();
-						if ( $count && wc_review_ratings_enabled() ) {
-							/* translators: 1: reviews count 2: product name */
-							$reviews_title = sprintf(
-								esc_html( _n( '%1$s review for %2$s', '%1$s reviews for %2$s', $count, 'woocommerce' ) ),
-								esc_html( $count ),
-								'<span>' . get_the_title() . '</span>'
-							);
-							echo apply_filters( 'woocommerce_reviews_title', $reviews_title, $count, $product ); // phpcs:ignore WordPress.Security.EscapeOutput
-						} else {
-							esc_html_e( 'Reviews', 'woocommerce' );
-						}
-					} else {
-						// Default title for other sections
-						echo wp_kses_post(
-							apply_filters( 'woocommerce_product_' . $key . '_tab_title', $product_tab['title'], $key )
-						);
-					}
-					?>
-				</h2>
-
-				<div class="section__content">
-					<?php
-					if ( isset( $product_tab['callback'] ) ) {
-						call_user_func( $product_tab['callback'], $key, $product_tab );
-					}
-					?>
-				</div>
+				<?php
+				if ( isset( $product_tab['callback'] ) ) {
+					call_user_func( $product_tab['callback'], $key, $product_tab );
+				}
+				?>
 			</div>
-		</section>
+		</div>
 	<?php endforeach; ?>
 
 	<?php do_action( 'woocommerce_product_after_tabs' ); ?>

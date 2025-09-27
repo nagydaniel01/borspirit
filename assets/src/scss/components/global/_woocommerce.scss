@@ -137,6 +137,7 @@
   .product {
     .woocommerce-loop-product {
       margin-bottom: 2rem;
+      background-color: rgba($white, 1);
       border: 1px solid $border-color;
       border-radius: 0.5rem;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -159,21 +160,14 @@
 
         img {
           @extend .card-img-top;
+          aspect-ratio: 1 / 1;
+          object-fit: contain;
+          object-position: center;
           transition: transform 0.3s ease;
         }
 
         &:hover img {
           transform: scale(1.05);
-        }
-
-        .onsale {
-          @extend .badge, .bg-danger;
-          position: absolute;
-          top: 0.5rem;
-          left: 0.5rem;
-          font-weight: bold;
-          padding: 0.25rem 0.5rem;
-          z-index: 2;
         }
       }
 
@@ -260,4 +254,8 @@
       }
     }
   }
+}
+
+.product-subtitle {
+  text-transform: uppercase;
 }

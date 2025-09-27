@@ -19,6 +19,19 @@ defined( 'ABSPATH' ) || exit;
 
 global $post;
 
+$heading = apply_filters( 'woocommerce_product_description_heading', __( 'Description', 'woocommerce' ) );
+
 ?>
 
-<?php the_content(); ?>
+<?php if ( $heading ) : ?>
+	<h2><?php echo esc_html( $heading ); ?></h2>
+<?php endif; ?>
+
+<div class="text-collapse">
+    <div class="text-collapse__text" data-height="180">
+        <?php the_content(); ?>
+    </div>
+    <div class="text-collapse__toggle">
+        <button type="button" class="btn read-more-button js-collapse-toggle is-hidden"><?php echo esc_html__( 'Show more', TEXT_DOMAIN ); ?></a>
+    </div>
+</div>

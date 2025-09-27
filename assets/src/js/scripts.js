@@ -19,14 +19,18 @@ import './navigation-home';
 */
 
 import './filter';
+import './product-filter';
 import './fancybox-init';
 import './slick-init';
 import './select2-init';
 import './tourguide-init';
 import './imagetosvg';
 import './validate-form';
+import './age-gate'; 
 import './header';
 import './back-to-top';
 import './toast';
+import './text-collapse';
 import './youtube-player';
-import './quantity'; 
+import './product-sticky';
+import './quantity';

@@ -19,13 +19,10 @@
              * Post thumbnail
              */
             add_theme_support( 'post-thumbnails' );
-            set_post_thumbnail_size( 150, 150 ); // 50 pixels wide by 50 pixels tall, resize mode
+            //set_post_thumbnail_size( 150, 150 ); // 50 pixels wide by 50 pixels tall, resize mode
 
             // Add image sizes
-            add_image_size( 'post-thumbnail', 500, 500, true );
-            //add_image_size('post-thumbnail', 500, 9999);
-            //add_image_size( 'icon', 24, 24, true );
-            //add_image_size( 'avatar', 64, 64, true );
+            add_image_size( 'product-sticky-thumbnail', 0, 64, false );
 
             /**
              * Supported formats
@@ -115,9 +112,9 @@
             add_theme_support( 'learndash' );
 
             // Enabling WooCommerce product gallery features (are off by default since WC 3.0.0).
-            add_theme_support( 'wc-product-gallery-zoom' );       // zoom
+            //add_theme_support( 'wc-product-gallery-zoom' );       // zoom
             add_theme_support( 'wc-product-gallery-lightbox' );   // lightbox
-            add_theme_support( 'wc-product-gallery-slider' );     // swipe
+            //add_theme_support( 'wc-product-gallery-slider' );     // swipe
 
             // Restoring the classic Widgets Editor
             remove_theme_support( 'widgets-block-editor' );

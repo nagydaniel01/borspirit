@@ -266,3 +266,30 @@
         }
         add_filter( 'acf/load_field/name=gform', 'acf_populate_gform_ids' );
     }
+
+    function acf_load_wine_pairing_tip_checkboxes( $field ) {
+        
+        // Reset choices
+        $field['choices'] = array();
+
+        // Check if the repeater has rows of data (replace 'option' if not on Options page)
+        if( have_rows('product_page_wine_pairing_tip_items', 'option') ) {
+            
+            while( have_rows('product_page_wine_pairing_tip_items', 'option') ) {
+                the_row();
+                
+                // Get subfields
+                $text = get_sub_field('product_page_wine_pairing_tip_text');
+
+                if ( $text ) {
+                    // Use sanitized text as value and original text as label
+                    $field['choices'][ sanitize_title( $text ) ] = $text;
+                }
+            }
+            
+        }
+
+        return $field;
+    }
+
+    add_filter('acf/load_field/name=product_wine_pairing_tips', 'acf_load_wine_pairing_tip_checkboxes');

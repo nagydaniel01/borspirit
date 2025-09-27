@@ -41,7 +41,7 @@ if (!function_exists('dpg_admin_page')) {
                     <tr>
                         <th scope="row"><label for="dpg_post_type"><?php echo esc_html__('Select Post Type', 'dummy-post-generator'); ?></label></th>
                         <td>
-                            <select name="dpg_post_type" id="dpg_post_type">
+                            <select name="dpg_post_type" id="dpg_post_type" class="regular-text">
                                 <?php
                                 $post_types = get_post_types(['public' => true], 'objects');
                                 foreach ($post_types as $type) {
@@ -54,19 +54,19 @@ if (!function_exists('dpg_admin_page')) {
                     <tr>
                         <th scope="row"><label for="dpg_number"><?php echo esc_html__('Number of Posts', 'dummy-post-generator'); ?></label></th>
                         <td>
-                            <input type="number" name="dpg_number" id="dpg_number" value="5" min="1" max="100">
+                            <input type="number" name="dpg_number" id="dpg_number" class="regular-text" value="5" min="1" max="100">
                         </td>
                     </tr>
                     <tr>
                         <th scope="row"><label for="dpg_post_image_width"><?php echo esc_html__('Featured Image Width (px)', 'dummy-post-generator'); ?></label></th>
                         <td>
-                            <input type="number" name="dpg_post_image_width" id="dpg_post_image_width" value="1280" min="300" max="3840">
+                            <input type="number" name="dpg_post_image_width" id="dpg_post_image_width" class="regular-text" value="1280" min="300" max="3840">
                         </td>
                     </tr>
                     <tr>
                         <th scope="row"><label for="dpg_post_image_height"><?php echo esc_html__('Featured Image Height (px)', 'dummy-post-generator'); ?></label></th>
                         <td>
-                            <input type="number" name="dpg_post_image_height" id="dpg_post_image_height" value="720" min="300" max="2160">
+                            <input type="number" name="dpg_post_image_height" id="dpg_post_image_height" class="regular-text" value="720" min="300" max="2160">
                         </td>
                     </tr>
                 </table>
@@ -81,19 +81,19 @@ if (!function_exists('dpg_admin_page')) {
                     <tr>
                         <th scope="row"><label for="dpg_image_count"><?php echo esc_html__('Number of Images', 'dummy-post-generator'); ?></label></th>
                         <td>
-                            <input type="number" name="dpg_image_count" id="dpg_image_count" value="5" min="1" max="100">
+                            <input type="number" name="dpg_image_count" id="dpg_image_count" class="regular-text" value="5" min="1" max="100">
                         </td>
                     </tr>
                     <tr>
                         <th scope="row"><label for="dpg_image_width"><?php echo esc_html__('Image Width (px)', 'dummy-post-generator'); ?></label></th>
                         <td>
-                            <input type="number" name="dpg_image_width" id="dpg_image_width" value="1280" min="300" max="3840">
+                            <input type="number" name="dpg_image_width" id="dpg_image_width" class="regular-text" value="1280" min="300" max="3840">
                         </td>
                     </tr>
                     <tr>
                         <th scope="row"><label for="dpg_image_height"><?php echo esc_html__('Image Height (px)', 'dummy-post-generator'); ?></label></th>
                         <td>
-                            <input type="number" name="dpg_image_height" id="dpg_image_height" value="720" min="300" max="2160">
+                            <input type="number" name="dpg_image_height" id="dpg_image_height" class="regular-text" value="720" min="300" max="2160">
                         </td>
                     </tr>
                 </table>
@@ -178,12 +178,21 @@ if (!function_exists('dpg_generate_posts')) {
             $post_id = wp_insert_post($post_data);
 
             if ($post_id && !is_wp_error($post_id)) {
+                // Upload featured image
                 $image_url = sprintf('https://picsum.photos/%d/%d?random=%d', $width, $height, wp_rand(1, 9999));
                 $image_id  = dpg_upload_image_from_url($image_url, $post_id);
                 if ($image_id) {
                     set_post_thumbnail($post_id, $image_id);
                 }
-            } 
+
+                // WooCommerce product-specific fields
+                if ($post_type === 'product') {
+                    update_post_meta($post_id, '_regular_price', rand(1000, 100000)); // Random price
+                    update_post_meta($post_id, '_price', rand(1000, 100000));
+                    update_post_meta($post_id, '_stock_status', 'instock');
+                    update_post_meta($post_id, '_manage_stock', 'no');
+                }
+            }
         }
     }
 }

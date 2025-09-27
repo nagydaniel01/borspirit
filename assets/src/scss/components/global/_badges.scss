@@ -12,3 +12,17 @@
   font-weight: 700;
   text-transform: uppercase;
 }
+
+.woocommerce-product-badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+
+  .badge {
+    @extend .badge, .bg-secondary;
+    position: relative;
+    z-index: 1;
+    font-weight: bold;
+    margin-right: 0.5rem;
+  }
+}

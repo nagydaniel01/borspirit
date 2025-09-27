@@ -16,7 +16,55 @@ if (productGallerySlider) {
             {
                 breakpoint: 991,
                 settings: {
-                  arrows: true,
+                    arrows: true,
+                }
+            }
+        ]
+    });
+}
+
+var winerySlider = $('.woocommerce-products-header__gallery');
+
+if (winerySlider) {
+    winerySlider.slick({
+        mobileFirst: true,
+        infinite: false,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        dots: true,
+    });
+}
+
+var productReviewsSlider = $('.commentlist');
+
+if (productReviewsSlider) {
+    productReviewsSlider.slick({
+        mobileFirst: true,
+        infinite: true,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        dots: true,
+        prevArrow: '<button type="button" class="slick-arrow slick-prev" aria-label="Előző"><svg class="icon icon-arrow-left"><use xlink:href="#icon-arrow-left"></use></svg></button>',
+        nextArrow: '<button type="button" class="slick-arrow slick-next" aria-label="Következő"><svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg></button>',
+        responsive: [
+            {
+                breakpoint: 991,
+                settings: {
+                    slidesToShow: 2,
+                    arrows: true,
+                }
+            },
+            {
+                breakpoint: 1199,
+                settings: {
+                    slidesToShow: 3,
+                    arrows: true,
                 }
             }
         ]

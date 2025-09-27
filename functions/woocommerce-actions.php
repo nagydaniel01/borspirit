@@ -9,16 +9,23 @@
     // Optional: Disable all default WooCommerce stylesheets
     add_filter('woocommerce_enqueue_styles', '__return_empty_array');
 
-    // Remove WooCommerce breadcrumb
-    //remove_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20);
-
-    // Remove WooCommerce sidebar
-    remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
-
     // Remove default WooCommerce wrappers
     remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10);
     remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10);
 
+    // Remove WooCommerce breadcrumb
+    //remove_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20);
+
+    // Remove WooCommerce sidebar
+    //remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
+
+    // Remove WooCommerce sidebar on single product pages
+    function remove_woocommerce_sidebar_single_product() {
+        if ( is_product() ) {
+            remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
+        }
+    }
+    add_action( 'template_redirect', 'remove_woocommerce_sidebar_single_product' );
     // ---------------------------------------------
     // Add blocks to shop and product single
     // ---------------------------------------------
@@ -31,7 +38,7 @@
             if (is_shop() || is_product_category() || is_tax() ) {
                 echo '<main class="page page--default page--archive page--archive-product"><section class="section section--default"><div class="container">';
             } elseif (is_singular('product' ) ) {
-                echo '<main class="page page--default page--single page--single-product"><section class="section section--default">';
+                echo '<main class="page page--default page--single page--single-product"><section class="section section--single section--single-product">';
             }
         }
         add_action( 'woocommerce_before_main_content', 'custom_woocommerce_output_content_wrapper', 10 );
@@ -51,12 +58,51 @@
         add_action( 'woocommerce_after_main_content', 'custom_woocommerce_output_content_wrapper_end', 10 );
     }
 
+    if ( ! function_exists( 'custom_shop_layout_open' ) ) {
+        /**
+         * Open layout before products loop.
+         *
+         * Uses Bootstrap flex utilities + column widths.
+         * Sidebar will appear on the left (desktop) and stack under products on mobile.
+         *
+         * @hooked woocommerce_before_shop_loop - 5
+         */
+        function custom_shop_layout_open() {
+            echo '<div class="shop-layout d-flex flex-column flex-lg-row">';
+
+            // Products (right on desktop, above on mobile)
+            echo '<div class="shop-layout__content col-lg-9 col-md-8 order-0 order-lg-1">';
+        }
+        add_action( 'woocommerce_before_shop_loop', 'custom_shop_layout_open', 5 );
+    }
+
+    if ( ! function_exists( 'custom_shop_layout_close' ) ) {
+        /**
+         * Close layout after products loop.
+         *
+         * Closes the flex container opened in custom_shop_layout_open().
+         *
+         * @hooked woocommerce_after_shop_loop - 50
+         */
+        function custom_shop_layout_close() {
+            echo '</div>'; // Close .shop-layout__content
+
+            // Sidebar (left on desktop, below on mobile)
+            echo '<aside class="shop-layout__sidebar col-lg-3 col-md-4 order-1 order-lg-0">';
+            do_action( 'woocommerce_sidebar' ); // Loads WooCommerce sidebar
+            echo '</aside>';
+
+            echo '</div>'; // Close .shop-layout
+        }
+        add_action( 'woocommerce_after_shop_loop', 'custom_shop_layout_close', 50 );
+    }
+
     if ( ! function_exists( 'custom_woocommerce_single_product_main_wrapper' ) ) {
         /**
          * Wraps the single product main content in a custom section and container.
          */
         function custom_woocommerce_single_product_main_wrapper() {
-            echo '<section class="section section--product-main"><div class="container"><div class="section__inner">';
+            echo '<div class="section section--product-main"><div class="container"><div class="section__inner">';
         }
         add_action( 'woocommerce_before_single_product_summary', 'custom_woocommerce_single_product_main_wrapper', 5 );
     }
@@ -66,7 +112,7 @@
          * Closes the custom section wrapper added around the single product main content.
          */
         function custom_woocommerce_single_product_main_wrapper_end() {
-            echo '</div></div></section>';
+            echo '</div></div></div>';
         }
         add_action( 'woocommerce_after_single_product_summary', 'custom_woocommerce_single_product_main_wrapper_end', 5 );
     }
@@ -415,9 +461,9 @@
 
                 // Only render wrapper if WooCommerce actually produced HTML
                 if ( ! empty( $content ) ) {
-                    echo '<section class="section section--related-products"><div class="container">';
+                    echo '<div class="section section--related-products"><div class="container">';
                     echo $content;
-                    echo '</div></section>';
+                    echo '</div></div>';
                 }
             }
         }

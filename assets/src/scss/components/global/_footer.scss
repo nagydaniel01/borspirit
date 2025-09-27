@@ -1,9 +1,10 @@
 .footer {
   background-color: $primary-light;
-  background: linear-gradient(180deg, rgba($secondary, 0.75), rgba($primary, 0.4)), url('../images/footer.jpg');
+  background: linear-gradient(to bottom, rgba($primary, 0.5), rgba($primary, 0.75)), url('../images/footer.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  color: $white;
 
   .footer__top {
     padding-top: 3rem;
@@ -20,7 +21,7 @@
 
   .footer__title {
     margin-bottom: 0.625rem;
-    color: $primary;
+    color: $white;
     font-size: 1.5rem;
     line-height: 1;
   }
@@ -40,6 +41,14 @@
         display: block;
         width: auto;
         max-height: 70px;
+      }
+    }
+  }
+
+  .nav {
+    .nav__list {
+      a {
+        color: $white;
       }
     }
   }

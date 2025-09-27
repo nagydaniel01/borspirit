@@ -1,0 +1,119 @@
+<?php
+    $logo                         = get_field('site_logo', 'option');
+    $header_partner_logo_repeater = get_field('header_partner_logo_repeater', 'option');
+
+    $current_user = wp_get_current_user() ?? null;
+    $avatar       = get_avatar( $current_user->ID, 32 );
+    $first_name   = $current_user->first_name ?? '';
+    $last_name    = $current_user->last_name ?? '';
+    $display_name = $current_user->display_name ?? '';
+    $user_name    = $display_name ? $display_name : $first_name;
+?>
+
+<header class="header">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg">
+            <!-- Brand -->
+            <a class="navbar-brand logo logo--header" href="<?php echo esc_url( trailingslashit( home_url() ) ); ?>">
+                <?php if ($logo) : ?>
+                    <?php echo wp_get_attachment_image($logo['ID'], [$logo['width'], $logo['height']], false, ['class' => 'logo__image', 'alt' => esc_attr($logo['alt'] ?: get_bloginfo('name'))]); ?>
+                <?php else : ?>
+                    <?php bloginfo('name'); ?>
+                <?php endif; ?>
+            </a>
+
+            <!-- Mobile header actions -->
+            <div class="header-actions d-flex align-items-center d-lg-none">
+                <?php if ( class_exists( 'WooCommerce' ) ) : ?>
+                    <!-- Mobile My Account / Login -->
+                    <?php if ( is_user_logged_in() ) : ?>
+                        <a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>" class="header-actions__item ms-3">
+                            <?php echo $avatar; ?>
+                            <span class="visually-hidden"><?php echo sprintf( esc_html__( 'Hello %s!', TEXT_DOMAIN ), esc_html( $user_name ) ); ?></span>
+                        </a>
+                    <?php else : ?>
+                        <button type="button" class="header-actions__item btn ms-3" data-bs-toggle="modal" data-bs-target="#login_formModal">
+                            <svg class="icon icon-user"><use xlink:href="#icon-user"></use></svg>
+                            <span class="visually-hidden"><?php echo esc_html__( 'Login / Register', TEXT_DOMAIN ); ?></span>
+                        </button>
+                    <?php endif; ?>
+
+                    <!-- Mobile Cart Trigger -->
+                    <button class="header-actions__item btn position-relative ms-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#minicartCanvas" aria-controls="minicartCanvas">
+                        <svg class="icon icon-bag-shopping"><use xlink:href="#icon-bag-shopping"></use></svg>
+                        <span class="visually-hidden"><?php echo esc_html__( 'Cart', TEXT_DOMAIN ); ?></span>
+                        <div class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-white">
+                            <span class="cart_contents_count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
+                        </div>
+                    </button>
+                <?php endif; ?>
+
+                <!-- Navbar Toggler -->
+                <button class="header-actions__item btn ms-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#mainMenu" aria-controls="mainMenu">
+                    <svg class="icon icon-menu"><use xlink:href="#icon-menu"></use></svg>
+                    <span class="visually-hidden"><?php echo esc_html__( 'Open menu', TEXT_DOMAIN ); ?></span>
+                </button>
+            </div>
+
+            <!-- Offcanvas container (mobile right, desktop inline) -->
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="mainMenu" aria-labelledby="mainMenuLabel">
+                <div class="offcanvas-header d-lg-none">
+                    <h5 class="offcanvas-title" id="mainMenuLabel"><?php echo esc_html__( 'Menu', TEXT_DOMAIN ); ?></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+                </div>
+
+                <div class="offcanvas-body w-100 p-3 p-lg-0">
+                    <div class="d-flex mb-3 d-lg-none">
+                        <?php get_search_form(); ?>
+                    </div>
+
+                    <?php if ( has_nav_menu( 'primary_menu' ) ) : ?>
+                        <?php
+                            wp_nav_menu( array(
+                                'theme_location' => 'primary_menu',
+                                'container'      => false,
+                                'menu_class'     => 'navbar-nav align-items-lg-center',
+                                'fallback_cb'    => false,
+                            ) );
+                        ?>
+                    <?php else : ?>
+                        <p class="no-menu-assigned"><?php echo esc_html__( 'Please assign a menu in Appearance → Menus.', TEXT_DOMAIN ); ?></p>
+                    <?php endif; ?>
+
+                    <!-- Desktop header actions -->
+                    <div class="header-actions d-none d-lg-flex ms-lg-auto">
+                        <?php if ( class_exists( 'WooCommerce' ) ) : ?>
+                            <!-- My Account / Login -->
+                            <?php if ( is_user_logged_in() ) : ?>
+                                <a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>" class="header-actions__item ms-lg-4">
+                                    <?php echo $avatar; ?>
+                                    <span class="ms-2"><?php echo sprintf( esc_html__( 'Hello %s!', TEXT_DOMAIN ), esc_html( $user_name ) ); ?></span>
+                                </a>
+                            <?php else : ?>
+                                <button type="button" class="header-actions__item btn ms-lg-4" data-bs-toggle="modal" data-bs-target="#login_formModal">
+                                    <svg class="icon icon-user"><use xlink:href="#icon-user"></use></svg>
+                                    <span class="visually-hidden"><?php echo esc_html__( 'Login / Register', TEXT_DOMAIN ); ?></span>
+                                </button>
+                            <?php endif; ?>
+
+                            <!-- Cart Trigger -->
+                            <button class="header-actions__item btn position-relative ms-lg-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#minicartCanvas" aria-controls="minicartCanvas">
+                                <svg class="icon icon-bag-shopping"><use xlink:href="#icon-bag-shopping"></use></svg>
+                                <span class="visually-hidden"><?php echo esc_html__( 'Cart', TEXT_DOMAIN ); ?></span>
+                                <div class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-white">
+                                    <span class="cart_contents_count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
+                                </div>
+                            </button>
+                        <?php endif; ?>
+
+                        <!-- Search bar Trigger -->
+                        <button class="header-actions__item btn ms-lg-4" data-bs-toggle="modal" data-bs-target="#searchModal">
+                            <svg class="icon icon-magnifying-glass"><use xlink:href="#icon-magnifying-glass"></use></svg>
+                            <span class="visually-hidden"><?php echo esc_html__('Search', TEXT_DOMAIN); ?></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>

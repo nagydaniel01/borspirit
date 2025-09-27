@@ -415,7 +415,8 @@
             </div>
         <?php }
         add_action( 'category_add_form_fields', 'add_custom_taxonomy_image' );
-        add_action( 'taxonomy_add_form_fields', 'add_custom_taxonomy_image' );
+        add_action( 'award_add_form_fields', 'add_custom_taxonomy_image' );
+        //add_action( 'taxonomy_add_form_fields', 'add_custom_taxonomy_image' );
     }
 
     if ( ! function_exists( 'save_custom_taxonomy_image' ) ) {
@@ -430,7 +431,8 @@
             }
         }
         add_action( 'created_category', 'save_custom_taxonomy_image' );
-        add_action( 'created_taxonomy', 'save_custom_taxonomy_image' );
+        add_action( 'created_award', 'save_custom_taxonomy_image' );
+        //add_action( 'created_taxonomy', 'save_custom_taxonomy_image' );
     }
 
     if ( ! function_exists( 'update_custom_taxonomy_image' ) ) {
@@ -460,7 +462,8 @@
             </tr>
         <?php }
         add_action( 'category_edit_form_fields', 'update_custom_taxonomy_image' );
-        add_action( 'taxonomy_edit_form_fields', 'update_custom_taxonomy_image' );
+        add_action( 'award_edit_form_fields', 'update_custom_taxonomy_image' );
+        //add_action( 'taxonomy_edit_form_fields', 'update_custom_taxonomy_image' );
     }
 
     if ( ! function_exists( 'updated_custom_taxonomy_image' ) ) {
@@ -475,7 +478,8 @@
             }
         }
         add_action( 'edited_category', 'updated_custom_taxonomy_image' );
-        add_action( 'edited_taxonomy', 'updated_custom_taxonomy_image' );
+        add_action( 'edited_award', 'updated_custom_taxonomy_image' );
+        //add_action( 'edited_taxonomy', 'updated_custom_taxonomy_image' );
     }
 
     if ( ! function_exists( 'custom_taxonomy_load_media' ) ) {
@@ -545,7 +549,8 @@
             return $columns;
         }
         add_filter( 'manage_edit-category_columns', 'display_custom_taxonomy_image_column_heading' );
-        add_filter( 'manage_edit-taxonomy_columns', 'display_custom_taxonomy_image_column_heading' );
+        add_filter( 'manage_edit-award_columns', 'display_custom_taxonomy_image_column_heading' );
+        //add_filter( 'manage_edit-taxonomy_columns', 'display_custom_taxonomy_image_column_heading' );
     }
 
     if ( ! function_exists( 'display_custom_taxonomy_image_column_value' ) ) {
@@ -567,7 +572,8 @@
             return $columns;
         }
         add_action( 'manage_category_custom_column', 'display_custom_taxonomy_image_column_value', 10, 3 );
-        add_action( 'manage_taxonomy_custom_column', 'display_custom_taxonomy_image_column_value', 10, 3 );
+        add_action( 'manage_award_custom_column', 'display_custom_taxonomy_image_column_value', 10, 3 );
+        //add_action( 'manage_taxonomy_custom_column', 'display_custom_taxonomy_image_column_value', 10, 3 );
     }
 
     // ============================================================

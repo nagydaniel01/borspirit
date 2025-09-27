@@ -1,0 +1,121 @@
+.block.block--product-sticky {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    padding: .5rem 0;
+    background-color: $secondary-light;
+    box-shadow: 0 -8px 20px rgba($black, .15);
+    z-index: 99;
+    transform: translateY(100%);
+    transition: $transition-base;
+
+    &.is-sticky {
+        transform: translateY(0);
+    }
+
+    .block__inner {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+        align-items: center;
+        gap: 1rem;
+
+        & > * {
+            margin: 0;
+        }
+    }
+
+    .block__image {
+        flex: 1 0 auto;
+        width: 100%;
+        max-width: 4rem;
+        height: 4rem;
+        object-fit: contain;
+        border-radius: 0.25rem;
+        background-color: rgba($white, 1);
+    }
+
+    .block__title {
+        flex: 1 0 auto;
+        font-size: 1rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .woocommerce-product-rating {
+        display: flex;
+        align-items: center;
+        margin-left: 4rem;
+
+        .star-rating {
+            margin-right: .625rem;
+            span {
+                color: $yellow;
+
+                &:before {
+                    color: $yellow;
+                }
+            }
+        }
+
+        .woocommerce-review-link {
+            font-size: .75rem;
+            text-decoration: none;
+            color: $body-color;
+        }
+
+        .link {
+            white-space: nowrap;
+        }
+    }
+
+    .price {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 0;
+        font-size: .875rem;
+        line-height: 150%;
+
+        ins {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-decoration: none;
+            color: $primary;
+        }
+    }
+}
+
+@include media-breakpoint-down(lg) {
+    .block.block--product-sticky {
+        .block__image,
+        .block__title,
+        .woocommerce-product-rating {
+            display: none;
+        }
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    .block.block--product-sticky {
+        bottom: 0;
+        top: auto;
+        box-shadow: 0 8px 20px rgba($black, .15);
+        transform: translateY(100%);
+
+        .price {
+            margin-left: 2rem;
+            text-align: right;
+
+            .price__regular {
+                justify-content: flex-end;
+            }
+        }
+
+        .block__button {
+            margin-left: 2rem;
+        }
+    }
+}

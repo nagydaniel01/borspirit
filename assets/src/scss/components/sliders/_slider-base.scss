@@ -7,11 +7,61 @@
   &.slick-initialized {
     opacity: 1;
     visibility: visible;
+
+    .slick-dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin: 1rem 0 0;
+      padding: 0;
+      list-style: none;
+      z-index: 1;
+
+      li {
+        position: relative;
+        width: 0.75rem;
+        height: 0.75rem;
+        margin: 0 0.25rem;
+        padding: 0;
+        cursor: pointer;
+
+        button {
+          display: block;
+          width: 100%;
+          height: 100%;
+          padding: 0;
+          border: 1px solid rgba($primary, 0.2);
+          border-radius: 50%;
+          outline: none;
+          background-color: transparent;
+          font-size: 0;
+          line-height: 0;
+          cursor: pointer;
+
+          &:hover,
+          &:focus {
+            outline: none;
+          }
+        }
+
+        &.slick-active {
+          button {
+            background-color: $primary;
+            border-color: $primary;
+          }
+        }
+      }
+    }
   }
 }
 
 .slider {
   position: relative;
+
+  .slick-slide > div {
+    display: flex;
+  }
 
   .slick-arrow {
     display: flex;
@@ -42,52 +92,6 @@
       height: 1.25rem;
       color: $black;
       fill: currentColor;
-    }
-  }
-
-  .slick-dots {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    z-index: 1;
-
-    li {
-      position: relative;
-      width: 0.75rem;
-      height: 0.75rem;
-      margin: 0 0.25rem;
-      padding: 0;
-      cursor: pointer;
-
-      button {
-        display: block;
-        width: 100%;
-        height: 100%;
-        padding: 0;
-        border: 1px solid rgba($primary, 0.2);
-        border-radius: 50%;
-        outline: none;
-        background-color: transparent;
-        font-size: 0;
-        line-height: 0;
-        cursor: pointer;
-
-        &:hover,
-        &:focus {
-          outline: none;
-        }
-      }
-
-      &.slick-active {
-        button {
-          background-color: $primary;
-          border-color: $primary;
-        }
-      }
     }
   }
 }

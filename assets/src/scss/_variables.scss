@@ -29,16 +29,16 @@ $teal:    #20c997;
 $cyan:    #0dcaf0;
 
 // Override and add colors
-$peachfuzz: #FFBE98;
-$eggshell:  #F2E8DA;
+$claret:    #7B1B38;
+$alabaster: #F4F1E6;
 $youtube:   #FF0033;
 
 // Override and add theme colors
-$primary: $peachfuzz;
-$primary-light: tint-color($primary, 50%); // makes it 40% lighter
+$primary: $claret;
+$primary-light: tint-color($primary, 80%); // makes it 40% lighter
 $primary-dark:  shade-color($primary, 25%); // makes it 20% lighter
-$secondary: $eggshell;
-$secondary-light: tint-color($secondary, 50%); // makes it 40% lighter
+$secondary: $alabaster;
+$secondary-light: tint-color($secondary, 80%); // makes it 40% lighter
 $secondary-dark:  shade-color($secondary, 25%); // makes it 20% lighter
 $info: $blue;
 $success: $green;
@@ -94,7 +94,7 @@ $grid-gutter-width: 1.5rem;
 
 // Body
 $body-color: $gray-900;
-$body-bg: $gray-100;
+$body-bg: $gray-50;
 
 // Components
 $border-width: 1px;
@@ -113,9 +113,9 @@ $headings-font-family: "Libre Bodoni", serif;
 $font-size-base: 1.063rem;
 $line-height-base: 1.6;
 
-$h1-font-size: 2.75rem;
-$h2-font-size: 2rem;
-$h3-font-size: 1.625rem;
+$h1-font-size: 3rem;
+$h2-font-size: 2.25rem;
+$h3-font-size: 1.5rem;
 $h4-font-size: 1.5rem;
 $h5-font-size: 1.375rem;
 $h6-font-size: 1.25rem;
@@ -245,3 +245,10 @@ $btn-close-opacity: 1;
 $btn-close-hover-opacity: 1;
 
 $transition-base: all 0.4s ease-in-out;
+
+// Badge
+$badge-font-size:                   .75em;
+$badge-color:                       $primary;
+$badge-padding-y:                   .5em;
+$badge-padding-x:                   1em;
+$badge-border-radius:               $border-radius;

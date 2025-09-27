@@ -26,7 +26,7 @@ $(document).ready(function () {
         if (currentScroll < HIDE_THRESHOLD) {
             $header.css('transition', 'none');
         } else {
-            $header.css('transition', 'transform 0.25s ease-in-out, box-shadow 0.25s ease, background-color 0.25s ease');
+            $header.css('transition', 'all 0.4s ease-in-out');
         }
 
         if (!offcanvasOpen) {
