@@ -14,8 +14,8 @@ global $product;
             <?php echo woocommerce_template_single_rating(); ?>
             <?php echo woocommerce_template_single_price(); ?>
             <button type="button" class="btn btn-primary block__button js-sticky-add-to-cart">
-                <span><?php echo esc_html( $product->single_add_to_cart_text() ); ?></span>
                 <svg class="icon icon-bag-shopping"><use xlink:href="#icon-bag-shopping"></use></svg>
+                <span><?php echo esc_html( $product->single_add_to_cart_text() ); ?></span>
             </button>
         </div>
     </div>
