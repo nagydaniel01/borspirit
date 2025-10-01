@@ -223,32 +223,52 @@
             }
 
             // Fee amount (hardcoded here, but can be dynamic if needed)
-            $fee = 50;
+            $drs_price = get_field( 'drs_price', 'option' );
+            $drs_logo  = get_field( 'drs_logo', 'option' );
+            $drs_link  = get_field( 'drs_link', 'option' );
 
             // Image (replace path with your actual icon)
-            $image = sprintf(
-                '<img width="60" height="60" src="%s" alt="%s" />',
-                esc_url( get_stylesheet_directory_uri() . '/assets/src/images/drs-icon.png' ),
-                esc_attr__( 'DRS', TEXT_DOMAIN )
-            );
+            $image ='';
+            if ( $drs_logo ) {
+                $icon_url = is_array( $drs_logo ) ? $drs_logo['url'] : $drs_logo;
+                $image = sprintf(
+                    '<img width="60" height="60" src="%s" alt="%s" />',
+                    esc_url( $icon_url ),
+                    esc_attr__( 'DRS', TEXT_DOMAIN )
+                );
+            }
+
+            if ( ! $drs_price ) {
+                return;
+            }
 
             // Translatable text (without HTML)
-            $fee_text   = sprintf(
-                __( 'DRS - kötelező visszaváltási díj: %s Ft/db.', TEXT_DOMAIN ),
-                $fee
+            $drs_price_text   = sprintf(
+                __( 'DRS - kötelező visszaváltási díj: %s / db.', TEXT_DOMAIN ),
+                wc_price( $drs_price )
             );
 
-            // Details link (replace URL with your actual page)
-            $details_link = sprintf(
-                '<a href="%s">%s</a>',
-                esc_url( get_home_url() ),
-                esc_html__( 'Részletek', TEXT_DOMAIN )
-            );
+            // Build link if available
+            $details_link = '';
+            if ( $drs_link && isset( $drs_link['url'], $drs_link['title'] ) ) {
+                $details_link = sprintf(
+                    '<a href="%s" target="%s">%s</a>',
+                    esc_url( $drs_link['url'] ),
+                    esc_attr( $drs_link['target'] ?: '_self' ),
+                    esc_html( $drs_link['title'] )
+                );
+            }
 
             // Output
             echo '<div class="drs-fee">';
             echo $image;
-            echo '<p>' . $fee_text . '<br/>' . $details_link . '</p>';
+            echo '<p>' . $drs_price_text;
+
+            if ( $details_link ) {
+                echo '<br/>' . $details_link;
+            }
+
+            echo '</p>';
             echo '</div>';
         }
         add_action( 'woocommerce_single_product_summary', 'display_drs_fee_in_summary', 16 );
@@ -305,7 +325,7 @@
          * @return string The modified tab title.
          */
         function rename_description_tab( $title ) {
-            $title = __( 'Ismerd meg jobban a terméket!', TEXT_DOMAIN );
+            $title = __( 'Learn more about the product!', TEXT_DOMAIN ); // Ismerd meg jobban a terméket
             return $title;
         }
 
@@ -432,70 +452,6 @@
             // Load external template from your theme: /woocommerce/single-product/tabs/tab-faq.php
             echo get_template_part('woocommerce/single-product/tabs/tab', 'faq');
         }
-    }
-
-    if ( ! function_exists( 'my_wc_add_boraszat_gallery_in_shop_loop_header' ) ) {
-        /**
-         * Output the "gallery" term field in the shop loop header
-         * when viewing a "pa_boraszat" taxonomy archive.
-         *
-         * @return void
-         */
-        function my_wc_add_boraszat_gallery_in_shop_loop_header() {
-            // Only run on taxonomy archive pages.
-            if ( ! is_tax( 'pa_boraszat' ) ) {
-                return;
-            }
-
-            $term = get_queried_object();
-
-            // Ensure it's a valid term object.
-            if ( empty( $term ) || ! isset( $term->term_id, $term->taxonomy ) ) {
-                return;
-            }
-
-            // Get the "gallery" field for this term (ACF).
-            $gallery = get_field( 'gallery', $term->taxonomy . '_' . $term->term_id );
-
-            if ( empty( $gallery ) || ! is_array( $gallery ) ) {
-                return; // No gallery found.
-            }
-
-            echo '<div class="slider woocommerce-products-header__gallery">';
-
-            foreach ( $gallery as $key => $image ) {
-                $image_id = null;
-
-                // Handle ACF gallery return format.
-                if ( is_numeric( $image ) ) {
-                    $image_id = $image;
-                } elseif ( is_array( $image ) && ! empty( $image['ID'] ) ) {
-                    $image_id = $image['ID'];
-                }
-
-                if ( $image_id ) {
-                    // Get existing alt text.
-                    $alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
-
-                    // Fallback alt text if none is set.
-                    if ( empty( $alt ) ) {
-                        $alt = sprintf(
-                            /* translators: %s: taxonomy term name */
-                            __( '%s image (%s)', 'textdomain' ),
-                            $term->name,
-                            $key + 1
-                        );
-                    }
-
-                    echo '<div class="woocommerce-products-header__gallery-item">';
-                    echo wp_get_attachment_image( $image_id, 'medium_large', false, [ 'class' => esc_attr( 'woocommerce-products-header__image' ), 'alt' => esc_attr( $alt ) ] );
-                    echo '</div>';
-                }
-            }
-
-            echo '</div>';
-        }
-        add_action( 'woocommerce_archive_description', 'my_wc_add_boraszat_gallery_in_shop_loop_header', 5 );
     }
 
     if ( ! function_exists( 'show_product_stock_in_loop' ) ) {
@@ -1011,3 +967,209 @@
         }
         add_action( 'woocommerce_after_single_product_summary', 'custom_recently_viewed_products', 25 );
     }
+
+    if ( ! function_exists( 'show_free_shipping_notice' ) ) {
+        /**
+         * Display a notice showing how much more a customer needs to spend 
+         * to qualify for free shipping.
+         *
+         * This function:
+         * - Gets the customer's shipping country from their WooCommerce profile or geolocation.
+         * - Finds the matching shipping zone and checks if "Free Shipping" is enabled.
+         * - Determines the minimum cart amount required for free shipping.
+         * - Displays a notice if the customer has not yet reached the free shipping threshold.
+         *
+         * Hooks into various WooCommerce locations:
+         * - Before shop loop
+         * - Before cart
+         * - Before checkout form
+         * - Custom bbloomer hooks for cart and checkout
+         *
+         * @return void
+         */
+        function show_free_shipping_notice() {
+            if ( ! WC()->cart ) {
+                return;
+            }
+
+            // Determine customer country
+            $customer_country = WC()->customer->get_shipping_country();
+
+            if ( empty( $customer_country ) ) {
+                $geo = WC_Geolocation::geolocate_ip();
+                $customer_country = $geo['country'] ?? '';
+            }
+
+            if ( empty( $customer_country ) ) {
+                return;
+            }
+
+            // Get the zone
+            $package = [
+                'destination' => [
+                    'country'  => $customer_country,
+                    'state'    => '',
+                    'postcode' => '',
+                    'city'     => '',
+                    'address'  => '',
+                ],
+            ];
+
+            $zone    = WC_Shipping_Zones::get_zone_matching_package( $package );
+            $methods = $zone->get_shipping_methods();
+
+            $minimum_amount = 0;
+            foreach ( $methods as $method ) {
+                if ( $method->id === 'free_shipping' && $method->enabled === 'yes' ) {
+                    $minimum_amount = $method->min_amount ?? 0;
+                    break;
+                }
+            }
+
+            if ( $minimum_amount <= 0 ) {
+                return;
+            }
+
+            $current_amount = WC()->cart->subtotal;
+            if ( $current_amount >= $minimum_amount ) {
+                return;
+            }
+
+            $remaining_amount = $minimum_amount - $current_amount;
+
+            $message = sprintf(
+                __( 'Add %s more to your cart to qualify for free shipping!', 'woocommerce' ),
+                wc_price( $remaining_amount )
+            );
+
+            wc_print_notice( $message, 'notice' );
+        }
+        add_action( 'woocommerce_archive_description', 'show_free_shipping_notice', 20 );
+        add_action( 'woocommerce_before_cart', 'show_free_shipping_notice' );
+        add_action( 'woocommerce_before_checkout_form', 'show_free_shipping_notice' );
+        add_action( 'bbloomer_before_woocommerce/cart', 'show_free_shipping_notice' );
+        add_action( 'bbloomer_before_woocommerce/checkout', 'show_free_shipping_notice' );
+    }
+
+    // FIX THIS BELOW !!!
+    if ( ! function_exists( 'add_estimated_delivery_time_to_label' ) ) {
+        function add_estimated_delivery_time_to_label($label, $method) {
+            // Get the current locale
+            $locale = get_locale(); // Example: "hu_HU" for Hungarian
+
+            // Get the timezone set
+            $wordpress_timezone = get_option('timezone_string'); // Get timezone as string, e.g., "Europe/Budapest"
+            
+            if (empty($wordpress_timezone)) {
+                $wordpress_timezone = 'UTC'; // Default to UTC if no timezone is set in WordPress settings
+            }
+            
+            // Set the timezone
+            date_default_timezone_set($wordpress_timezone);
+    
+            // Get the current day and time
+            $current_time = current_time('H'); // Get current hour in 24h format
+            $current_day  = strtolower(current_time('l')); // Get the current day name (e.g., "monday") in lowercase
+    
+            // Define opening hours (all days in lowercase)
+            $opening_hours = array(
+                'monday'    => array('open' => 9, 'close' => 18),
+                'tuesday'   => array('open' => 9, 'close' => 18),
+                'wednesday' => array('open' => 9, 'close' => 18),
+                'thursday'  => array('open' => 9, 'close' => 18),
+                'friday'    => array('open' => 9, 'close' => 18),
+                'saturday'  => array('open' => 9, 'close' => 14),
+                'sunday'    => array('open' => 0, 'close' => 0) // Closed on Sundays
+            );
+    
+            // Set default estimated delivery days
+            $base_delivery_days = 2; // Default processing time in business days
+    
+            // Adjust based on opening hours
+            if ($opening_hours[$current_day]['open'] > 0) { // If shop is open today
+                if ($current_time >= $opening_hours[$current_day]['close']) {
+                    $base_delivery_days++; // If ordering after hours, add 1 extra day
+                }
+            } else {
+                $base_delivery_days++; // If ordering on a closed day, add 1 extra day
+            }
+    
+            // Calculate estimated delivery date
+            $estimated_timestamp = strtotime("+$base_delivery_days weekdays");
+    
+            // Format date using IntlDateFormatter for proper localization
+            $formatter = new IntlDateFormatter(
+                $locale,
+                IntlDateFormatter::FULL, // Use FULL for complete weekday & month names
+                IntlDateFormatter::NONE,
+                'Europe/Budapest',
+                IntlDateFormatter::GREGORIAN,
+                'yyyy. MMMM d., EEEE' // Example: "2024. március 22., péntek"
+            );
+            $estimated_date = $formatter->format($estimated_timestamp);
+    
+            // Handle Local Pickup with "Tomorrow" logic
+            $pickup_date = '';
+            $next_day_timestamp = strtotime("+1 day"); // Tomorrow's timestamp
+            $next_day = strtolower(date('l', $next_day_timestamp)); // Get tomorrow's day name in lowercase
+    
+            // Check if tomorrow is open, otherwise find the next available open day
+            if ($opening_hours[$next_day]['open'] > 0) {
+                $pickup_date = __('Tomorrow', 'ajandekplaza');
+            } else {
+                // Find the next open day
+                for ($i = 2; $i <= 7; $i++) { // Loop up to 7 days ahead
+                    $future_day_timestamp = strtotime("+$i days");
+                    $future_day = strtolower(date('l', $future_day_timestamp)); // Convert to lowercase
+                    if ($opening_hours[$future_day]['open'] > 0) {
+                        $pickup_date = $formatter->format($future_day_timestamp);
+                        break;
+                    }
+                }
+            }
+    
+            // Define delivery messages with custom class
+            $delivery_times = array(
+                'flat_rate'     => sprintf(__('Estimated delivery: %s', 'ajandekplaza'), $estimated_date),
+                'free_shipping' => sprintf(__('Estimated delivery: %s', 'ajandekplaza'), $formatter->format(strtotime("+($base_delivery_days + 2) weekdays"))),
+                'local_pickup'  => sprintf(__('Pickup available: %s', 'ajandekplaza'), $pickup_date)
+            );
+    
+            // Check if the shipping method exists in our list
+            if (array_key_exists($method->method_id, $delivery_times)) {
+                $label .= '<div class="shipping__list_estimate">' . esc_html($delivery_times[$method->method_id]) . '</div>';
+            }
+    
+            return $label;
+        }
+        //add_filter('woocommerce_cart_shipping_method_full_label', 'add_estimated_delivery_time_to_label', 10, 2);
+    }
+
+function get_woocommerce_general_settings() {
+    $settings = [
+        'store_address'      => get_option('woocommerce_store_address'),
+        'store_address_2'    => get_option('woocommerce_store_address_2'),
+        'store_city'         => get_option('woocommerce_store_city'),
+        'store_postcode'     => get_option('woocommerce_store_postcode'),
+        'default_country'    => get_option('woocommerce_default_country'),
+        'allowed_countries'  => get_option('woocommerce_allowed_countries'),
+        'specific_countries' => get_option('woocommerce_specific_allowed_countries'),
+        'ship_to_countries'  => get_option('woocommerce_ship_to_countries'),
+        'specific_ship_to'   => get_option('woocommerce_specific_ship_to_countries'),
+        'customer_location'  => get_option('woocommerce_default_customer_address'),
+        'enable_taxes'       => get_option('woocommerce_calc_taxes'),
+        'currency'           => get_option('woocommerce_currency'),
+        'currency_position'  => get_option('woocommerce_currency_pos'),
+        'num_decimals'       => get_option('woocommerce_price_num_decimals'),
+        'thousand_separator' => get_option('woocommerce_price_thousand_sep'),
+        'decimal_separator'  => get_option('woocommerce_price_decimal_sep'),
+    ];
+
+    return $settings;
+}
+
+/*
+echo '<pre>';
+print_r(get_woocommerce_general_settings());
+echo '</pre>';
+*/

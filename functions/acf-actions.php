@@ -267,19 +267,19 @@
         add_filter( 'acf/load_field/name=gform', 'acf_populate_gform_ids' );
     }
 
-    function acf_load_wine_pairing_tip_checkboxes( $field ) {
+    function acf_load_food_pairing_tip_checkboxes( $field ) {
         
         // Reset choices
         $field['choices'] = array();
 
         // Check if the repeater has rows of data (replace 'option' if not on Options page)
-        if( have_rows('product_page_wine_pairing_tip_items', 'option') ) {
+        if( have_rows('food_pairing_tip_items', 'option') ) {
             
-            while( have_rows('product_page_wine_pairing_tip_items', 'option') ) {
+            while( have_rows('food_pairing_tip_items', 'option') ) {
                 the_row();
                 
                 // Get subfields
-                $text = get_sub_field('product_page_wine_pairing_tip_text');
+                $text = get_sub_field('food_pairing_tip_text');
 
                 if ( $text ) {
                     // Use sanitized text as value and original text as label
@@ -292,4 +292,36 @@
         return $field;
     }
 
-    add_filter('acf/load_field/name=product_wine_pairing_tips', 'acf_load_wine_pairing_tip_checkboxes');
+    add_filter('acf/load_field/name=product_food_pairing_tips', 'acf_load_food_pairing_tip_checkboxes');
+
+    function acf_load_icon_checkboxes( $field ) {
+        
+        // Reset choices
+        $field['choices'] = array();
+
+        // Add fixed choices
+        $field['choices']['free_shipping_limit_message'] = __( 'Free Shipping Limit', TEXT_DOMAIN );
+        $field['choices']['estimated_delivery_message'] = __( 'Estimated Delivery', TEXT_DOMAIN );
+
+        // Check if the repeater has rows of data (replace 'option' if not on Options page)
+        if( have_rows('icon_items', 'option') ) {
+            
+            while( have_rows('icon_items', 'option') ) {
+                the_row();
+                
+                // Get subfields
+                $text = get_sub_field('icon_text');
+
+                if ( $text ) {
+                    // Use sanitized text as value and original text as label
+                    $field['choices'][ sanitize_title( $text ) ] = $text;
+                }
+            }
+            
+        }
+
+        return $field;
+    }
+
+    add_filter('acf/load_field/name=product_page_icons', 'acf_load_icon_checkboxes');
+    add_filter('acf/load_field/name=product_icons', 'acf_load_icon_checkboxes');

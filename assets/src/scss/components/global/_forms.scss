@@ -26,9 +26,10 @@ input[type="radio"] {
   @extend .form-check-input;
 }
 
-input[type="submit"],
 input[type="reset"],
-input[type="button"] {
+input[type="submit"],
+input[type="button"],
+button[type="submit"] {
   @extend .btn, .btn-primary;
 }
 
@@ -293,5 +294,25 @@ legend {
 
   .wpcf7-submit {
     @extend .btn, .btn-primary;
+  }
+}
+
+// YITH Ajax Product Filter
+.yith-wcan-filters {
+  background-color: $body-bg;
+
+  .yith-wcan-filter {
+    .filter-title {
+      color: $primary;
+    }
+
+    .filter-items {
+      .filter-item {
+        .item-count {
+          font-size: .875rem;
+          color: $primary-light;
+        }
+      }
+    }
   }
 }

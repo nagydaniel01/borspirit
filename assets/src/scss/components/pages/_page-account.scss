@@ -51,52 +51,52 @@
 
         /* Dashboard */
         &.woocommerce-MyAccount-navigation-link--dashboard a:before {
-          background-image: url('#{$svg-path}/home-user.svg');
+          background-image: url('./../../src/svg/home-user.svg');
         }
 
         /* Beauty profile */
         &.woocommerce-MyAccount-navigation-link--beauty-profile a:before {
-          background-image: url('#{$svg-path}/id-card.svg');
+          background-image: url('./../../src/svg/id-card.svg');
         }
 
         /* Bookmarks */
         &.woocommerce-MyAccount-navigation-link--bookmarks a:before {
-          background-image: url('#{$svg-path}/bookmark-empty.svg');
+          background-image: url('./../../src/svg/bookmark-empty.svg');
         }
 
         /* Orders */
         &.woocommerce-MyAccount-navigation-link--orders a:before {
-          background-image: url('#{$svg-path}/box.svg');
+          background-image: url('./../../src/svg/box.svg');
         }
 
         /* My Membership */
         &.woocommerce-MyAccount-navigation-link--members-area a:before {
-          background-image: url('#{$svg-path}/user.svg');
+          background-image: url('./../../src/svg/user.svg');
         }
 
         /* My Subscription */
         &.woocommerce-MyAccount-navigation-link--subscriptions a:before {
-          background-image: url('#{$svg-path}/receipt.svg');
+          background-image: url('./../../src/svg/receipt.svg');
         }
 
         /* Downloads */
         &.woocommerce-MyAccount-navigation-link--downloads a:before {
-          background-image: url('#{$svg-path}/download.svg');
+          background-image: url('./../../src/svg/download.svg');
         }
 
         /* Addresses */
         &.woocommerce-MyAccount-navigation-link--edit-address a:before {
-          background-image: url('#{$svg-path}/location-pen.svg');
+          background-image: url('./../../src/svg/location-pen.svg');
         }
 
         /* Account details */
         &.woocommerce-MyAccount-navigation-link--edit-account a:before {
-          background-image: url('#{$svg-path}/user-pen.svg');
+          background-image: url('./../../src/svg/user-pen.svg');
         }
 
         /* Logout */
         &.woocommerce-MyAccount-navigation-link--customer-logout a:before {
-          background-image: url('#{$svg-path}/right-from-bracket.svg');
+          background-image: url('./../../src/svg/right-from-bracket.svg');
         }
       }
     }

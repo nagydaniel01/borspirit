@@ -15,6 +15,8 @@
                 return;
             }
 
+            $selected_flashes = get_field( 'product_badge_flashes', 'option' ) ?? [];
+
             ob_start();
 
             echo '<div class="woocommerce-product-badge">';
@@ -25,14 +27,30 @@
                 echo '<span class="badge badge--onsale">' . $text . '</span>';
             }
 
-            // Always show custom badges
-            wc_wine_store_new_flash( $product );
-            wc_wine_store_bestseller_flash( $product );
-            wc_wine_store_limited_stock_flash( $product );
-            //wc_wine_store_discount_flash( $product );
-            wc_wine_store_award_flash( $product );
-            //wc_wine_store_organic_flash( $product );
-            //wc_wine_store_winetype_flash( $product );
+            // Check each badge separately
+            if ( in_array( 'wc_wine_store_new_flash', $selected_flashes, true ) ) {
+                wc_wine_store_new_flash( $product );
+            }
+
+            if ( in_array( 'wc_wine_store_bestseller_flash', $selected_flashes, true ) ) {
+                wc_wine_store_bestseller_flash( $product );
+            }
+
+            if ( in_array( 'wc_wine_store_limited_stock_flash', $selected_flashes, true ) ) {
+                wc_wine_store_limited_stock_flash( $product );
+            }
+
+            if ( in_array( 'wc_wine_store_discount_flash', $selected_flashes, true ) ) {
+                wc_wine_store_discount_flash( $product );
+            }
+
+            if ( in_array( 'wc_wine_store_award_flash', $selected_flashes, true ) ) {
+                wc_wine_store_award_flash( $product );
+            }
+
+            if ( in_array( 'wc_wine_store_category_flash', $selected_flashes, true ) ) {
+                wc_wine_store_category_flash( $product, 'honap-bora' );
+            }
 
             echo '</div>';
 
@@ -137,25 +155,34 @@
             if ( $terms && ! is_wp_error( $terms ) ) {
                 /*
                 foreach ( $terms as $term ) {
-                    echo '<span class="badge badge--winetype">' . esc_html( $term->name ) . '</span>';
+                    echo '<span class="badge badge--award">' . esc_html( $term->name ) . '</span>';
                 }
                 */
 
-                echo '<span class="badge badge--award">' . esc_html__( 'Award Winner', 'TEXT_DOMAIN' ) . '</span>';
+                echo '<span class="badge badge--award">' . esc_html__( 'Award Winner', TEXT_DOMAIN ) . '</span>';
             }
         }
     }
 
-    if ( ! function_exists( 'wc_wine_store_organic_flash' ) ) {
+    if ( ! function_exists( 'wc_wine_store_category_flash' ) ) {
         /**
-         * Badge: Organic (custom field).
+         * Badge: Specific Product Category.
          *
          * @param WC_Product $product WooCommerce product.
+         * @param string $target_category_slug Slug of the category to display badge for.
          * @return void
          */
-        function wc_wine_store_organic_flash( $product ) {
-            if ( 'yes' === get_post_meta( $product->get_id(), 'organic', true ) ) {
-                echo '<span class="badge badge--organic">' . esc_html__( 'Organic', TEXT_DOMAIN ) . '</span>';
+        function wc_wine_store_category_flash( $product, $target_category_slug ) {
+            // Get product categories
+            $terms = get_the_terms( $product->get_id(), 'product_cat' );
+
+            if ( $terms && ! is_wp_error( $terms ) ) {
+                foreach ( $terms as $term ) {
+                    // Only show badge if the category matches
+                    if ( $term->slug === $target_category_slug ) {
+                        echo '<span class="badge badge--'.$target_category_slug.'">' . esc_html( $term->name ) . '</span>';
+                    }
+                }
             }
         }
     }
@@ -176,4 +203,60 @@
                 }
             }
         }
+    }
+
+    if ( ! function_exists( 'wc_wine_store_organic_flash' ) ) {
+        /**
+         * Badge: Organic (custom field).
+         *
+         * @param WC_Product $product WooCommerce product.
+         * @return void
+         */
+        function wc_wine_store_organic_flash( $product ) {
+            if ( 'yes' === get_post_meta( $product->get_id(), 'organic', true ) ) {
+                echo '<span class="badge badge--organic">' . esc_html__( 'Organic', TEXT_DOMAIN ) . '</span>';
+            }
+        }
+    }
+
+    if ( ! function_exists( 'acf_load_product_badge_flashes' ) ) {
+        /**
+         * Auto-populate ACF field with available WooCommerce product badge flashes.
+         *
+         * This will scan your theme/plugin for existing `wc_wine_store_*_flash` functions
+         * and add them as selectable choices in an ACF field.
+         *
+         * Usage:
+         * - Create an ACF field (Select or Checkbox).
+         * - Set the field name to `product_badge_flashes` (or adjust filter below).
+         * - Choices will automatically populate with badge flash functions.
+         */
+        function acf_load_product_badge_flashes( $field ) {
+            
+            // Reset choices
+            $field['choices'] = array();
+
+            // Define all badge flash functions you want available
+            $badge_functions = array(
+                'wc_wine_store_sale_flash'       => __( 'Sale Badge', TEXT_DOMAIN ),
+                'wc_wine_store_new_flash'        => __( 'New Arrival Badge', TEXT_DOMAIN ),
+                'wc_wine_store_bestseller_flash' => __( 'Best Seller Badge', TEXT_DOMAIN ),
+                'wc_wine_store_limited_stock_flash' => __( 'Limited Stock Badge', TEXT_DOMAIN ),
+                'wc_wine_store_discount_flash'   => __( 'Discount Badge', TEXT_DOMAIN ),
+                'wc_wine_store_award_flash'      => __( 'Award Winner Badge', TEXT_DOMAIN ),
+                'wc_wine_store_category_flash'   => __( 'Hónap bora', TEXT_DOMAIN ),
+            );
+
+            // Loop through and only add existing functions (safety check)
+            foreach ( $badge_functions as $function => $label ) {
+                if ( function_exists( $function ) ) {
+                    $field['choices'][ $function ] = $label;
+                }
+            }
+
+            return $field;
+        }
+
+        // Hook into ACF field loading (adjust field name as needed)
+        add_filter( 'acf/load_field/name=product_badge_flashes', 'acf_load_product_badge_flashes' );
     }

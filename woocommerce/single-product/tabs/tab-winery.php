@@ -43,7 +43,7 @@ if ( $show_tab_title ) : ?>
         <div class="section__content">
             <div class="row">
                 <?php if ( ! empty( $gallery ) && is_array( $gallery ) ) : ?>
-                    <div class="col-md-4">
+                    <div class="col-md-4 woocommerce-products-header">
                         <div class="slider woocommerce-products-header__gallery">
                             <?php foreach ( $gallery as $key => $image ) : ?>
                                 <?php
@@ -89,8 +89,16 @@ if ( $show_tab_title ) : ?>
                     <?php echo wpautop( wp_kses_post( $description ) ); ?>
 
                     <?php if ( ! is_wp_error( $term_link ) ) : ?>
-                        <a href="<?php echo esc_url( $term_link ); ?>" class="btn btn-primary">
-                            <?php echo esc_html( $title ); ?>
+                        <?php
+                            $aria_label = sprintf(
+                                // translators: %1$s is the post title
+                                __('Read more about %1$s', TEXT_DOMAIN),
+                                $title
+                            );
+                        ?>
+                        <a href="<?php echo esc_url( $term_link ); ?>" class="btn btn-primary" aria-label="<?php echo esc_attr( $aria_label ); ?>">
+                            <span><?php echo esc_html__( 'Read more', TEXT_DOMAIN ); ?></span>
+                            <svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg>
                         </a>
                     <?php endif; ?>
                 </div>

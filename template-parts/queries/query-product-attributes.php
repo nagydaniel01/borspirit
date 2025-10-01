@@ -121,6 +121,11 @@ render_taxonomy_filter('product_tag', __('Tags', 'vince'));
         $name  = $field['name'];
         $label = $field['label'] ?? '';
 
+        // Check if this filter is a custom field (ACF) starting with "product_filter_"
+        if (strpos($name, 'product_filter_') !== 0) {
+            continue;
+        }
+
         if ($type === 'tab') {
             $tab_counter++;
             continue;

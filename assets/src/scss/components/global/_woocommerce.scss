@@ -75,7 +75,7 @@
 // ---------------------------------------------
 // Breadcrumb
 // ---------------------------------------------
-.woocommerce-breadcrumb-wrapper {
+.woocommerce-breadcrumb {
   margin-bottom: 1rem;
 }
 
@@ -258,4 +258,22 @@
 
 .product-subtitle {
   text-transform: uppercase;
+}
+
+.woocommerce-products-header {
+  .woocommerce-products-header__inner {
+    padding: 2rem 0;
+  }
+
+  .woocommerce-products-header__gallery {
+    .slick-list {
+      border-radius: $border-radius-lg;
+    }
+    .woocommerce-products-header__gallery-item {
+      img {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+      }
+    }
+  }
 }

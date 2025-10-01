@@ -17,8 +17,8 @@ if (!empty($filter_object)) {
         } elseif ($filter === 'keyword') {
             $post_type_args['s'] = $values;
         } else {
-            // Check if this filter is a custom field (ACF) starting with "product_attr_"
-            if (strpos($filter, 'product_attr_') === 0) {
+            // Check if this filter is a custom field (ACF) starting with "product_filter_"
+            if (strpos($filter, 'product_filter_') === 0) {
                 if ($meta_counter === 0) {
                     $post_type_args['meta_query'] = array('relation' => 'AND');
                 }

@@ -1,3 +1,4 @@
+<!--
 <div id="toolbar-product" class="toolbar toolbar--products">
     <input type="search" name="keyword" id="keyword" placeholder="<?php echo esc_html__('Search...', TEXT_DOMAIN); ?>" class="form-control search js-search">
 </div>
@@ -21,3 +22,8 @@
         <?php get_template_part( 'template-parts/queries/query', 'product' ); ?>
     </div>
 </div>
+-->
+
+<!-- https://www.youtube.com/watch?v=gOJ4zXuNyQ8 -->
+
+<?php echo do_shortcode( '[yith_wcan_filters slug="default-preset"]' ); ?>

@@ -32,10 +32,10 @@ $heading = apply_filters( 'woocommerce_product_additional_information_heading', 
 		<?php do_action( 'woocommerce_product_additional_information', $product ); ?>
 	</div>
 	<div class="col-md-4">
-		<h3><?php echo esc_html__( 'Wine pairing tips', TEXT_DOMAIN ); ?></h3>
 		<?php
 		// Get the saved values from the checkbox field for the current product
-		$selected_tips = get_field('product_wine_pairing_tips');
+		$selected_tips 	  = get_field('product_food_pairing_tips');
+		$tips_description = get_field('product_food_pairing_tips_description');
 
 		// Ensure $selected_tips is an array
 		if ( ! is_array( $selected_tips ) || empty( $selected_tips ) ) {
@@ -45,14 +45,20 @@ $heading = apply_filters( 'woocommerce_product_additional_information_heading', 
 		if ( ! empty( $selected_tips ) ) :
 
 			// Check if the repeater exists on the Options page
-			if ( have_rows('product_page_wine_pairing_tip_items', 'option') ) :
+			if ( have_rows('food_pairing_tip_items', 'option') ) :
+
+				echo '<h3>' . esc_html__( 'Food that goes well with this wine', TEXT_DOMAIN ) . '</h3>';
+
+				if ( $tips_description ) {
+					echo wp_kses_post($tips_description);
+				}
 
 				echo '<ul class="section__list">';
 
-				while ( have_rows('product_page_wine_pairing_tip_items', 'option') ) : the_row();
+				while ( have_rows('food_pairing_tip_items', 'option') ) : the_row();
 
-					$text  = get_sub_field('product_page_wine_pairing_tip_text');
-					$image = get_sub_field('product_page_wine_pairing_tip_image');
+					$text  = get_sub_field('food_pairing_tip_text');
+					$image = get_sub_field('food_pairing_tip_image');
 
 					// Skip if text is empty
 					if ( empty( $text ) ) {
@@ -99,12 +105,12 @@ $heading = apply_filters( 'woocommerce_product_additional_information_heading', 
 
 			else :
 				// No repeater rows found
-				echo wpautop( esc_html__( 'No wine pairing tips available.', TEXT_DOMAIN ) );
+				//echo wpautop( esc_html__( 'No food pairing tips available.', TEXT_DOMAIN ) );
 			endif;
 
 		else :
 			// No tips selected in the checkbox
-			echo wpautop( esc_html__( 'No wine pairing tips selected for this product.', TEXT_DOMAIN ) );
+			//echo wpautop( esc_html__( 'No food pairing tips selected for this product.', TEXT_DOMAIN ) );
 		endif;
 		?>
 	</div>

@@ -4,93 +4,145 @@ defined( 'ABSPATH' ) || exit;
 
 global $product;
 
-?>
+// --- Get selected icons from ACF checkbox field ---
+$selected_icons = get_field( 'product_icons', $product->get_id() ) ?? [];
 
-<?php
-// Get icon items from global "product_page_icon_items" option
-$icon_items = get_field( 'product_page_icon_items', 'option' ) ?? [];
-
-// Filter out icon items where both image and text are empty
-$icon_items = array_filter( $icon_items ?? [], function ($item) {
-    $image_id = $item['product_page_icon_image']['ID'] ?? '';
-    $text     = trim( $item['product_page_icon_text'] ?? '' );
-    
-    return $image_id !== '' && $text !== '';
-} );
-
-// Determine current customer country
-$customer_country = WC()->customer->get_shipping_country();
-
-// If new visitor or no shipping country set, fallback to geolocation
-if ( empty( $customer_country ) ) {
-    $geo = WC_Geolocation::geolocate_ip();
-    $customer_country = $geo['country'] ?? '';
+if ( empty($selected_icons) ) {
+    $selected_icons = get_field( 'product_page_icons', 'option' ) ?? [];
 }
 
-// Get free shipping message for current zone
-$free_shipping_message = '';
+// --- Existing icon items ---
+$icon_items = get_field( 'icon_items', 'option' ) ?? [];
+$icon_items = array_filter( $icon_items, function ($item) use ($selected_icons) {
+    $image_id = $item['icon_image']['ID'] ?? '';
+    $text     = trim( $item['icon_text'] ?? '' );
 
-if ( $customer_country ) {
-    $package = [
-        'destination' => [
-            'country'  => $customer_country,
-            'state'    => '',
-            'postcode' => '',
-            'city'     => '',
-            'address'  => '',
-        ],
-    ];
+    // Only keep items if the sanitized text is in selected icons
+    return $image_id !== '' && $text !== '' && in_array( sanitize_title($text), $selected_icons );
+});
 
-    $customer_zone = WC_Shipping_Zones::get_zone_matching_package( $package );
-    $methods = $customer_zone->get_shipping_methods();
+// --- Free shipping message ---
+$free_shipping_limit_message = '';
+if ( in_array('free_shipping_limit_message', $selected_icons) ) {
 
-    foreach ( $methods as $method ) {
-        if ( ! is_object( $method ) ) continue;
+    $customer_country = WC()->customer->get_shipping_country();
+    if ( empty( $customer_country ) ) {
+        $geo = WC_Geolocation::geolocate_ip();
+        $customer_country = $geo['country'] ?? '';
+    }
 
-        if ( $method->id === 'free_shipping' && isset( $method->enabled ) && $method->enabled === 'yes' ) {
-            if ( isset( $method->min_amount ) && is_numeric( $method->min_amount ) && $method->min_amount > 0 ) {
-                $formatted_amount = wc_price( $method->min_amount );
+    if ( $customer_country ) {
+        $package = [
+            'destination' => [
+                'country'  => $customer_country,
+                'state'    => '',
+                'postcode' => '',
+                'city'     => '',
+                'address'  => '',
+            ],
+        ];
 
-                $free_shipping_message = sprintf(
-                    /* translators: %s: formatted minimum order amount for free shipping */
-                    __('Ingyenes szállítás %s felett.', 'your-text-domain'),
-                    $formatted_amount
-                );
-                break;
+        $customer_zone = WC_Shipping_Zones::get_zone_matching_package( $package );
+        $methods = $customer_zone->get_shipping_methods();
+
+        foreach ( $methods as $method ) {
+            if ( ! is_object( $method ) ) continue;
+
+            if ( $method->id === 'free_shipping' && $method->enabled === 'yes' ) {
+                if ( isset( $method->min_amount ) && is_numeric( $method->min_amount ) && $method->min_amount > 0 ) {
+                    $formatted_amount = wc_price( $method->min_amount );
+                    $free_shipping_limit_message = sprintf(
+                        __( 'Free shipping on orders over %1$s', TEXT_DOMAIN ),
+                        $formatted_amount
+                    );
+                    break;
+                }
             }
         }
     }
 }
+
+// --- Estimated Delivery Message ---
+$estimated_delivery_message = '';
+if ( in_array('estimated_delivery_message', $selected_icons) ) {
+
+    $locale = get_locale();
+    $wordpress_timezone = get_option('timezone_string') ?: 'UTC';
+    date_default_timezone_set($wordpress_timezone);
+
+    $current_time = current_time('H');
+    $current_day  = strtolower(current_time('l'));
+
+    $opening_hours = [
+        'monday'    => ['open' => 9, 'close' => 18],
+        'tuesday'   => ['open' => 9, 'close' => 18],
+        'wednesday' => ['open' => 9, 'close' => 18],
+        'thursday'  => ['open' => 9, 'close' => 18],
+        'friday'    => ['open' => 9, 'close' => 18],
+        'saturday'  => ['open' => 9, 'close' => 14],
+        'sunday'    => ['open' => 0, 'close' => 0],
+    ];
+
+    $base_delivery_days = 2;
+
+    if ($opening_hours[$current_day]['open'] > 0) {
+        if ($current_time >= $opening_hours[$current_day]['close']) {
+            $base_delivery_days++;
+        }
+    } else {
+        $base_delivery_days++;
+    }
+
+    $estimated_timestamp = strtotime("+$base_delivery_days weekdays");
+    $formatter = new IntlDateFormatter(
+        $locale,
+        IntlDateFormatter::FULL,
+        IntlDateFormatter::NONE,
+        $wordpress_timezone,
+        IntlDateFormatter::GREGORIAN,
+        'yyyy. MMMM d., EEEE'
+    );
+    $estimated_date = $formatter->format($estimated_timestamp);
+
+    $estimated_delivery_message = sprintf(
+        __( 'Free in-store pickup as early as %1$s', TEXT_DOMAIN ),
+        $estimated_date
+    );
+}
 ?>
 
 <div class="section__content">
-    <?php if ( ! empty( $icon_items ) || ! empty( $free_shipping_message ) ) : ?>
+    <?php if ( ! empty( $icon_items ) || ! empty( $free_shipping_limit_message ) || ! empty( $estimated_delivery_message ) ) : ?>
         <div class="section__list">
 
-            <?php if ( ! empty( $free_shipping_message ) ) : ?>
+            <?php if ( ! empty( $free_shipping_limit_message ) ) : ?>
                 <div class="section__listitem">
                     <svg class="section__icon icon icon-truck"><use xlink:href="#icon-truck"></use></svg>
-                    <span class="section__text">
-                        <?php echo wp_kses_post( $free_shipping_message ); ?>
-                    </span>
+                    <span class="section__text"><?php echo wp_kses_post( $free_shipping_limit_message ); ?></span>
                 </div>
             <?php endif; ?>
-            
+
+            <?php if ( ! empty( $estimated_delivery_message ) ) : ?>
+                <div class="section__listitem">
+                    <svg class="section__icon icon icon-shop"><use xlink:href="#icon-shop"></use></svg>
+                    <span class="section__text"><?php echo esc_html( $estimated_delivery_message ); ?></span>
+                </div>
+            <?php endif; ?>
+
             <?php foreach ( $icon_items as $item ) : 
-                $image_id = $item['product_page_icon_image']['ID'] ?? '';
-                $text     = trim( $item['product_page_icon_text'] ?? '' );
+                $image_id = $item['icon_image']['ID'] ?? '';
+                $text     = trim( $item['icon_text'] ?? '' );
             ?>
                 <div class="section__listitem">
-                    <?php if ( $image_id  ) : ?>
+                    <?php if ( $image_id ) : ?>
                         <?php echo wp_get_attachment_image( $image_id, 'thumbnail', false, ['class' => 'section__icon icon imgtosvg'] ); ?>
                     <?php endif; ?>
                     <?php if ( $text ) : ?>
-                        <span class="section__text">
-                            <?php echo wp_kses_post( $text ); ?>
-                        </span>
+                        <span class="section__text"><?php echo wp_kses_post( $text ); ?></span>
                     <?php endif; ?>
                 </div>
             <?php endforeach; ?>
+
         </div>
     <?php else : ?>
         <?php echo wpautop( __( 'No icon items found.', TEXT_DOMAIN ) ); ?>

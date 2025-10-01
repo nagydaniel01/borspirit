@@ -68,7 +68,7 @@
          * @hooked woocommerce_before_shop_loop - 5
          */
         function custom_shop_layout_open() {
-            echo '<div class="shop-layout d-flex flex-column flex-lg-row">';
+            echo '<div class="shop-layout row">';
 
             // Products (right on desktop, above on mobile)
             echo '<div class="shop-layout__content col-lg-9 col-md-8 order-0 order-lg-1">';

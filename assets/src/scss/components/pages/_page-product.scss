@@ -341,25 +341,13 @@
   }
 }
 
-.section.section--product--winery {
-  .slick-list {
-    border-radius: $border-radius-lg;
-  }
-  .woocommerce-products-header__gallery-item {
-    img {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-    }
-  }
-}
-
 .section.section--product--reviews {
   background-color: $gray-100;
   background-image: linear-gradient(to bottom, rgba($body-bg, .95), rgba(255, 255, 255, 0)), url('./../images/reviews-bg.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  color: $white;
+  color: $primary;
 
   .review {
     position: relative;

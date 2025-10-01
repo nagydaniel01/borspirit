@@ -1,12 +1,51 @@
 import $ from 'jquery';
 import 'slick-slider';
 
+/**
+ * Stops a Slick slider autoplay permanently at the last slide.
+ * @param {jQuery} slider - The jQuery slider element
+ */
+function stopAtLastSlide(slider) {
+    if (!slider.length) return;
+
+    slider.on('afterChange', function(event, slick, currentSlide) {
+        if (currentSlide === slick.slideCount - 1) {
+            $(this).slick('slickPause'); // stop autoplay permanently
+        }
+    });
+}
+
+/**
+ * Starts/stops Slick slider autoplay based on viewport visibility.
+ * @param {jQuery} slider - The jQuery slider element
+ * @param {number} visibilityThreshold - IntersectionObserver threshold (0 to 1)
+ */
+function viewportAutoplay(slider, visibilityThreshold = 0.5) {
+    if (!slider.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const currentSlide = slider.slick('slickCurrentSlide');
+                const lastSlide = slider.slick('getSlick').slideCount - 1;
+                if (currentSlide < lastSlide) {
+                    slider.slick('slickPlay');
+                }
+            } else {
+                slider.slick('slickPause');
+            }
+        });
+    }, { threshold: visibilityThreshold });
+
+    observer.observe(slider[0]);
+}
+
 var productGallerySlider = $('.woocommerce-product-gallery__wrapper');
 
 if (productGallerySlider) {
     productGallerySlider.slick({
         mobileFirst: true,
-        infinite: false,
+        infinite: true,
         slidesToShow: 1,
         slidesToScroll: 1,
         arrows: false,
@@ -28,7 +67,6 @@ var winerySlider = $('.woocommerce-products-header__gallery');
 if (winerySlider) {
     winerySlider.slick({
         mobileFirst: true,
-        infinite: false,
         autoplay: true,
         autoplaySpeed: 3000,
         slidesToShow: 1,
@@ -36,6 +74,10 @@ if (winerySlider) {
         arrows: false,
         dots: true,
     });
+
+    // Apply functions
+    stopAtLastSlide(winerySlider);
+    viewportAutoplay(winerySlider);
 }
 
 var productReviewsSlider = $('.commentlist');
@@ -69,6 +111,8 @@ if (productReviewsSlider) {
             }
         ]
     });
+
+    viewportAutoplay(productReviewsSlider);
 }
 
 // Select all main sliders

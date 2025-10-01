@@ -60,11 +60,11 @@
             "selected": 0
         },
         {
-            "key": "field_68d54e7beb02e",
-            "label": "Termék ikonok",
-            "name": "product_page_icon_items",
+            "key": "field_68da95af0b35d",
+            "label": "Ikonok",
+            "name": "product_page_icons",
             "aria-label": "",
-            "type": "repeater",
+            "type": "checkbox",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -73,64 +73,19 @@
                 "class": "",
                 "id": ""
             },
-            "layout": "table",
-            "pagination": 0,
-            "min": 0,
-            "max": 0,
-            "collapsed": "",
-            "button_label": "Sor hozzáadása",
-            "rows_per_page": 20,
-            "sub_fields": [
-                {
-                    "key": "field_68d54ea0eb02f",
-                    "label": "Kép",
-                    "name": "product_page_icon_image",
-                    "aria-label": "",
-                    "type": "image",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "array",
-                    "library": "all",
-                    "min_width": "",
-                    "min_height": "",
-                    "min_size": "",
-                    "max_width": "",
-                    "max_height": "",
-                    "max_size": "",
-                    "mime_types": "",
-                    "allow_in_bindings": 0,
-                    "preview_size": "medium",
-                    "parent_repeater": "field_68d54e7beb02e"
-                },
-                {
-                    "key": "field_68d54ec1eb030",
-                    "label": "Leírás",
-                    "name": "product_page_icon_text",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "maxlength": "",
-                    "allow_in_bindings": 0,
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_68d54e7beb02e"
-                }
-            ]
+            "choices": {
+                "free_shipping_limit_message": "Free Shipping Limit",
+                "estimated_delivery_message": "Estimated Delivery",
+                "hazhoz-szallitas": "Házhoz szállítás"
+            },
+            "default_value": [],
+            "return_format": "value",
+            "allow_custom": 0,
+            "allow_in_bindings": 0,
+            "layout": "vertical",
+            "toggle": 0,
+            "save_custom": 0,
+            "custom_choice_button_text": "Add new choice"
         },
         {
             "key": "field_68d54bc318d13",
@@ -165,6 +120,147 @@
             "bidirectional_target": []
         },
         {
+            "key": "field_68da7f3b916ee",
+            "label": "Termékcímkék",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_68da425e88af7",
+            "label": "Termékcímkék",
+            "name": "product_badge_flashes",
+            "aria-label": "",
+            "type": "checkbox",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "wc_wine_store_sale_flash": "Sale Badge",
+                "wc_wine_store_new_flash": "New Arrival Badge",
+                "wc_wine_store_bestseller_flash": "Best Seller Badge",
+                "wc_wine_store_limited_stock_flash": "Limited Stock Badge",
+                "wc_wine_store_discount_flash": "Discount Badge",
+                "wc_wine_store_award_flash": "Award Winner Badge",
+                "wc_wine_store_category_flash": "Hónap bora"
+            },
+            "default_value": [],
+            "return_format": "value",
+            "allow_custom": 0,
+            "allow_in_bindings": 0,
+            "layout": "vertical",
+            "toggle": 0,
+            "save_custom": 0,
+            "custom_choice_button_text": "Add new choice"
+        },
+        {
+            "key": "field_68da422488af6",
+            "label": "Ikonok",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_68d54e7beb02e",
+            "label": "Ikonok",
+            "name": "icon_items",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Sor hozzáadása",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_68d54ea0eb02f",
+                    "label": "Kép",
+                    "name": "icon_image",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "",
+                    "allow_in_bindings": 0,
+                    "preview_size": "medium",
+                    "parent_repeater": "field_68d54e7beb02e"
+                },
+                {
+                    "key": "field_68d54ec1eb030",
+                    "label": "Leírás",
+                    "name": "icon_text",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_68d54e7beb02e"
+                }
+            ]
+        },
+        {
             "key": "field_68d6b3701a1e0",
             "label": "Borok és ételek párosítására vonatkozó tippek",
             "name": "",
@@ -185,7 +281,7 @@
         {
             "key": "field_68d6b38d1a1e1",
             "label": "Borok és ételek párosítására vonatkozó tippek",
-            "name": "product_page_wine_pairing_tip_items",
+            "name": "food_pairing_tip_items",
             "aria-label": "",
             "type": "repeater",
             "instructions": "",
@@ -207,7 +303,7 @@
                 {
                     "key": "field_68d6b38d1a1e2",
                     "label": "Kép",
-                    "name": "product_page_wine_pairing_tip_image",
+                    "name": "food_pairing_tip_image",
                     "aria-label": "",
                     "type": "image",
                     "instructions": "",
@@ -234,7 +330,7 @@
                 {
                     "key": "field_68d6b38d1a1e3",
                     "label": "Leírás",
-                    "name": "product_page_wine_pairing_tip_text",
+                    "name": "food_pairing_tip_text",
                     "aria-label": "",
                     "type": "text",
                     "instructions": "",
@@ -254,6 +350,89 @@
                     "parent_repeater": "field_68d6b38d1a1e1"
                 }
             ]
+        },
+        {
+            "key": "field_68dbf5dd2a838",
+            "label": "Visszaváltási rendszer (Deposit and Return System)",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_68dbf5e72a839",
+            "label": "Ár",
+            "name": "drs_price",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": "",
+            "max": "",
+            "step": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_68dbf8785cd4c",
+            "label": "Logó",
+            "name": "drs_logo",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_68dbf61c2a83a",
+            "label": "Hivatkozás",
+            "name": "drs_link",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "allow_in_bindings": 0
         }
     ],
     "location": [
@@ -274,5 +453,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1758901240
+    "modified": 1759337148
 }

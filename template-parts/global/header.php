@@ -12,7 +12,7 @@
 
 <header class="header">
     <div class="container">
-        <nav class="navbar navbar-expand-lg">
+        <nav class="navbar navbar-expand-lg header__nav nav nav--main js-nav-main">
             <!-- Brand -->
             <a class="navbar-brand logo logo--header" href="<?php echo esc_url( trailingslashit( home_url() ) ); ?>">
                 <?php if ($logo) : ?>
@@ -62,18 +62,25 @@
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
                 </div>
 
-                <div class="offcanvas-body w-100 p-3 p-lg-0">
-                    <div class="d-flex mb-3 d-lg-none">
-                        <?php get_search_form(); ?>
-                    </div>
+                <div class="offcanvas-body">
+                    <?php
+                        if ( class_exists( 'WooCommerce' ) ) {
+                            // WooCommerce product search form
+                            get_product_search_form();
+                        } else {
+                            // Default WordPress search form
+                            get_search_form();
+                        }
+                    ?>
 
                     <?php if ( has_nav_menu( 'primary_menu' ) ) : ?>
                         <?php
                             wp_nav_menu( array(
                                 'theme_location' => 'primary_menu',
                                 'container'      => false,
-                                'menu_class'     => 'navbar-nav align-items-lg-center',
+                                'menu_class'     => 'navbar-nav nav__list level0',
                                 'fallback_cb'    => false,
+                                'walker'         => new Default_Menu_Walker(),
                             ) );
                         ?>
                     <?php else : ?>
