@@ -26,6 +26,7 @@
         }
     }
     add_action( 'template_redirect', 'remove_woocommerce_sidebar_single_product' );
+    
     // ---------------------------------------------
     // Add blocks to shop and product single
     // ---------------------------------------------
@@ -274,20 +275,38 @@
 
     if ( ! function_exists( 'custom_woocommerce_loop_rating_wrapper' ) ) {
         /**
-         * Outputs opening wrapper div for rating in WooCommerce product loop.
+         * Outputs opening wrapper div for rating in WooCommerce product loop, only if product has a rating.
          */
         function custom_woocommerce_loop_rating_wrapper() {
-            echo '<div class="woocommerce-loop-product__rating-wrapper">';
+            global $product;
+
+            if ( ! $product instanceof WC_Product ) {
+                return;
+            }
+
+            // Check if product has rating
+            if ( $product->get_average_rating() > 0 ) {
+                echo '<div class="woocommerce-loop-product__rating-wrapper">';
+            }
         }
         add_action( 'woocommerce_after_shop_loop_item_title', 'custom_woocommerce_loop_rating_wrapper', 4 );
     }
 
     if ( ! function_exists( 'custom_woocommerce_loop_rating_wrapper_end' ) ) {
         /**
-         * Outputs closing wrapper div for rating in WooCommerce product loop.
+         * Outputs closing wrapper div for rating in WooCommerce product loop, only if product has a rating.
          */
         function custom_woocommerce_loop_rating_wrapper_end() {
-            echo '</div>';
+            global $product;
+
+            if ( ! $product instanceof WC_Product ) {
+                return;
+            }
+
+            // Check if product has rating
+            if ( $product->get_average_rating() > 0 ) {
+                echo '</div>';
+            }
         }
         add_action( 'woocommerce_after_shop_loop_item_title', 'custom_woocommerce_loop_rating_wrapper_end', 6 );
     }

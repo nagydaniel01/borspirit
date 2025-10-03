@@ -66,13 +66,7 @@ if ( in_array('free_shipping_limit_message', $selected_icons) ) {
 $estimated_delivery_message = '';
 if ( in_array('estimated_delivery_message', $selected_icons) ) {
 
-    $locale = get_locale();
-    $wordpress_timezone = get_option('timezone_string') ?: 'UTC';
-    date_default_timezone_set($wordpress_timezone);
-
-    $current_time = current_time('H');
-    $current_day  = strtolower(current_time('l'));
-
+    /*
     $opening_hours = [
         'monday'    => ['open' => 9, 'close' => 18],
         'tuesday'   => ['open' => 9, 'close' => 18],
@@ -82,6 +76,24 @@ if ( in_array('estimated_delivery_message', $selected_icons) ) {
         'saturday'  => ['open' => 9, 'close' => 14],
         'sunday'    => ['open' => 0, 'close' => 0],
     ];
+    */
+
+    $opening_hours = get_field('opening_hours', 'option');
+    $opening_hours = get_opening_hours($opening_hours, $acf_mode = true);
+
+    /*
+    // Debug
+    echo '<pre>';
+    var_dump($opening_hours);
+    echo '</pre>';
+    */
+
+    $locale = get_locale();
+    $wordpress_timezone = get_option('timezone_string') ?: 'UTC';
+    date_default_timezone_set($wordpress_timezone);
+
+    $current_time = current_time('H');
+    $current_day  = strtolower(current_time('l'));
 
     $base_delivery_days = 2;
 
@@ -93,6 +105,7 @@ if ( in_array('estimated_delivery_message', $selected_icons) ) {
         $base_delivery_days++;
     }
 
+    //$estimated_timestamp = strtotime("+$base_delivery_days days");
     $estimated_timestamp = strtotime("+$base_delivery_days weekdays");
     $formatter = new IntlDateFormatter(
         $locale,

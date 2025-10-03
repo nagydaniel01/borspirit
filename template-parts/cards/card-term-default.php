@@ -52,11 +52,13 @@
                 </div>
             <?php endif; ?>
 
+            <!--
             <div class="card__meta">
                 <span class="card__taxonomy">
-                    <?php echo esc_html(get_taxonomy($taxonomy)->labels->singular_name); ?>
+                    <?php //echo esc_html(get_taxonomy($taxonomy)->labels->singular_name); ?>
                 </span>
             </div>
+            -->
 
             <span class="card__button">
                 <svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg>

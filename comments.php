@@ -31,7 +31,7 @@ if ( post_password_required() ) {
 					'style'       	=> 'ol',
 					'short_ping'  	=> true,
 					'avatar_size' 	=> 64,
-					'callback' 		=> 'mytheme_comment'
+					//'callback' 		=> 'mytheme_comment'
 				) );
 				?>
 			</ol>

@@ -4,11 +4,8 @@ defined( 'ABSPATH' ) || exit;
 
 global $product;
 
-?>
+$heading = get_query_var( 'tab_title' );
 
-<h2 class="section__title"><?php echo esc_html(get_query_var('tab_title')); ?></h2>
-
-<?php
 // Try to get FAQs linked to this product
 $faq_posts = get_field( 'product_faq', $product->get_id() ) ??  [];
 
@@ -35,6 +32,10 @@ $faq_posts = array_filter( $faq_posts ?? [], function ($faq) {
     return $title !== '' && $content !== '';
 } );
 ?>
+
+<?php if ( $heading ) : ?>
+	<h2 class="section__title"><?php echo esc_html( $heading ); ?></h2>
+<?php endif; ?>
 
 <div class="section__content">
     <?php if ( ! empty( $faq_posts ) ) : ?>

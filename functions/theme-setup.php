@@ -131,7 +131,6 @@
             );
 
         }
-
         add_action( 'after_setup_theme', 'theme_setup' );
     }
 
@@ -170,7 +169,6 @@
             register_taxonomy_for_object_type( 'post_tag', 'research' );
             register_taxonomy_for_object_type( 'post_tag', 'video' );
         }
-
         add_action( 'init', 'theme_init' );
     }
 
@@ -241,7 +239,6 @@
         
             return $classes;
         }
-
         add_filter( 'body_class', 'theme_body_classes' );
     }
 
@@ -275,7 +272,6 @@
                 );
             }
         }
-
         add_action( 'admin_menu', 'add_all_settings_menu' );
     }
 
@@ -340,4 +336,41 @@
                 wp_die( __( 'Sorry, you are not allowed to access this page.' ), 403 );
             }
         }
+    }
+
+    if ( ! function_exists( 'add_environment_pill' ) ) {
+        /**
+         * Displays a small floating environment indicator (pill) on the frontend.
+         *
+         * Only displays for non-production environments. The pill appears in the
+         * bottom-left corner of the page with a color corresponding to the environment.
+         *
+         * @since 1.0.0
+         */
+        function add_environment_pill() {
+            // Check if environment constant exists
+            if ( defined('WP_ENVIRONMENT_TYPE') ) {
+                $env = strtolower( trim( WP_ENVIRONMENT_TYPE ) );
+
+                // Skip display for production
+                if ( $env === 'production' ) {
+                    return;
+                }
+
+                // Map environment to color, use a fallback for unknown environments
+                $colors = [
+                    'development' => '#e74c3c', // red
+                    'staging'     => '#f39c12', // orange
+                ];
+
+                $color = $colors[$env] ?? '#3498db'; // default blue
+
+                // Sanitize environment name for safe output
+                $env_safe = esc_html( ucfirst($env) );
+
+                // Output the pill
+                echo "<div style='position:fixed;bottom:10px;left:10px;padding:4px 8px 4px 8px;font-size:12px;background-color:$color;color:#fff;z-index:9999;pointer-events:none;'>$env_safe</div>";
+            }
+        }
+        add_action( 'wp_footer', 'add_environment_pill' );
     }

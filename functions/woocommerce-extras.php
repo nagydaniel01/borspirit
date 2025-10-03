@@ -21,7 +21,7 @@
                 return array(
                     'width'  => 400,
                     'height' => 400,
-                    'crop'   => 1,
+                    'crop'   => 0,
                 );
             });
             
@@ -143,7 +143,7 @@
         add_action( 'woocommerce_after_single_product', 'add_sticky_product_block', 5 );
     }
 
-    if (!function_exists('calculate_unit_price_ft_per_liter')) {
+    if (!function_exists('calculate_unit_price_per_liter')) {
         /**
          * Calculate the unit price in Ft per liter from price and volume.
          *
@@ -153,7 +153,7 @@
          * @param float|int $volumeMl The volume in milliliters (ml).
          * @return float|string Unit price in Ft/L, rounded to 2 decimals, or error message on invalid input.
          */
-        function calculate_unit_price_ft_per_liter($priceFt, $volumeMl) {
+        function calculate_unit_price_per_liter($priceFt, $volumeMl) {
             // Validate inputs
             if (!is_numeric($priceFt) || !is_numeric($volumeMl)) {
                 return __("Error: Price and volume must be numeric.", TEXT_DOMAIN);
@@ -188,7 +188,7 @@
             $volume = get_post_meta($product->get_id(), 'product_volume_ml', true);
 
             if ($volume) {
-                $unit_price = calculate_unit_price_ft_per_liter($price, $volume);
+                $unit_price = calculate_unit_price_per_liter($price, $volume);
                 
                 if (is_numeric($unit_price)) {
                     // Format with WooCommerce currency
@@ -313,8 +313,59 @@
         add_action( 'woocommerce_single_product_summary', 'display_product_awards', 9 );
     }
 
-    if ( ! function_exists( 'rename_description_tab' ) ) {
+    if ( ! function_exists( 'custom_recently_viewed_products' ) ) {
+        /**
+         * Display recently viewed WooCommerce products on the single product page.
+         *
+         * Fetches the IDs of recently viewed products and outputs them in a WooCommerce product loop,
+         * excluding the current product being viewed.
+         *
+         * Hooked to: woocommerce_after_single_product_summary
+         *
+         * @return void
+         */
+        function custom_recently_viewed_products() {
+            global $post;
 
+            $recently_viewed_ids = get_recently_viewed();
+
+            // Remove current product ID
+            $recently_viewed_ids = array_diff( $recently_viewed_ids, [ $post->ID ] );
+
+            if ( empty( $recently_viewed_ids ) ) {
+                return;
+            }
+
+            $recently_viewed_query = new WP_Query([
+                'post_type'      => 'product',
+                'post_status'    => 'publish',
+                'posts_per_page' => 4,
+                'post__in'       => $recently_viewed_ids,
+                'orderby'        => 'post__in',
+            ]);
+
+            if ( $recently_viewed_query->have_posts() ) {
+                echo '<div class="section section--recently-viewed-products"><div class="container">';
+                echo '<h2>' . __( 'Recently viewed products', TEXT_DOMAIN ) . '</h2>';
+                
+                woocommerce_product_loop_start();
+
+                while ( $recently_viewed_query->have_posts() ) {
+                    $recently_viewed_query->the_post();
+                    wc_get_template_part( 'content', 'product' );
+                }
+
+                woocommerce_product_loop_end();
+
+                echo '</div></div>';
+            }
+
+            wp_reset_postdata();
+        }
+        add_action( 'woocommerce_after_single_product_summary', 'custom_recently_viewed_products', 25 );
+    }
+
+    if ( ! function_exists( 'rename_description_tab' ) ) {
         /**
          * Rename the WooCommerce product description tab.
          *
@@ -328,9 +379,24 @@
             $title = __( 'Learn more about the product!', TEXT_DOMAIN ); // Ismerd meg jobban a terméket
             return $title;
         }
-
-        // Apply the filter to rename the description tab.
         add_filter( 'woocommerce_product_description_heading', 'rename_description_tab' );
+    }
+
+    if ( ! function_exists( 'rename_related_products_heading' ) ) {
+        /**
+         * Rename the WooCommerce related products section heading.
+         *
+         * This function changes the default "Related products" heading
+         * to your custom text.
+         *
+         * @param string $heading The original related products heading.
+         * @return string The modified heading.
+         */
+        function rename_related_products_heading( $heading ) {
+            $heading = __( 'We also recommend…', TEXT_DOMAIN ); // Suggested translation
+            return $heading;
+        }
+        add_filter( 'woocommerce_product_related_products_heading', 'rename_related_products_heading' );
     }
 
     if ( ! function_exists( 'custom_product_icons_tab' ) ) {
@@ -388,7 +454,7 @@
 
                 if ( ! is_wp_error( $boraszat_terms ) && ! empty( $boraszat_terms ) ) {
                     $tabs['winery'] = array(
-                        'title'    => __( 'Borászat', TEXT_DOMAIN ),
+                        'title'    => __( 'Winery', TEXT_DOMAIN ),
                         'priority' => 20,
                         'callback' => 'winery_tab_content'
                     );
@@ -430,7 +496,7 @@
                 // Only add the tab if FAQs exist
                 //if ( !empty($faqs) ) {
                     $tabs['faq'] = array(
-                        'title'    => __( 'Gyakran ismételt kérdések', TEXT_DOMAIN ),
+                        'title'    => __( 'Frequently asked questions', TEXT_DOMAIN ),
                         'priority' => 30,
                         'callback' => 'faq_tab_content'
                     );
@@ -733,8 +799,8 @@
                 esc_attr__( 'Product subtitle', TEXT_DOMAIN )
             );
         }
+        //add_action( 'edit_form_after_title', 'add_product_subtitle_input' );
     }
-    add_action( 'edit_form_after_title', 'add_product_subtitle_input' );
 
     // Save subtitle
     if ( ! function_exists( 'save_product_subtitle_input' ) ) {
@@ -916,58 +982,6 @@
         //add_action( 'admin_footer-edit.php', 'quick_edit_subtitle_js' );
     }
 
-    if ( ! function_exists( 'custom_recently_viewed_products' ) ) {
-        /**
-         * Display recently viewed WooCommerce products on the single product page.
-         *
-         * Fetches the IDs of recently viewed products and outputs them in a WooCommerce product loop,
-         * excluding the current product being viewed.
-         *
-         * Hooked to: woocommerce_after_single_product_summary
-         *
-         * @return void
-         */
-        function custom_recently_viewed_products() {
-            global $post;
-
-            $recently_viewed_ids = get_recently_viewed();
-
-            // Remove current product ID
-            $recently_viewed_ids = array_diff( $recently_viewed_ids, [ $post->ID ] );
-
-            if ( empty( $recently_viewed_ids ) ) {
-                return;
-            }
-
-            $recently_viewed_query = new WP_Query([
-                'post_type'      => 'product',
-                'post_status'    => 'publish',
-                'posts_per_page' => 4,
-                'post__in'       => $recently_viewed_ids,
-                'orderby'        => 'post__in',
-            ]);
-
-            if ( $recently_viewed_query->have_posts() ) {
-                echo '<div class="section section--recently-viewed-products"><div class="container">';
-                echo '<h2>' . __( 'Recently viewed products', TEXT_DOMAIN ) . '</h2>';
-                
-                woocommerce_product_loop_start();
-
-                while ( $recently_viewed_query->have_posts() ) {
-                    $recently_viewed_query->the_post();
-                    wc_get_template_part( 'content', 'product' );
-                }
-
-                woocommerce_product_loop_end();
-
-                echo '</div></div>';
-            }
-
-            wp_reset_postdata();
-        }
-        add_action( 'woocommerce_after_single_product_summary', 'custom_recently_viewed_products', 25 );
-    }
-
     if ( ! function_exists( 'show_free_shipping_notice' ) ) {
         /**
          * Display a notice showing how much more a customer needs to spend 
@@ -1144,32 +1158,3 @@
         }
         //add_filter('woocommerce_cart_shipping_method_full_label', 'add_estimated_delivery_time_to_label', 10, 2);
     }
-
-function get_woocommerce_general_settings() {
-    $settings = [
-        'store_address'      => get_option('woocommerce_store_address'),
-        'store_address_2'    => get_option('woocommerce_store_address_2'),
-        'store_city'         => get_option('woocommerce_store_city'),
-        'store_postcode'     => get_option('woocommerce_store_postcode'),
-        'default_country'    => get_option('woocommerce_default_country'),
-        'allowed_countries'  => get_option('woocommerce_allowed_countries'),
-        'specific_countries' => get_option('woocommerce_specific_allowed_countries'),
-        'ship_to_countries'  => get_option('woocommerce_ship_to_countries'),
-        'specific_ship_to'   => get_option('woocommerce_specific_ship_to_countries'),
-        'customer_location'  => get_option('woocommerce_default_customer_address'),
-        'enable_taxes'       => get_option('woocommerce_calc_taxes'),
-        'currency'           => get_option('woocommerce_currency'),
-        'currency_position'  => get_option('woocommerce_currency_pos'),
-        'num_decimals'       => get_option('woocommerce_price_num_decimals'),
-        'thousand_separator' => get_option('woocommerce_price_thousand_sep'),
-        'decimal_separator'  => get_option('woocommerce_price_decimal_sep'),
-    ];
-
-    return $settings;
-}
-
-/*
-echo '<pre>';
-print_r(get_woocommerce_general_settings());
-echo '</pre>';
-*/

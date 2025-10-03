@@ -2,8 +2,9 @@
 /**
  * Template Name: Page 404
  */
-get_header();
 ?>
+
+<?php get_header(); ?>
 
 <?php
     $page_404 = get_pages(
@@ -13,8 +14,15 @@ get_header();
         )
     );
     $page_id = $page_404[0]->ID ?? null;
-    $page_title = get_the_title($page_id);
-    $page_content = get_the_content(null, false, $page_id);
+    $page_title = get_the_title( $page_id ) ?: __( 'Oops! Page not found', TEXT_DOMAIN );
+    $page_content = get_the_content( null, false, $page_id );
+
+    // Fallback content if page content is empty
+    if ( empty( $page_content ) ) {
+        $fallback_text = __('The page you are looking for does not exist. It might have been moved or deleted.', TEXT_DOMAIN) . "\n\n";
+        $fallback_text .= __('Try using the navigation menu or go back to the homepage.', TEXT_DOMAIN);
+        $page_content = wpautop( $fallback_text );
+    }
 ?>
 
 <main class="page page--404">
@@ -30,7 +38,7 @@ get_header();
                 </div>
             <?php endif; ?>
     
-            <a href="<?php echo esc_url( trailingslashit( home_url() ) ); ?>" class="btn btn-secondary btn-lg page__button"><?php _e('Vissza a főoldalra', TEXT_DOMAIN); ?></a>
+            <a href="<?php echo esc_url( trailingslashit( home_url() ) ); ?>" class="btn btn-outline-primary btn-lg page__button"><?php echo esc_html__('Back to homepage', TEXT_DOMAIN); ?></a>
         </div>
     </div>
 </main>

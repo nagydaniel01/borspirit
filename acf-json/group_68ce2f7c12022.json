@@ -42,6 +42,535 @@
             "append": ""
         },
         {
+            "key": "field_68de5913cb953",
+            "label": "Nyitvatartás",
+            "name": "opening_hours",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_68de594dcb954",
+                    "label": "Hétfő",
+                    "name": "monday_status",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 1,
+                    "allow_in_bindings": 0,
+                    "ui_on_text": "Nyitva",
+                    "ui_off_text": "Zárva",
+                    "ui": 1
+                },
+                {
+                    "key": "field_68de59cdcb955",
+                    "label": "Nyitás",
+                    "name": "monday_open",
+                    "aria-label": "",
+                    "type": "time_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_68de594dcb954",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "g:i a",
+                    "return_format": "g:i a",
+                    "allow_in_bindings": 0
+                },
+                {
+                    "key": "field_68de5a33cb956",
+                    "label": "Zárás",
+                    "name": "monday_close",
+                    "aria-label": "",
+                    "type": "time_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_68de594dcb954",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "g:i a",
+                    "return_format": "g:i a",
+                    "allow_in_bindings": 0
+                },
+                {
+                    "key": "field_68de5ae5cb957",
+                    "label": "Kedd",
+                    "name": "tuesday_status",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 1,
+                    "allow_in_bindings": 0,
+                    "ui_on_text": "Nyitva",
+                    "ui_off_text": "Zárva",
+                    "ui": 1
+                },
+                {
+                    "key": "field_68de5b0dcb958",
+                    "label": "Nyitás",
+                    "name": "tuesday_open",
+                    "aria-label": "",
+                    "type": "time_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_68de5ae5cb957",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "g:i a",
+                    "return_format": "g:i a",
+                    "allow_in_bindings": 0
+                },
+                {
+                    "key": "field_68de5b13cb959",
+                    "label": "Zárás",
+                    "name": "tuesday_close",
+                    "aria-label": "",
+                    "type": "time_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_68de5ae5cb957",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "g:i a",
+                    "return_format": "g:i a",
+                    "allow_in_bindings": 0
+                },
+                {
+                    "key": "field_68de5c8a14fed",
+                    "label": "Szerda",
+                    "name": "wednesday_status",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 1,
+                    "allow_in_bindings": 0,
+                    "ui_on_text": "Nyitva",
+                    "ui_off_text": "Zárva",
+                    "ui": 1
+                },
+                {
+                    "key": "field_68de5cbb14fee",
+                    "label": "Nyitás",
+                    "name": "wednesday_open",
+                    "aria-label": "",
+                    "type": "time_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_68de5c8a14fed",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "g:i a",
+                    "return_format": "g:i a",
+                    "allow_in_bindings": 0
+                },
+                {
+                    "key": "field_68de5cce14fef",
+                    "label": "Zárás",
+                    "name": "wednesday_close",
+                    "aria-label": "",
+                    "type": "time_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_68de5c8a14fed",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "g:i a",
+                    "return_format": "g:i a",
+                    "allow_in_bindings": 0
+                },
+                {
+                    "key": "field_68de5d1c14ff3",
+                    "label": "Csütörtök",
+                    "name": "thursday_status",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 1,
+                    "allow_in_bindings": 0,
+                    "ui_on_text": "Nyitva",
+                    "ui_off_text": "Zárva",
+                    "ui": 1
+                },
+                {
+                    "key": "field_68de5d3714ff4",
+                    "label": "Nyitás",
+                    "name": "thursday_open",
+                    "aria-label": "",
+                    "type": "time_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_68de5d1c14ff3",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "g:i a",
+                    "return_format": "g:i a",
+                    "allow_in_bindings": 0
+                },
+                {
+                    "key": "field_68de5d4c14ff5",
+                    "label": "Zárás",
+                    "name": "thursday_close",
+                    "aria-label": "",
+                    "type": "time_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_68de5d1c14ff3",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "g:i a",
+                    "return_format": "g:i a",
+                    "allow_in_bindings": 0
+                },
+                {
+                    "key": "field_68de5da46fcf2",
+                    "label": "Péntek",
+                    "name": "friday_status",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 1,
+                    "allow_in_bindings": 0,
+                    "ui_on_text": "Nyitva",
+                    "ui_off_text": "Zárva",
+                    "ui": 1
+                },
+                {
+                    "key": "field_68de5dce6fcf3",
+                    "label": "Nyitás",
+                    "name": "friday_open",
+                    "aria-label": "",
+                    "type": "time_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_68de5da46fcf2",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "g:i a",
+                    "return_format": "g:i a",
+                    "allow_in_bindings": 0
+                },
+                {
+                    "key": "field_68de5dd06fcf4",
+                    "label": "Zárás",
+                    "name": "friday_close",
+                    "aria-label": "",
+                    "type": "time_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_68de5da46fcf2",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "g:i a",
+                    "return_format": "g:i a",
+                    "allow_in_bindings": 0
+                },
+                {
+                    "key": "field_68dee20c0b8de",
+                    "label": "Szombat",
+                    "name": "saturday_status",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 1,
+                    "allow_in_bindings": 0,
+                    "ui_on_text": "Nyitva",
+                    "ui_off_text": "Zárva",
+                    "ui": 1
+                },
+                {
+                    "key": "field_68dee2370b8df",
+                    "label": "Nyitás",
+                    "name": "saturday_open",
+                    "aria-label": "",
+                    "type": "time_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_68dee20c0b8de",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "g:i a",
+                    "return_format": "g:i a",
+                    "allow_in_bindings": 0
+                },
+                {
+                    "key": "field_68dee2560b8e0",
+                    "label": "Zárás",
+                    "name": "saturday_close",
+                    "aria-label": "",
+                    "type": "time_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_68dee20c0b8de",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "g:i a",
+                    "return_format": "g:i a",
+                    "allow_in_bindings": 0
+                },
+                {
+                    "key": "field_68dee2080b8dd",
+                    "label": "Vasárnap",
+                    "name": "sunday_status",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 1,
+                    "allow_in_bindings": 0,
+                    "ui_on_text": "Nyitva",
+                    "ui_off_text": "Zárva",
+                    "ui": 1
+                },
+                {
+                    "key": "field_68dee2710b8e1",
+                    "label": "Nyitás",
+                    "name": "sunday_open",
+                    "aria-label": "",
+                    "type": "time_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_68dee2080b8dd",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "g:i a",
+                    "return_format": "g:i a",
+                    "allow_in_bindings": 0
+                },
+                {
+                    "key": "field_68dee2890b8e2",
+                    "label": "Zárás",
+                    "name": "sunday_close",
+                    "aria-label": "",
+                    "type": "time_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_68dee2080b8dd",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "g:i a",
+                    "return_format": "g:i a",
+                    "allow_in_bindings": 0
+                }
+            ]
+        },
+        {
             "key": "field_68d54bad18d12",
             "label": "Termékoldal",
             "name": "",
@@ -453,5 +982,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1759337148
+    "modified": 1759437519
 }

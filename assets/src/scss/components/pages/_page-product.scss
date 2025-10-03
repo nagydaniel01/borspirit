@@ -195,7 +195,7 @@
   }
 
   .woocommerce-product-details__short-description {
-    font-size: 1rem;
+    font-size: 1.125rem;
     line-height: 1.5;
   }
 
@@ -209,6 +209,10 @@
       gap: 0; 
     }
 
+    .wc-points-rewards-product-message {
+      width: 100%;
+    }
+
     .quantity {
       display: flex;
       align-items: center;
@@ -217,11 +221,11 @@
       overflow: hidden;
 
       input.qty {
-        width: 80px;
+        width: 100px;
         text-align: right;
         border: 1px solid $border-color;
         padding: .5rem;
-        padding-right: 2.125rem;
+        padding-right: 2.875rem;
 
         &::-webkit-outer-spin-button,
         &::-webkit-inner-spin-button {

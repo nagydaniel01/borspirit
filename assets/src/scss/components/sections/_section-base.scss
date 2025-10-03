@@ -2,17 +2,40 @@
     padding-top: 2rem;
     padding-bottom: 2rem;
 
-    &.section--page-title {
-        background-color: $primary-light;
-        color: $white;
+    &.section--padding-top-none {
+        padding-top: 0;
     }
 
-    &.section--box {
-        .section__content {
-            padding: 2rem;
-            background-color: $primary;
-            border-radius: $border-radius-xl;
-        }
+    &.section--padding-bottom-none {
+        padding-bottom: 0;
+    }
+
+    &.section--padding-top-large {
+        padding-top: 5rem;
+    }
+
+    &.section--padding-bottom-large {
+        padding-bottom: 5rem;
+    }
+
+    &.section--color-white {
+        background-color: rgba($white, 1);
+    }
+
+    &.section--color-primary-05 {
+        background-color: rgba($primary, 0.05);
+    }
+
+    &.section--color-primary-25 {
+        background-color: rgba($primary, 0.25);
+    }
+
+    &.section--color-secondary-05 {
+        background-color: rgba($secondary, 0.05);
+    }
+
+    &.section--color-secondary-25 {
+        background-color: rgba($secondary, 0.25);
     }
 
     &.section--right {
@@ -53,8 +76,7 @@
     }
 
     .section__title {
-        font-style: italic;
-        letter-spacing: -1px;
+        
     }
 
     .section__lead {

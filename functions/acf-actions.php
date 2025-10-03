@@ -24,13 +24,13 @@
         //add_action( 'admin_notices', 'acf_admin_notice' );
     }
 
-    if ( ! function_exists( 'check_acf_before_theme_activation' ) ) {
+    if ( ! function_exists( 'acf_check_before_theme_activation' ) ) {
         /**
          * Prevent theme activation if ACF is not active.
          *
          * @return void
          */
-        function check_acf_before_theme_activation() {
+        function acf_check_before_theme_activation() {
             if ( ! function_exists( 'get_field' ) ) {
                 // Switch back to previous theme
                 switch_theme( WP_DEFAULT_THEME );
@@ -44,10 +44,10 @@
                 });
             }
         }
-        add_action( 'after_switch_theme', 'check_acf_before_theme_activation' );
+        add_action( 'after_switch_theme', 'acf_check_before_theme_activation' );
     }
 
-    if ( ! function_exists( 'mytheme_register_acf_options_pages' ) ) {
+    if ( ! function_exists( 'acf_register_options_pages' ) ) {
         /**
          * Register ACF options pages for Sablon beállítások.
          *
@@ -57,7 +57,7 @@
          *
          * @return void
          */
-        function mytheme_register_acf_options_pages() {
+        function acf_register_options_pages() {
             if ( function_exists( 'acf_add_options_page' ) ) {
 
                 // Main options page
@@ -70,10 +70,10 @@
                 ) );
             }
         }
-        add_action( 'acf/init', 'mytheme_register_acf_options_pages' );
+        add_action( 'acf/init', 'acf_register_options_pages' );
     }
 
-    if ( ! function_exists( 'add_theme_settings_link' ) ) {
+    if ( ! function_exists( 'acf_add_theme_settings_admin_bar_menu' ) ) {
         /**
          * Add a Theme Settings link with a gear icon to the WordPress Admin Bar.
          *
@@ -81,7 +81,7 @@
          * 
          * @return void
          */
-        function add_theme_settings_link( $wp_admin_bar ) {
+        function acf_add_theme_settings_admin_bar_menu( $wp_admin_bar ) {
             if ( ! class_exists( 'WP_Admin_Bar' ) ) {
                 return;
             }
@@ -106,17 +106,17 @@
 
             $wp_admin_bar->add_node( $args );
         }
-        add_action( 'admin_bar_menu', 'add_theme_settings_link', 999 );
+        add_action( 'admin_bar_menu', 'acf_add_theme_settings_admin_bar_menu', 999 );
     }
 
-    if ( ! function_exists( 'my_acf_add_wc_prod_attr_rule_type' ) ) {
+    if ( ! function_exists( 'acf_add_wc_prod_attr_rule_type' ) ) {
         /**
          * Add a custom rule type to ACF location rules.
          *
          * @param array $choices Existing ACF rule types.
          * @return array Modified ACF rule types with custom WC product attribute.
          */
-        function my_acf_add_wc_prod_attr_rule_type( $choices ) {
+        function acf_add_wc_prod_attr_rule_type( $choices ) {
             if ( ! is_array( $choices ) ) {
                 $choices = [];
             }
@@ -126,16 +126,16 @@
             return $choices;
         }
     }
-    add_filter( 'acf/location/rule_types', 'my_acf_add_wc_prod_attr_rule_type' );
+    add_filter( 'acf/location/rule_types', 'acf_add_wc_prod_attr_rule_type' );
 
-    if ( ! function_exists( 'my_acf_add_wc_prod_attr_rule_values' ) ) {
+    if ( ! function_exists( 'acf_add_wc_prod_attr_rule_values' ) ) {
         /**
          * Add custom rule values (list of WooCommerce product attributes).
          *
          * @param array $choices Existing rule values.
          * @return array Modified rule values with WooCommerce attributes.
          */
-        function my_acf_add_wc_prod_attr_rule_values( $choices ) {
+        function acf_add_wc_prod_attr_rule_values( $choices ) {
             if ( ! is_array( $choices ) ) {
                 $choices = [];
             }
@@ -156,9 +156,9 @@
             return $choices;
         }
     }
-    add_filter( 'acf/location/rule_values/wc_prod_attr', 'my_acf_add_wc_prod_attr_rule_values' );
+    add_filter( 'acf/location/rule_values/wc_prod_attr', 'acf_add_wc_prod_attr_rule_values' );
 
-    if ( ! function_exists( 'my_acf_match_wc_prod_attr_rule' ) ) {
+    if ( ! function_exists( 'acf_match_wc_prod_attr_rule' ) ) {
         /**
          * Match the custom rule against the current screen options.
          *
@@ -167,7 +167,7 @@
          * @param array $options Current screen options from ACF.
          * @return bool True if rule matches, false otherwise.
          */
-        function my_acf_match_wc_prod_attr_rule( $match, $rule, $options ) {
+        function acf_match_wc_prod_attr_rule( $match, $rule, $options ) {
             if ( ! is_array( $rule ) || ! isset( $rule['operator'], $rule['value'] ) ) {
                 return (bool) $match;
             }
@@ -183,7 +183,7 @@
             return (bool) $match;
         }
     }
-    add_filter( 'acf/location/rule_match/wc_prod_attr', 'my_acf_match_wc_prod_attr_rule', 10, 3 );
+    add_filter( 'acf/location/rule_match/wc_prod_attr', 'acf_match_wc_prod_attr_rule', 10, 3 );
 
     if ( ! function_exists( 'add_post_to_relationship_field' ) ) {
         /**
@@ -267,61 +267,76 @@
         add_filter( 'acf/load_field/name=gform', 'acf_populate_gform_ids' );
     }
 
-    function acf_load_food_pairing_tip_checkboxes( $field ) {
-        
-        // Reset choices
-        $field['choices'] = array();
+    if ( ! function_exists( 'acf_load_food_pairing_tip_checkboxes' ) ) {
+        /**
+         * Populate ACF 'product_food_pairing_tips' checkbox field with items from
+         * the 'food_pairing_tip_items' repeater field (on Options page).
+         *
+         * @param array $field The ACF field array.
+         * @return array Modified field with dynamic choices.
+         */
+        function acf_load_food_pairing_tip_checkboxes( $field ) {
 
-        // Check if the repeater has rows of data (replace 'option' if not on Options page)
-        if( have_rows('food_pairing_tip_items', 'option') ) {
-            
-            while( have_rows('food_pairing_tip_items', 'option') ) {
-                the_row();
-                
-                // Get subfields
-                $text = get_sub_field('food_pairing_tip_text');
+            // Reset choices
+            $field['choices'] = array();
 
-                if ( $text ) {
-                    // Use sanitized text as value and original text as label
-                    $field['choices'][ sanitize_title( $text ) ] = $text;
+            // Check if repeater has rows of data (replace 'option' if not on Options page)
+            if ( have_rows( 'food_pairing_tip_items', 'option' ) ) {
+
+                while ( have_rows( 'food_pairing_tip_items', 'option' ) ) {
+                    the_row();
+
+                    // Get subfield text
+                    $text = get_sub_field( 'food_pairing_tip_text' );
+
+                    if ( $text ) {
+                        // Use sanitized text as value and original text as label
+                        $field['choices'][ sanitize_title( $text ) ] = $text;
+                    }
                 }
             }
-            
-        }
 
-        return $field;
+            return $field;
+        }
+        add_filter( 'acf/load_field/name=product_food_pairing_tips', 'acf_load_food_pairing_tip_checkboxes' );
     }
 
-    add_filter('acf/load_field/name=product_food_pairing_tips', 'acf_load_food_pairing_tip_checkboxes');
 
-    function acf_load_icon_checkboxes( $field ) {
-        
-        // Reset choices
-        $field['choices'] = array();
+    if ( ! function_exists( 'acf_load_icon_checkboxes' ) ) {
+        /**
+         * Populate ACF 'product_page_icons' and 'product_icons' checkbox fields with
+         * static choices and items from the 'icon_items' repeater field (on Options page).
+         *
+         * @param array $field The ACF field array.
+         * @return array Modified field with dynamic and static choices.
+         */
+        function acf_load_icon_checkboxes( $field ) {
 
-        // Add fixed choices
-        $field['choices']['free_shipping_limit_message'] = __( 'Free Shipping Limit', TEXT_DOMAIN );
-        $field['choices']['estimated_delivery_message'] = __( 'Estimated Delivery', TEXT_DOMAIN );
+            // Reset choices
+            $field['choices'] = array();
 
-        // Check if the repeater has rows of data (replace 'option' if not on Options page)
-        if( have_rows('icon_items', 'option') ) {
-            
-            while( have_rows('icon_items', 'option') ) {
-                the_row();
-                
-                // Get subfields
-                $text = get_sub_field('icon_text');
+            // Add fixed/static choices
+            $field['choices']['free_shipping_limit_message'] = __( 'Free Shipping Limit', TEXT_DOMAIN );
+            $field['choices']['estimated_delivery_message'] = __( 'Estimated Delivery', TEXT_DOMAIN );
 
-                if ( $text ) {
-                    // Use sanitized text as value and original text as label
-                    $field['choices'][ sanitize_title( $text ) ] = $text;
+            // Check if repeater has rows of data (replace 'option' if not on Options page)
+            if ( have_rows( 'icon_items', 'option' ) ) {
+
+                while ( have_rows( 'icon_items', 'option' ) ) {
+                    the_row();
+
+                    // Get subfield text
+                    $text = get_sub_field( 'icon_text' );
+
+                    if ( $text ) {
+                        // Use sanitized text as value and original text as label
+                        $field['choices'][ sanitize_title( $text ) ] = $text;
+                    }
                 }
             }
-            
+
+            return $field;
         }
-
-        return $field;
+        add_filter( 'acf/load_field/name=product_page_icons', 'acf_load_icon_checkboxes' );
+        add_filter( 'acf/load_field/name=product_icons', 'acf_load_icon_checkboxes' );
     }
-
-    add_filter('acf/load_field/name=product_page_icons', 'acf_load_icon_checkboxes');
-    add_filter('acf/load_field/name=product_icons', 'acf_load_icon_checkboxes');

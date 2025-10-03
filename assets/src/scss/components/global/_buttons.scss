@@ -58,6 +58,20 @@
   }
 }
 
+/*
+.button {
+  @extend .btn;
+
+  &:not(.alt) {
+    @extend .btn-primary;
+  }
+
+  &.alt {
+    @extend .btn-outline-primary;
+  }
+}
+*/
+
 .button {
   @extend .btn;
 

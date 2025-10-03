@@ -9,11 +9,11 @@
          */
         function theme_scripts() {
             // Enqueue theme CSS and JS
-            wp_enqueue_style( 'theme', TEMPLATE_DIR_URI . '/assets/dist/css/styles.css', array(), ASSETS_VERSION );
-            wp_enqueue_script( 'theme', TEMPLATE_DIR_URI . '/assets/dist/js/scripts.js', array( 'jquery' ), ASSETS_VERSION, true );
+            wp_enqueue_style( TEXT_DOMAIN . '-theme', TEMPLATE_DIR_URI . '/assets/dist/css/styles.css', array(), ASSETS_VERSION );
+            wp_enqueue_script( TEXT_DOMAIN . '-theme', TEMPLATE_DIR_URI . '/assets/dist/js/scripts.js', array( 'jquery' ), ASSETS_VERSION, true );
 
             // Localize script for use in JS
-            wp_localize_script( 'theme', 'localize', array(
+            wp_localize_script( TEXT_DOMAIN . '-theme', 'localize', array(
                 'ajaxurl'      => admin_url( 'admin-ajax.php' ),
                 'resturl'      => esc_url( rest_url( 'wp/v2/posts' ) ),
                 'themeurl'     => TEMPLATE_DIR_URI,

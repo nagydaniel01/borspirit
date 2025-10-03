@@ -30,6 +30,7 @@
       display: flex;
       flex: 1;
       padding: 0 1rem;
+      font-family: $headings-font-family;
       text-decoration: none;
     }
 
@@ -49,7 +50,6 @@
       text-align: right;
 
       .amount {
-        font-family: $headings-font-family;
         font-weight: 500;
         text-wrap: nowrap;
       }
@@ -81,12 +81,10 @@
   font-size: 1.25rem;
 
   strong {
-    font-family: $headings-font-family;
     font-weight: 400;
   }
 
   .amount {
-    font-family: $headings-font-family;
     font-weight: 700;
   }
 }

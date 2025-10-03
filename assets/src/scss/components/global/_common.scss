@@ -348,6 +348,11 @@ mark, .mark {
 /* -------------------------- */
 /* Default WordPress Elements */
 /* -------------------------- */
+h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
+  //letter-spacing: -1px;
+  word-spacing: -6px;
+}
+
 b, strong {
   background: linear-gradient(to bottom, transparent 0, transparent 75%, $primary 75%, $primary 75%);
 }

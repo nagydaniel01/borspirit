@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || exit;
 
 global $product;
 
-$tab_title = get_query_var('tab_title');
+$heading = get_query_var( 'tab_title' );
 
 // Flag to decide whether to show the tab title.
 $show_tab_title = false;
@@ -30,7 +30,9 @@ if ( $product instanceof WC_Product ) {
 
 // Output only if we have valid terms.
 if ( $show_tab_title ) : ?>
-    <h2 class="section__title"><?php echo esc_html( $tab_title ); ?></h2>
+    <?php if ( $heading ) : ?>
+	    <h2 class="section__title"><?php echo esc_html( $heading ); ?></h2>
+    <?php endif; ?>
 
     <?php foreach ( $valid_terms as $term ) : ?>
         <?php

@@ -628,3 +628,122 @@
         }
     }
     
+    // ---------------------------------------------
+    // Custom BORSPIRIT function
+    // ---------------------------------------------
+
+    if ( ! function_exists( 'build_section_classes' ) ) {
+        /**
+         * Build CSS classes for a section based on its configuration.
+         *
+         * @param array  $section The section configuration array.
+         * @param string $prefix  The prefix used for section keys (e.g., 'term_query').
+         *
+         * @return string A string of CSS classes for the section.
+         */
+        function build_section_classes(array $section, string $prefix = ''): string {
+            $classes = '';
+
+            $padding_top    = $section["{$prefix}_section_padding_top"] ?? '';
+            $padding_bottom = $section["{$prefix}_section_padding_bottom"] ?? '';
+            $bg_color       = $section["{$prefix}_section_bg_color"] ?? '';
+
+            if ($padding_top) {
+                $classes .= ' section--padding-top-' . $padding_top;
+            }
+
+            if ($padding_bottom) {
+                $classes .= ' section--padding-bottom-' . $padding_bottom;
+            }
+
+            if ($bg_color) {
+                $classes .= ' section--color-' . $bg_color;
+            }
+
+            return trim($classes);
+        }
+        // $section_classes = build_section_classes($section, 'post_query');
+    }
+
+    if ( ! function_exists( 'get_opening_hours' ) ) {
+        /**
+         * Retrieve formatted opening hours.
+         *
+         * This function converts opening hours from either:
+         *  - ACF field structure (`$acf_mode = true`)
+         *  - A simple multidimensional array (`$acf_mode = false`)
+         *
+         * The function returns a structured array containing translated day labels
+         * along with open and close times as integers (hours).
+         *
+         * @param array $opening_hours Opening hours data from ACF fields or simple array.
+         * @param bool  $acf_mode      Whether to parse as ACF fields (true) or simple array (false).
+         *
+         * @return array Returns an associative array of days with translated labels and open/close hours.
+         */
+        function get_opening_hours($opening_hours, $acf_mode = true) {
+
+            // Day labels with translation support
+            $days = [
+                'monday'    => __('Hétfő', TEXT_DOMAIN),
+                'tuesday'   => __('Kedd', TEXT_DOMAIN),
+                'wednesday' => __('Szerda', TEXT_DOMAIN),
+                'thursday'  => __('Csütörtök', TEXT_DOMAIN),
+                'friday'    => __('Péntek', TEXT_DOMAIN),
+                'saturday'  => __('Szombat', TEXT_DOMAIN),
+                'sunday'    => __('Vasárnap', TEXT_DOMAIN),
+            ];
+
+            $result = [];
+
+            foreach ($days as $key => $label) {
+
+                if ($acf_mode) {
+                    // ACF FIELD MODE
+                    $status = $opening_hours[$key . '_status'] ?? 0;
+
+                    if ($status) {
+                        $open  = $opening_hours[$key . '_open'] ?? '';
+                        $close = $opening_hours[$key . '_close'] ?? '';
+
+                        if ($open && $close) {
+                            $open_fmt  = (int) wp_safe_format_time($open, 'g:i a', 'G');
+                            $close_fmt = (int) wp_safe_format_time($close, 'g:i a', 'G');
+
+                            $result[$key] = ['label' => $label, 'open'  => $open_fmt, 'close' => $close_fmt];
+                        } else {
+                            $result[$key] = ['label' => $label, 'open'  => 0, 'close' => 0];
+                        }
+                    } else {
+                        $result[$key] = ['label' => $label, 'open'  => 0, 'close' => 0];
+                    }
+
+                } else {
+                    // SIMPLE ARRAY MODE
+                    $open  = $opening_hours[$key]['open'] ?? 0;
+                    $close = $opening_hours[$key]['close'] ?? 0;
+
+                    if ($open == 0 && $close == 0) {
+                        $result[$key] = ['label' => $label, 'open'  => 0, 'close' => 0];
+                    } else {
+                        $open_fmt  = (int) wp_safe_format_time(sprintf('%02d:00', $open));
+                        $close_fmt = (int) wp_safe_format_time(sprintf('%02d:00', $close));
+
+                        $result[$key] = ['label' => $label, 'open'  => $open_fmt, 'close' => $close_fmt];
+                    }
+                }
+            }
+
+            return $result;
+        }
+    }
+
+    /*
+    $opening_hours = get_field('opening_hours', 'option');
+    $opening_hours = get_opening_hours($opening_hours, $acf_mode = true);
+
+    // Debug
+    echo '<pre>';
+    var_dump($opening_hours);
+    echo '</pre>';
+    */

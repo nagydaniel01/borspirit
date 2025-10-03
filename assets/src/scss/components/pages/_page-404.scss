@@ -1,13 +1,10 @@
 .page.page--404 {
-    background-color: $primary;
-
     .page__inner {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        min-height: 100vh;
-        padding: 4rem 0;
+        min-height: calc(100vh - 64px);
     }
 
     .page__title {

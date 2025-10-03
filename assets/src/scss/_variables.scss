@@ -106,7 +106,7 @@ $border-radius-xl: 1.5rem;
 @import url('https://fonts.googleapis.com/css2?family=Libre+Bodoni:ital,wght@0,400..700;1,400..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 $font-family-base: "Poppins", sans-serif;
-$headings-font-family: "Libre Bodoni", serif;
+$headings-font-family: "Kalam-Regular", serif;
 
 $font-size-base: 1.063rem;
 $line-height-base: 1.6;
@@ -119,7 +119,7 @@ $h5-font-size: 1.375rem;
 $h6-font-size: 1.25rem;
 
 $headings-margin-bottom: .5rem;
-$headings-font-style: italic;
+$headings-font-style: normal;
 $headings-font-weight: 800;
 $headings-line-height: normal;
 $headings-color: $primary;
@@ -136,12 +136,12 @@ $table-cell-padding-x-sm: .25rem;
 // Buttons
 $btn-padding-y: 0.563rem;
 $btn-padding-x: 1.5rem;
-$btn-padding-y-sm: 0.5rem;
-$btn-padding-x-sm: 1.375rem;
+$btn-padding-y-sm: 0.25rem;
+$btn-padding-x-sm: 1rem;
 $btn-padding-y-lg: 1rem;
 $btn-padding-x-lg: 2.625rem;
 $btn-font-size: 1rem;
-$btn-font-size-sm: 0.75rem;
+$btn-font-size-sm: 0.875rem;
 $btn-font-size-lg: 1.25rem;
 $btn-font-weight: 400;
 $btn-line-height: 1.5;

@@ -38,6 +38,7 @@
 
     .block__title {
         flex: 1 0 auto;
+        font-family: $headings-font-family;
         font-size: 1rem;
         font-weight: 600;
         margin: 0;
@@ -75,15 +76,20 @@
         flex-direction: column;
         margin-bottom: 0;
         font-size: .875rem;
+        font-weight: 600;
         line-height: 150%;
 
         ins {
             display: block;
             font-size: 1.5rem;
-            font-weight: 600;
             letter-spacing: 1px;
             text-decoration: none;
             color: $primary;
+        }
+
+        .price-label {
+            font-size: .875rem;
+            font-weight: normal;
         }
     }
 }
