@@ -359,8 +359,8 @@
 
                 // Map environment to color, use a fallback for unknown environments
                 $colors = [
-                    'development' => '#e74c3c', // red
-                    'staging'     => '#f39c12', // orange
+                    'development' => 'rgb(231 76 60 / 50%)', // red
+                    'staging'     => 'rgb(243 156 18 / 50%)', // orange
                 ];
 
                 $color = $colors[$env] ?? '#3498db'; // default blue
