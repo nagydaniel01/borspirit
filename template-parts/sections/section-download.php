@@ -5,7 +5,7 @@
     $section_hide_title = $section['download_section_hide_title'] ?? false;
     $section_slug       = sanitize_title($section_title);
     $section_lead       = $section['download_section_lead'] ?? '';
-    $items     = $section['download_items'] ?? [];
+    $items              = $section['download_items'] ?? [];
 
     // Filter out items without a file
     $items = array_filter($items, function ($item) {

@@ -77,7 +77,7 @@
                                         <?php endif; ?>
     
                                         <?php if ($cta_url) : ?>
-                                            <a href="<?php echo esc_url($cta_url); ?>" target="<?php echo esc_attr($cta_target); ?>" class="slider__button btn btn-lg btn-primary">
+                                            <a href="<?php echo esc_url($cta_url); ?>" target="<?php echo esc_attr($cta_target); ?>" class="slider__button btn btn-primary btn-lg">
                                                 <span><?php echo esc_html($cta_title); ?></span>
                                                 <svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg>
                                             </a>

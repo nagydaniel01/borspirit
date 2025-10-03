@@ -127,7 +127,7 @@
                             "sub_fields": [
                                 {
                                     "key": "field_68a48159f5c3c",
-                                    "label": "WYSIWYG Editor",
+                                    "label": "Szöveg",
                                     "name": "wysiwyg_editor",
                                     "aria-label": "",
                                     "type": "wysiwyg",
@@ -315,27 +315,6 @@
                             "key": "field_68c1b070554fd",
                             "label": "Slider",
                             "name": "card_slider",
-                            "aria-label": "",
-                            "type": "true_false",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "message": "",
-                            "default_value": 0,
-                            "allow_in_bindings": 0,
-                            "ui_on_text": "",
-                            "ui_off_text": "",
-                            "ui": 1
-                        },
-                        {
-                            "key": "field_68c1b07a554fe",
-                            "label": "Doboz",
-                            "name": "card_box",
                             "aria-label": "",
                             "type": "true_false",
                             "instructions": "",
@@ -588,27 +567,6 @@
                             "key": "field_68af1a184229a",
                             "label": "Slider",
                             "name": "post_query_slider",
-                            "aria-label": "",
-                            "type": "true_false",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "message": "",
-                            "default_value": 0,
-                            "allow_in_bindings": 0,
-                            "ui_on_text": "",
-                            "ui_off_text": "",
-                            "ui": 1
-                        },
-                        {
-                            "key": "field_68af1a494229b",
-                            "label": "Doboz",
-                            "name": "post_query_box",
                             "aria-label": "",
                             "type": "true_false",
                             "instructions": "",
@@ -1092,27 +1050,6 @@
                             "key": "field_68cd0f406b6d1",
                             "label": "Slider",
                             "name": "product_query_slider",
-                            "aria-label": "",
-                            "type": "true_false",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "message": "",
-                            "default_value": 0,
-                            "allow_in_bindings": 0,
-                            "ui_on_text": "",
-                            "ui_off_text": "",
-                            "ui": 1
-                        },
-                        {
-                            "key": "field_68cd0f406b6d2",
-                            "label": "Doboz",
-                            "name": "product_query_box",
                             "aria-label": "",
                             "type": "true_false",
                             "instructions": "",
@@ -1627,27 +1564,6 @@
                             "ui": 1
                         },
                         {
-                            "key": "field_68b03ce3ad6a1",
-                            "label": "Doboz",
-                            "name": "term_query_box",
-                            "aria-label": "",
-                            "type": "true_false",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "message": "",
-                            "default_value": 0,
-                            "allow_in_bindings": 0,
-                            "ui_on_text": "",
-                            "ui_off_text": "",
-                            "ui": 1
-                        },
-                        {
                             "key": "field_68b03e2bad6a6",
                             "label": "Kategória típus",
                             "name": "taxonomy_type",
@@ -2081,6 +1997,154 @@
                             "multiple": 0,
                             "allow_null": 0,
                             "bidirectional_target": []
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_68dff2f97ea69": {
+                    "key": "layout_68dff2f97ea69",
+                    "name": "featured",
+                    "label": "Kiemelt",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_68dff2f97ea6b",
+                            "label": "Section",
+                            "name": "featured",
+                            "aria-label": "",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "clone": [
+                                "group_68a48de5a7f72"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 1
+                        },
+                        {
+                            "key": "field_68dff4b17ea70",
+                            "label": "Bejegyzés",
+                            "name": "featured_object",
+                            "aria-label": "",
+                            "type": "post_object",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "post_type": [
+                                "post",
+                                "page",
+                                "product"
+                            ],
+                            "post_status": [
+                                "publish"
+                            ],
+                            "taxonomy": "",
+                            "return_format": "object",
+                            "multiple": 0,
+                            "allow_null": 0,
+                            "allow_in_bindings": 0,
+                            "bidirectional": 0,
+                            "ui": 1,
+                            "bidirectional_target": []
+                        },
+                        {
+                            "key": "field_68dff4157ea6e",
+                            "label": "Cím",
+                            "name": "featured_title",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "allow_in_bindings": 0,
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_68dff3197ea6d",
+                            "label": "Szöveg",
+                            "name": "featured_description",
+                            "aria-label": "",
+                            "type": "wysiwyg",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "allow_in_bindings": 0,
+                            "tabs": "all",
+                            "toolbar": "full",
+                            "media_upload": 0,
+                            "delay": 0
+                        },
+                        {
+                            "key": "field_68dff4927ea6f",
+                            "label": "Call to Action gomb",
+                            "name": "featured_call_to_action",
+                            "aria-label": "",
+                            "type": "link",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "return_format": "array",
+                            "allow_in_bindings": 0
+                        },
+                        {
+                            "key": "field_68dff645756fa",
+                            "label": "Kép",
+                            "name": "featured_image",
+                            "aria-label": "",
+                            "type": "image",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "return_format": "array",
+                            "library": "all",
+                            "min_width": "",
+                            "min_height": "",
+                            "min_size": "",
+                            "max_width": "",
+                            "max_height": "",
+                            "max_size": "",
+                            "mime_types": "",
+                            "allow_in_bindings": 0,
+                            "preview_size": "medium"
                         }
                     ],
                     "min": "",
@@ -3460,5 +3524,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1759401533
+    "modified": 1759508237
 }
