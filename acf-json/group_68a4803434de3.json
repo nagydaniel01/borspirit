@@ -1260,7 +1260,9 @@
                             },
                             "choices": {
                                 "auto": "Automatikus",
-                                "manual": "Manuális"
+                                "manual": "Manuális",
+                                "featured": "Kiemelt",
+                                "popular": "Népszerű"
                             },
                             "default_value": "auto",
                             "return_format": "value",
@@ -1492,6 +1494,46 @@
                                     "parent_repeater": "field_68cd0f406b6e2"
                                 }
                             ]
+                        },
+                        {
+                            "key": "field_68e0cd16c5bad",
+                            "label": "Termékek",
+                            "name": "selected_product_items",
+                            "aria-label": "",
+                            "type": "relationship",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_68cd0f406b6d7",
+                                        "operator": "==",
+                                        "value": "manual"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "post_type": [
+                                "product"
+                            ],
+                            "post_status": [
+                                "publish"
+                            ],
+                            "taxonomy": "",
+                            "filters": [
+                                "search"
+                            ],
+                            "return_format": "object",
+                            "min": "",
+                            "max": "",
+                            "allow_in_bindings": 0,
+                            "elements": "",
+                            "bidirectional": 0,
+                            "bidirectional_target": []
                         }
                     ],
                     "min": "",
@@ -3320,7 +3362,7 @@
                             "allow_in_bindings": 0,
                             "tabs": "all",
                             "toolbar": "full",
-                            "media_upload": 1,
+                            "media_upload": 0,
                             "delay": 0
                         },
                         {
@@ -3524,5 +3566,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1759508237
+    "modified": 1759563179
 }

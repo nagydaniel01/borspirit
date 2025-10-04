@@ -28,8 +28,12 @@ $query_args = [
 
 // Manual selection
 if (!empty($section['selection_type']) && $section['selection_type'] === 'manual') {
-    if (!empty($section['product'])) {
-        $query_args['include'] = array_map(fn($p) => $p->ID, $section['product']);
+    if (!empty($section['selected_product_items']) && is_array($section['selected_product_items'])) {
+        $query_args['include'] = array_map(function($p) {
+            return is_object($p) ? $p->ID : $p; // Get ID if it's a WP_Post object
+        }, $section['selected_product_items']);
+
+        $query_args['orderby'] = 'post__in';
     }
 }
 
@@ -41,6 +45,29 @@ if (!empty($section['selection_type']) && $section['selection_type'] === 'auto')
     if (!empty($section['product_tag'])) {
         $query_args['tag'] = array_map(fn($t) => $t->slug, $section['product_tag']);
     }
+}
+
+// Featured products
+if (!empty($section['selection_type']) && $section['selection_type'] === 'featured') {
+    $query_args['tax_query'][] = [
+        'taxonomy' => 'product_visibility',
+        'field'    => 'name',
+        'terms'    => 'featured',
+        'operator' => 'IN',
+    ];
+}
+
+// Popular products in the last month
+if (!empty($section['selection_type']) && $section['selection_type'] === 'popular') {
+    $date_query = [
+        'after' => date('Y-m-d', strtotime('-1 month')),
+        'inclusive' => true,
+    ];
+
+    $query_args['orderby']    = 'meta_value_num'; // Sort by meta numeric value
+    $query_args['meta_key']   = 'total_sales';    // WooCommerce total sales meta key
+    $query_args['order']      = 'DESC';           // Most sold first
+    $query_args['date_query'] = [$date_query];    // Limit to last month
 }
 
 // Handle Sale Products

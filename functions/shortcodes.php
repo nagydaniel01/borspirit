@@ -144,21 +144,26 @@
 
     if ( ! function_exists( 'woocommerce_general_settings_shortcode' ) ) {
         /**
-         * Shortcode callback: Display WooCommerce general settings.
+         * Display WooCommerce general settings via a shortcode.
          *
-         * Show all settings:
-         * [woocommerce_settings]
+         * This shortcode retrieves WooCommerce general settings using the
+         * `get_woocommerce_general_settings()` helper function and displays them
+         * as formatted HTML. You can optionally specify a single setting to display
+         * using the `setting` attribute.
          *
-         * Show only the store city:
-         * [woocommerce_settings setting="store_city"]
+         * Shortcode: [woocommerce_settings]
          *
-         * Show only the currency:
-         * [woocommerce_settings setting="currency"]
-         * 
-         * @param array $atts Shortcode attributes. 
-         *                    - setting (string) Optional. Specific setting key to display.
+         * Example usage:
+         *   [woocommerce_settings]                 - Displays all WooCommerce settings.
+         *   [woocommerce_settings setting="store_address"] - Displays a single setting value.
          *
-         * @return string HTML output of the settings or specific record.
+         * @since 1.0.0
+         * @param array $atts {
+         *     Optional. Shortcode attributes.
+         *
+         *     @type string $setting Specific WooCommerce setting key to display. Default '' (show all settings).
+         * }
+         * @return string HTML output containing the requested WooCommerce settings or an error message.
          */
         function woocommerce_general_settings_shortcode( $atts ) {
             // Parse shortcode attributes
@@ -198,7 +203,7 @@
 
     if ( ! function_exists( 'render_opening_hours_table' ) ) {
         /**
-         * Render Opening Hours Table (Accessible + Translatable)
+         * Render Opening Hours Table
          *
          * Works with both:
          *  - ACF Group Field (true_false + time_picker fields)
@@ -274,9 +279,20 @@
 
     if ( ! function_exists( 'opening_hours_shortcode' ) ) {
         /**
-         * Shortcode to display opening hours from ACF Options page
+         * Display the store's opening hours via a shortcode.
          *
-         * Usage: [opening_hours]
+         * Retrieves the "opening_hours" field from ACF (Advanced Custom Fields) options
+         * and displays it using the `render_opening_hours_table()` helper function.
+         * If ACF is not active or the field is empty, it displays a relevant message instead.
+         *
+         * Shortcode: [opening_hours]
+         *
+         * Example usage:
+         *   [opening_hours]
+         *   echo do_shortcode('[opening_hours]');
+         *
+         * @since 1.0.0
+         * @return string HTML markup for the opening hours table, or a message if not available.
          */
         function opening_hours_shortcode() {
             if ( ! function_exists( 'get_field' ) ) {
@@ -292,4 +308,68 @@
             return render_opening_hours_table( $opening_hours, true, TEXT_DOMAIN );
         }
         add_shortcode( 'opening_hours', 'opening_hours_shortcode' );
+    }
+
+    if ( ! function_exists( 'get_wc_free_shipping_amount' ) ) {
+        /**
+         * Retrieve and display the WooCommerce free shipping minimum amount.
+         *
+         * Determines the customer's shipping country using the WooCommerce session or IP geolocation,
+         * finds the appropriate shipping zone, and returns the formatted minimum order amount required
+         * to qualify for free shipping.
+         *
+         * This function is also registered as a shortcode: [free_shipping_amount]
+         * Example usage in content or templates:
+         *   [free_shipping_amount]
+         *   echo do_shortcode('[free_shipping_amount]');
+         *
+         * @since 1.0.0
+         * @return string The formatted free shipping minimum amount (e.g. "$50.00"), or an empty string if not available.
+         */
+        function get_wc_free_shipping_amount() {
+            if ( ! class_exists( 'WooCommerce' ) ) {
+                return '';
+            }
+
+            $customer_country = WC()->customer->get_shipping_country();
+
+            // If country is not yet set, try geolocation
+            if ( empty( $customer_country ) ) {
+                $geo = WC_Geolocation::geolocate_ip();
+                $customer_country = $geo['country'] ?? '';
+            }
+
+            if ( empty( $customer_country ) ) {
+                return '';
+            }
+
+            // Prepare package for zone matching
+            $package = [
+                'destination' => [
+                    'country'  => $customer_country,
+                    'state'    => '',
+                    'postcode' => '',
+                    'city'     => '',
+                    'address'  => '',
+                ],
+            ];
+
+            $customer_zone = WC_Shipping_Zones::get_zone_matching_package( $package );
+            $methods = $customer_zone->get_shipping_methods();
+
+            foreach ( $methods as $method ) {
+                if ( ! is_object( $method ) ) {
+                    continue;
+                }
+
+                if ( $method->id === 'free_shipping' && $method->enabled === 'yes' ) {
+                    if ( isset( $method->min_amount ) && is_numeric( $method->min_amount ) && $method->min_amount > 0 ) {
+                        return wc_price( $method->min_amount ); // Just return the amount
+                    }
+                }
+            }
+
+            return ''; // No free shipping found
+        }
+        add_shortcode( 'free_shipping_amount', 'get_wc_free_shipping_amount' );
     }

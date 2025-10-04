@@ -41,6 +41,16 @@
         define( 'ERROR_404_PAGE_ID', $page_404[0]->ID );
     }
 
+    // Custom "Thank you" Page
+    $page_thank_you = get_pages( array(
+        'meta_key'   => '_wp_page_template',
+        'meta_value' => 'templates/page-thank-you.php',
+    ) );
+
+    if ( ! empty( $page_thank_you ) ) {
+        define( 'THANK_YOU_PAGE_ID', $page_thank_you[0]->ID );
+    }
+
     // ACF Fields (Logo, Placeholder)
     if ( function_exists( 'get_field' ) ) {
         $under_construction_mode = get_field( 'under_construction_mode', 'option' ) ?? false;

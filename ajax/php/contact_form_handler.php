@@ -143,7 +143,7 @@
                 // Success response
                 wp_send_json_success([
                     'message'      => __('Your message has been sent successfully!', TEXT_DOMAIN),
-                    'redirect_url' => esc_url( trailingslashit( home_url('/thank-you') ) ),
+                    'redirect_url' => esc_url( trailingslashit( get_the_permalink( THANK_YOU_PAGE_ID ) ) ),
                     'message_id'   => $message_id
                 ], 200);
 
