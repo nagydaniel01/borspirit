@@ -1,6 +1,6 @@
 <?php
-    $logo                         = get_field('site_logo', 'option');
-    $header_partner_logo_repeater = get_field('header_partner_logo_repeater', 'option');
+    $site_name = get_field('site_name', 'option') ?: get_bloginfo('name');
+    $site_logo = get_field('site_logo', 'option');
 
     $current_user = wp_get_current_user() ?? null;
     $avatar       = get_avatar( $current_user->ID, 32 );
@@ -15,10 +15,11 @@
         <nav class="navbar navbar-expand-lg header__nav nav nav--main js-nav-main">
             <!-- Brand -->
             <a class="navbar-brand logo logo--header" href="<?php echo esc_url( trailingslashit( home_url() ) ); ?>">
-                <?php if ($logo) : ?>
-                    <?php echo wp_get_attachment_image($logo['ID'], [$logo['width'], $logo['height']], false, ['class' => 'logo__image', 'alt' => esc_attr($logo['alt'] ?: get_bloginfo('name'))]); ?>
+                <?php if ( $site_logo ) : ?>
+                    <?php echo wp_get_attachment_image( $site_logo['ID'], [$site_logo['width'], $site_logo['height']], false, ['class' => 'logo__image imgtosvg', 'alt' => esc_attr($site_logo['alt'] ?: $site_name)] ); ?>
+                    <span class="visually-hidden"><?php echo esc_html($site_name); ?></span>
                 <?php else : ?>
-                    <?php bloginfo('name'); ?>
+                    <?php echo esc_html($site_name); ?>
                 <?php endif; ?>
             </a>
 

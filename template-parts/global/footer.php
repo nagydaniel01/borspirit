@@ -1,8 +1,10 @@
 <?php
-    $locations   = get_nav_menu_locations();
-    $footer_logo = get_field('site_logo', 'option');
-    $social      = get_field('social', 'option');
-    $copyright   = get_field('copyright', 'option');
+    $site_name = get_field('site_name', 'option') ?: get_bloginfo('name');
+    $site_logo = get_field('site_logo', 'option');
+    $social    = get_field('social', 'option');
+    $copyright = get_field('copyright', 'option');
+
+    $locations = get_nav_menu_locations();
 ?>
 
 <footer class="footer">
@@ -24,10 +26,15 @@
             <div class="row">
                 <div class="col-md-6 col-xl">
                     <div class="footer__block">
-                        <?php if ($footer_logo) : ?>
+                        <?php if ($site_logo) : ?>
                             <div class="logo logo--footer">
                                 <a href="<?php echo esc_url( trailingslashit( home_url() ) ); ?>" class="logo__link">
-                                    <?php echo wp_get_attachment_image($footer_logo['ID'], [$footer_logo['width'], $footer_logo['height']], false, ['class' => 'logo__image', 'alt' => esc_attr($footer_logo['alt'] ?: get_bloginfo('name'))]); ?>
+                                    <?php if ( $site_logo ) : ?>
+                                        <?php echo wp_get_attachment_image( $site_logo['ID'], [$site_logo['width'], $site_logo['height']], false, ['class' => 'logo__image imgtosvg', 'alt' => esc_attr($site_logo['alt'] ?: $site_name)] ); ?>
+                                        <span class="visually-hidden"><?php echo esc_html($site_name); ?></span>
+                                    <?php else : ?>
+                                        <?php echo esc_html($site_name); ?>
+                                    <?php endif; ?>
                                 </a>
                             </div>
                         <?php endif; ?>

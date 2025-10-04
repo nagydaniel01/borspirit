@@ -11,12 +11,14 @@
     color: $white;
     
     .logo__image {
-      height: 50px;
+      height: 32px;
     }
   }
   
   &.logo--footer {
-    padding-bottom: 1.25rem;
+    .logo__image {
+      height: 56px;
+    }
   }
 }
 
@@ -24,10 +26,10 @@
   .logo {
     &.logo--header {
       margin-right: 2.5rem;
-    }
 
-    &.logo--footer {
-      padding-bottom: 0;
+      .logo__image {
+        height: 44px;
+      }
     }
   }
 }
