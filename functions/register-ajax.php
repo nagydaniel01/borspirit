@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+    
     $ajax_dir = get_template_directory() . '/ajax/php';
 
     if ( file_exists( $ajax_dir ) && is_dir( $ajax_dir ) ) {
@@ -31,6 +35,39 @@
             }
         }
         add_action( 'wp_enqueue_scripts', 'enqueue_comment_form_ajax_scripts' );
+    }
+
+    if ( ! function_exists( 'enqueue_poll_form_ajax_scripts' ) ) {
+        function enqueue_poll_form_ajax_scripts() {
+            // Only load on WooCommerce Thank You (order received) page.
+            if ( ! is_wc_endpoint_url( 'order-received' ) ) {
+                return;
+            }
+
+            $script_rel_path = '/ajax/js/poll_form_ajax.js'; // relative to theme root.
+            $script_path     = get_template_directory() . $script_rel_path;
+            $script_uri      = get_template_directory_uri() . $script_rel_path;
+
+            // Only enqueue if the file exists
+            if ( file_exists( $script_path ) ) {
+                wp_enqueue_script( 'poll_form_ajax_script', $script_uri, array( 'jquery' ), null, true );
+
+                // Pass dynamic data to JS
+                wp_localize_script( 'poll_form_ajax_script', 'poll_form_ajax_object', array(
+                    'ajax_url'           => admin_url( 'admin-ajax.php' ),
+                    'msg_select_rating'  => __( 'Please select a rating.', TEXT_DOMAIN ),
+                    'msg_select_opinion' => __( 'Please select your opinion about the shop.', TEXT_DOMAIN ),
+                    'msg_enter_feedback' => __( 'Please write your feedback.', TEXT_DOMAIN ),
+                    'msg_sending'        => __( 'Submitting your feedback…', TEXT_DOMAIN ),
+                    'msg_success'        => __( 'Thank you! Your feedback has been sent.', TEXT_DOMAIN ),
+                    'msg_error'          => __( 'There was an error sending your feedback.', TEXT_DOMAIN ),
+                    'msg_network_error'  => __( 'A network error occurred. Please try again.', TEXT_DOMAIN ),
+                ) );
+            } else {
+                error_log( 'Thank You feedback script not found: ' . $script_path );
+            }
+        }
+        add_action( 'wp_enqueue_scripts', 'enqueue_poll_form_ajax_scripts' );
     }
 
     if ( ! function_exists( 'enqueue_event_registration_form_ajax_scripts' ) ) {
@@ -87,34 +124,6 @@
             }
         }
         add_action( 'wp_enqueue_scripts', 'enqueue_contact_form_ajax_scripts' );
-    }
-
-    if ( ! function_exists( 'enqueue_testimonial_form_ajax_scripts' ) ) {
-        function enqueue_testimonial_form_ajax_scripts() {
-            $script_rel_path = '/ajax/js/testimonial_form_ajax.js'; // relative to theme root
-            $script_path = get_template_directory() . $script_rel_path;
-            $script_uri  = get_template_directory_uri() . $script_rel_path;
-
-            // Only enqueue if the file exists
-            if ( file_exists( $script_path ) ) {
-                wp_enqueue_script( 'testimonial_form_ajax_script', $script_uri, array( 'jquery' ), null, true );
-
-                // Pass dynamic data to JS
-                wp_localize_script( 'testimonial_form_ajax_script', 'testimonial_form_ajax_object', array(
-                    'ajax_url'             => admin_url( 'admin-ajax.php' ),
-                    'user_id'              => get_current_user_id(),
-                    'msg_privacy_required' => __( 'You must agree to the privacy policy.', TEXT_DOMAIN ),
-                    'msg_sending'          => __( 'Sending…', TEXT_DOMAIN ),
-                    'msg_success'          => __( 'Message sent successfully!', TEXT_DOMAIN ),
-                    'msg_error_sending'    => __( 'There was an error while sending your message.', TEXT_DOMAIN ),
-                    'msg_unexpected'       => __( 'An unexpected error occurred.', TEXT_DOMAIN ),
-                    'msg_network_error'    => __( 'A network error occurred.', TEXT_DOMAIN )
-                ) );
-            } else {
-                error_log( 'Testimonial form script file does not exist: ' . $script_path );
-            }
-        }
-        //add_action( 'wp_enqueue_scripts', 'enqueue_testimonial_form_ajax_scripts' );
     }
 
     if ( ! function_exists( 'enqueue_mailchimp_form_ajax_scripts' ) ) {

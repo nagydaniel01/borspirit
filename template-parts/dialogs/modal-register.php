@@ -7,7 +7,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<?php echo esc_attr('Close', TEXT_DOMAIN); ?>"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Would you like to save your favorites?</p>
+                    <?php echo wpautop( esc_html__('Would you like to save your favorites?', TEXT_DOMAIN) ); ?>
                 </div>
                 <div class="modal-footer">
                     <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="btn btn-primary">

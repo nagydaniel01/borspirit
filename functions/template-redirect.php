@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+    
     if ( ! function_exists( 'borspirit_register_attribute_rewrites' ) ) {
         /**
          * Registers rewrite rules for all WooCommerce product attribute base slugs.

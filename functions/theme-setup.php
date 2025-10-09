@@ -107,6 +107,9 @@
              */
             // WooCommerce in general.
             add_theme_support( 'woocommerce' );
+            //add_theme_support( 'wc-product-gallery-zoom' );
+            //add_theme_support( 'wc-product-gallery-lightbox' );
+            //add_theme_support( 'wc-product-gallery-slider' ); 
 
             // Add support for LearnDash features
             add_theme_support( 'learndash' );

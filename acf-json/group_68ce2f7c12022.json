@@ -597,6 +597,66 @@
             ]
         },
         {
+            "key": "field_68e51a739e723",
+            "label": "Hírlevél",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_68e51a889e724",
+            "label": "Mailchimp API key",
+            "name": "mailchimp_api_key",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_68e51bb9c7a16",
+            "label": "Mailchimp Audience ID",
+            "name": "mailchimp_audience_id",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_68d54bad18d12",
             "label": "Termékoldal",
             "name": "",
@@ -713,7 +773,8 @@
                 "wc_wine_store_limited_stock_flash": "Limited Stock Badge",
                 "wc_wine_store_discount_flash": "Discount Badge",
                 "wc_wine_store_award_flash": "Award Winner Badge",
-                "wc_wine_store_category_flash": "Hónap bora"
+                "wc_wine_store_new_vintage_flash": "New vintage",
+                "wc_wine_store_category_flash": "A hónap bora"
             },
             "default_value": [],
             "return_format": "value",
@@ -1008,5 +1069,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1759565214
+    "modified": 1759845343
 }

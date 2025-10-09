@@ -1,4 +1,10 @@
 <?php
+// Get the current number of product columns from the WooCommerce settings
+$columns = wc_get_loop_prop( 'columns' );
+if ( ! $columns ) {
+    $columns = apply_filters( 'loop_shop_columns', 4 ); // fallback default
+}
+
 $section_classes = build_section_classes($section, 'product_query');
 
 $section_title      = $section['product_query_section_title'] ?? '';
@@ -8,7 +14,6 @@ $section_lead       = $section['product_query_section_lead'] ?? '';
 
 $link               = $section['product_query_link'] ?? '';
 $slider             = $section['product_query_slider'] ?? '';
-$box                = $section['product_query_box'] ?? '';
 
 $url         = $link['url'] ?? '';
 $title       = $link['title'] ?? esc_url($url);
@@ -108,7 +113,7 @@ $products      = $product_query->get_products();
 ?>
 
 <?php if (!empty($products)) : ?>
-    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--product_query <?php echo esc_attr($section_classes); ?><?php echo ($slider != false) ? ' section--slider' : ''; ?><?php echo ($box != false) ? ' section--box' : ''; ?>">
+    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--product_query <?php echo esc_attr($section_classes); ?><?php echo ($slider != false) ? ' section--slider' : ''; ?>">
         <div class="container">
             <?php if (($section_title && $section_hide_title !== true) || $section_lead) : ?>
                 <div class="section__header">
@@ -152,7 +157,7 @@ $products      = $product_query->get_products();
                         <div class="slider__controls"></div>
                     </div>
                 <?php else : ?>
-                    <ul class="products columns-4">
+                    <ul class="products columns-<?php echo esc_attr($columns); ?>">
                         <?php foreach ($products as $product) : ?>
                             <?php
                             // Allow WooCommerce template parts to work correctly

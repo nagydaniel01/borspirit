@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+    
     if ( ! function_exists( 'move_comment_field' ) ) {
         /**
          * Moves the comment textarea to the bottom of the comment form fields.

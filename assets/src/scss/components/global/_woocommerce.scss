@@ -80,10 +80,45 @@
 }
 
 // ---------------------------------------------
+// Price
+// ---------------------------------------------
+.price {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+
+  & > span {
+    display: flex;
+    flex-direction: column;
+  }
+
+  del {
+    font-size: .875rem;
+    color: $body-color;
+  }
+
+  ins {
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: $primary;
+  }
+
+  .price-label {
+    font-size: .875rem;
+    font-weight: normal;
+  }
+}
+
+// ---------------------------------------------
 // WooCommerce Components
 // ---------------------------------------------
-.woocommerce {
-  .u-columns {
+.woocommerce,
+.woocommerce-page {
+  .u-columns,
+  .woocommerce-columns {
     @extend .row;
 
     .u-column1,
@@ -136,9 +171,7 @@
   // ---------------------------------------------
   .product {
     .woocommerce-loop-product {
-      margin-bottom: 2rem;
       background-color: rgba($white, 1);
-      border: 1px solid $border-color;
       border-radius: 0.5rem;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
 
@@ -156,7 +189,6 @@
       .woocommerce-loop-product__image {
         position: relative;
         overflow: hidden;
-        border-bottom: 1px solid $border-color;
 
         img {
           @extend .card-img-top;
@@ -188,17 +220,7 @@
         }
 
         // Price
-        .price {
-          del {
-            color: $black;
-          }
-
-          ins {
-            color: $success;
-            font-weight: bold;
-            text-decoration: none;
-          }
-        }
+        .price {}
 
         // Stock info
         .product-stock {

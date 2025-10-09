@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+    
     if ( ! function_exists( 'custom_wc_registration_form_shortcode' ) ) {
         /**
          * Registration Form Shortcode
@@ -372,4 +376,93 @@
             return ''; // No free shipping found
         }
         add_shortcode( 'free_shipping_amount', 'get_wc_free_shipping_amount' );
+    }
+
+    if ( ! function_exists( 'show_thankyou_feedbacks' ) ) {
+        /**
+         * Display all customer feedback (saved in order meta) as stars and text.
+         *
+         * Fully compatible with WooCommerce HPOS and translatable.
+         *
+         * @return string HTML output of feedback list.
+         */
+        function show_thankyou_feedbacks() {
+
+            // Query all orders that have the _thankyou_feedback meta key
+            $orders = wc_get_orders( array(
+                'limit'         => -1,
+                'meta_key'      => '_thankyou_feedback',
+                'meta_compare'  => 'EXISTS',
+                'return'        => 'objects',
+                'status'        => array( 'wc-completed', 'wc-processing' ),
+            ) );
+
+            if ( empty( $orders ) ) {
+                return '<p>' . esc_html__( 'No feedback yet.', TEXT_DOMAIN ) . '</p>';
+            }
+
+            $output = '<div class="thankyou-feedback-list">';
+
+            foreach ( $orders as $order ) {
+                $feedback_data = $order->get_meta( '_thankyou_feedback' );
+
+                // Skip if feedback is missing or malformed
+                if ( empty( $feedback_data ) || ! is_array( $feedback_data ) ) {
+                    continue;
+                }
+
+                $like     = $feedback_data['like'] ?? '';
+                $rating   = intval($feedback_data['rating'] ?? 0);
+                $feedback = $feedback_data['feedback'] ?? '';
+                $date     = isset($feedback_data['date']) ? date_i18n(get_option('date_format'), strtotime($feedback_data['date'])) : '';
+
+                // Get customer first name
+                $customer_first_name = $order->get_billing_first_name();
+
+                /*
+                // Build stars with Dashicons
+                $stars = '';
+                for ($i = 1; $i <= 5; $i++) {
+                    if ($i <= $rating) {
+                        $stars .= '<span class="dashicons dashicons-star-filled" style="color:#FFD700;"></span>';
+                    } else {
+                        $stars .= '<span class="dashicons dashicons-star-empty" style="color:#ccc;"></span>';
+                    }
+                }
+                */
+
+                // Build WooCommerce-style star rating
+                $stars = '';
+                if ($rating > 0) {
+                    $stars = wc_get_rating_html($rating, 5); // second param = max stars
+                }
+
+                $output .= '<div class="thankyou-feedback">';
+                if ( $customer_first_name ) {
+                    $output .= '<p class="customer-name">' . $customer_first_name . '</p>';
+                }
+                if ( $stars ) {
+                    $output .= '<div class="rating">' . $stars . '</div>';
+                }
+                if ( $like ) {
+                    $output .= '<p><strong>' . esc_html__( 'Opinion:', TEXT_DOMAIN ) . '</strong> ' . esc_html( $like ) . '</p>';
+                }
+                if ( $feedback ) {
+                    $output .= '<p><strong>' . esc_html__( 'Feedback:', TEXT_DOMAIN ) . '</strong> ' . esc_html( $feedback ) . '</p>';
+                }
+                if ( $date ) {
+                    $output .= '<p class="date">' . sprintf(
+                        /* translators: %s = feedback date */
+                        esc_html__( 'Submitted on %s', TEXT_DOMAIN ),
+                        esc_html( $date )
+                    ) . '</p>';
+                }
+                $output .= '</div>';
+            }
+
+            $output .= '</div>';
+
+            return $output;
+        }
+        add_shortcode( 'thankyou_feedbacks', 'show_thankyou_feedbacks' );
     }

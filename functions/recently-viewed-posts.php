@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+    
     if ( ! function_exists( 'start_custom_session' ) ) {
         /**
          * Start a custom session if not already started.

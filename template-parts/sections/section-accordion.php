@@ -72,7 +72,7 @@
                         }
 
                         $button_attrs = sprintf(
-                            'data-bs-toggle="collapse" data-bs-target="#collapse-%1$s" aria-expanded="%2$s" aria-controls="collapse-%1$s"',
+                            'data-bs-toggle="collapse" data-bs-target="#collapse-%1$s" aria-expanded="%2$s" aria-controls="collapse-%2$s"',
                             esc_attr($item_id),
                             $aria_expanded
                         );

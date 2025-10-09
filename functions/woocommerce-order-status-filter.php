@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+    
     if ( ! function_exists( 'custom_my_account_orders_filter_by_status' ) ) {
         /**
          * Filter the My Account orders query by order status if provided in URL.

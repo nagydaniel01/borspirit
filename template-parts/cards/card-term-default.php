@@ -1,10 +1,15 @@
 <?php
     $term        = $args['term'];
+
+    if (empty($term)) {
+        return;
+    }
+
     $term_id     = $term->term_id;
     $taxonomy    = $term->taxonomy;
     $term_link   = get_term_link($term);
     $title       = $term->name;
-    $description = term_description($term_id, $taxonomy);
+    //$description = term_description($term_id, $taxonomy);
 
     // Get gallery field (ACF)
     $gallery = get_field('gallery', $taxonomy . '_' . $term_id);
@@ -33,7 +38,7 @@
     }
 ?>
 
-<article class="card <?php echo esc_attr($extra_classes); ?>">
+<article class="card card--term <?php echo esc_attr($extra_classes); ?>">
     <a href="<?php echo esc_url($term_link); ?>" class="card__link">
         <?php if ($image_id) : ?>
             <div class="card__header">
@@ -42,27 +47,7 @@
         <?php endif; ?>
 
         <div class="card__content">
-            <h3 class="card__title">
-                <?php echo esc_html($title); ?>
-            </h3>
-            
-            <?php if (!empty($description)) : ?>
-                <div class="card__lead">
-                    <?php echo wp_trim_words(wp_strip_all_tags($description), 20, '…'); ?>
-                </div>
-            <?php endif; ?>
-
-            <!--
-            <div class="card__meta">
-                <span class="card__taxonomy">
-                    <?php //echo esc_html(get_taxonomy($taxonomy)->labels->singular_name); ?>
-                </span>
-            </div>
-            -->
-
-            <span class="card__button">
-                <svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg>
-            </span>
+            <h3 class="card__title"><?php echo esc_html($title); ?></h3>
         </div>
     </a>
 </article>

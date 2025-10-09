@@ -30,7 +30,7 @@
             <?php echo esc_html($card_title); ?>
         </h3>
         
-        <div class="card__lead card__lead--no-trim"><?php echo wp_kses_post($card_description); ?></div>
+        <div class="card__lead"><?php echo wp_kses_post($card_description); ?></div>
 
         <?php if ($button_url) : ?>
             <a href="<?php echo esc_attr($button_url); ?>" target="<?php echo esc_attr($button_target); ?>" class="card__link btn btn-primary"><?php echo esc_html($button_title); ?></a>

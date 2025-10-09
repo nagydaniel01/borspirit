@@ -1,6 +1,10 @@
 <?php
     $post_type    = $args['post_type'] ?? '';
 
+    if (empty($post_type)) {
+        return;
+    }
+
     $current_user_id = get_current_user_id();
 
     $post_id      = get_the_ID();
@@ -51,9 +55,7 @@
         <?php endif; ?>
 
         <div class="card__content">
-            <h3 class="card__title">
-                <?php the_title(); ?>
-            </h3>
+            <h3 class="card__title"><?php the_title(); ?></h3>
             
             <div class="card__lead"><?php the_excerpt(); ?></div>
 

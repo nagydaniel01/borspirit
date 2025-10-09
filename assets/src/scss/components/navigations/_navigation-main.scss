@@ -52,21 +52,6 @@
     font-weight: 400;
   }
   */
-
-  form[role="search"] {
-    display: flex;
-    margin-bottom: 1rem;
-
-    label {
-      width: 100%;
-      margin: 0;
-    }
-
-    input[type="submit"],
-    button[type="submit"] {
-      margin-left: .875rem;
-    }
-  }
 }
 
 @include media-breakpoint-down(xxl) {

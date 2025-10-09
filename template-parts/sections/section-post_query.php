@@ -8,7 +8,6 @@ $section_lead       = $section['post_query_section_lead'] ?? '';
 
 $link               = $section['post_query_link'] ?? '';
 $slider             = $section['post_query_slider'] ?? '';
-$box                = $section['post_query_box'] ?? '';
 
 $url         = $link['url'] ?? '';
 $title       = $link['title'] ?? esc_url($url);
@@ -89,7 +88,7 @@ $post_query = new WP_Query($query_args);
 ?>
 
 <?php if ($post_query->have_posts()) : ?>
-    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--post_query <?php echo esc_attr($section_classes); ?><?php echo ($slider != false) ? ' section--slider' : ''; ?><?php echo ($box != false) ? ' section--box' : ''; ?>">
+    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--post_query <?php echo esc_attr($section_classes); ?><?php echo ($slider != false) ? ' section--slider' : ''; ?>">
         <div class="container">
             <?php if (($section_title && $section_hide_title !== true) || $section_lead) : ?>
                 <div class="section__header">

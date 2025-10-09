@@ -20,22 +20,42 @@
 
     &.section--color-white {
         background-color: rgba($white, 1);
+
+        .slider__list::after {
+            background: linear-gradient(to right, rgba(250, 250, 250, 0) 0%, rgba($white, 1) 100%) !important;
+        }
     }
 
     &.section--color-primary-05 {
         background-color: rgba($primary, 0.05);
+
+        .slider__list::after {
+            background: linear-gradient(to right, rgba(250, 250, 250, 0) 0%, #F2EEEE 100%) !important;
+        }
     }
 
     &.section--color-primary-25 {
         background-color: rgba($primary, 0.25);
+
+        .slider__list::after {
+            background: linear-gradient(to right, rgba(250, 250, 250, 0) 0%, #D5BEC2 100%) !important;
+        }
     }
 
     &.section--color-secondary-05 {
         background-color: rgba($secondary, 0.05);
+
+        .slider__list::after {
+            background: linear-gradient(to right, rgba(250, 250, 250, 0) 0%, #D5BEC2 100%) !important;
+        }
     }
 
     &.section--color-secondary-25 {
         background-color: rgba($secondary, 0.25);
+
+        .slider__list::after {
+            background: linear-gradient(to right, rgba(250, 250, 250, 0) 0%, #F8F7F5 100%) !important;
+        }
     }
 
     &.section--right {

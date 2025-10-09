@@ -93,6 +93,7 @@
           width: 4rem;
           height: 4rem;
           border: none;
+          border-radius: 0;
           background-color: $white;
           position: absolute;
           bottom: 0;
@@ -161,36 +162,6 @@
       &:hover {
         text-decoration: underline;
       }
-    }
-  }
-
-  .price {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    font-size: 1.5rem;
-    font-weight: 600;
-
-    & > span {
-      display: flex;
-      flex-direction: column;
-    }
-
-    del {
-      font-size: .875rem;
-      color: $body-color;
-    }
-
-    ins {
-      font-size: 1.5rem;
-      font-weight: 600;
-      text-decoration: none;
-      color: $primary;
-    }
-
-    .price-label {
-      font-size: .875rem;
-      font-weight: normal;
     }
   }
 
@@ -347,75 +318,14 @@
 
 .section.section--product--reviews {
   background-color: $gray-100;
-  background-image: linear-gradient(to bottom, rgba($body-bg, .95), rgba(255, 255, 255, 0)), url('./../images/reviews-bg.jpg');
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, .25) 50%, rgba($body-bg, .5) 100%), url('./../images/reviews-bg.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   color: $primary;
 
-  .review {
-    position: relative;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-
-    &::before,
-    &::after {
-      content: '';
-    }
-
-    &::before {
-      position: absolute;
-      top: 2px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, .1), inset 3px 3px 3px hsla(0, 0%, 100%, .2), inset -3px -3px 3px hsla(0, 0%, 0%, .2), 26px 18px 3px hsla(0, 0%, 0%, .15);
-      background-color: $primary-dark;
-      z-index: 2;
-    }
-
-    &::after {
-      position: absolute;
-      top: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: block;
-      width: 2px;
-      height: 32px;
-      background-color: #aaa;
-      z-index: 1;
-    }
-
-    .comment_container {
-      background-color: rgba($white, 1);
-      padding: 2.5rem 1.25rem;
-      box-shadow: 0 10px 10px 2px rgba(0, 0, 0, .25);
-      transform: rotate(-2deg);
-
-      &::before {
-        content: '';
-        position: absolute;
-        top: -8px;
-        left: calc(50% + 14px);
-        height: 24px;
-        width: 2px;
-        background-color: hsla(0, 0%, 0%, .1);
-        box-shadow: 0 0 .25em hsla(0, 0%, 0%, .1);
-        transform: rotate(57.5deg);
-      }
-    }
-
-    .comment-text {
-      display: flex;
-      flex-direction: column;
-      color: $body-color;
-    }
-
-    .description {
-      font-size: .875rem;
-    }
+  .woocommerce-Reviews-title {
+    color: $white;
   }
 
   .slick-list {

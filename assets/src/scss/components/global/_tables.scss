@@ -1,4 +1,4 @@
-table,
+table:not(.wc-block-cart-items),
 .table,
 .shop_table {
   @extend .table;

@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+    
     if ( ! function_exists( 'custom_product_header_wrapper' ) ) {
         /**
          * Adds a custom wrapper and title for WooCommerce product attribute archive pages.

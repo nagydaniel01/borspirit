@@ -4,9 +4,46 @@
   transition: $transition-base;
   user-select: auto;
 
+  .slick-slide > div {
+    display: flex;
+  }
+
   &.slick-initialized {
     opacity: 1;
     visibility: visible;
+
+    .slick-arrow {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      padding: 0;
+      transition: $transition-base;
+      border: none;
+      border-radius: 50%;
+      outline: none;
+      background-color: transparent;
+      text-align: center;
+      cursor: pointer;
+      pointer-events: all;
+
+      &:focus,
+      &:active {
+        outline: 0;
+      }
+
+      &.slick-disabled {
+        opacity: 0.25;
+      }
+
+      svg {
+        width: 1.25rem;
+        height: 1.25rem;
+        color: $black;
+        fill: currentColor;
+      }
+    }
 
     .slick-dots {
       display: flex;
@@ -59,39 +96,18 @@
 .slider {
   position: relative;
 
-  .slick-slide > div {
+  /*
+  .slider__controls {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    //bottom: calc(100% + 1rem);
+    //right: 0;
     display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    pointer-events: none;
   }
-
-  .slick-arrow {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    padding: 0;
-    transition: $transition-base;
-    border: none;
-    border-radius: 50%;
-    outline: none;
-    background-color: transparent;
-    text-align: center;
-    cursor: pointer;
-
-    &:focus,
-    &:active {
-      outline: 0;
-    }
-
-    &.slick-disabled {
-      opacity: 0.25;
-    }
-
-    svg {
-      width: 1.25rem;
-      height: 1.25rem;
-      color: $black;
-      fill: currentColor;
-    }
-  }
+  */
 }

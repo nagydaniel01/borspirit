@@ -16,7 +16,7 @@
             $phpmailer->Password   = '4be51df465bc15';
         }
         // Uncomment to activate Mailtrap config
-        //add_action( 'phpmailer_init', 'mailtrap' );
+        add_action( 'phpmailer_init', 'mailtrap' );
     }
 
     if ( ! function_exists( 'rd_mailtrap' ) ) {
@@ -36,7 +36,7 @@
             $phpmailer->Password   = '67e22e4ddb9475';
         }
         // Uncomment to activate Mailtrap config
-        add_action( 'phpmailer_init', 'rd_mailtrap' );
+        //add_action( 'phpmailer_init', 'rd_mailtrap' );
     }
 
     if ( ! function_exists( 'cpanel_mail' ) ) {

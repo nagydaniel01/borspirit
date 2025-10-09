@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+	
 	if ( ! function_exists( 'register_award_taxonomy' ) ) {
 		/**
 		 * Registers a custom taxonomy 'award'.

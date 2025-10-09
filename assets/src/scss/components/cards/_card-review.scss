@@ -1,0 +1,69 @@
+.card.card--review {
+    overflow: visible;
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+
+    &::before,
+    &::after {
+        content: '';
+    }
+
+    &::before {
+        position: absolute;
+        top: 2px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, .1), inset 3px 3px 3px hsla(0, 0%, 100%, .2), inset -3px -3px 3px hsla(0, 0%, 0%, .2), 26px 18px 3px hsla(0, 0%, 0%, .15);
+        background-color: $primary-dark;
+        z-index: 2;
+    }
+
+    &::after {
+        position: absolute;
+        top: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: block;
+        width: 2px;
+        height: 32px;
+        background-color: #aaa;
+        z-index: 1;
+    }
+
+    .card__title {
+        color: $primary;
+    }
+
+    .card__lead {
+        color: $body-color;
+    }
+
+    .card__content {
+        background-color: $white;
+        background: linear-gradient(to bottom, rgba($white, 0.65), rgba($white, 0.75)), url('../images/paper-bg.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        padding: 2.5rem 1.25rem;
+        box-shadow: 0 10px 10px 2px rgba(0, 0, 0, .25);
+        transform: rotate(-3deg);
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: calc(50% + 14px);
+            height: 24px;
+            width: 2px;
+            background-color: hsla(0, 0%, 0%, .1);
+            box-shadow: 0 0 .25em hsla(0, 0%, 0%, .1);
+            transform: rotate(57.5deg);
+        }
+    }
+}

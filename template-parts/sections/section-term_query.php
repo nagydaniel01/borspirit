@@ -8,7 +8,6 @@ $section_lead       = $section['term_query_section_lead'] ?? '';
 
 $link               = $section['term_query_link'] ?? '';
 $slider             = $section['term_query_slider'] ?? '';
-$box                = $section['term_query_box'] ?? '';
 
 $url         = $link['url'] ?? '';
 $title       = $link['title'] ?? esc_url($url);

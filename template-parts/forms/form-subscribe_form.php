@@ -1,6 +1,13 @@
 <?php
     $current_user = wp_get_current_user();
     $prefix = 'mc_';
+
+    // Get Mailchimp settings
+    $mailchimp_api_key = get_field('mailchimp_api_key', 'option');
+    $mailchimp_audience_id = get_field('mailchimp_audience_id', 'option');
+
+    // Only show the form if both fields have values
+    if ( !empty($mailchimp_api_key) && !empty($mailchimp_audience_id) ) :
 ?>
 
 <form id="subscribe_form" class="form form--subscribe" method="post" action="<?php echo esc_url( admin_url('admin-ajax.php') ); ?>" novalidate>
@@ -46,3 +53,25 @@
         <div id="<?php echo esc_attr($prefix); ?>response" role="status" aria-live="polite"></div>
     </div>
 </form>
+
+<?php else : ?>
+
+    <?php
+        if ( current_user_can('manage_options') ) {
+            printf( 
+                '<div class="alert alert-danger" role="alert">%s</div>',
+                sprintf(
+                    __('Mailchimp configuration is missing. Please set <code>%s</code> and <code>%s</code> in the theme options.', TEXT_DOMAIN),
+                    esc_html('mailchimp_api_key'),
+                    esc_html('mailchimp_audience_id')
+                )
+            );
+        } else {
+            printf(
+                '<div class="alert alert-warning" role="alert">%s</div>',
+                esc_html__( 'Subscription form is temporarily unavailable. Please try again later.', TEXT_DOMAIN )
+            );
+        }
+    ?>
+
+<?php endif; // end check for Mailchimp credentials ?>

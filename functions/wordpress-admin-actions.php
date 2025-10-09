@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+    
     // ============================================================
     // ADMIN PAGE
     // ============================================================
@@ -19,6 +23,43 @@
             //remove_meta_box( 'dashboard_activity', 'dashboard', 'normal' );    // Activity (recent posts, comments)
         }
         add_action( 'wp_dashboard_setup', 'wpdocs_remove_dashboard_widgets' );
+    }
+
+    if ( ! function_exists( 'remove_wp_logo_from_admin_bar' ) ) {
+        /**
+         * Remove the WordPress logo from the admin bar.
+         *
+         * This function removes the default WordPress logo ('wp-logo') from the admin toolbar 
+         * for a cleaner backend appearance.
+         *
+         * @return void
+         */
+        function remove_wp_logo_from_admin_bar() {
+            global $wp_admin_bar;
+
+            if ( is_object( $wp_admin_bar ) ) {
+                $wp_admin_bar->remove_menu( 'wp-logo' );
+            }
+        }
+        add_action( 'wp_before_admin_bar_render', 'remove_wp_logo_from_admin_bar', 0 );
+    }
+
+    if ( ! function_exists( 'remove_wp_help_tabs' ) ) {
+        /**
+         * Remove contextual help tabs from WordPress admin screens.
+         *
+         * This function removes all contextual help tabs from the current admin screen.
+         * It is hooked into 'admin_head' so it runs when the admin screen is being built.
+         *
+         * @return void
+         */
+        function remove_wp_help_tabs() {
+            $screen = get_current_screen();
+            if ( method_exists( $screen, 'remove_help_tabs' ) ) {
+                $screen->remove_help_tabs();
+            }
+        }
+        add_action( 'admin_head', 'remove_wp_help_tabs' );
     }
 
     if ( ! function_exists( 'remove_footer_admin' ) ) {
@@ -42,6 +83,102 @@
             echo esc_html( $text );
         }
         add_filter( 'admin_footer_text', 'remove_footer_admin' );
+    }
+
+    // ============================================================
+    // LOGIN PAGE
+    // ============================================================
+
+    if ( ! function_exists( 'disable_shake_js_login_head' ) ) {
+        /**
+         * Disable the shake effect on the login page.
+         *
+         * This function removes the default WordPress login shake effect
+         * that is triggered when the login attempt fails.
+         *
+         * @return void
+         */
+        function disable_shake_js_login_head() {
+            remove_action('login_head', 'wp_shake_js', 12);
+        }
+        add_action( 'login_head', 'disable_shake_js_login_head' );
+    }
+
+    if ( ! function_exists( 'override_login_logo_url' ) ) {
+        /**
+         * Override the login logo URL.
+         *
+         * This function changes the URL that the login logo links to.
+         * It returns the site's main URL, which is typically the homepage.
+         *
+         * @return string The site's URL.
+         */
+        function override_login_logo_url() {
+            return get_bloginfo( 'url' );
+        }
+        add_filter( 'login_headerurl', 'override_login_logo_url' );
+    }
+
+    if ( ! function_exists( 'override_login_logo_url_title' ) ) {
+        /**
+         * Override the login logo URL title.
+         *
+         * This function sets the title attribute of the login logo.
+         * It returns the site's description as the title.
+         *
+         * @return string The site's description.
+         */
+        function override_login_logo_url_title() {
+            return get_bloginfo( 'description' );
+        }
+        add_filter( 'login_headertext', 'override_login_logo_url_title' );
+    }
+
+    if ( ! function_exists( 'override_login_style' ) ) {
+        /**
+         * Override and apply custom styles to the login page.
+         *
+         * This function customizes the login page by:
+         * - Replacing the default login logo with a custom one.
+         * - Applying a custom background image and styling to the login page.
+         *
+         * @return void
+         */
+        function override_login_style() {
+            ?>
+            <style type="text/css">
+                body.login {
+                    position: relative;
+                    background-image: url('wp-content/themes/borspirit/assets/src/images/footer.jpg');
+                    background-size: cover;
+                    background-position: center center;
+                }
+
+                body.login::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    z-index: -1;
+                    background: rgba(255,255,255,.65);
+                }
+
+                body.login h1 a {
+                    display: block;
+                    background-image: url('wp-content/themes/borspirit/assets/src/images/borspirit-logo-dark-ruby.svg');
+                    background-size: contain;
+                    background-position: center center;
+                    width: 150px;
+                    height: 84px;
+                    padding: 0;
+                    margin: 0 auto;
+                }
+            </style>
+            <?php
+        };
+        add_action( 'login_head', 'override_login_style', 999 );
     }
     
     // ============================================================

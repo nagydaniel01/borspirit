@@ -3,6 +3,10 @@
         exit;
     }
 
+    // ============================================================
+    // 1. WOOCOMMERCE IMAGE SIZES
+    // ============================================================
+
     if ( ! function_exists( 'custom_woocommerce_image_sizes' ) ) {
         /**
          * Customize WooCommerce product image sizes via filters.
@@ -47,6 +51,10 @@
         add_action( 'after_setup_theme', 'custom_woocommerce_image_sizes', 10 );
     }
 
+    // ============================================================
+    // 2. ADDRESS FORMATS
+    // ============================================================
+
     if ( ! function_exists( 'custom_hu_address_format' ) ) {
         /**
          * Modify the WooCommerce address format for Hungary (HU) 
@@ -62,6 +70,10 @@
         }
         add_filter( 'woocommerce_localisation_address_formats', 'custom_hu_address_format' );
     }
+
+    // ============================================================
+    // 3. QUANTITY BUTTONS
+    // ============================================================
 
     if ( ! function_exists( 'quantity_plus_sign' ) ) {
         /**
@@ -123,6 +135,56 @@
         add_action( 'woocommerce_before_quantity_input_field', 'quantity_minus_sign' );
     }
 
+    // ============================================================
+    // 4. SINGLE PRODUCT ELEMENTS
+    // ============================================================
+
+    if ( ! function_exists( 'woocommerce_template_single_rating' ) ) {
+        /**
+         * Display the single product rating section safely.
+         *
+         * Outputs the product's average rating, rating stars, and a link to the reviews section
+         * on a WooCommerce single product page.
+         *
+         * @since 1.0.0
+         * @return void
+         */
+        function woocommerce_template_single_rating() {
+            global $product;
+
+            // Ensure product object exists and is valid
+            if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) ) {
+                return;
+            }
+
+            $rating_count = (int) $product->get_rating_count();
+            $review_count = (int) $product->get_review_count();
+            $average      = $product->get_average_rating();
+
+            // Only display ratings if there are reviews
+            if ( $review_count > 0 ) {
+                echo '<div class="woocommerce-product-rating">';
+
+                // Output rating stars if available
+                $rating_html = wc_get_rating_html( $average, $rating_count );
+                if ( $rating_html ) {
+                    echo $rating_html;
+                }
+
+                // Display rating text and link to reviews section
+                printf(
+                    '<a href="#reviews" class="woocommerce-review-link" rel="nofollow">%s</a>',
+                    sprintf(
+                        esc_html__( 'Rated %s out of 5', 'woocommerce' ),
+                        esc_html( $average )
+                    )
+                );
+
+                echo '</div>';
+            }
+        }
+    }
+
     if ( ! function_exists( 'add_sticky_product_block' ) ) {
         /**
          * Adds a sticky product block to the WooCommerce single product page.
@@ -142,6 +204,10 @@
         }
         add_action( 'woocommerce_after_single_product', 'add_sticky_product_block', 5 );
     }
+
+    // ============================================================
+    // 5. UNIT PRICE AND DRS FEE
+    // ============================================================
 
     if (!function_exists('calculate_unit_price_per_liter')) {
         /**
@@ -274,6 +340,10 @@
         add_action( 'woocommerce_single_product_summary', 'display_drs_fee_in_summary', 16 );
     }
 
+    // ============================================================
+    // 6. PRODUCT AWARDS
+    // ============================================================
+
     if ( ! function_exists( 'display_product_awards' ) ) {
         /**
          * Display product awards with images on the single product page.
@@ -310,8 +380,12 @@
                 echo '</div>';
             }
         }
-        add_action( 'woocommerce_single_product_summary', 'display_product_awards', 9 );
+        add_action( 'woocommerce_single_product_summary', 'display_product_awards', 10 );
     }
+
+    // ============================================================
+    // 7. RECENTLY VIEWED PRODUCTS
+    // ============================================================
 
     if ( ! function_exists( 'custom_recently_viewed_products' ) ) {
         /**
@@ -364,6 +438,10 @@
         }
         add_action( 'woocommerce_after_single_product_summary', 'custom_recently_viewed_products', 25 );
     }
+
+    // ============================================================
+    // 8. PRODUCT TABS
+    // ============================================================
 
     if ( ! function_exists( 'rename_description_tab' ) ) {
         /**
@@ -520,6 +598,10 @@
         }
     }
 
+    // ============================================================
+    // 9. SHOP LOOP MODIFICATIONS
+    // ============================================================
+
     if ( ! function_exists( 'show_product_stock_in_loop' ) ) {
         /**
          * Display product stock status in the WooCommerce product loop.
@@ -606,6 +688,10 @@
         //add_action( 'woocommerce_after_shop_loop_item_title', 'show_product_attributes_in_loop', 25 );
     }
 
+    // ============================================================
+    // 10. PRICE MODIFICATIONS
+    // ============================================================
+
     if ( ! function_exists( 'borspirit_add_label_before_price' ) ) {
         /**
          * Add a custom label before the WooCommerce product price.
@@ -617,7 +703,17 @@
          * @param string $price The original WooCommerce price HTML.
          * @return string Modified price HTML with label.
          */
-        function borspirit_add_label_before_price( $price ) {
+        function borspirit_add_label_before_price( $price, $product ) {
+            // Exit early if in admin
+            if ( is_admin() ) {
+                return $price;
+            }
+
+            // Skip subscription products
+            if ( $product && ( $product->is_type( 'subscription' ) || $product->is_type( 'variable-subscription' ) ) ) {
+                return $price;
+            }
+
             try {
                 // Ensure price is a non-empty string
                 if ( empty( $price ) || ! is_string( $price ) ) {
@@ -634,7 +730,69 @@
                 return $price;
             }
         }
-        add_filter( 'woocommerce_get_price_html', 'borspirit_add_label_before_price' );
+        add_filter( 'woocommerce_get_price_html', 'borspirit_add_label_before_price', 10, 2 );
+    }
+
+    if ( ! function_exists( 'borspirit_display_club_price' ) ) {
+        /**
+         * Display both regular price and club price for everyone, and show sale difference if applicable.
+         *
+         * @since 1.1.0
+         * @param string     $price   The original WooCommerce price HTML.
+         * @param WC_Product $product The WooCommerce product object.
+         * @return string Modified price HTML including club price and sale difference.
+         */
+        function borspirit_display_club_price( $price, $product ) {
+            // Exit early if in admin
+            if ( is_admin() ) {
+                return $price;
+            }
+            
+            try {
+                // =========================
+                // Wrap original price in span
+                // =========================
+                $price = '<span class="price__regular">' . $price . '</span>';
+                
+                // =========================
+                // Club price
+                // =========================
+                $club_price = get_post_meta( $product->get_id(), '_club_price', true );
+                if ( $club_price !== '' && is_numeric( $club_price ) ) {
+                    $club_price_html = wc_price( $club_price );
+
+                    $label = '<span class="price-label">' . esc_html__( 'Klub ár', TEXT_DOMAIN ) . ': </span>';
+                    $price .= '<span class="price__club">' . $label . '<ins aria-hidden="true">' . $club_price_html . '</ins></span>';
+                }
+
+                // =========================
+                // Sale price difference
+                // =========================
+                /*
+                if ( $product->is_on_sale() ) {
+                    $regular_price = (float) $product->get_regular_price();
+                    $sale_price    = (float) $product->get_sale_price();
+
+                    if ( $regular_price > $sale_price ) {
+                        $amount_saved = $regular_price - $sale_price;
+                        $percent_saved = round( ( $amount_saved / $regular_price ) * 100 );
+
+                        $difference_html = ' <span class="price__savings"><span class="price-label">' . esc_html__( 'Kedvezmény', TEXT_DOMAIN ) . ': </span><span class="discount-amount">' . sprintf( esc_html__( '%s (-%s%%)', TEXT_DOMAIN ), wc_price( $amount_saved ), $percent_saved ) . '</span></span>';
+
+                        // Append after price HTML
+                        $price .= $difference_html;
+                    }
+                }
+                */
+
+                return $price;
+
+            } catch ( Exception $e ) {
+                error_log( 'Error displaying club/sale price: ' . $e->getMessage() );
+                return $price;
+            }
+        }
+        add_filter( 'woocommerce_get_price_html', 'borspirit_display_club_price', 20, 2 );
     }
 
     if ( ! function_exists( 'borspirit_add_club_price_field' ) ) {
@@ -684,68 +842,6 @@
             }
         }
         add_action( 'woocommerce_process_product_meta', 'borspirit_save_club_price_field' );
-    }
-
-    if ( ! function_exists( 'borspirit_display_club_price' ) ) {
-        /**
-         * Display both regular price and club price for everyone, and show sale difference if applicable.
-         *
-         * @since 1.1.0
-         * @param string     $price   The original WooCommerce price HTML.
-         * @param WC_Product $product The WooCommerce product object.
-         * @return string Modified price HTML including club price and sale difference.
-         */
-        function borspirit_display_club_price( $price, $product ) {
-            // Exit early if in admin
-            if ( is_admin() ) {
-                return $price;
-            }
-            
-            try {
-                // =========================
-                // Wrap original price in span
-                // =========================
-                $price = '<span class="price__regular">' . $price . '</span>';
-                
-                // =========================
-                // Club price
-                // =========================
-                $club_price = get_post_meta( $product->get_id(), '_club_price', true );
-                if ( $club_price !== '' && is_numeric( $club_price ) ) {
-                    $club_price_html = wc_price( $club_price );
-
-                    $label = '<span class="price-label">' . esc_html__( 'Klub ár', TEXT_DOMAIN ) . ': </span>';
-                    $price .= '<span class="price__club">' . $label . $club_price_html . '</span>';
-                }
-
-                // =========================
-                // Sale price difference
-                // =========================
-                /*
-                if ( $product->is_on_sale() ) {
-                    $regular_price = (float) $product->get_regular_price();
-                    $sale_price    = (float) $product->get_sale_price();
-
-                    if ( $regular_price > $sale_price ) {
-                        $amount_saved = $regular_price - $sale_price;
-                        $percent_saved = round( ( $amount_saved / $regular_price ) * 100 );
-
-                        $difference_html = ' <span class="price__savings"><span class="price-label">' . esc_html__( 'Kedvezmény', TEXT_DOMAIN ) . ': </span><span class="discount-amount">' . sprintf( esc_html__( '%s (-%s%%)', TEXT_DOMAIN ), wc_price( $amount_saved ), $percent_saved ) . '</span></span>';
-
-                        // Append after price HTML
-                        $price .= $difference_html;
-                    }
-                }
-                */
-
-                return $price;
-
-            } catch ( Exception $e ) {
-                error_log( 'Error displaying club/sale price: ' . $e->getMessage() );
-                return $price;
-            }
-        }
-        add_filter( 'woocommerce_get_price_html', 'borspirit_display_club_price', 20, 2 );
     }
 
     if ( ! function_exists( 'borspirit_apply_club_price_in_cart' ) ) {
@@ -982,6 +1078,10 @@
         //add_action( 'admin_footer-edit.php', 'quick_edit_subtitle_js' );
     }
 
+    // ============================================================
+    // 11. SHIPPING
+    // ============================================================
+
     if ( ! function_exists( 'show_free_shipping_notice' ) ) {
         /**
          * Display a notice showing how much more a customer needs to spend 
@@ -1063,98 +1163,4 @@
         add_action( 'woocommerce_before_checkout_form', 'show_free_shipping_notice' );
         add_action( 'bbloomer_before_woocommerce/cart', 'show_free_shipping_notice' );
         add_action( 'bbloomer_before_woocommerce/checkout', 'show_free_shipping_notice' );
-    }
-
-    // FIX THIS BELOW !!!
-    if ( ! function_exists( 'add_estimated_delivery_time_to_label' ) ) {
-        function add_estimated_delivery_time_to_label($label, $method) {
-            // Get the current locale
-            $locale = get_locale(); // Example: "hu_HU" for Hungarian
-
-            // Get the timezone set
-            $wordpress_timezone = get_option('timezone_string'); // Get timezone as string, e.g., "Europe/Budapest"
-            
-            if (empty($wordpress_timezone)) {
-                $wordpress_timezone = 'UTC'; // Default to UTC if no timezone is set in WordPress settings
-            }
-            
-            // Set the timezone
-            date_default_timezone_set($wordpress_timezone);
-    
-            // Get the current day and time
-            $current_time = current_time('H'); // Get current hour in 24h format
-            $current_day  = strtolower(current_time('l')); // Get the current day name (e.g., "monday") in lowercase
-    
-            // Define opening hours (all days in lowercase)
-            $opening_hours = array(
-                'monday'    => array('open' => 9, 'close' => 18),
-                'tuesday'   => array('open' => 9, 'close' => 18),
-                'wednesday' => array('open' => 9, 'close' => 18),
-                'thursday'  => array('open' => 9, 'close' => 18),
-                'friday'    => array('open' => 9, 'close' => 18),
-                'saturday'  => array('open' => 9, 'close' => 14),
-                'sunday'    => array('open' => 0, 'close' => 0) // Closed on Sundays
-            );
-    
-            // Set default estimated delivery days
-            $base_delivery_days = 2; // Default processing time in business days
-    
-            // Adjust based on opening hours
-            if ($opening_hours[$current_day]['open'] > 0) { // If shop is open today
-                if ($current_time >= $opening_hours[$current_day]['close']) {
-                    $base_delivery_days++; // If ordering after hours, add 1 extra day
-                }
-            } else {
-                $base_delivery_days++; // If ordering on a closed day, add 1 extra day
-            }
-    
-            // Calculate estimated delivery date
-            $estimated_timestamp = strtotime("+$base_delivery_days weekdays");
-    
-            // Format date using IntlDateFormatter for proper localization
-            $formatter = new IntlDateFormatter(
-                $locale,
-                IntlDateFormatter::FULL, // Use FULL for complete weekday & month names
-                IntlDateFormatter::NONE,
-                'Europe/Budapest',
-                IntlDateFormatter::GREGORIAN,
-                'yyyy. MMMM d., EEEE' // Example: "2024. március 22., péntek"
-            );
-            $estimated_date = $formatter->format($estimated_timestamp);
-    
-            // Handle Local Pickup with "Tomorrow" logic
-            $pickup_date = '';
-            $next_day_timestamp = strtotime("+1 day"); // Tomorrow's timestamp
-            $next_day = strtolower(date('l', $next_day_timestamp)); // Get tomorrow's day name in lowercase
-    
-            // Check if tomorrow is open, otherwise find the next available open day
-            if ($opening_hours[$next_day]['open'] > 0) {
-                $pickup_date = __('Tomorrow', 'ajandekplaza');
-            } else {
-                // Find the next open day
-                for ($i = 2; $i <= 7; $i++) { // Loop up to 7 days ahead
-                    $future_day_timestamp = strtotime("+$i days");
-                    $future_day = strtolower(date('l', $future_day_timestamp)); // Convert to lowercase
-                    if ($opening_hours[$future_day]['open'] > 0) {
-                        $pickup_date = $formatter->format($future_day_timestamp);
-                        break;
-                    }
-                }
-            }
-    
-            // Define delivery messages with custom class
-            $delivery_times = array(
-                'flat_rate'     => sprintf(__('Estimated delivery: %s', 'ajandekplaza'), $estimated_date),
-                'free_shipping' => sprintf(__('Estimated delivery: %s', 'ajandekplaza'), $formatter->format(strtotime("+($base_delivery_days + 2) weekdays"))),
-                'local_pickup'  => sprintf(__('Pickup available: %s', 'ajandekplaza'), $pickup_date)
-            );
-    
-            // Check if the shipping method exists in our list
-            if (array_key_exists($method->method_id, $delivery_times)) {
-                $label .= '<div class="shipping__list_estimate">' . esc_html($delivery_times[$method->method_id]) . '</div>';
-            }
-    
-            return $label;
-        }
-        //add_filter('woocommerce_cart_shipping_method_full_label', 'add_estimated_delivery_time_to_label', 10, 2);
     }

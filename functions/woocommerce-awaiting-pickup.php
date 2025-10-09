@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+    
     /**
      * Register a custom WooCommerce order status: "Awaiting Pickup"
      */
@@ -115,4 +119,69 @@
             return array( 'processing', 'on-hold', 'completed', 'awaiting-pickup' );
         }
         add_filter( 'woocommerce_reports_order_statuses', 'include_awaiting_pickup_order_status_to_reports', 20, 1 );
+    }
+
+    if ( ! function_exists( 'send_awaiting_pickup_wc_email' ) ) {
+        /**
+         * Sends a customer email for orders that are marked as "Awaiting Pickup".
+         *
+         * The email uses WooCommerce HTML styling by leveraging the WC_Mailer instance.
+         * It wraps the message in the WooCommerce template and styles it inline.
+         *
+         * @param int $order_id The WooCommerce order ID.
+         */
+        function send_awaiting_pickup_wc_email( $order_id ) {
+
+            // Validate order ID
+            if ( ! $order_id ) {
+                return;
+            }
+
+            // Get the order object
+            $order = wc_get_order( $order_id );
+            if ( ! $order ) {
+                return;
+            }
+
+            // Get the customer's billing email
+            $to = $order->get_billing_email();
+            if ( ! $to ) {
+                return;
+            }
+
+            // Prepare email subject and heading
+            $subject = sprintf(
+                /* translators: %1$s: site title, %2$s: order number */
+                __( '[%1$s] Your order #%2$s is ready for pickup', TEXT_DOMAIN ),
+                get_bloginfo( 'name' ),
+                $order->get_order_number()
+            );
+
+            $heading = __( 'Your Order is Ready for Pickup!', TEXT_DOMAIN );
+
+            // Prepare email body content
+            $message = sprintf(
+                /* translators: %1$s: customer first name, %2$s: order number */
+                __( "Hi %1\$s,\n\nGood news! Your order #%2\$s is now ready for pickup at our store.\n\nThank you for shopping with us!", TEXT_DOMAIN ),
+                $order->get_billing_first_name(),
+                $order->get_order_number()
+            );
+
+            // Get WooCommerce mailer instance
+            $mailer = WC()->mailer();
+
+            // Wrap message using WooCommerce HTML email template
+            $wrapped_message = $mailer->wrap_message( $heading, nl2br( $message ) );
+
+            // Create temporary WC_Email instance to apply inline styles
+            $wc_email = new WC_Email();
+            $html_message = $wc_email->style_inline( $wrapped_message );
+
+            // Prepare email headers for HTML content
+            $headers = array( 'Content-Type: text/html; charset=UTF-8' );
+
+            // Send the email
+            $mailer->send( $to, $subject, $html_message, $headers );
+        }
+        add_action( 'woocommerce_order_status_awaiting-pickup', 'send_awaiting_pickup_wc_email', 10, 1 );
     }

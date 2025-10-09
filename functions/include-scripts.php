@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+    
     if ( ! function_exists( 'theme_scripts' ) ) {
         /**
          * Dequeues unnecessary styles and enqueues theme-specific CSS and JS assets.
@@ -27,6 +31,8 @@
                     'read_less' => __( 'Show less', TEXT_DOMAIN ),
                 ),
             ) );
+
+            //wp_enqueue_style('dashicons');
 
             if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
                 wp_enqueue_script( 'comment-reply' );

@@ -61,6 +61,21 @@ legend {
   color: $danger;
 }
 
+form[role="search"] {
+  display: flex;
+  margin-bottom: 1rem;
+
+  label {
+    width: 100%;
+    margin: 0;
+  }
+
+  input[type="submit"],
+  button[type="submit"] {
+    margin-left: .875rem;
+  }
+}
+
 // WooCommerce password field wrapper
 .password-input {
   position: relative;

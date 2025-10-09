@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+    
     if ( ! function_exists( 'register_faq_post_type' ) ) {
         /**
          * Registers the "Gyakori kérdések" custom post type.

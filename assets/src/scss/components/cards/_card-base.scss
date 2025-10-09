@@ -8,7 +8,21 @@
 	box-shadow: 0 8px 20px 0 rgba(0, 0, 0, .15);
 	box-shadow: 8px 16px 20px -8px rgba(0, 0, 0, .15);
 
+	&.card--term:has(.card__header ~ .card__content) {
+		.card__content {
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			background: linear-gradient(to top, $primary, transparent);
+		}
+
+		.card__title {
+			color: $white;
+		}
+	}
+
 	.card__link {
+		position: relative;
 		display: flex;
 		flex-direction: column;
 		height: 100%;
@@ -25,7 +39,7 @@
 	.card__header {
 		flex: 0 0 auto;
 		position: relative;
-		overflow: hidden;
+		//overflow: hidden;
 		border-radius: $border-radius-xl;
 	}
 
@@ -78,19 +92,6 @@
 		margin-bottom: .75rem;
 		font-size: 1rem;
         color: rgba($black, .5);
-
-		&.card__lead--no-trim {
-			p {
-				display: block;
-			}
-		}
-
-		p {
-			display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 3;
-            overflow: hidden;
-		}
 	}
 
 	.card__button {

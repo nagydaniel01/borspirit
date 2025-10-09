@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+    
     if ( ! function_exists( 'clean_wp_head' ) ) {
         /**
          * Clean up unnecessary elements from the WordPress <head> section.
@@ -106,7 +110,7 @@
             }
         }
         
-        add_action( 'init', 'load_jquery_by_cdn', 20 );
+        //add_action( 'init', 'load_jquery_by_cdn', 20 );
     }
 
     if ( ! function_exists( 'add_jquery_by_cdn' ) ) {

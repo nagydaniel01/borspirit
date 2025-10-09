@@ -1,5 +1,11 @@
 <?php
-    if ( ! class_exists( 'WooCommerce' ) ) return;
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+    
+    if ( ! class_exists( 'WooCommerce' ) ) {
+        return;
+    }
 
     if ( ! function_exists( 'link_orders_at_registration' ) ) {
         /**

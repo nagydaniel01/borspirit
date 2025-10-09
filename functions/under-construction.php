@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+    
     if ( ! function_exists( 'show_under_construction_page' ) ) {
         /**
          * Display a Coming Soon page to guests (non-logged-in users) while hiding the site.

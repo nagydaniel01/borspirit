@@ -17,6 +17,19 @@
          */
         function mc_form_handler() {
             try {
+                // Ensure Mailchimp credentials are available
+                $api_key      = get_field('mailchimp_api_key', 'option');
+                $audience_id  = get_field('mailchimp_audience_id', 'option');
+
+                if ( empty($api_key) || empty($audience_id) ) {
+                    wp_send_json_error([
+                        'message' => __('Mailchimp configuration is missing. Please contact site administrator.', TEXT_DOMAIN)
+                    ], 500);
+                }
+
+                // Mailchimp subscription
+                $mailchimp = new MailchimpService($api_key, $audience_id);
+
                 // Ensure the request method is POST
                 if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
                     wp_send_json_error([
@@ -66,13 +79,7 @@
                     wp_send_json_error(['message' => __('You must agree to the privacy policy.', TEXT_DOMAIN)], 422);
                 }
 
-                // Mailchimp subscription
-                $mailchimp = new MailchimpService(
-                    get_field('mailchimp_api_key', 'option'),
-                    get_field('mailchimp_audience_id', 'option')
-                );
-
-                $subscribe = $mailchimp->subscribe($email, $name, '', ['WordPress'], 'subscribed');
+                $subscribe = $mailchimp->subscribe($email, $name, '', ['webshop'], 'subscribed');
 
                 // Handle Mailchimp errors safely
                 if ( is_wp_error($subscribe) ) {

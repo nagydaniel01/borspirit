@@ -7,7 +7,6 @@
     $section_lead       = $section['card_section_lead'] ?? '';
 
     $slider             = $section['card_slider'] ?? '';
-    $box                = $section['card_box'] ?? '';
 
     $card_items         = $section['card_items'] ?? [];
     $card_style         = $section['card_style'] ?? 'unordered';
@@ -23,7 +22,7 @@
 ?>
 
 <?php if (!empty($card_items)) : ?>
-    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--card <?php echo esc_attr($section_classes); ?><?php echo ($slider != false) ? ' section--slider' : ''; ?><?php echo ($box != false) ? ' section--box' : ''; ?>">
+    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--card <?php echo esc_attr($section_classes); ?><?php echo ($slider != false) ? ' section--slider' : ''; ?>">
         <div class="container">
             <?php if (($section_title && $section_hide_title !== true) || $section_lead) : ?>
                 <div class="section__header">

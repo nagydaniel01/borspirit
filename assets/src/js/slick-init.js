@@ -87,7 +87,7 @@ if (productReviewsSlider) {
         mobileFirst: true,
         infinite: true,
         autoplay: true,
-        autoplaySpeed: 3000,
+        autoplaySpeed: 5000,
         slidesToShow: 1,
         slidesToScroll: 1,
         arrows: false,
@@ -99,6 +99,7 @@ if (productReviewsSlider) {
                 breakpoint: 991,
                 settings: {
                     slidesToShow: 2,
+                    slidesToScroll: 2,
                     arrows: true,
                 }
             },
@@ -106,6 +107,7 @@ if (productReviewsSlider) {
                 breakpoint: 1199,
                 settings: {
                     slidesToShow: 3,
+                    slidesToScroll: 3,
                     arrows: true,
                 }
             }

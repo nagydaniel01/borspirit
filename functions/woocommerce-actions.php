@@ -1,12 +1,24 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+    
     /**
      * WooCommerce Customizations
-     * This file contains customizations for WooCommerce.
+     * -----------------------------------------------------
+     * Custom wrappers, layouts, fragments, and template tweaks.
+     * -----------------------------------------------------
      */
 
-    if ( ! class_exists( 'WooCommerce' ) ) return;
+    if ( ! class_exists( 'WooCommerce' ) ) {
+        return;
+    }
 
-    // Optional: Disable all default WooCommerce stylesheets
+    // ============================================================
+    // General Setup
+    // ============================================================
+
+    // Disable default WooCommerce styles
     add_filter('woocommerce_enqueue_styles', '__return_empty_array');
 
     // Remove default WooCommerce wrappers
@@ -26,97 +38,10 @@
         }
     }
     add_action( 'template_redirect', 'remove_woocommerce_sidebar_single_product' );
-    
-    // ---------------------------------------------
-    // Add blocks to shop and product single
-    // ---------------------------------------------
 
-    if ( ! function_exists( 'custom_woocommerce_output_content_wrapper' ) ) {
-        /**
-         * Output the opening wrapper for WooCommerce content.
-         */
-        function custom_woocommerce_output_content_wrapper() {
-            if (is_shop() || is_product_category() || is_tax() ) {
-                echo '<main class="page page--default page--archive page--archive-product"><section class="section section--default"><div class="container">';
-            } elseif (is_singular('product' ) ) {
-                echo '<main class="page page--default page--single page--single-product"><section class="section section--single section--single-product">';
-            }
-        }
-        add_action( 'woocommerce_before_main_content', 'custom_woocommerce_output_content_wrapper', 10 );
-    }
-
-    if ( ! function_exists( 'custom_woocommerce_output_content_wrapper_end' ) ) {
-        /**
-         * Output the closing wrapper for WooCommerce content.
-         */
-        function custom_woocommerce_output_content_wrapper_end() {
-            if (is_shop() || is_product_category() || is_tax() ) {
-                echo '</div></section></main>';
-            } elseif (is_singular('product' ) ) {
-                echo '</section></main>';
-            }
-        }
-        add_action( 'woocommerce_after_main_content', 'custom_woocommerce_output_content_wrapper_end', 10 );
-    }
-
-    if ( ! function_exists( 'custom_shop_layout_open' ) ) {
-        /**
-         * Open layout before products loop.
-         *
-         * Uses Bootstrap flex utilities + column widths.
-         * Sidebar will appear on the left (desktop) and stack under products on mobile.
-         *
-         * @hooked woocommerce_before_shop_loop - 5
-         */
-        function custom_shop_layout_open() {
-            echo '<div class="shop-layout row">';
-
-            // Products (right on desktop, above on mobile)
-            echo '<div class="shop-layout__content col-lg-9 col-md-8 order-0 order-lg-1">';
-        }
-        add_action( 'woocommerce_before_shop_loop', 'custom_shop_layout_open', 5 );
-    }
-
-    if ( ! function_exists( 'custom_shop_layout_close' ) ) {
-        /**
-         * Close layout after products loop.
-         *
-         * Closes the flex container opened in custom_shop_layout_open().
-         *
-         * @hooked woocommerce_after_shop_loop - 50
-         */
-        function custom_shop_layout_close() {
-            echo '</div>'; // Close .shop-layout__content
-
-            // Sidebar (left on desktop, below on mobile)
-            echo '<aside class="shop-layout__sidebar col-lg-3 col-md-4 order-1 order-lg-0">';
-            do_action( 'woocommerce_sidebar' ); // Loads WooCommerce sidebar
-            echo '</aside>';
-
-            echo '</div>'; // Close .shop-layout
-        }
-        add_action( 'woocommerce_after_shop_loop', 'custom_shop_layout_close', 50 );
-    }
-
-    if ( ! function_exists( 'custom_woocommerce_single_product_main_wrapper' ) ) {
-        /**
-         * Wraps the single product main content in a custom section and container.
-         */
-        function custom_woocommerce_single_product_main_wrapper() {
-            echo '<div class="section section--product-main"><div class="container"><div class="section__inner">';
-        }
-        add_action( 'woocommerce_before_single_product_summary', 'custom_woocommerce_single_product_main_wrapper', 5 );
-    }
-
-    if ( ! function_exists( 'custom_woocommerce_single_product_main_wrapper_end' ) ) {
-        /**
-         * Closes the custom section wrapper added around the single product main content.
-         */
-        function custom_woocommerce_single_product_main_wrapper_end() {
-            echo '</div></div></div>';
-        }
-        add_action( 'woocommerce_after_single_product_summary', 'custom_woocommerce_single_product_main_wrapper_end', 5 );
-    }
+    // ============================================================
+    // 5. BREADCRUMBS
+    // ============================================================
 
     if ( ! function_exists( 'custom_wrap_woocommerce_breadcrumbs' ) ) {
         /**
@@ -147,6 +72,10 @@
         }
         add_action( 'woocommerce_before_main_content', 'custom_breadcrumb_wrapper_end', 20 );
     }
+
+    // ============================================================
+    // 6. NOTICES & TOOLS WRAPPERS
+    // ============================================================
 
     if ( ! function_exists( 'custom_woocommerce_notices_wrapper' ) ) {
         /**
@@ -200,13 +129,111 @@
         }
         add_action( 'woocommerce_before_shop_loop', 'custom_woocommerce_catalog_ordering_wrapper_end', 35 );
     }
+    
+    // ============================================================
+    // Layout Wrappers
+    // ============================================================
 
-    // ---------------------------------------------
-    // Add blocks to product card
-    // ---------------------------------------------
+    if ( ! function_exists( 'custom_woocommerce_output_content_wrapper' ) ) {
+        /**
+         * Output the opening wrapper for WooCommerce content.
+         */
+        function custom_woocommerce_output_content_wrapper() {
+            if (is_shop() || is_product_category() || is_tax() ) {
+                echo '<main class="page page--default page--archive page--archive-product"><section class="section section--default"><div class="container">';
+            } elseif (is_singular('product') ) {
+                echo '<main class="page page--default page--single page--single-product"><section class="section section--single section--single-product">';
+            }
+        }
+        add_action( 'woocommerce_before_main_content', 'custom_woocommerce_output_content_wrapper', 10 );
+    }
 
-    // Product wrapper
+    if ( ! function_exists( 'custom_woocommerce_output_content_wrapper_end' ) ) {
+        /**
+         * Output the closing wrapper for WooCommerce content.
+         */
+        function custom_woocommerce_output_content_wrapper_end() {
+            if (is_shop() || is_product_category() || is_tax() ) {
+                echo '</div></section></main>';
+            } elseif (is_singular('product') ) {
+                echo '</section></main>';
+            }
+        }
+        add_action( 'woocommerce_after_main_content', 'custom_woocommerce_output_content_wrapper_end', 10 );
+    }
 
+    // ============================================================
+    // 3. SHOP PAGE STRUCTURE
+    // ============================================================
+
+    if ( ! function_exists( 'custom_shop_layout_open' ) ) {
+        /**
+         * Open layout before products loop.
+         *
+         * Uses Bootstrap flex utilities + column widths.
+         * Sidebar will appear on the left (desktop) and stack under products on mobile.
+         *
+         * @hooked woocommerce_before_shop_loop - 5
+         */
+        function custom_shop_layout_open() {
+            echo '<div class="shop-layout row">';
+
+            // Products (right on desktop, above on mobile)
+            echo '<div class="shop-layout__content col-lg-9 col-md-8 order-0 order-lg-1">';
+        }
+        add_action( 'woocommerce_before_shop_loop', 'custom_shop_layout_open', 5 );
+    }
+
+    if ( ! function_exists( 'custom_shop_layout_close' ) ) {
+        /**
+         * Close layout after products loop.
+         *
+         * Closes the flex container opened in custom_shop_layout_open().
+         *
+         * @hooked woocommerce_after_shop_loop - 50
+         */
+        function custom_shop_layout_close() {
+            echo '</div>'; // Close .shop-layout__content
+
+            // Sidebar (left on desktop, below on mobile)
+            echo '<aside class="shop-layout__sidebar col-lg-3 col-md-4 order-1 order-lg-0">';
+            do_action( 'woocommerce_sidebar' ); // Loads WooCommerce sidebar
+            echo '</aside>';
+
+            echo '</div>'; // Close .shop-layout
+        }
+        add_action( 'woocommerce_after_shop_loop', 'custom_shop_layout_close', 50 );
+    }
+
+    // ============================================================
+    // 4. SINGLE PRODUCT WRAPPERS
+    // ============================================================
+
+    if ( ! function_exists( 'custom_woocommerce_single_product_main_wrapper' ) ) {
+        /**
+         * Wraps the single product main content in a custom section and container.
+         */
+        function custom_woocommerce_single_product_main_wrapper() {
+            echo '<div class="section section--product-main"><div class="container"><div class="section__inner">';
+        }
+        add_action( 'woocommerce_before_single_product_summary', 'custom_woocommerce_single_product_main_wrapper', 5 );
+    }
+
+    if ( ! function_exists( 'custom_woocommerce_single_product_main_wrapper_end' ) ) {
+        /**
+         * Closes the custom section wrapper added around the single product main content.
+         */
+        function custom_woocommerce_single_product_main_wrapper_end() {
+            echo '</div></div></div>';
+        }
+        add_action( 'woocommerce_after_single_product_summary', 'custom_woocommerce_single_product_main_wrapper_end', 5 );
+    }
+
+    // ============================================================
+    // 7. PRODUCT LOOP STRUCTURE
+    // ============================================================
+
+    // Product crad wrapper
     if ( ! function_exists( 'custom_product_wrapper' ) ) {
         /**
          * Open a wrapper around each WooCommerce product in the loop
@@ -228,7 +255,6 @@
     }
 
     // Body wrapper
-
     if ( ! function_exists( 'custom_woocommerce_loop_body_wrapper' ) ) {
         /**
          * Open a wrapper around the WooCommerce product body.
@@ -250,7 +276,6 @@
     }
 
     // Image wrapper
-
     if ( ! function_exists( 'custom_woocommerce_loop_image_wrapper' ) ) {
         /**
          * Open a wrapper around the WooCommerce product image.
@@ -272,7 +297,6 @@
     }
 
     // Rating wrapper
-
     if ( ! function_exists( 'custom_woocommerce_loop_rating_wrapper' ) ) {
         /**
          * Outputs opening wrapper div for rating in WooCommerce product loop, only if product has a rating.
@@ -312,7 +336,6 @@
     }
 
     // Add to cart wrapper
-
     if ( ! function_exists( 'custom_woocommerce_loop_add_to_cart_wrapper' ) ) {
         /**
          * Open a wrapper around the WooCommerce add-to-cart button.
@@ -333,9 +356,9 @@
         add_action( 'woocommerce_after_shop_loop_item', 'custom_woocommerce_loop_add_to_cart_wrapper_end', 11 );
     }
 
-    // ---------------------------------------------
-    // Add blocks to product single
-    // ---------------------------------------------
+    // ============================================================
+    // 8. SINGLE PRODUCT CONTENT
+    // ============================================================
 
     if ( ! function_exists( 'move_short_description_under_title' ) ) {
         /**
@@ -408,6 +431,10 @@
         }
         //add_action( 'after_setup_theme', 'custom_woocommerce_move_product_tabs', 15 );
     }
+
+    // ============================================================
+    // 9. RELATED, UPSELLS & TABS
+    // ============================================================
 
     if ( ! function_exists( 'custom_woocommerce_move_upsells' ) ) {
         /**
@@ -489,21 +516,108 @@
         add_action( 'after_setup_theme', 'custom_woocommerce_move_related_products', 15 );
     }
 
-    if ( ! function_exists( 'custom_woocommerce_pagination_icons' ) ) {
+    // ============================================================
+    // 10. PRODUCT REVIEWS
+    // ============================================================
+
+    if ( ! function_exists( 'woocommerce_product_review_callback' ) ) {
         /**
-         * Replaces WooCommerce pagination arrows with custom SVG icons.
+         * Modify the WooCommerce product review list arguments.
          *
-         * @param array $args Pagination arguments.
-         * @return array Modified pagination arguments.
+         * @param array $args The default WooCommerce review list arguments.
+         * @return array Modified review list arguments with a custom callback.
          */
-        function custom_woocommerce_pagination_icons($args) {
-            $args['prev_text'] = '<svg class="icon icon-chevron-left"><use xlink:href="#icon-chevron-left"></use></svg>';
-            $args['next_text'] = '<svg class="icon icon-chevron-right"><use xlink:href="#icon-chevron-right"></use></svg>';
+        function woocommerce_product_review_callback( $args ) {
+            $args['style'] = 'div';
+            $args['callback'] = 'custom_woocommerce_comments';
             return $args;
         }
-        add_filter( 'woocommerce_pagination_args', 'custom_woocommerce_pagination_icons' );
-        add_filter( 'woocommerce_comment_pagination_args', 'custom_woocommerce_pagination_icons' );
+        add_filter( 'woocommerce_product_review_list_args', 'woocommerce_product_review_callback' );
     }
+
+    if ( ! function_exists( 'custom_woocommerce_comments' ) ) {
+        /**
+         * Custom WooCommerce comment (review) callback.
+         *
+         * Outputs the HTML structure for each product review item.
+         *
+         * @param WP_Comment $comment The comment object.
+         * @param array      $args    Comment display arguments.
+         * @param int        $depth   Depth of the comment in the comment thread.
+         * @return void
+         */
+        function custom_woocommerce_comments($comment, $args, $depth) {
+            if ( 'div' === $args['style'] ) {
+                $tag       = 'div';
+                $add_below = 'comment';
+            } else {
+                $tag       = 'li';
+                $add_below = 'div-comment';
+            }?>
+            <<?php echo $tag; ?> <?php comment_class( array_merge( empty( $args['has_children'] ) ? [] : ['parent'], ['card card--review'] ) ); ?> id="comment-<?php comment_ID() ?>"><?php 
+            if ( 'div' != $args['style'] ) { ?>
+                <div id="div-comment-<?php comment_ID() ?>" class="comment-body"><?php
+            } ?>
+            <div class="card__content">
+                <div class="card__header"><?php 
+                    /*
+                    if ( $args['avatar_size'] != 0 ) {
+                        echo get_avatar( $comment, $args['avatar_size'] ); 
+                    } 
+                    */
+                    printf( __( '<h3 class="card__title"><cite class="fn">%s</cite><span class="says">%s: </span></h3>' ), get_comment_author(), __( ' says', 'woocommerce' ) ); ?>
+                </div><?php 
+                if ( $rating = intval( get_comment_meta( $comment->comment_ID, 'rating', true ) ) ) {
+                    echo '<div class="card__rating">';
+                    echo wc_get_rating_html( $rating ); // WooCommerce function for star HTML
+                    echo '</div>';
+                }
+                if ( $comment->comment_approved == '0' ) { ?>
+                    <em class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.' ); ?></em><br/><?php 
+                } ?>
+
+                <div class="card__lead"><?php comment_text(); ?></div>
+
+                <!--
+                <div class="card__meta comment-meta commentmetadata">
+                    <a href="<?php //echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ); ?>"><?php
+                        /* translators: 1: date, 2: time */
+                        /*printf( 
+                            __('%1$s at %2$s'), 
+                            get_comment_date(),  
+                            get_comment_time() 
+                        );*/ ?>
+                    </a><?php 
+                    //edit_comment_link( __( '(Edit)' ), '  ', '' ); ?>
+                </div>
+                -->
+
+                <div class="reply">
+                    <?php 
+                        comment_reply_link( 
+                            array_merge( 
+                                $args, 
+                                array( 
+                                    'add_below' => $add_below, 
+                                    'depth'     => $depth, 
+                                    'max_depth' => $args['max_depth'] 
+                                ) 
+                            ) 
+                        ); ?>
+                </div>
+            </div>
+            <?php if ( 'div' != $args['style'] ) : ?>
+                </div><?php 
+            endif;
+        }
+
+        // Remove comment reply link
+        add_filter('comment_reply_link', '__return_empty_string');
+    }
+
+    // ============================================================
+    // 11. PRODUCT SECTIONS (ACF)
+    // ============================================================
 
     if ( ! function_exists('custom_woocommerce_single_product_sections') ) {
         /**
@@ -580,6 +694,10 @@
         }
         add_action( 'woocommerce_after_single_product_summary', 'custom_woocommerce_single_product_sections', 30 );
     }
+
+    // ============================================================
+    // 12. CART & MINI CART
+    // ============================================================
     
     if ( ! function_exists( 'refresh_offcanvas_minicart_fragments' ) ) {
         /**
@@ -649,4 +767,24 @@
             return $new_link;
         }
         add_filter( 'woocommerce_cart_item_remove_link', 'custom_cart_item_remove_link', 10, 2 );
+    }
+
+    // ============================================================
+    // 13. PAGINATION ICONS
+    // ============================================================
+
+    if ( ! function_exists( 'custom_woocommerce_pagination_icons' ) ) {
+        /**
+         * Replaces WooCommerce pagination arrows with custom SVG icons.
+         *
+         * @param array $args Pagination arguments.
+         * @return array Modified pagination arguments.
+         */
+        function custom_woocommerce_pagination_icons($args) {
+            $args['prev_text'] = '<svg class="icon icon-chevron-left"><use xlink:href="#icon-chevron-left"></use></svg>';
+            $args['next_text'] = '<svg class="icon icon-chevron-right"><use xlink:href="#icon-chevron-right"></use></svg>';
+            return $args;
+        }
+        add_filter( 'woocommerce_pagination_args', 'custom_woocommerce_pagination_icons' );
+        add_filter( 'woocommerce_comment_pagination_args', 'custom_woocommerce_pagination_icons' );
     }

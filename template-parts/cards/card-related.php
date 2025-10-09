@@ -1,5 +1,9 @@
 <?php
     $post_type    = $args['post_type'] ?? '';
+
+    if (empty($post_type)) {
+        return;
+    }
     
     $post_id      = get_the_ID();
     $title        = get_the_title();
@@ -49,9 +53,7 @@
         <?php endif; ?>
 
         <div class="card__content">
-            <h3 class="card__title">
-                <?php the_title(); ?>
-            </h3>
+            <h3 class="card__title"><?php the_title(); ?></h3>
 
             <div class="card__meta">
                 <?php if (!empty($categories) && is_array($categories)) : ?>

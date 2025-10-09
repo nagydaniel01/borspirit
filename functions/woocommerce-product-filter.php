@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit;
+    }
+
     if ( ! function_exists( 'product_filter' ) ) {
         /**
          * Handles AJAX request to filter products.
@@ -23,8 +27,8 @@
 
             wp_die();
         }
-        add_action( 'wp_ajax_product_filter', 'product_filter' );
-        add_action( 'wp_ajax_nopriv_product_filter', 'product_filter' );
+        //add_action( 'wp_ajax_product_filter', 'product_filter' );
+        //add_action( 'wp_ajax_nopriv_product_filter', 'product_filter' );
     }
 
     if ( ! function_exists( 'product_attributes_filter' ) ) {
@@ -51,6 +55,6 @@
 
             wp_die();
         }
-        add_action( 'wp_ajax_product_attributes_filter', 'product_attributes_filter' );
-        add_action( 'wp_ajax_nopriv_product_attributes_filter', 'product_attributes_filter' );
+        //add_action( 'wp_ajax_product_attributes_filter', 'product_attributes_filter' );
+        //add_action( 'wp_ajax_nopriv_product_attributes_filter', 'product_attributes_filter' );
     }

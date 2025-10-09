@@ -98,7 +98,7 @@ if ( $show_tab_title ) : ?>
                                 $title
                             );
                         ?>
-                        <a href="<?php echo esc_url( $term_link ); ?>" class="btn btn-primary" aria-label="<?php echo esc_attr( $aria_label ); ?>">
+                        <a href="<?php echo esc_url( $term_link ); ?>" class="btn btn-outline-primary" aria-label="<?php echo esc_attr( $aria_label ); ?>">
                             <span><?php echo esc_html__( 'Read more', TEXT_DOMAIN ); ?></span>
                             <svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg>
                         </a>

@@ -12,7 +12,7 @@
 
 <header class="header">
     <div class="container">
-        <nav class="navbar navbar-expand-lg header__nav nav nav--main js-nav-main">
+        <nav class="navbar navbar-expand-xl header__nav nav nav--main js-nav-main">
             <!-- Brand -->
             <a class="navbar-brand logo logo--header" href="<?php echo esc_url( trailingslashit( home_url() ) ); ?>">
                 <?php if ( $site_logo ) : ?>
@@ -24,7 +24,7 @@
             </a>
 
             <!-- Mobile header actions -->
-            <div class="header-actions d-flex align-items-center d-lg-none">
+            <div class="header-actions d-flex align-items-center d-xl-none">
                 <?php if ( class_exists( 'WooCommerce' ) ) : ?>
                     <!-- Mobile My Account / Login -->
                     <?php if ( is_user_logged_in() ) : ?>
