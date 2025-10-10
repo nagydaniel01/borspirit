@@ -54,6 +54,7 @@
       <tr><td>Bootstrap</td><td>Frontend keretrendszer (reszponzív dizájn és komponensek)</td></tr>
       <tr><td>​​Advanced Custom Fields (ACF)</td><td>Egyedi mezők kezelése</td></tr>
       <tr><td>Custom post types (CPT)</td><td>Egyedi tartalomtípusok létrehozása</td></tr>
+      <tr><td>Custom taxonomies</td><td>Egyedi kategóriatípusok létrehozása</td></tr>
       <tr><td>SASS / SCSS</td><td>Strukturált és változóalapú stílusírás</td></tr>
       <tr><td>Webpack</td><td>Asset buildelés és optimalizálás</td></tr>
       <tr><td>OOP + Clean Code</td><td>Olvasható, moduláris és fenntartható PHP struktúra</td></tr>
@@ -76,7 +77,9 @@
 <hr>
 
 <section>
-  <h2>🧩 ACF és Bootstrap integráció</h2>
+  <h2>🧩 Egyedi WordPress sablon a következőkre alapozva</h2>
+  <p>Fejlesztésünk célja egy egyedi WordPress sablon létrehozása, amely kiemelkedő teljesítményt és testreszabhatóságot kínál. A sablon alapját a következő technológiák adják:</p>
+
   <h3>🔹 ACF (Advanced Custom Fields)</h3>
   <ul>
     <li>Testreszabható admin mezők</li>
@@ -89,6 +92,24 @@
     <li>Reszponzív grid rendszer</li>
     <li>Egységes komponensek</li>
     <li>Könnyen testreszabható változók</li>
+  </ul>
+
+  <h3>📦 Custom Post Types (CPT)</h3>
+  <p>Minden post type a <code>register_post_types.php</code> fájlban kerül létrehozásra.</p>
+  <ul>
+    <li>Egyedi tartalomtípusok (pl. hírek, projektek, borok)</li>
+    <li>Saját mezők, taxonómiák és sablonok rendelhetők hozzá</li>
+    <li>Külön menüpont az admin felületen</li>
+    <li>Könnyíti a tartalom szervezését és szűrését</li>
+  </ul>
+
+  <h3>🏷️ Custom Taxonomies</h3>
+  <p>Minden taxonomy a <code>register_taxonomies.php</code> fájlban kerül létrehozásra.</p>
+  <ul>
+    <li>Egyedi taxonómiák a CPT-khez (pl. szolgáltatások, projekttípusok)</li>
+    <li>Hierarchikus (kategória-szerű) vagy címke-szerű struktúra</li>
+    <li>Admin felületen szűrés és csoportosítás</li>
+    <li>Sablonokhoz rendelhetők (<code>taxonomy-{taxonomy_neve}.php</code>)</li>
   </ul>
 </section>
 
@@ -156,32 +177,6 @@
     <li>Dinamikus adatok átadása a JS-nek <code>wp_localize_script</code> segítségével (pl. <code>ajax_url</code>, felhasználói ID, üzenetek)</li>
     <li>Hiba- és státuszkezelés logolással (<code>error_log</code>) és frontenden</li>
     <li>Segít a felhasználói élmény javításában: oldalletöltés nélkül frissül az adat</li>
-  </ul>
-</section>
-
-<hr>
-
-<section>
-  <h2>📦 Custom Post Types (CPT)</h2>
-  <p>Minden Post Type a <code>register_post_types.php</code> fájlban létrehozva.</p>
-  <ul>
-    <li>Egyedi tartalomtípusok létrehozása (pl. hírek, projektek, borok)</li>
-    <li>Saját mezők, taxonómiák és sablonok rendelhetők hozzá</li>
-    <li>Admin felületen külön menüpont jelenik meg</li>
-    <li>Könnyíti a tartalom szervezését és szűrését</li>
-  </ul>
-</section>
-
-<hr>
-
-<section>
-  <h2>🏷️ Custom Taxonomies</h2>
-  <p>Minden Taxonomy a <code>register_taxonomies.php</code> fájlban létrehozva.</p>
-  <ul>
-    <li>Egyedi taxonómiák létrehozása a CPT-khez (pl. szolgáltatások, projekttípusok)</li>
-    <li>Hierarchikus (kategória-szerű) vagy címke-szerű struktúra</li>
-    <li>Admin felületen szűrés és csoportosítás</li>
-    <li>Sablonokhoz rendelhetők (<code>taxonomy-{taxonomy_neve}.php</code>)</li>
   </ul>
 </section>
 
