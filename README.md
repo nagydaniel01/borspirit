@@ -8,7 +8,7 @@
 <section>
   <h2>🎯 Cél és Megindoklás</h2>
   <p>
-    A BorSpirit x NagyDanielEV WordPress Theme célja, hogy <strong>egységes, moduláris és jól dokumentált WordPress sablon</strong> alapot biztosítson a cég fejlesztői számára. Az egységes fejlesztési környezet elősegíti a <strong>hatékony csapatmunkát</strong>, a <strong>minőségbiztosítást</strong> és a <strong>könnyű karbantarthatóságot</strong>.
+    A BorSpirit x NagyDanielEV WordPress Theme célja, hogy <strong>egységes, moduláris és jól dokumentált WordPress sablon</strong> alapot biztosítson a projekt fejlesztői számára. Az egységes fejlesztési környezet elősegíti a <strong>hatékony csapatmunkát</strong>, a <strong>minőségbiztosítást</strong> és a <strong>könnyű karbantarthatóságot</strong>.
   </p>
 
   <h3>Előnyök</h3>
@@ -65,15 +65,75 @@
 <hr>
 
 <section>
+  <h2>🧠 OOP és Clean Code</h2>
+  <ul>
+    <li>Külön osztályok (pl. CPT, Widget, Shortcode)</li>
+    <li>Namespace és autoload a Composer segítségével</li>
+    <li>Egyszerű, olvasható, karbantartható kód</li>
+  </ul>
+</section>
+
+<hr>
+
+<section>
+  <h2>🧩 ACF és Bootstrap integráció</h2>
+  <h3>🔹 ACF (Advanced Custom Fields)</h3>
+  <ul>
+    <li>Testreszabható admin mezők</li>
+    <li>Felhasználóbarát tartalomkezelés</li>
+    <li>Gyorsabb adminisztráció</li>
+  </ul>
+
+  <h3>🔹 Bootstrap</h3>
+  <ul>
+    <li>Reszponzív grid rendszer</li>
+    <li>Egységes komponensek</li>
+    <li>Könnyen testreszabható változók</li>
+  </ul>
+</section>
+
+<hr>
+
+<section>
+  <h2>🔹 Theme Constants (define)</h2>
+  <ul>
+    <li>Konstansok globális, változtathatatlan értékek tárolására a theme-ben</li>
+    <li>Segít egységesen hivatkozni útvonalakra, URL-ekre, oldal-azonosítókra és beállításokra</li>
+    <li>Példák: <code>TEMPLATE_PATH</code>, <code>ASSETS_URI</code>, <code>HOME_PAGE_ID</code>, <code>ASSETS_VERSION</code></li>
+    <li>Megkönnyíti a fejlesztést és csökkenti a hibalehetőségeket</li>
+  </ul>
+</section>
+
+<hr>
+
+<section>
+  <h2>🖥️ Theme CSS & JS Enqueue</h2>
+  <ul>
+    <li>Theme-specifikus CSS és JS betöltése (<code>styles.css</code> és <code>scripts.js</code>)</li>
+    <li>Dinamikus adatok átadása JavaScript-nek <code>wp_localize_script</code>-tel:
+      <ul>
+        <li><code>ajaxurl</code> – AJAX hívásokhoz</li>
+        <li><code>resturl</code> – REST API eléréshez</li>
+        <li><code>themeurl</code>, <code>siteurl</code> – theme/site útvonalak</li>
+        <li>Fordítások (<code>read_more</code>, <code>read_less</code>)</li>
+      </ul>
+    </li>
+  </ul>
+  <p>Ez a funkció biztosítja, hogy a theme minden oldalon **egységesen, modulárisan és optimalizáltan** töltse be a stílusokat és szkripteket.</p>
+</section>
+
+<hr>
+
+<section>
   <h2>🧱 Fájlrendszer és Fejlesztési Szabványok</h2>
   <h3>📁 Functions mappa</h3>
   <p>Minden egyedi funkció külön fájlban a <code>functions</code> mappában:</p>
   <pre>
-- functions/
-  - header_customization.php
-  - navigation_functions.php
-  - post_customization.php
-  - widget_functions.php
+    - functions/
+      - include_scripts.php
+      - register_ajax.php
+      - register_post_types.php
+      - register_taxonomies.php
   </pre>
 
   <h3>📜 Fájlnevezési konvenciók</h3>
@@ -87,34 +147,119 @@
 <hr>
 
 <section>
+  <h2>⚡ AJAX Funkciók</h2>
+  <p>Minden AJAX funkció a <code>register_ajax.php</code> fájlban létrehozva.</p>
+  <ul>
+    <li>Aszinkron adatküldés és -fogadás a frontenden (pl. űrlapok, szűrők)</li>
+    <li>PHP backend fájlok a <code>/ajax/php/</code> mappában</li>
+    <li>JS fájlok a <code>/ajax/js/</code> mappában, betöltés a <code>wp_enqueue_script</code>-tel</li>
+    <li>Dinamikus adatok átadása a JS-nek <code>wp_localize_script</code> segítségével (pl. <code>ajax_url</code>, felhasználói ID, üzenetek)</li>
+    <li>Hiba- és státuszkezelés logolással (<code>error_log</code>) és frontenden</li>
+    <li>Segít a felhasználói élmény javításában: oldalletöltés nélkül frissül az adat</li>
+  </ul>
+</section>
+
+<hr>
+
+<section>
+  <h2>📦 Custom Post Types (CPT)</h2>
+  <p>Minden Post Type a <code>register_post_types.php</code> fájlban létrehozva.</p>
+  <ul>
+    <li>Egyedi tartalomtípusok létrehozása (pl. hírek, projektek, borok)</li>
+    <li>Saját mezők, taxonómiák és sablonok rendelhetők hozzá</li>
+    <li>Admin felületen külön menüpont jelenik meg</li>
+    <li>Könnyíti a tartalom szervezését és szűrését</li>
+  </ul>
+</section>
+
+<hr>
+
+<section>
+  <h2>🏷️ Custom Taxonomies</h2>
+  <p>Minden Taxonomy a <code>register_taxonomies.php</code> fájlban létrehozva.</p>
+  <ul>
+    <li>Egyedi taxonómiák létrehozása a CPT-khez (pl. szolgáltatások, projekttípusok)</li>
+    <li>Hierarchikus (kategória-szerű) vagy címke-szerű struktúra</li>
+    <li>Admin felületen szűrés és csoportosítás</li>
+    <li>Sablonokhoz rendelhetők (<code>taxonomy-{taxonomy_neve}.php</code>)</li>
+  </ul>
+</section>
+
+<hr>
+
+<section>
+  <h2>📄 Oldalsablonok (Single / Archive)</h2>
+  <pre>
+    <code>
+      single-news.php
+      archive-news.php
+    </code>
+  </pre>
+  <p>Regisztrálás filterekkel:</p>
+  <pre>
+    <code>
+      add_filter('single_template', 'news_cpt_single_template');
+      add_filter('archive_template', 'news_cpt_archive_template');
+    </code>
+  </pre>
+</section>
+
+<hr>
+
+<section>
+    <h2>📂 Template-parts mappa struktúrája</h2>
+    <pre>
+      <code>
+        template-parts/
+        ├── blocks/        # Általános blokkok
+        ├── cards/         # Kártya típusú elemek
+        ├── dialogs/       # Pop-up ablakok, modálisok
+        ├── forms/         # Űrlapok
+        ├── global/        # Globális részek (header, footer)
+        ├── queries/       # Loop-ok és egyedi lekérdezések
+        ├── sections/      # Oldalonkénti szekciók
+        ├── sidebars/      # Oldalsáv komponensek
+        └── flexible-elements  # Rugalmas, ACF alapú modulok
+      </code>
+    </pre>
+    <ul>
+      <li><strong>Újrahasználhatóság:</strong> Bármelyik oldalhoz vagy post típushoz újra felhasználható részek.</li>
+      <li><strong>Modularitás:</strong> Külön mappákba szervezett funkciók és blokkok.</li>
+      <li><strong>ACF integráció:</strong> Flexible-elements mappa az ACF “Flexible Content” mezőihez kapcsolódik.</li>
+      <li><strong>Egységes naming és struktúra:</strong> Könnyen megtalálható minden részlet.</li>
+    </ul>
+</section>
+<hr>
+
+<section>
   <h2>🎨 SCSS és BEM Szabályok</h2>
   <p>SCSS szerkezet:</p>
   <pre>
     <code>
-scss/
-├── components/
-│   ├── blocks/
-│   ├── cards/
-│   ├── global/
-│   ├── headlines/
-│   ├── navigations/
-│   ├── pages/
-│   ├── sections/
-│   ├── sidebars/
-│   └── sliders/
-│       ├── _blocks.scss
-│       ├── _cards.scss
-│       ├── _global.scss
-│       ├── _headlines.scss
-│       ├── _navigation.scss
-│       ├── _pages.scss
-│       ├── _sections.scss
-│       ├── _sidebars.scss
-│       └── _sliders.scss
-├── vendors/
-│   └── (pl. Bootstrap, Swiper, stb.)
-├── _variables.scss
-└── styles.scss
+      scss/
+      ├── components/
+      │   ├── blocks/
+      │   ├── cards/
+      │   ├── global/
+      │   ├── headlines/
+      │   ├── navigations/
+      │   ├── pages/
+      │   ├── sections/
+      │   ├── sidebars/
+      │   └── sliders/
+      │       ├── _blocks.scss
+      │       ├── _cards.scss
+      │       ├── _global.scss
+      │       ├── _headlines.scss
+      │       ├── _navigation.scss
+      │       ├── _pages.scss
+      │       ├── _sections.scss
+      │       ├── _sidebars.scss
+      │       └── _sliders.scss
+      ├── vendors/
+      │   └── (pl. Bootstrap, Swiper, stb.)
+      ├── _variables.scss
+      └── styles.scss
     </code>
   </pre>
 
@@ -152,46 +297,14 @@ scss/
 <hr>
 
 <section>
-  <h2>🧩 ACF, CPT és Bootstrap integráció</h2>
-  <h3>🔹 ACF (Advanced Custom Fields)</h3>
-  <ul>
-    <li>Testreszabható admin mezők</li>
-    <li>Felhasználóbarát tartalomkezelés</li>
-    <li>Gyorsabb adminisztráció</li>
-  </ul>
-
-  <h3>🔹 CPT (Custom Post Type)</h3>
-  <ul>
-    <li>Egyedi tartalomtípusok (pl. hírek, projektek)</li>
-    <li>Taxonómiák és mezők hozzárendelése</li>
-  </ul>
-
-  <h3>🔹 Bootstrap</h3>
-  <ul>
-    <li>Reszponzív grid rendszer</li>
-    <li>Egységes komponensek</li>
-    <li>Könnyen testreszabható változók</li>
-  </ul>
-</section>
-
-<hr>
-
-<section>
-  <h2>🧠 OOP és Clean Code</h2>
-  <ul>
-    <li>Külön osztályok (pl. CPT, Widget, Shortcode)</li>
-    <li>Namespace és autoload a Composer segítségével</li>
-    <li>Egyszerű, olvasható, karbantartható kód</li>
-  </ul>
-</section>
-
-<hr>
-
-<section>
   <h2>🧰 JS és SVG struktúra</h2>
   <p>JS fájlok az <code>assets/src/js</code> mappában:</p>
-  <pre><code>import './valami.js';
-import $ from 'jquery';</code></pre>
+  <pre>
+    <code>
+      import './valami.js';
+      import $ from 'jquery';
+    </code>
+  </pre>
 
   <p>SVG ikonok az <code>assets/src/svg</code> mappában, használatuk:</p>
   <pre><code>&lt;svg class="icon icon-valami"&gt;
@@ -199,17 +312,6 @@ import $ from 'jquery';</code></pre>
 &lt;/svg&gt;</code></pre>
 
   <p>Képek helye: <code>assets/src/images</code> → Webpack után: <code>assets/dist/images</code></p>
-</section>
-
-<hr>
-
-<section>
-  <h2>📄 Oldalsablonok (Single / Archive)</h2>
-  <pre><code>single-news.php  
-archive-news.php</code></pre>
-  <p>Regisztrálás filterekkel:</p>
-  <pre><code>add_filter('single_template', 'news_cpt_single_template');
-add_filter('archive_template', 'news_cpt_archive_template');</code></pre>
 </section>
 
 <hr>
@@ -228,9 +330,7 @@ add_filter('archive_template', 'news_cpt_archive_template');</code></pre>
 
 <section>
   <h2>✅ Összegzés</h2>
-  <p>
-    A <strong>BorSpirit / RevindDigital WordPress Theme</strong> egy modern, egységes és skálázható fejlesztői alap, amely:
-  </p>
+  <p>A <strong>BorSpirit x RevindDigital WordPress Theme</strong> egy modern, egységes és skálázható fejlesztői alap, amely:</p>
   <ul>
     <li>gyorsítja a fejlesztést,</li>
     <li>csökkenti a hibákat,</li>
@@ -240,7 +340,5 @@ add_filter('archive_template', 'news_cpt_archive_template');</code></pre>
 </section>
 
 <footer>
-  <p><strong>Készült:</strong> Revind Digital fejlesztői csapat<br>
-  📅 2023 — folyamatos fejlesztés alatt<br>
-  📚 Verzió: v0.1</p>
+  <p><strong>Készült:</strong><br>Nagy Dániel EV<br>📅 2025 — folyamatos fejlesztés alatt<br>📚 Verzió: v1.0</p>
 </footer>
