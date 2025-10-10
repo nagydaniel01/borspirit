@@ -211,22 +211,27 @@
     <pre>
       <code>
         template-parts/
-        ├── blocks/        # Általános blokkok
-        ├── cards/         # Kártya típusú elemek
-        ├── dialogs/       # Pop-up ablakok, modálisok
-        ├── forms/         # Űrlapok
-        ├── global/        # Globális részek (header, footer)
-        ├── queries/       # Loop-ok és egyedi lekérdezések
-        ├── sections/      # Oldalonkénti szekciók
-        ├── sidebars/      # Oldalsáv komponensek
-        └── flexible-elements  # Rugalmas, ACF alapú modulok
+        ├── blocks/                 # Általános blokkok (pl. CTA, icon-box, grid elemek)
+        ├── cards/                  # Kártya típusú elemek (pl. hírek, termékek, projektek)
+        ├── dialogs/                # Pop-up ablakok, modálisok
+        ├── forms/                  # Űrlapok (pl. kapcsolat, hírlevél)
+        ├── global/                 # Globális részek (header, footer, navigation)
+        ├── queries/                # Loop-ok és egyedi lekérdezések (pl. WP_Query sablonok)
+        ├── sections/               # Oldalonkénti szekciók (ACF Flexible Content elemek)
+        │   ├── section-hero.php         # Hero szekció (kiemelt tartalom, háttérkép, cím, CTA)
+        │   ├── section-gallery.php      # Képgaléria szekció
+        │   ├── section-testimonials.php # Vélemények / referenciák szekció
+        │   └── section-contact.php      # Kapcsolat szekció
+        ├── sidebars/               # Oldalsáv komponensek
+        └── flexible-elements.php   # ACF „Flexible Content” logika betöltése
       </code>
     </pre>
     <ul>
       <li><strong>Újrahasználhatóság:</strong> Bármelyik oldalhoz vagy post típushoz újra felhasználható részek.</li>
       <li><strong>Modularitás:</strong> Külön mappákba szervezett funkciók és blokkok.</li>
-      <li><strong>ACF integráció:</strong> Flexible-elements mappa az ACF “Flexible Content” mezőihez kapcsolódik.</li>
-      <li><strong>Egységes naming és struktúra:</strong> Könnyen megtalálható minden részlet.</li>
+      <li><strong>ACF integráció:</strong> A <code>flexible-elements.php</code> és a <code>sections/</code> mappa az ACF “Flexible Content” mezőihez kapcsolódik.</li>
+      <li><strong>Rugalmas oldalépítés:</strong> Az admin felületen az oldalak szekciói (pl. hero, galéria, kontakt) szabadon hozzáadhatók és átrendezhetők.</li>
+      <li><strong>Egységes naming és struktúra:</strong> Könnyen megtalálható, logikusan felépített fájlrendszer minden modulhoz.</li>
     </ul>
 </section>
 <hr>
@@ -237,31 +242,42 @@
   <pre>
     <code>
       scss/
-      ├── components/
-      │   ├── blocks/
-      │   ├── cards/
-      │   ├── global/
-      │   ├── headlines/
-      │   ├── navigations/
-      │   ├── pages/
-      │   ├── sections/
-      │   ├── sidebars/
-      │   └── sliders/
-      │       ├── _blocks.scss
-      │       ├── _cards.scss
-      │       ├── _global.scss
-      │       ├── _headlines.scss
-      │       ├── _navigation.scss
-      │       ├── _pages.scss
-      │       ├── _sections.scss
-      │       ├── _sidebars.scss
-      │       └── _sliders.scss
-      ├── vendors/
-      │   └── (pl. Bootstrap, Swiper, stb.)
-      ├── _variables.scss
-      └── styles.scss
+      ├── components/                 # Komponensek
+      │   ├── blocks/                 # Általános blokkok
+      │   │   └── _block-base.scss        # Alap blokkstílusok (spacing, layout)
+      │   ├── cards/                  # Kártyák
+      │   │   ├── _card-base.scss         # Kártyák általános alapstílusai
+      │   │   └── _card-post.scss         # Egyedi kártyastílus bejegyzésekhez (Post CPT)
+      │   ├── global/                 # Globális stílusok (header, footer)
+      │   ├── headlines/              # Címsorok, tipográfia
+      │   ├── navigations/            # Menü- és navigációs elemek
+      │   ├── pages/                  # Oldalspecifikus stílusok
+      │   ├── sections/               # Oldalszekciók
+      │   │   ├── _section-base.scss      # Általános szekcióstílusok (padding, háttér, grid)
+      │   │   └── _section-hero.scss      # Hero szekció (kiemelt tartalom a kezdőlapon)
+      │   ├── sidebars/               # Oldalsávok
+      │   └── sliders/                # Csúszkák, galériák
+      │
+      │   ├── _blocks.scss
+      │   ├── _cards.scss
+      │   ├── _global.scss
+      │   ├── _headlines.scss
+      │   ├── _navigation.scss
+      │   ├── _pages.scss
+      │   ├── _sections.scss
+      │   ├── _sidebars.scss
+      │   └── _sliders.scss
+      ├── vendors/                    # Külső könyvtárak (pl. Bootstrap, Swiper)
+      ├── _variables.scss             # Színek, méretek, tipográfia, mixinek
+      └── styles.scss                 # Főfájl, amely importálja az összes SCSS modult
     </code>
   </pre>
+  <ul>
+    <li><strong>_block-base.scss:</strong> minden blokk alapstílusát tartalmazza (pl. margók, padding, reszponzív elrendezés)</li>
+    <li><strong>Modularitás:</strong> külön fájl minden komponensnek az átláthatóság érdekében</li>
+    <li><strong>Egységes naming:</strong> BEM konvenció és logikus struktúra</li>
+    <li><strong>Vendors mappa:</strong> külső könyvtárak (Bootstrap, Swiper) elkülönítve</li>
+  </ul>
 
   <h3>BEM elnevezési konvenció</h3>
   <ul>
@@ -270,27 +286,6 @@
     <li><code>.block--modifier</code> – módosító / állapot</li>
     <li>Állapotok: <code>.is-active</code>, <code>.is-open</code></li>
     <li>JS: <code>.js-nav-toggle</code></li>
-  </ul>
-
-  <h3>📂 SCSS struktúra</h3>
-  <ul>
-    <li><strong>components/</strong> – komponensek
-      <ul>
-        <li>blocks/ – blokkok</li>
-        <li>cards/ – kártyák</li>
-        <li>global/ – globális stílusok</li>
-        <li>headlines/ – címsorok</li>
-        <li>navigations/ – navigációk</li>
-        <li>pages/ – oldalak</li>
-        <li>sections/ – szekciók</li>
-        <li>sidebars/ – oldalsávok</li>
-        <li>sliders/ – csúszkák</li>
-        <li>_blocks.scss, _cards.scss, _global.scss, _headlines.scss, _navigation.scss, _pages.scss, _sections.scss, _sidebars.scss, _sliders.scss – komponens fájlok</li>
-      </ul>
-    </li>
-    <li><strong>vendors/</strong> – külső könyvtárak (pl. Bootstrap, Swiper)</li>
-    <li><strong>_variables.scss</strong> – színek, méretek, tipográfia</li>
-    <li><strong>styles.scss</strong> – összefoglaló fájl, amely importálja az összes SCSS fájlt</li>
   </ul>
 </section>
 
@@ -312,6 +307,56 @@
 &lt;/svg&gt;</code></pre>
 
   <p>Képek helye: <code>assets/src/images</code> → Webpack után: <code>assets/dist/images</code></p>
+</section>
+
+<hr>
+
+<section>
+  <h2>🧩 Section–Card Kapcsolat</h2>
+  <p>
+    A section–card hivatkozás célja, hogy a szekciók (<code>template-parts/sections/</code>) dinamikusan a megfelelő kártyakomponenst (<code>template-parts/cards/</code>) töltsék be az adott post type alapján.
+  </p>
+
+  <div class="doc-card" style="border:1px solid #ddd; padding:16px; margin:16px 0; border-radius:8px; background:#fafafa;">
+    <h3>🔹 PHP Példa</h3>
+    <pre>
+      <code>
+          &lt;?php
+          $post_type = get_post_type(); // Aktuális post type lekérése
+          $template_args = array('post_type' =&gt; esc_attr($post_type));
+
+          $template = locate_template("template-parts/cards/card-{$post_type}.php");
+
+          if (!empty($template)) {
+              // Ha létezik a post type-hoz tartozó kártya sablon
+              get_template_part('template-parts/cards/card', $post_type, $template_args);
+          } else {
+              // Ha nincs egyedi sablon, fallback a default kártyára
+              get_template_part('template-parts/cards/card', 'default', $template_args);
+          }
+          ?&gt;
+      </code>
+    </pre>
+  </div>
+
+  <div class="doc-card" style="border:1px solid #ddd; padding:16px; margin:16px 0; border-radius:8px; background:#f0f8ff;">
+    <h3>🔍 Működés</h3>
+    <ul>
+      <li>Első lépésként lekéri az aktuális post type-ot (pl. <code>news</code>, <code>event</code>, <code>product</code>).</li>
+      <li>Ellenőrzi, hogy létezik-e hozzá egyedi sablon a <code>template-parts/cards/</code> mappában (pl. <code>card-news.php</code>).</li>
+      <li>Ha igen, betölti azt a kártyát.</li>
+      <li>Ha nem, automatikusan a <code>card-default.php</code> fájl kerül betöltésre.</li>
+    </ul>
+  </div>
+
+  <div class="doc-card" style="border:1px solid #ddd; padding:16px; margin:16px 0; border-radius:8px; background:#fff8dc;">
+    <h3>💡 Előnyök</h3>
+    <ul>
+      <li><strong>Rugalmas sablonkezelés:</strong> minden post típushoz saját kártya készíthető.</li>
+      <li><strong>Egységes logika:</strong> a section-ök bármilyen típusú tartalomhoz ugyanazt a hivatkozási sémát használják.</li>
+      <li><strong>Karbantarthatóság:</strong> nincs szükség feltételes <code>if</code> blokkokra több helyen – a struktúra automatikusan kezeli a post típusokat.</li>
+    </ul>
+  </div>
 </section>
 
 <hr>
