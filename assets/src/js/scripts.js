@@ -10,16 +10,13 @@ import './add-to-calendar-button-init';
 import './masonry-init';
 import './moment-init';
 import './podcast-player';
-import './select2-init';
-import './slick-init';
 import './fancybox-init';
 import './validate-form';
-import './youtube-player';
 import './navigation-home';
 */
 
 import './filter';
-import './product-filter';
+//import './product-filter';
 import './fancybox-init';
 import './slick-init';
 import './select2-init';

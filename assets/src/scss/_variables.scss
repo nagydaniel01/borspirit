@@ -39,7 +39,7 @@ $primary-dark:  shade-color($primary, 25%); // makes it 20% lighter
 $secondary: $alabaster;
 $secondary-light: tint-color($secondary, 80%); // makes it 40% lighter
 $secondary-dark:  shade-color($secondary, 25%); // makes it 20% lighter
-$info: $blue;
+$info: $primary;
 $success: $green;
 $warning: $yellow;
 $danger: $red;
@@ -221,7 +221,7 @@ $nav-pills-link-active-bg: $nav-tabs-link-active-bg;
 // Modal
 $modal-content-border-width: 0;
 $modal-backdrop-bg: $primary-light;
-$modal-backdrop-opacity: .9;
+$modal-backdrop-opacity: .95;
 
 /*
 $modal-content-color: $black;
