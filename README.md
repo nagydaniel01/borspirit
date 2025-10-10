@@ -312,56 +312,6 @@
 <hr>
 
 <section>
-  <h2>🧩 Section–Card Kapcsolat</h2>
-  <p>
-    A section–card hivatkozás célja, hogy a szekciók (<code>template-parts/sections/</code>) dinamikusan a megfelelő kártyakomponenst (<code>template-parts/cards/</code>) töltsék be az adott post type alapján.
-  </p>
-
-  <div class="doc-card" style="border:1px solid #ddd; padding:16px; margin:16px 0; border-radius:8px; background:#fafafa;">
-    <h3>🔹 PHP Példa</h3>
-    <pre>
-      <code>
-          &lt;?php
-          $post_type = get_post_type(); // Aktuális post type lekérése
-          $template_args = array('post_type' =&gt; esc_attr($post_type));
-
-          $template = locate_template("template-parts/cards/card-{$post_type}.php");
-
-          if (!empty($template)) {
-              // Ha létezik a post type-hoz tartozó kártya sablon
-              get_template_part('template-parts/cards/card', $post_type, $template_args);
-          } else {
-              // Ha nincs egyedi sablon, fallback a default kártyára
-              get_template_part('template-parts/cards/card', 'default', $template_args);
-          }
-          ?&gt;
-      </code>
-    </pre>
-  </div>
-
-  <div class="doc-card" style="border:1px solid #ddd; padding:16px; margin:16px 0; border-radius:8px; background:#f0f8ff;">
-    <h3>🔍 Működés</h3>
-    <ul>
-      <li>Első lépésként lekéri az aktuális post type-ot (pl. <code>news</code>, <code>event</code>, <code>product</code>).</li>
-      <li>Ellenőrzi, hogy létezik-e hozzá egyedi sablon a <code>template-parts/cards/</code> mappában (pl. <code>card-news.php</code>).</li>
-      <li>Ha igen, betölti azt a kártyát.</li>
-      <li>Ha nem, automatikusan a <code>card-default.php</code> fájl kerül betöltésre.</li>
-    </ul>
-  </div>
-
-  <div class="doc-card" style="border:1px solid #ddd; padding:16px; margin:16px 0; border-radius:8px; background:#fff8dc;">
-    <h3>💡 Előnyök</h3>
-    <ul>
-      <li><strong>Rugalmas sablonkezelés:</strong> minden post típushoz saját kártya készíthető.</li>
-      <li><strong>Egységes logika:</strong> a section-ök bármilyen típusú tartalomhoz ugyanazt a hivatkozási sémát használják.</li>
-      <li><strong>Karbantarthatóság:</strong> nincs szükség feltételes <code>if</code> blokkokra több helyen – a struktúra automatikusan kezeli a post típusokat.</li>
-    </ul>
-  </div>
-</section>
-
-<hr>
-
-<section>
   <h2>🧾 Git Használati Irányelvek</h2>
   <ul>
     <li><strong>Branch naming:</strong> <code>feature/</code>, <code>fix/</code>, <code>release/</code></li>
