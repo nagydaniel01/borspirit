@@ -95,7 +95,7 @@
 <hr>
 
 <section>
-  <h2>🔹 Theme Constants (define)</h2>
+  <h2>🔧 Theme Constants (define)</h2>
   <ul>
     <li>Konstansok globális, változtathatatlan értékek tárolására a theme-ben</li>
     <li>Segít egységesen hivatkozni útvonalakra, URL-ekre, oldal-azonosítókra és beállításokra</li>
