@@ -139,7 +139,7 @@
 
 <section>
   <h2>🧩 Egyedi WordPress sablon a következőkre alapozva</h2>
-  <p>Fejlesztésünk célja egy egyedi WordPress sablon létrehozása, amely kiemelkedő teljesítményt és testreszabhatóságot kínál. A sablon alapját a következő technológiák adják:</p>
+  <p>Fejlesztésünk célja egy egyedi WordPress sablon létrehozása, amely kiemelkedő teljesítményt és testreszabhatóságot kínál. A sablon alapját a következők adják:</p>
 
   <h3>🔹 ACF (Advanced Custom Fields)</h3>
   <ul>
@@ -154,24 +154,76 @@
     <li>Egységes komponensek</li>
     <li>Könnyen testreszabható változók</li>
   </ul>
+</section>
 
+<hr>
+
+<section>
   <h3>📦 Custom Post Types (CPT)</h3>
   <p>Minden post type a <code>register_post_types.php</code> fájlban kerül létrehozásra.</p>
+  <p>A CPT-k lényege, hogy a WordPress alapértelmezett „bejegyzések” és „oldalak” mellett saját, strukturált tartalomtípusokat hozzunk létre. Ez különösen hasznos nagyobb projektekben, ahol különféle tartalmakat kell kezelni (pl. hírek, termékek, projektek, események).</p>
+  <h4>Használat és előnyök</h4>
+  <h5>Saját admin felület</h5>
   <ul>
-    <li>Egyedi tartalomtípusok (pl. hírek, projektek)</li>
-    <li>Saját mezők, taxonómiák és sablonok rendelhetők hozzá</li>
-    <li>Külön menüpont az admin felületen</li>
-    <li>Könnyíti a tartalom szervezését és szűrését</li>
-    <li>Sablonokhoz rendelhetők (<code>single-{post_type_neve}.php</code>)</li>
+    <li>Minden CPT-hez külön menüpont tartozik az adminban.</li>
+    <li>Például: Projektek, Hírek, Események.</li>
+    <li>Adminisztráció során könnyen kereshetők, szűrhetők a bejegyzések.</li>
   </ul>
+  <h5>Egyedi mezők (ACF) hozzárendelése</h5>
+  <ul>
+    <li>Minden CPT-hez rendelhetsz egyedi mezőket.</li>
+    <li>Példa: „Projektek” CPT → Projekt kezdete, Projekt vége, Projekt állapota.</li>
+  </ul>
+  <h5>Sablonokhoz rendelhetők</h5>
+  <ul>
+    <li>Egyedi megjelenítés: <code>single-{post_type}.php</code> és <code>archive-{post_type}.php</code>.</li>
+    <li>Példa: <code>single-project.php</code> a projektek részletes oldalához, <code>archive-project.php</code> a projektek listázásához.</li>
+  </ul>
+  <h5>Hierarchia és strukturáltság</h5>
+  <ul>
+    <li>CPT-k különböző típusai között is lehet hierarchia (pl. „Alprojektek” szülő „Projekt” CPT alatt).</li>
+    <li>Segít a tartalom logikus szervezésében és a front-end lekérdezésekben (<code>WP_Query</code>).</li>
+  </ul>
+  <h5>SEO és URL struktúra</h5>
+  <ul>
+    <li>Egyedi URL-ek (permalink) minden CPT-hez: pl. <code>domain.com/projektek/projekt-neve</code>.</li>
+    <li>Jobb SEO és könnyebb navigáció.</li>
+  </ul>
+</section>
 
+<hr>
+
+<section>
   <h3>🏷️ Custom Taxonomies</h3>
   <p>Minden taxonomy a <code>register_taxonomies.php</code> fájlban kerül létrehozásra.</p>
+  <p>A Custom Taxonomies lehetővé teszi a CPT-k tartalmának rendszerezését, kategorizálását és szűrését. Minden taxonomy a hozzá kapcsolódó CPT-hez köthető, így logikus és átlátható struktúrát ad a tartalmaknak.</p>
+  <h4>Használat és előnyök</h4>
+  <h5>Hierarchia és típusok</h5>
   <ul>
-    <li>Egyedi taxonómiák a CPT-khez (pl. szolgáltatások, projekttípusok)</li>
-    <li>Hierarchikus (kategória-szerű) vagy címke-szerű struktúra</li>
-    <li>Admin felületen szűrés és csoportosítás</li>
-    <li>Sablonokhoz rendelhetők (<code>taxonomy-{taxonomy_neve}.php</code>)</li>
+    <li>Hierarchikus (kategória-szerű) vagy címke-szerű (tag) struktúra létrehozása.</li>
+    <li>Példa: Projektek CPT → Projekttípus taxonomy (web, mobil, branding).</li>
+  </ul>
+  <h5>Admin felület és szűrés</h5>
+  <ul>
+    <li>Admin felületen szűrés és gyors keresés a taxonomy alapján.</li>
+    <li>Egyszerű tartalomcsoportosítás és rendszerezés.</li>
+  </ul>
+  <h5>Sablonokhoz rendelhetők</h5>
+  <ul>
+    <li>Egyedi sablonok rendelhetők: <code>taxonomy-{taxonomy_neve}.php</code>.</li>
+    <li>Front-end lekérdezések egyszerűsítése <code>WP_Query</code>-vel.</li>
+  </ul>
+  <h5>Kapcsolat a CPT-kkel</h5>
+  <ul>
+    <li>Kapcsolat a CPT-k között: pl. Projektek CPT → Projekttípus taxonomy.</li>
+    <li>Segít a tartalom logikus szervezésében és a front-end megjelenítésben.</li>
+  </ul>
+  <h5>Tippek</h5>
+  <ul>
+    <li>Mindig tervezzük meg a tartalmi struktúrát a projekt elején, hogy a CPT-k és taxonomy-k logikusan kapcsolódjanak.</li>
+    <li>Használjuk a <code>show_in_rest => true</code> paramétert a Gutenberg blokképítő és REST API kompatibilitásért.</li>
+    <li>Kapcsolódó ACF mezők használatával növelhető a tartalom testreszabhatósága és az admin felület használhatósága.</li>
+    <li>Egységes permalink és slug stratégia SEO optimalizálásért.</li>
   </ul>
 </section>
 
