@@ -23,22 +23,57 @@
 <hr>
 
 <section>
-  <h1>⚙️ Telepítés</h1>
+  <h2>🎯 Fejlesztési Sztenderdek és Irányelvek</h2>
+
+  <h3>1️⃣ Bevezetés</h3>
+  <p>
+    Az egyedi WordPress sablon célja, hogy rugalmas, moduláris és bővíthető fejlesztési alapot nyújtson, amely a CPT-k (Custom Post Types), ACF mezők és Bootstrap komponensek köré épül. A struktúra célja, hogy minden elem — a sablonfájloktól a SCSS modulokig — egységes névkonvenciót, logikát és technológiai szintet kövessen.
+  </p>
+  <p><strong>A rendszer filozófiája:</strong> „Minden tartalom komponens, minden komponens újrahasznosítható.”</p>
+
+  <h3>2️⃣ Kódstruktúra és Fájlrendszer</h3>
+  <p>A sablon fájlrendszere logikusan szervezett, a felelősségek szétválasztásának elvét követi:</p>
   <ul>
-    <li>WordPress fájlok másolása</li>
-    <li>Felesleges pluginek és sablonok törlése</li>
-    <li>Adatbázis létrehozása</li>
-    <li>A <code>wp-config.php</code> fájl beállítása</li>
-    <li>Local szerver elindítása</li>
-    <li>WordPress telepítése</li>
-    <li>Sablon letöltése Git segítségével a themes mappába</li>
-    <li>Sablon gyökérkönyvtárában: <code>composer install</code> és <code>npm install</code></li>
-    <li>Fejlesztői környezet indítása: <code>npm run dev</code> vagy <code>npm run prod</code></li>
-    <li>Pluginek bekapcsolása</li>
-    <li>ACF sync</li>
-    <li>Nem használt section, css, js fájlok és funkciók törlése</li>
+    <li><code>inc/</code> – kódbázis logikai rétegei (pl. include_scripts.php, register_post_types.php, register_taxonomies.php, theme_scripts.php)</li>
+    <li><code>ajax/</code> – PHP és JS alapú aszinkron műveletek</li>
+    <li><code>template-parts/</code> – vizuális és logikai komponensek (cards, sections, forms, sidebars stb.)</li>
+    <li><code>assets/</code> – minden frontend erőforrás: SCSS, JS, képek és buildelt fájlok</li>
+    <li><code>acf-json/</code> – ACF mezők exportálása JSON formátumban, verziókövetéshez</li>
   </ul>
-  <b>Fontos: Composer szükséges az npm parancsokhoz!</b>
+  <p>Cél: teljes átláthatóság és minimális duplikáció. Egy fejlesztőnek bármikor könnyen meg kell találnia, hogy egy funkció vagy megjelenítés melyik réteghez tartozik.</p>
+
+  <h3>3️⃣ Névkonvenciók</h3>
+  <ul>
+    <li>Fájlnevek, SCSS: kebab-case (pl. <code>card-project.php</code>, <code>_section-hero.scss</code>)</li>
+    <li>PHP függvények: snake_case, prefixszel (pl. <code>theme_enqueue_scripts()</code>)</li>
+    <li>JS változók: camelCase</li>
+    <li>CPT és Taxonomy slugs: kisbetű, kötőjellel (pl. <code>product</code>, <code>product-category</code>)</li>
+  </ul>
+</section>
+
+<hr>
+
+<section>
+  <h2>💻 OOP + Clean Code</h2>
+  <p>A WordPress sablon fejlesztése során az <strong>OOP (Objektumorientált programozás)</strong> és a <strong>Clean Code</strong> elvek alkalmazása kiemelten fontos a moduláris, karbantartható és skálázható kód érdekében.</p>
+
+  <h3>OOP alapelvek</h3>
+  <ul>
+    <li><strong>Osztályok (Classes):</strong> valós entitások reprezentálása, például egyedi post type-ok, taxonómiák, vagy asset-kezelők.</li>
+    <li><strong>Objektumok (Objects):</strong> az osztály példányai, konkrét entitások.</li>
+    <li><strong>Metódusok (Methods):</strong> osztályhoz tartozó funkciók (pl. `register()` egy CPT regisztrálására).</li>
+    <li><strong>Properties (Tulajdonságok):</strong> osztály adatai, amelyek beállíthatók és lekérhetők.</li>
+  </ul>
+
+  <h3>Clean Code alapelvek</h3>
+  <ul>
+    <li><strong>Olvashatóság:</strong> a kód nevei és struktúrája önmagáért beszéljenek.</li>
+    <li><strong>Single Responsibility Principle:</strong> egy osztály vagy funkció csak egy feladatot lásson el.</li>
+    <li><strong>DRY (Don't Repeat Yourself):</strong> duplikáció kerülése, minden logika egyszer szerepeljen.</li>
+    <li><strong>Kód struktúra:</strong> logikus mappák, fájlok, prefixek és névkonvenciók használata.</li>
+    <li><strong>Kommentek:</strong> minden függvényhez PHPDoc blokk, a kód nevéből is érthető legyen a működés.</li>
+  </ul>
+  <p>Az OOP + Clean Code alkalmazása biztosítja, hogy a sablon moduláris, könnyen karbantartható, tesztelhető és skálázható legyen, különösen nagyobb projektek vagy csapatmunka esetén.</p>
 </section>
 
 <hr>
@@ -53,8 +88,8 @@
       <tr><td>WordPress</td><td>Tartalomkezelő rendszer (CMS)</td></tr>
       <tr><td>Bootstrap</td><td>Frontend keretrendszer (reszponzív dizájn és komponensek)</td></tr>
       <tr><td>​​Advanced Custom Fields (ACF)</td><td>Egyedi mezők kezelése</td></tr>
-      <tr><td>Custom post types (CPT)</td><td>Egyedi tartalomtípusok létrehozása</td></tr>
-      <tr><td>Custom taxonomies</td><td>Egyedi kategóriatípusok létrehozása</td></tr>
+      <tr><td>Custom post type (CPT)</td><td>Egyedi tartalomtípusok létrehozása</td></tr>
+      <tr><td>Custom taxonomy</td><td>Egyedi kategóriatípusok létrehozása</td></tr>
       <tr><td>SASS / SCSS</td><td>Strukturált és változóalapú stílusírás</td></tr>
       <tr><td>Webpack</td><td>Asset buildelés és optimalizálás</td></tr>
       <tr><td>OOP + Clean Code</td><td>Olvasható, moduláris és fenntartható PHP struktúra</td></tr>
@@ -66,12 +101,38 @@
 <hr>
 
 <section>
-  <h2>🧠 OOP és Clean Code</h2>
+  <h2>🧭 Kódstílus és Verziókezelés</h2>
   <ul>
-    <li>Külön osztályok (pl. CPT, Widget, Shortcode)</li>
-    <li>Namespace és autoload a Composer segítségével</li>
-    <li>Egyszerű, olvasható, karbantartható kód</li>
+    <li>PHP: PSR-12, Composer autoload</li>
+    <li>SCSS: BEM konvenció, moduláris</li>
+    <li>JS: ES6+, jQuery kerülése, ha lehetséges</li>
+    <li>HTML: szemantikus, akadálymentes (A11Y)</li>
+    <li>Branch-ek: <code>feature/</code>, <code>fix/</code>, <code>release/</code></li>
+    <li>Commit prefixek: <code>add:</code>, <code>fix:</code>, <code>refactor:</code></li>
+    <li>Dokumentáció: <code>CHANGELOG.md</code></li>
+    <li>Code review minden merge előtt</li>
   </ul>
+</section>
+
+<hr>
+
+<section>
+  <h1>⚙️ Telepítés</h1>
+  <ul>
+    <li>WordPress fájlok másolása</li>
+    <li>Felesleges pluginek és sablonok törlése</li>
+    <li>Adatbázis létrehozása</li>
+    <li>A <code>wp-config.php</code> fájl beállítása</li>
+    <li>Local szerver elindítása</li>
+    <li>WordPress telepítése</li>
+    <li>Sablon letöltése Git segítségével a themes mappába: <code>git clone</code></li>
+    <li>Sablon gyökérkönyvtárában: <code>composer install</code> és <code>npm install</code></li>
+    <li>Fejlesztői környezet indítása: <code>npm run dev</code> vagy <code>npm run prod</code></li>
+    <li>Pluginek bekapcsolása</li>
+    <li>ACF sync</li>
+    <li>Nem használt section, css, js fájlok és funkciók törlése</li>
+  </ul>
+  <b>Fontos: Composer szükséges az npm parancsokhoz!</b>
 </section>
 
 <hr>
@@ -97,10 +158,11 @@
   <h3>📦 Custom Post Types (CPT)</h3>
   <p>Minden post type a <code>register_post_types.php</code> fájlban kerül létrehozásra.</p>
   <ul>
-    <li>Egyedi tartalomtípusok (pl. hírek, projektek, borok)</li>
+    <li>Egyedi tartalomtípusok (pl. hírek, projektek)</li>
     <li>Saját mezők, taxonómiák és sablonok rendelhetők hozzá</li>
     <li>Külön menüpont az admin felületen</li>
     <li>Könnyíti a tartalom szervezését és szűrését</li>
+    <li>Sablonokhoz rendelhetők (<code>single-{post_type_neve}.php</code>)</li>
   </ul>
 
   <h3>🏷️ Custom Taxonomies</h3>
@@ -117,6 +179,7 @@
 
 <section>
   <h2>🔧 Theme Constants (define)</h2>
+  <p>A <code>constants.php</code> határozza meg a sablon alapkonstansait:</p>
   <ul>
     <li>Konstansok globális, változtathatatlan értékek tárolására a theme-ben</li>
     <li>Segít egységesen hivatkozni útvonalakra, URL-ekre, oldal-azonosítókra és beállításokra</li>
@@ -128,7 +191,7 @@
 <hr>
 
 <section>
-  <h2>🖥️ Theme CSS & JS Enqueue</h2>
+  <h2>🖥️ Theme CSS & JS betöltés</h2>
   <ul>
     <li>Theme-specifikus CSS és JS betöltése (<code>styles.css</code> és <code>scripts.js</code>)</li>
     <li>Dinamikus adatok átadása JavaScript-nek <code>wp_localize_script</code>-tel:
@@ -146,28 +209,6 @@
 <hr>
 
 <section>
-  <h2>🧱 Fájlrendszer és Fejlesztési Szabványok</h2>
-  <h3>📁 Functions mappa</h3>
-  <p>Minden egyedi funkció külön fájlban a <code>functions</code> mappában:</p>
-  <pre>
-    - functions/
-      - include_scripts.php
-      - register_ajax.php
-      - register_post_types.php
-      - register_taxonomies.php
-  </pre>
-
-  <h3>📜 Fájlnevezési konvenciók</h3>
-  <ul>
-    <li>kisbetűk + alsóvonás</li>
-    <li>rövid, leíró fájlnevek</li>
-    <li>egy funkció = egy felelősség</li>
-  </ul>
-</section>
-
-<hr>
-
-<section>
   <h2>⚡ AJAX Funkciók</h2>
   <p>Minden AJAX funkció a <code>register_ajax.php</code> fájlban létrehozva.</p>
   <ul>
@@ -177,6 +218,29 @@
     <li>Dinamikus adatok átadása a JS-nek <code>wp_localize_script</code> segítségével (pl. <code>ajax_url</code>, felhasználói ID, üzenetek)</li>
     <li>Hiba- és státuszkezelés logolással (<code>error_log</code>) és frontenden</li>
     <li>Segít a felhasználói élmény javításában: oldalletöltés nélkül frissül az adat</li>
+  </ul>
+</section>
+
+<hr>
+
+<section>
+  <h2>🧱 Fájlrendszer és Fejlesztési Szabványok</h2>
+  <h3>📁 Functions mappa</h3>
+  <p>Minden egyedi funkció külön fájlban a <code>inc</code> mappában, egyértelmű felelősségi körrel:</p>
+  <pre>
+    - inc/
+      - include_scripts.php
+      - register_ajax.php
+      - register_post_types.php
+      - register_taxonomies.php
+      - theme_scripts.php
+  </pre>
+
+  <h3>📜 Fájlnevezési konvenciók</h3>
+  <ul>
+    <li>kisbetűk + alsóvonás</li>
+    <li>rövid, leíró fájlnevek</li>
+    <li>egy funkció = egy felelősség</li>
   </ul>
 </section>
 
@@ -233,6 +297,7 @@
 
 <section>
   <h2>🎨 SCSS és BEM Szabályok</h2>
+  <p>A stílusok moduláris felépítése a fenntarthatóság és újrahasznosíthatóság elvét követi.</p>
   <p>SCSS szerkezet:</p>
   <pre>
     <code>
@@ -282,6 +347,19 @@
     <li>Állapotok: <code>.is-active</code>, <code>.is-open</code></li>
     <li>JS: <code>.js-nav-toggle</code></li>
   </ul>
+
+  <h3>📘 BEM Módszer Magyarázata</h3>
+  <p>
+    A <strong>BEM</strong> (Block, Element, Modifier) egy moduláris, logikusan felépített névkonvenció a frontend fejlesztéshez. Lényege, hogy a HTML és CSS kódot olyan egységekre bontjuk, amelyek:
+  </p>
+  <ul>
+    <li><strong>Block:</strong> önálló, újrahasználható komponens (pl. <code>menu</code>, <code>button</code>, <code>card</code>)</li>
+    <li><strong>Element:</strong> a blokk része, nem létezhet önállóan (pl. <code>card__title</code>, <code>card__description</code>)</li>
+    <li><strong>Modifier:</strong> a blokk vagy elem állapotát vagy variánsát jelzi (pl. <code>button--primary</code>, <code>button--disabled</code>)</li>
+  </ul>
+  <p>
+    A BEM célja a <strong>modularitás, átláthatóság és karbantarthatóság</strong> biztosítása. A jól felépített BEM struktúrával a kód könnyen érthető, skálázható, és minimalizálhatók a CSS-ütközések.
+  </p>
 </section>
 
 <hr>
@@ -307,7 +385,44 @@
 <hr>
 
 <section>
-  <h2>🧾 Git Használati Irányelvek</h2>
+  <h2>Verziózás folyamata</h2>
+  <ol>
+    <li>Kód módosítása → tesztelés</li>
+    <li>Changelog bejegyzés → verziószám növelése</li>
+    <li>Git commit</li>
+  </ol>
+</section>
+
+<section>
+  <h3>📘 CHANGELOG.md – Verziókövetési Irányelvek</h3>
+  <p>A CHANGELOG.md fájl célja, hogy áttekinthetően dokumentálja a fejlesztés történetét — minden módosítást, újítást, hibajavítást és visszavonást. Ez segít a fejlesztőknek, tesztelőknek és projektvezetőknek abban, hogy kövessék a változásokat, megértsék a verziók közti különbségeket, és biztosítsák a konzisztens kiadáskezelést. Minden lényeges változás ebben a fájlban kerül dokumentálásra, a [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) és a [Semantic Versioning](https://semver.org/) elvei szerint. A legfrissebb verzió mindig legfelül szerepel.</p>
+  <ul>
+    <li>Added – új funkciók</li>
+    <li>Changed – módosítások</li>
+    <li>Fixed – hibajavítások</li>
+    <li>Removed – elavult elemek</li>
+  </ul>
+
+  <pre>
+## [v1.0.1] – 2025-10-15
+### Added
+- Új "Projektek" CPT
+- Hero szekció bővítve videó támogatással
+
+### Fixed
+- Mobilmenü z-index hiba javítva
+
+### Changed
+- SCSS struktúra módosítva: különválasztott _mixins.scss
+
+### Removed
+- Régi "Kapcsolat" shortcode, már nem használatos
+- Elavult CSS mixinek törölve
+  </pre>
+</section>
+
+<section>
+  <h3>🧾 Git Használati Irányelvek</h3>
   <ul>
     <li><strong>Branch naming:</strong> <code>feature/</code>, <code>fix/</code>, <code>release/</code></li>
     <li><strong>Commit üzenetek:</strong> rövidek, leírók (pl. <code>fix: header logo alignment</code>)</li>

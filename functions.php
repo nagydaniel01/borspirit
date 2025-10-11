@@ -34,7 +34,7 @@
         }
     }
 
-    // Initialize: Include all PHP files under /functions directory in your theme
-    $functions_dir = get_template_directory() . '/functions';
+    // Initialize: Include all PHP files under /inc directory in your theme
+    $functions_dir = get_template_directory() . '/inc';
     include_files_recursively($functions_dir);
     
