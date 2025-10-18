@@ -1,6 +1,8 @@
 <?php
-    if ( ! defined( 'ABSPATH' ) ) {
-        exit;
+    defined( 'ABSPATH' ) || exit;
+
+    if ( ! class_exists( 'WooCommerce' ) ) {
+        return;
     }
     
     if ( ! function_exists( 'wc_wine_store_sale_flash' ) ) {
@@ -15,7 +17,7 @@
         function wc_wine_store_sale_flash( $html = '', $post = null, $product = null ) {
             global $product;
 
-            if ( ! $product instanceof WC_Product ) {
+            if ( ! $product ) {
                 return;
             }
 
@@ -73,6 +75,11 @@
         // Runs when product is NOT on sale (shop loop + single product)
         add_action( 'woocommerce_before_shop_loop_item_title', function() {
             global $product;
+
+            if ( ! $product ) {
+                return;
+            }
+
             if ( $product && ! $product->is_on_sale() ) {
                 echo wc_wine_store_sale_flash();
             }
@@ -80,6 +87,11 @@
 
         add_action( 'woocommerce_before_single_product_summary', function() {
             global $product;
+
+            if ( ! $product ) {
+                return;
+            }
+
             if ( $product && ! $product->is_on_sale() ) {
                 echo wc_wine_store_sale_flash();
             }

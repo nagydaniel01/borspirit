@@ -487,7 +487,7 @@
 
 <section>
   <h2>✅ Összegzés</h2>
-  <p>A <strong>BorSpirit x RevindDigital WordPress Theme</strong> egy modern, egységes és skálázható fejlesztői alap, amely:</p>
+  <p>A <strong>BorSpirit x NagyDanielEV WordPress Theme</strong> egy modern, egységes és skálázható fejlesztői alap, amely:</p>
   <ul>
     <li>gyorsítja a fejlesztést,</li>
     <li>csökkenti a hibákat,</li>

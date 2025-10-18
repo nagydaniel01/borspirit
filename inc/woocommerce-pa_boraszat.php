@@ -1,6 +1,8 @@
 <?php
-    if ( ! defined( 'ABSPATH' ) ) {
-        exit;
+    defined( 'ABSPATH' ) || exit;
+
+    if ( ! class_exists( 'WooCommerce' ) ) {
+        return;
     }
     
     if ( ! function_exists( 'custom_product_header_wrapper' ) ) {

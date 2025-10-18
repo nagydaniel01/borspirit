@@ -1,0 +1,22 @@
+.block.block--marquee {
+    .block__inner {
+        overflow-x: hidden;
+    }
+
+    .block__track {
+        display: flex;
+        gap: 3rem;
+        white-space: nowrap;
+        animation: marquee linear infinite;
+        animation-duration: 10s; /* JS will override */
+    }
+
+    .block__item {
+        cursor: pointer;
+    }
+    
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+}

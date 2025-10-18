@@ -1,4 +1,6 @@
 <?php
+    defined( 'ABSPATH' ) || exit;
+    
     if ( ! function_exists( 'get_current_url' ) ) {
         /**
          * Get the current URL of the page.

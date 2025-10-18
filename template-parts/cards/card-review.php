@@ -1,20 +1,20 @@
 <?php
-$order         = $args['order'];
-$feedback_data = $args['feedback_data'];
+    $order         = $args['order'];
+    $feedback_data = $args['feedback_data'];
 
-if (empty($order) || empty($feedback_data) || !is_array($feedback_data)) {
-    return;
-}
+    if (empty($order) || empty($feedback_data) || !is_array($feedback_data)) {
+        return;
+    }
 
-$like     = $feedback_data['like'] ?? '';
-$rating   = intval($feedback_data['rating'] ?? 0);
-$feedback = $feedback_data['feedback'] ?? '';
-$date     = isset($feedback_data['date']) ? date_i18n(get_option('date_format'), strtotime($feedback_data['date'])) : '';
+    $like     = $feedback_data['like'] ?? '';
+    $rating   = intval($feedback_data['rating'] ?? 0);
+    $feedback = $feedback_data['feedback'] ?? '';
+    $date     = isset($feedback_data['date']) ? date_i18n(get_option('date_format'), strtotime($feedback_data['date'])) : '';
 
-$customer_first_name = $order->get_billing_first_name();
+    $customer_first_name = $order->get_billing_first_name();
 
-// Build WooCommerce-style stars
-$stars = $rating > 0 ? wc_get_rating_html($rating, 5) : '';
+    // Build WooCommerce-style stars
+    $stars = $rating > 0 ? wc_get_rating_html($rating, 5) : '';
 ?>
 
 <div class="card card--review">

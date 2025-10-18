@@ -11,13 +11,13 @@
     $title       = $term->name;
     //$description = term_description($term_id, $taxonomy);
 
+    $image_id = PLACEHOLDER_IMAGE_ID;
+    $alt_text = __('', TEXT_DOMAIN);
+
     // Get gallery field (ACF)
     $gallery = get_field('gallery', $taxonomy . '_' . $term_id);
 
     // Get the first image from gallery if available
-    $image_id = '';
-    $alt_text = '';
-
     if ($gallery && is_array($gallery)) {
         $first_image = $gallery[0];
 
@@ -42,7 +42,9 @@
     <a href="<?php echo esc_url($term_link); ?>" class="card__link">
         <?php if ($image_id) : ?>
             <div class="card__header">
-                <?php echo wp_get_attachment_image($image_id, 'medium_large', false, ['class' => 'card__image', 'alt' => esc_attr($alt_text), 'loading' => 'lazy']); ?>
+                <div class="card__image-wrapper">
+                    <?php echo wp_get_attachment_image($image_id, 'medium_large', false, ['class' => 'card__image', 'alt' => esc_attr($alt_text), 'loading' => 'lazy']); ?>
+                </div>
             </div>
         <?php endif; ?>
 

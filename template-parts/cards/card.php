@@ -1,27 +1,28 @@
 <?php
     $card_image       = $args['card_image'] ?? [];
-    $card_icon        = $args['card_icon'] ?? [];
     $card_title       = $args['card_title'] ?? '';
     $card_description = $args['card_description'] ?? '';
     $card_button      = $args['card_button'] ?? [];
 
-    $image_id      = $card_image['ID'] ?? '';
-    $icon_id       = $card_icon['ID'] ?? '';
-    $button_url    = $card_button['url'] ?? '';
-    $button_title  = $card_button['title'] ?? esc_url($button_url);
-    $button_target = isset($card_button['target']) && $card_button['target'] !== '' ? $card_button['target'] : '_self';
+    $image_id        = $card_image['ID'] ?? '';
+    $image_mime_type = $card_image['mime_type'] ?? '';
+    $button_url      = $card_button['url'] ?? '';
+    $button_title    = $card_button['title'] ?? esc_url($button_url);
+    $button_target   = isset($card_button['target']) && $card_button['target'] !== '' ? $card_button['target'] : '_self';
+
+    // Add special class if image is an SVG
+    $image_class = 'card__image';
+    if ($image_mime_type === 'image/svg+xml') {
+        $image_class .= ' imgtosvg';
+    }
 ?>
 
 <article class="card">
     <?php if ($image_id) : ?>
         <div class="card__header">
-            <?php echo wp_get_attachment_image($image_id, 'medium', false, ['class' => 'card__image', 'alt' => esc_attr( get_post_meta( $image_id, '_wp_attachment_image_alt', true ) ), 'loading' => 'lazy']); ?>
-        </div>
-    <?php endif; ?>
-
-    <?php if ($icon_id) : ?>
-        <div class="card__header">
-            <?php echo wp_get_attachment_image($icon_id, 'medium', false, ['class' => 'card__icon icon imgtosvg']); ?>
+            <div class="card__image-wrapper">
+                <?php echo wp_get_attachment_image($image_id, 'medium_large', false, ['class' => $image_class, 'alt' => esc_attr( get_post_meta( $image_id, '_wp_attachment_image_alt', true ) ), 'loading' => 'lazy']); ?>
+            </div>
         </div>
     <?php endif; ?>
 

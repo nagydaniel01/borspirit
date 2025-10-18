@@ -8,7 +8,6 @@ Minden lényeges változás ebben a fájlban kerül dokumentálásra, a [Keep a 
 ### Added
 - Új **AJAX rendszer** bevezetése (`ajax/php/`, `ajax/js/`)
 - **Flexible Content sections** ACF integráció
-- **Új CPT:** `borok` és `rendezvenyek`
 - **Hero section** komponens (`_section-hero.scss`)
 
 ### Changed
@@ -18,7 +17,6 @@ Minden lényeges változás ebben a fájlban kerül dokumentálásra, a [Keep a 
 
 ### Fixed
 - Contact form AJAX hibakezelés
-- Hiányzó asset verziók és cache busting javítása
 
 ### Removed
 - Régi inline script hivatkozások (`header.php`, `footer.php`)
@@ -29,7 +27,7 @@ Minden lényeges változás ebben a fájlban kerül dokumentálásra, a [Keep a 
 ### Added
 - WooCommerce integráció
 - `enqueue_contact_form_ajax_scripts()` funkció
-- REST API endpointok és localize script adatok
+- localize script adatok
 
 ### Changed
 - CSS és JS verziókezelés `filemtime()` alapján
@@ -39,6 +37,6 @@ Minden lényeges változás ebben a fájlban kerül dokumentálásra, a [Keep a 
 ## [1.0.0] – 2025-08-01
 ### Added
 - Alap WordPress sablonstruktúra létrehozása
-- `theme_scripts()` és `register_post_types.php`
+- `theme_scripts()`
 - SCSS és Bootstrap integráció
 - ACF alapbeállítások és Flexible Content támogatás

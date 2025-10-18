@@ -31,3 +31,4 @@ import './text-collapse';
 import './youtube-player';
 import './product-sticky';
 import './quantity';
+import './marquee';

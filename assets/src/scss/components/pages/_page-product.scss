@@ -117,6 +117,8 @@
 
       .woocommerce-product-gallery__image {
         display: block !important;
+        margin: 0 auto;
+        background-color: rgba($white, 1);
 
         > a {
           display: flex;

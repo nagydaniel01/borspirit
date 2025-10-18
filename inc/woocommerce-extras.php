@@ -1,11 +1,30 @@
 <?php
-    if ( ! defined( 'ABSPATH' ) ) {
-        exit;
+    defined( 'ABSPATH' ) || exit;
+
+    if ( ! class_exists( 'WooCommerce' ) ) {
+        return;
     }
 
     // ============================================================
-    // 1. WOOCOMMERCE IMAGE SIZES
+    // 1. WOOCOMMERCE IMAGE LINK AND SIZES
     // ============================================================
+
+    if ( ! function_exists( 'custom_woocommerce_image_sizes' ) ) {
+        /**
+         * Remove the <a> link around WooCommerce product thumbnails on the single product page.
+         *
+         * This function strips out any <a> tags from the product image HTML, effectively
+         * disabling the link to the full-size product image when clicking the thumbnail.
+         *
+         * @param string $html    The HTML content of the product thumbnail.
+         * @param int    $post_id The ID of the current product.
+         * @return string         The modified HTML without <a> tags.
+         */
+        function custom_remove_product_image_link( $html, $post_id ) {
+            return preg_replace( "!<(a|/a).*?>!", '', $html );
+        }
+        //add_filter( 'woocommerce_single_product_image_thumbnail_html', 'custom_remove_product_image_link', 10, 2 );
+    }
 
     if ( ! function_exists( 'custom_woocommerce_image_sizes' ) ) {
         /**
@@ -82,6 +101,10 @@
         function quantity_plus_sign() {
             global $product;
 
+            if ( ! $product ) {
+                return;
+            }
+
             // Skip if product is sold individually
             if ( $product && $product->is_sold_individually() ) {
                 return;
@@ -111,6 +134,10 @@
          */
         function quantity_minus_sign() {
             global $product;
+
+            if ( ! $product ) {
+                return;
+            }
 
             // Skip if product is sold individually
             if ( $product && $product->is_sold_individually() ) {
@@ -151,6 +178,10 @@
          */
         function woocommerce_template_single_rating() {
             global $product;
+
+            if ( ! $product ) {
+                return;
+            }
 
             // Ensure product object exists and is valid
             if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) ) {
@@ -247,6 +278,10 @@
         function display_unit_price_in_summary() {
             global $product;
 
+            if ( ! $product ) {
+                return;
+            }
+
             // Get product price
             $price = $product->get_price(); // WooCommerce price
 
@@ -277,7 +312,7 @@
         function display_drs_fee_in_summary() {
             global $product;
 
-            if ( ! $product instanceof WC_Product ) {
+            if ( ! $product ) {
                 return;
             }
 
@@ -350,6 +385,10 @@
          */
         function display_product_awards() {
             global $product;
+
+            if ( ! $product ) {
+                return;
+            }
 
             // Get all 'award' terms for this product
             $awards = get_the_terms( $product->get_id(), 'award' );
@@ -487,17 +526,19 @@
         function custom_product_icons_tab($tabs) {
             global $product;
 
-            if ( $product && is_object($product) ) {
-                $product_id = $product->get_id();
-                //$icons = get_post_meta($product_id, '_product_icons', true); // Optional meta key if you only want icons for specific products
-
-                // Add the tab (you can wrap it with a condition if needed, like only if icons exist)
-                $tabs['icons'] = array(
-                    'title'    => __( 'Ikonok', TEXT_DOMAIN ), // Change "Ikonok" to your desired title
-                    'priority' => 5,
-                    'callback' => 'icons_tab_content'
-                );
+            if ( ! $product ) {
+                return;
             }
+
+            //$product_id = $product->get_id();
+            //$icons = get_post_meta($product_id, '_product_icons', true); // Optional meta key if you only want icons for specific products
+
+            // Add the tab (you can wrap it with a condition if needed, like only if icons exist)
+            $tabs['icons'] = array(
+                'title'    => __( 'Ikonok', TEXT_DOMAIN ), // Change "Ikonok" to your desired title
+                'priority' => 5,
+                'callback' => 'icons_tab_content'
+            );
 
             return $tabs;
         }
@@ -526,17 +567,19 @@
         function custom_product_winery_tab($tabs) {
             global $product;
 
-            if ( $product && is_object($product) ) {
-                // Get 'pa_boraszat' terms assigned to this product
-                $boraszat_terms = wp_get_post_terms( $product->get_id(), 'pa_boraszat' );
+            if ( ! $product ) {
+                return;
+            }
 
-                if ( ! is_wp_error( $boraszat_terms ) && ! empty( $boraszat_terms ) ) {
-                    $tabs['winery'] = array(
-                        'title'    => __( 'Winery', TEXT_DOMAIN ),
-                        'priority' => 20,
-                        'callback' => 'winery_tab_content'
-                    );
-                }
+            // Get 'pa_boraszat' terms assigned to this product
+            $boraszat_terms = wp_get_post_terms( $product->get_id(), 'pa_boraszat' );
+
+            if ( ! is_wp_error( $boraszat_terms ) && ! empty( $boraszat_terms ) ) {
+                $tabs['winery'] = array(
+                    'title'    => __( 'Winery', TEXT_DOMAIN ),
+                    'priority' => 20,
+                    'callback' => 'winery_tab_content'
+                );
             }
 
             return $tabs;
@@ -566,20 +609,21 @@
         function custom_product_faq_tab($tabs) {
             global $product;
 
-            // Only add the 'FAQ' tab for specific products if needed
-            if ( $product && is_object($product) ) {
-                $product_id = $product->get_id();
-                //$faqs = get_post_meta($product_id, '_product_faqs', true); // Replace with your actual meta key
-
-                // Only add the tab if FAQs exist
-                //if ( !empty($faqs) ) {
-                    $tabs['faq'] = array(
-                        'title'    => __( 'Frequently asked questions', TEXT_DOMAIN ),
-                        'priority' => 30,
-                        'callback' => 'faq_tab_content'
-                    );
-                //}
+            if ( ! $product ) {
+                return;
             }
+
+            // Only add the 'FAQ' tab for specific products if needed
+            //$product_id = $product->get_id();
+            //$faqs = get_post_meta($product_id, '_product_faqs', true); // Replace with your actual meta key
+
+            //if ( !empty($faqs) ) {
+                $tabs['faq'] = array(
+                    'title'    => __( 'Frequently asked questions', TEXT_DOMAIN ),
+                    'priority' => 30,
+                    'callback' => 'faq_tab_content'
+                );
+            //}
 
             return $tabs;
         }
@@ -613,7 +657,7 @@
         function show_product_stock_in_loop() {
             global $product;
 
-            if ( ! $product || ! is_a( $product, 'WC_Product' ) ) {
+            if ( ! $product ) {
                 return;
             }
 
@@ -640,7 +684,7 @@
         function show_product_attributes_in_loop() {
             global $product;
 
-            if ( ! $product || ! is_a( $product, 'WC_Product' ) ) {
+            if ( ! $product ) {
                 return;
             }
 

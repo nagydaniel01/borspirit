@@ -1,7 +1,5 @@
 <?php
-    if ( ! defined( 'ABSPATH' ) ) {
-        exit;
-    }
+    defined( 'ABSPATH' ) || exit;
     
     /**
      * WooCommerce Customizations
@@ -304,7 +302,7 @@
         function custom_woocommerce_loop_rating_wrapper() {
             global $product;
 
-            if ( ! $product instanceof WC_Product ) {
+            if ( ! $product ) {
                 return;
             }
 
@@ -323,7 +321,7 @@
         function custom_woocommerce_loop_rating_wrapper_end() {
             global $product;
 
-            if ( ! $product instanceof WC_Product ) {
+            if ( ! $product ) {
                 return;
             }
 
@@ -461,7 +459,7 @@
             function custom_woocommerce_move_upsells_inner() {
                 global $product;
 
-                if (!$product) {
+                if ( ! $product ) {
                     return;
                 }
 

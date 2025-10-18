@@ -81,7 +81,7 @@
                                 'container'      => false,
                                 'menu_class'     => 'navbar-nav nav__list level0',
                                 'fallback_cb'    => false,
-                                'walker'         => new Default_Menu_Walker(),
+                                'walker'         => new Custom_Mega_Menu_Walker(),
                             ) );
                         ?>
                     <?php else : ?>

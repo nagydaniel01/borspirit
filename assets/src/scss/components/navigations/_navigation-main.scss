@@ -1,4 +1,5 @@
 .nav.nav--main {
+  // Base styles (shared)
   .nav__toggle {
     margin-right: 1rem;
     border: none;
@@ -17,6 +18,12 @@
     list-style: none;
   }
 
+  .nav__item {
+    &.level0 {
+      margin-right: 1.25rem;
+    }
+  }
+
   .nav__link {
     display: block;
     color: $primary;
@@ -33,27 +40,29 @@
     &.level0 {
       display: flex;
       align-items: center;
+      height: 100%;
       color: $white;
     }
   }
 
-  /*
-  .nav__image {
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    margin: 0 auto;
+  .nav__arrow {
+    margin-left: 0.35em;
+    font-size: 0.8em;
+    transition: transform 0.3s ease;
   }
 
-  .nav__lead {
-    display: block;
-    font-family: $font-family-base;
-    font-size: 0.875rem;
-    text-transform: none;
-    font-weight: 400;
+  .nav__arrow--mega {
+    font-weight: bold;
   }
-  */
+  
+  .nav__item:hover > .nav__link .nav__arrow {
+    transform: rotate(180deg);
+  }
 }
 
+// -----------------------------------------------------------------------------
+// MOBILE: Offcanvas-style, simple stacked menu
+// -----------------------------------------------------------------------------
 @include media-breakpoint-down(xxl) {
   .nav.nav--main {
     display: flex;
@@ -77,10 +86,8 @@
 
       &.level1 {
         &:not(.has-children) {
-          > .nav__link {
-            &::after {
-              display: none;
-            }
+          > .nav__link::after {
+            display: none;
           }
         }
 
@@ -106,20 +113,10 @@
       }
     }
 
-    .nav__image {
-      display: none;
-      flex: 0 0 25%;
-      max-width: 25%;
-
-      & + span {
-        //padding-left: 0.5rem;
-        //text-align: left;
-      }
-    }
-
+    // Hide images and extra elements on mobile
+    .nav__image,
     .nav__lead {
       display: none;
-      text-align: left;
     }
 
     .nav__button {
@@ -128,6 +125,9 @@
   }
 }
 
+// -----------------------------------------------------------------------------
+// DESKTOP: Mega menu vs Dropdown separation
+// -----------------------------------------------------------------------------
 @include media-breakpoint-up(xxl) {
   .nav.nav--main {
     .offcanvas,
@@ -143,119 +143,136 @@
       display: none;
     }
 
-    .nav__list {
-      &.level0 {
-        display: flex;
-      }
-
-      &.level1 {
-        display: none;
-        justify-content: center;
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        width: 100vw;
-        padding: 2.5rem 4rem 3rem;
-        gap: 2.5rem;
-        transform: translateX(-50%);
-        z-index: 1;
-        background-color: $white;
-        border-top: 1px solid rgba($primary-dark, 0.2);
-        border-bottom: 1px solid rgba($primary-dark, 0.2);
-      }
-
-      &.level2 {
-        margin-top: 0.5rem;
-      }
+    // Level 0 (main nav)
+    .nav__list.level0 {
+      display: flex;
     }
 
-    .nav__item {
-      &.level0 {
-        display: flex;
-        align-items: center;
-        margin-right: 0.75rem;
+    // Shared level styles
+    .nav__list.level2 {
+      margin-top: 0.5rem;
+    }
 
-        &.has-children {
-          & > .nav__link {
-            &::after {
-              display: block;
-              content: "";
-              width: 0.75rem;
-              height: 0.75rem;
-              background-image: #{escape-svg($accordion-button-icon)};
-              background-size: 0.75rem;
-              transform: rotate(0);
-            }
+    // -------------------------------------------------------------------------
+    // SIMPLE DROPDOWN (no mega menu)
+    // -------------------------------------------------------------------------
+    .nav__item.has-children:not(.has-mega-menu) {
+      position: relative;
 
-            span {
-              padding-right: 1rem;
-            }
-          }
-        }
-      }
-
-      &.level1 {
-        &.accordion-item,
-        &.is-product {
-          flex: 1;
-        }
-      }
-
-      &.level2 {
-        margin-top: 1rem;
+      > .nav__list.level1 {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        min-width: 14rem;
+        padding: 1rem;
+        background-color: $white;
+        border: 1px solid rgba($primary-dark, 0.1);
+        box-shadow: 0 4px 12px rgba($black, 0.1);
+        flex-direction: column;
+        z-index: 99;
       }
 
       &:hover {
-        .nav__list {
-          &.level1 {
-            display: flex;
-          }
-        }
-
-        .nav__link {
-          &.level0 {
-            &::before {
-              width: 100%;
-            }
-          }
+        > .nav__list.level1 {
+          display: flex;
         }
       }
     }
 
-    .nav__link {
-      &.level0 {
-        position: relative;
+    // -------------------------------------------------------------------------
+    // MEGA MENU (Bootstrap tabs)
+    // -------------------------------------------------------------------------
+    .nav__item.has-mega-menu {
+      position: static; // full width
 
-        &::before {
-          content: "";
-          display: block;
-          position: absolute;
-          inset: auto 0 0;
-          width: 0;
-          height: 1px;
-          background-color: $white;
-          transition: $transition-base;
+      > .nav__mega-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100vw;
+        padding: 2.5rem 4rem 3rem;
+        background-color: $white;
+        border-top: 1px solid rgba($primary-dark, 0.2);
+        border-bottom: 1px solid rgba($primary-dark, 0.2);
+        z-index: 98;
+
+        .nav-tabs {
+          justify-content: center;
+          margin-bottom: 2rem;
+
+          .nav__link.level1 {
+            border-color: transparent;
+            color: $primary-dark;
+            font-weight: 600;
+
+            &.active {
+              background: transparent;
+              color: $primary;
+              border-bottom: 3px solid $primary;
+            }
+          }
+        }
+
+        .tab-content {
+          display: flex;
+          justify-content: center;
+          gap: 2.5rem;
+
+          .tab-pane {
+            width: 100%;
+            display: none;
+
+            &.show.active {
+              display: block;
+            }
+
+            .nav__list.level2 {
+              display: flex;
+              flex-direction: column;
+              flex-wrap: wrap;
+              gap: 1rem 2rem;
+
+              .nav__link.level2 {
+                color: $primary-dark;
+                font-size: 1rem;
+
+                &:hover {
+                  color: $primary;
+                }
+              }
+            }
+          }
         }
       }
 
-      &.level1 {
-        &:has(.nav__image) {
-          display: flex;
-          flex-direction: column;
-          text-transform: uppercase;
-          text-align: center;
-          font-size: 1rem;
-          font-weight: 500;
-
-          > span {
-            margin-top: 0.75rem;
-          }
-
-          .nav__lead {
-            text-transform: none;
-            font-weight: 400;
-          }
+      &:hover {
+        > .nav__mega-menu {
+          display: block;
         }
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // Base link & hover underline
+    // -------------------------------------------------------------------------
+    .nav__link.level0 {
+      position: relative;
+
+      &::before {
+        content: "";
+        position: absolute;
+        inset: auto 0 0;
+        width: 0;
+        height: 1px;
+        background-color: $white;
+        transition: $transition-base;
+      }
+
+      &:hover::before {
+        width: 100%;
       }
     }
 

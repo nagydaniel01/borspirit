@@ -51,7 +51,9 @@
 
                     <?php if (!empty($image)) : ?>
                     <div class="col-md-6">
-                        <?php echo wp_get_attachment_image($image_id, 'full', false, ['class' => 'section__image', 'alt' => esc_attr($alt_text), 'loading' => 'lazy']); ?>
+                        <div class="section__image-wrapper">
+                            <?php echo wp_get_attachment_image($image_id, 'full', false, ['class' => 'section__image', 'alt' => esc_attr($alt_text), 'loading' => 'lazy']); ?>
+                        </div>
                     </div>
                     <?php endif; ?>
                 </div>

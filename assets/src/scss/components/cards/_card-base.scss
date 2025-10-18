@@ -39,7 +39,6 @@
 	.card__header {
 		flex: 0 0 auto;
 		position: relative;
-		//overflow: hidden;
 		border-radius: $border-radius-xl;
 	}
 
@@ -48,6 +47,10 @@
 		display: flex;
 		flex-direction: column;
 		padding: 1.25rem;
+	}
+
+	.card__image-wrapper {
+		overflow: hidden;
 	}
 
 	.card__image {

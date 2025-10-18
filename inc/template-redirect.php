@@ -1,7 +1,5 @@
 <?php
-    if ( ! defined( 'ABSPATH' ) ) {
-        exit;
-    }
+    defined( 'ABSPATH' ) || exit;
     
     if ( ! function_exists( 'borspirit_register_attribute_rewrites' ) ) {
         /**

@@ -1,7 +1,5 @@
 <?php
-    if ( ! defined( 'ABSPATH' ) ) {
-        exit;
-    }
+    defined( 'ABSPATH' ) || exit;
 
     // Theme Constants
     define( 'THEME_NAME', get_bloginfo( 'name' ) );
