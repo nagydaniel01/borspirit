@@ -40,13 +40,13 @@ class MailchimpService
         if (in_array($currentStatus, $validStatuses, true)) {
             if (is_user_logged_in()) {
                 $response = $this->updateMember($email, $firstName, $lastName, $tags, $status);
-                return $this->handleResponse($response, __('Your subscription has been updated successfully.', 'text-domain'));
+                return $this->handleResponse($response, __('Your subscription has been updated successfully.', 'borspirit'));
             }
-            return $this->jsonResponse(true, __('Your e-mail address is already in our list.', 'text-domain'));
+            return $this->jsonResponse(true, __('Your e-mail address is already in our list.', 'borspirit'));
         }
 
         $response = $this->createMember($email, $firstName, $lastName, $tags);
-        return $this->handleResponse($response, __('You have been subscribed successfully.', 'text-domain'));
+        return $this->handleResponse($response, __('You have been subscribed successfully.', 'borspirit'));
     }
 
     /**

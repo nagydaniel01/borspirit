@@ -61,7 +61,7 @@
 
     <div class="form__actions">
         <button type="submit" class="btn btn-primary mb-3" id="poll_form_submit">
-            <span><?php echo esc_html__( 'Submit Feedback', 'borspirit' ); ?></span>
+            <span><?php echo esc_html__( 'Submit feedback', 'borspirit' ); ?></span>
             <svg class="icon icon-paper-plane"><use xlink:href="#icon-paper-plane"></use></svg>
         </button>
         <div id="<?php echo esc_attr( $prefix ); ?>response" role="status" aria-live="polite"></div>

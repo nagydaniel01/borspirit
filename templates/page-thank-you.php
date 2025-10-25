@@ -52,7 +52,7 @@
                 <?php endif; ?>
 
                 <a href="<?php echo esc_url(home_url('/')); ?>" class="button">
-                    <?php echo esc_html__('Back to Home', 'borspirit'); ?>
+                    <?php echo esc_html__('Back to homepage', 'borspirit'); ?>
                 </a>
             </div>
         </div>

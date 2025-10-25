@@ -17,7 +17,7 @@ if ( $product->get_review_count() > 0 || comments_open() ) : ?>
                         '<span>' . get_the_title() . '</span>'
                     );
                 } else {
-                    esc_html_e( 'Reviews', 'woocommerce' );
+                    echo esc_html__( 'Reviews', 'woocommerce' );
                 }
                 ?>
             </h2>

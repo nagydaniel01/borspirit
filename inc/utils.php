@@ -687,13 +687,13 @@
 
             // Day labels with translation support
             $days = [
-                'monday'    => __('Hétfő', 'borspirit'),
-                'tuesday'   => __('Kedd', 'borspirit'),
-                'wednesday' => __('Szerda', 'borspirit'),
-                'thursday'  => __('Csütörtök', 'borspirit'),
-                'friday'    => __('Péntek', 'borspirit'),
-                'saturday'  => __('Szombat', 'borspirit'),
-                'sunday'    => __('Vasárnap', 'borspirit'),
+                'monday'    => __('Monday', 'borspirit'),
+                'tuesday'   => __('Tuesday', 'borspirit'),
+                'wednesday' => __('Wednesday', 'borspirit'),
+                'thursday'  => __('Thursday', 'borspirit'),
+                'friday'    => __('Friday', 'borspirit'),
+                'saturday'  => __('Saturday', 'borspirit'),
+                'sunday'    => __('Sunday', 'borspirit'),
             ];
 
             $result = [];

@@ -111,12 +111,6 @@ if ( $show_tab_title ) : ?>
 <?php else : ?>
     <?php
         // Optional fallback message
-        echo wpautop(
-            sprintf(
-                /* translators: %s: taxonomy name */
-                __( 'No valid %s terms found.', 'borspirit' ),
-                esc_html__( 'Boraszat', 'borspirit' )
-            )
-        );
+        echo wpautop( __( 'No valid terms found.', 'borspirit' ) );
     ?>
 <?php endif; ?>

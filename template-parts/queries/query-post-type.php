@@ -260,7 +260,7 @@ $post_type_query = new WP_Query($post_type_args);
                 <?php if ($current_page > 1) : ?>
                     <li>
                         <a href="" data-number="1" class="page-numbers first js-pagination-link">
-                            <span class="page-numbers__label"><?php _e('Első', 'borspirit'); ?></span>
+                            <span class="page-numbers__label"><?php _e('First page', 'borspirit'); ?></span>
                         </a>
                     </li>
                 <?php endif; ?>
@@ -320,7 +320,7 @@ $post_type_query = new WP_Query($post_type_args);
                 <?php if ($current_page < $max_page) : ?>
                     <li>
                         <a href="" data-number="<?php echo $max_page; ?>" class="page-numbers last js-pagination-link">
-                            <span class="page-numbers__label"><?php _e('Utolsó', 'borspirit'); ?></span>
+                            <span class="page-numbers__label"><?php _e('Last page', 'borspirit'); ?></span>
                         </a>
                     </li>
                 <?php endif; ?>

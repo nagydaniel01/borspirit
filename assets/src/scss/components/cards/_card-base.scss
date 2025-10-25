@@ -91,6 +91,10 @@
 	}
 
 	.card__lead {
+		display: -webkit-box;
+		-webkit-line-clamp: 4;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
 		margin-top: .875rem;
 		margin-bottom: .75rem;
 		font-size: 1rem;

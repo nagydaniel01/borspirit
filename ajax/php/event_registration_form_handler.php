@@ -41,7 +41,7 @@
                 if ( ! isset($form['event_registration_form_nonce']) ||
                     ! wp_verify_nonce($form['event_registration_form_nonce'], 'event_registration_form_action') ) {
                     wp_send_json_error([
-                        'message' => __('Invalid security token', 'borspirit')
+                        'message' => __('Invalid security token.', 'borspirit')
                     ], 403);
                 }
 

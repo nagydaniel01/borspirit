@@ -85,7 +85,7 @@
                     'msg_privacy_required' => __( 'You must agree to the privacy policy.', 'borspirit' ),
                     'msg_registering'      => __( 'Registering…', 'borspirit' ),
                     'msg_success'          => __( 'Successfully registered!', 'borspirit' ),
-                    'msg_error_sending'    => __( 'There was an error while sending your registration.', 'borspirit' ),
+                    'msg_error_sending'    => __( 'There was an error while processing your registration.', 'borspirit' ),
                     'msg_unexpected'       => __( 'An unexpected error occurred.', 'borspirit' ),
                     'msg_network_error'    => __( 'A network error occurred.', 'borspirit' )
                 ) );

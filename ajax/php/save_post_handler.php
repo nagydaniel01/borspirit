@@ -45,7 +45,7 @@
 
             // Return success response
             wp_send_json_success([
-                'message' => __('The post saved successfully', 'borspirit'),
+                'message' => __('The post saved successfully.', 'borspirit'),
             ], 200);
         }
 

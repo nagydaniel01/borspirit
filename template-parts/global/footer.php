@@ -9,17 +9,7 @@
 
 <footer class="footer">
     <div class="footer__top">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <h3 class="footer__title"><?php echo esc_html__('Ízek, történetek, élmények – kéthetente a legizgalmasabb borokkal', 'borspirit'); ?></h3>
-                    <p><?php echo esc_html__('...egyenesen a postaládádba.', 'borspirit'); ?></p>
-                </div>
-                <div class="col-lg-6">
-                    <?php get_template_part('template-parts/forms/form', 'subscribe_form'); ?>
-                </div>
-            </div>
-        </div>
+        <?php get_template_part('template-parts/forms/form', 'subscribe_form'); ?>
     </div>
     <div class="footer__bottom">
         <div class="container">
@@ -44,7 +34,7 @@
                 <div class="col-md-6 col-xl">
                     <div class="footer__block">
                         <?php if (!empty($social) && is_array($social)) : ?>
-                            <h3 class="footer__title"><?php echo esc_html__('Közösségi média', 'borspirit'); ?></h3>
+                            <h3 class="footer__title"><?php echo esc_html__('Social media', 'borspirit'); ?></h3>
                             <?php
                                 $custom_names = [
                                     'linkedin'     => 'LinkedIn',
@@ -115,39 +105,11 @@
 
                     if (!empty($categories) && !is_wp_error($categories)) : ?>
                         <div class="footer__block">
-                            <h3 class="footer__title"><?php echo esc_html__('Cikkeink', 'borspirit'); ?></h3>
+                            <h3 class="footer__title"><?php echo esc_html__('Our posts', 'borspirit'); ?></h3>
                             <nav class="footer__nav nav nav--footer">
                                 <ul class="nav__list">
                                     <?php
                                         wp_list_categories(array(
-                                            'title_li'   => '',
-                                            'orderby'    => 'name',
-                                            'order'      => 'ASC',
-                                            'show_count' => false,
-                                            'hide_empty' => true,
-                                        ));
-                                    ?>
-                                </ul>
-                            </nav>
-                        </div>
-                    <?php endif; ?>
-                </div>
-
-                <div class="col-md-6 col-xl">
-                    <?php
-                    $categories = get_terms(array(
-                        'taxonomy'   => 'knowledge_base_cat',
-                        'hide_empty' => false,
-                    ));
-
-                    if (!empty($categories) && !is_wp_error($categories)) : ?>
-                        <div class="footer__block">
-                            <h3 class="footer__title"><?php echo esc_html__('Tudástár', 'borspirit'); ?></h3>
-                            <nav class="footer__nav nav nav--footer">
-                                <ul class="nav__list">
-                                    <?php
-                                        wp_list_categories(array(
-                                            'taxonomy'   => 'knowledge_base_cat',
                                             'title_li'   => '',
                                             'orderby'    => 'name',
                                             'order'      => 'ASC',

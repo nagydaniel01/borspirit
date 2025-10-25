@@ -102,7 +102,7 @@ $post_query = new WP_Query($query_args);
                     
                     <?php if (!empty($url)) : ?>
                         <a href="<?php echo esc_url($url); ?>" target="<?php echo esc_attr($target); ?>" <?php echo $is_external ? 'rel="noopener noreferrer"' : ''; ?> class="btn btn-link section__link">
-                            <span><?php esc_html_e($title, 'borspirit'); ?></span>
+                            <span><?php echo esc_html($title); ?></span>
                             <svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg>
                         </a>
                     <?php endif; ?>
@@ -135,7 +135,8 @@ $post_query = new WP_Query($query_args);
                                         }
                                     ?>
                                 </div>
-                            <?php endwhile; wp_reset_postdata(); ?>
+                            <?php endwhile; ?>
+                            <?php wp_reset_postdata(); ?>
                         </div>
                         <div class="slider__controls"></div>
                     </div>
@@ -159,7 +160,8 @@ $post_query = new WP_Query($query_args);
                                     }
                                 ?>
                             </div>
-                        <?php endwhile; wp_reset_postdata(); ?>
+                        <?php endwhile; ?>
+                        <?php wp_reset_postdata(); ?>
                     </div>
                 <?php endif; ?>
             </div>

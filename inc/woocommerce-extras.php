@@ -295,7 +295,7 @@
                     // Format with WooCommerce currency
                     $formatted_price = wc_price($unit_price);
 
-                    echo '<p class="unit-price">' . sprintf(__("Egységár: %s / liter", 'borspirit'), $formatted_price) . '</p>';
+                    echo '<p class="unit-price">' . sprintf(__('Unit price: %s / liter', 'borspirit'), $formatted_price) . '</p>';
                 } else {
                     // Show error message
                     echo '<p class="unit-price">' . esc_html($unit_price) . '</p>';
@@ -345,7 +345,7 @@
 
             // Translatable text (without HTML)
             $drs_price_text   = sprintf(
-                __( 'DRS - kötelező visszaváltási díj: %s / db.', 'borspirit' ),
+                __( 'DRS - mandatory redemption fee: %s / item.', 'borspirit' ),
                 wc_price( $drs_price )
             );
 
@@ -528,7 +528,7 @@
             }
 
             $tabs['icons'] = array(
-                'title'    => __( 'Ikonok', 'borspirit' ), // Change "Ikonok" to your desired title
+                'title'    => __( 'Icons', 'borspirit' ), // Change "Icons" to your desired title
                 'priority' => 5,
                 'callback' => 'icons_tab_content'
             );
@@ -617,7 +617,7 @@
 
             if ( !empty($faqs) ) {
                 $tabs['faq'] = array(
-                    'title'    => __( 'Frequently asked questions', 'borspirit' ),
+                    'title'    => __( 'Frequently Asked Questions', 'borspirit' ),
                     'priority' => 30,
                     'callback' => 'faq_tab_content'
                 );
@@ -880,7 +880,7 @@
                 }
 
                 // Only add label on single product pages
-                $label = '<span class="price-label">' . esc_html__( 'Polci ár', 'borspirit' ) . ': </span>';
+                $label = '<span class="price-label">' . esc_html__( 'Shelf price', 'borspirit' ) . ': </span>';
                 return $label . '<span>' . $price . '</span>';
 
             } catch ( Exception $e ) {
@@ -920,7 +920,7 @@
                 if ( $club_price !== '' && is_numeric( $club_price ) ) {
                     $club_price_html = wc_price( $club_price );
 
-                    $label = '<span class="price-label">' . esc_html__( 'Klub ár', 'borspirit' ) . ': </span>';
+                    $label = '<span class="price-label">' . esc_html__( 'Club price', 'borspirit' ) . ': </span>';
                     $price .= '<span class="price__club">' . $label . '<ins aria-hidden="true">' . $club_price_html . '</ins></span>';
                 }
 
@@ -966,7 +966,7 @@
                 woocommerce_wp_text_input(
                     array(
                         'id'          => '_club_price',
-                        'label'       => __( 'Klub ár', 'borspirit' ),
+                        'label'       => __( 'Club price', 'borspirit' ),
                         'desc_tip'    => true,
                         'description' => __( 'Enter a special price for club members.', 'borspirit' ),
                         'type'        => 'text',

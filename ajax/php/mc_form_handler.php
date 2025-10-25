@@ -18,8 +18,8 @@
         function mc_form_handler() {
             try {
                 // Ensure Mailchimp credentials are available
-                $api_key      = get_field('mailchimp_api_key', 'option');
-                $audience_id  = get_field('mailchimp_audience_id', 'option');
+                $api_key      = get_field('mailchimp_api_key', 'option') ?: MAILCHIMP_API_KEY;
+                $audience_id  = get_field('mailchimp_audience_id', 'option') ?: MAILCHIMP_AUDIENCE_ID;
 
                 if ( empty($api_key) || empty($audience_id) ) {
                     wp_send_json_error([

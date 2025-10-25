@@ -33,11 +33,11 @@
         'show_all'              => false,
         'end_size'              => 1,
         'mid_size'              => 2,
-        'prev_text'             => sprintf('<span class="page-numbers__label">%s</span><svg class="icon icon-arrow-left"><use xlink:href="#icon-arrow-left"></use></svg>', __('Előző', 'borspirit')),
-        'next_text'             => sprintf('<span class="page-numbers__label">%s</span><svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg>', __('Következő', 'borspirit')),
+        'prev_text'             => sprintf('<span class="page-numbers__label">%s</span><svg class="icon icon-arrow-left"><use xlink:href="#icon-arrow-left"></use></svg>', __('Previous', 'borspirit')),
+        'next_text'             => sprintf('<span class="page-numbers__label">%s</span><svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg>', __('Next', 'borspirit')),
         'type'                  => 'list',
         //'before_page_number'    => '',
-        'after_page_number'     => '<span class="visually-hidden"> ' . __('Oldal', 'borspirit') . '</span>',
+        'after_page_number'     => '<span class="visually-hidden"> ' . __('Page', 'borspirit') . '</span>',
     ];
 ?>
 
@@ -45,7 +45,7 @@
     <section class="section section--archive section--archive-search">
         <div class="section__header">
             <div class="container">
-                <h1 class="section__title fs-2"><?php printf( esc_html__('Keresés erre: %s', 'borspirit'), '<span>' . $search_query . '</span>' ); ?></h1>
+                <h1 class="section__title fs-2"><?php printf( esc_html__('Search for: %s', 'borspirit'), '<span>' . $search_query . '</span>' ); ?></h1>
             </div>
         </div>
 
@@ -174,7 +174,7 @@
                 <?php endif; ?>
             <?php else : ?>
                 <div class="container">
-                    <p class="text-center"><?php echo esc_html__('Sajnáljuk, de nem találtunk találatot a keresési feltételek alapján. Kérjük, próbálkozzon újra más kulcsszavakkal.', 'borspirit'); ?></p>
+                    <p class="text-center"><?php echo esc_html__('We are sorry, but we did not find any results based on your search criteria. Please try again with different keywords.', 'borspirit'); ?></p>
                 </div>
             <?php endif; ?>
         </div>

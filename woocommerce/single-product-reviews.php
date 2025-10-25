@@ -34,7 +34,7 @@ if ( ! comments_open() ) {
 				$reviews_title = sprintf( esc_html( _n( '%1$s review for %2$s', '%1$s reviews for %2$s', $count, 'woocommerce' ) ), esc_html( $count ), '<span>' . get_the_title() . '</span>' );
 				echo apply_filters( 'woocommerce_reviews_title', $reviews_title, $count, $product ); // WPCS: XSS ok.
 			} else {
-				esc_html_e( 'Reviews', 'woocommerce' );
+				echo esc_html__( 'Reviews', 'woocommerce' );
 			}
 			?>
 		</h2>
@@ -61,7 +61,7 @@ if ( ! comments_open() ) {
 			endif;
 			?>
 		<?php else : ?>
-			<p class="woocommerce-noreviews"><?php esc_html_e( 'There are no reviews yet.', 'woocommerce' ); ?></p>
+			<p class="woocommerce-noreviews"><?php echo esc_html__( 'There are no reviews yet.', 'woocommerce' ); ?></p>
 		<?php endif; ?>
 	</div>
 
@@ -69,7 +69,7 @@ if ( ! comments_open() ) {
 
 		<!-- Button to trigger modal -->
 		<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#reviewFormModal">
-			<?php esc_html_e( 'Add a Review', 'borspirit' ); ?>
+			<?php echo esc_html__( 'Add a Review', 'borspirit' ); ?>
 		</button>
 
 		<!-- Bootstrap Modal -->
@@ -153,7 +153,7 @@ if ( ! comments_open() ) {
 		</div>
 
 	<?php else : ?>
-		<p class="woocommerce-verification-required"><?php esc_html_e( 'Only logged in customers who have purchased this product may leave a review.', 'woocommerce' ); ?></p>
+		<p class="woocommerce-verification-required"><?php echo esc_html__( 'Only logged in customers who have purchased this product may leave a review.', 'woocommerce' ); ?></p>
 	<?php endif; ?>
 
 	<div class="clear"></div>

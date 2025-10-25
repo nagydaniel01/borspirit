@@ -70,7 +70,7 @@
                     '<div class="alert alert-danger" role="alert">%s</div>',
                     sprintf(
                         __(
-                            'A(z) <code>%s</code> oldal sablonja hiányzik. Kérjük, hozza létre a fájlt: <code>%s</code>',
+                            'The template for <code>%s</code> page is missing. Please create the file: <code>%s</code>',
                             'borspirit'
                         ),
                         esc_html( $section_name ),
@@ -107,7 +107,7 @@
                     '<div class="alert alert-danger" role="alert">%s</div>',
                     sprintf(
                         __(
-                            'A(z) <code>%s</code> oldal sablonja hiányzik. Kérjük, hozza létre a fájlt: <code>%s</code>',
+                            'The template for <code>%s</code> page is missing. Please create the file: <code>%s</code>',
                             'borspirit'
                         ),
                         esc_html( $section_name ),
@@ -143,7 +143,6 @@
                     'customer-logout'   => __( 'Logout', 'woocommerce' ),
                     'subscriptions'     => __( 'My Subscription', 'woocommerce-subscriptions' ),
                     'view-subscription' => __( 'Subscription Details', 'woocommerce-subscriptions' ),
-                    'beauty-profile'    => __( 'Beauty profile', 'borspirit' ),
                     'bookmarks'         => __( 'Bookmarks', 'borspirit' ),
                     'email-marketing'   => __( 'Newsletter', 'borspirit' ),
                     'product-bookmarks' => __( 'Product Bookmarks', 'borspirit' ),

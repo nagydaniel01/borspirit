@@ -327,7 +327,7 @@
                 'wc_wine_store_discount_flash'      => __( 'Discount Badge', 'borspirit' ),
                 'wc_wine_store_award_flash'         => __( 'Award Winner Badge', 'borspirit' ),
                 'wc_wine_store_new_vintage_flash'   => __( 'New vintage', 'borspirit' ),
-                'wc_wine_store_category_flash'      => __( 'A hónap bora', 'borspirit' ),
+                'wc_wine_store_category_flash'      => __( 'Wine of the month', 'borspirit' ),
             );
 
             // Loop through and only add existing functions (safety check)

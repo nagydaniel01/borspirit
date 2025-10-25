@@ -73,7 +73,7 @@
             $theme = wp_get_theme();
             $text = sprintf(
                 /* translators: 1: Theme name, 2: Theme version, 3: PHP version */
-                __('Sablon: %1$s %2$s verzió, PHP: %3$s verzió', 'borspirit'),
+                __('Template: %1$s %2$s version, PHP: %3$s version', 'borspirit'),
                 $theme->get( 'Name' ),
                 $theme->get( 'Version' ),
                 phpversion()
@@ -223,7 +223,7 @@
                 // If the taxonomy is 'post_tag', use a custom select dropdown
                 if ('post_tag' === $taxonomy->name) {
                     echo '<select name="' . esc_attr($taxonomy->name) . '" class="postform">';
-                    echo '<option value="">' . esc_html( sprintf( __('Összes %s', 'borspirit'), strtolower($taxonomy->labels->singular_name) ) ) . '</option>';
+                    echo '<option value="">' . esc_html( sprintf( __('All %s', 'borspirit'), strtolower($taxonomy->labels->singular_name) ) ) . '</option>';
 
                     foreach ($terms as $term) {
                         printf(
@@ -238,7 +238,7 @@
                 } else {
                     // Use wp_dropdown_categories for non-tag taxonomies
                     wp_dropdown_categories(array(
-                        'show_option_all' => esc_html( sprintf( __('Összes %s', 'borspirit'), strtolower($taxonomy->labels->singular_name) ) ),
+                        'show_option_all' => esc_html( sprintf( __('All %s', 'borspirit'), strtolower($taxonomy->labels->singular_name) ) ),
                         'taxonomy'        => esc_attr($taxonomy->name),
                         'name'            => esc_attr($taxonomy->name),
                         'selected'        => $selected,
@@ -281,7 +281,7 @@
 
                 if (!empty($authors)) {
                     echo '<select name="author" class="postform">';
-                    echo '<option value="">' . esc_html__('Összes szerző', 'borspirit') . '</option>';
+                    echo '<option value="">' . esc_html__('All author', 'borspirit') . '</option>';
                     foreach ($authors as $author) {
                         printf(
                             '<option value="%1$s"%2$s>%3$s</option>',
@@ -805,7 +805,7 @@
             );
 
             // Add the 'Switch To' action link
-            $actions['switch_to'] = '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Fiók váltás', 'borspirit' ) . '</a>';
+            $actions['switch_to'] = '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Switch account', 'borspirit' ) . '</a>';
 
             return $actions;
         }

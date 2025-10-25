@@ -280,6 +280,33 @@
          */
         function custom_woocommerce_loop_image_wrapper() {
             echo '<div class="woocommerce-loop-product__image">';
+
+            // Bookmark button
+            if ( ! is_user_logged_in() ) {
+                ?>
+                <a class="woocommerce-loop-product__bookmark" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">
+                    <svg class="icon icon-bookmark-empty">
+                        <use xlink:href="#icon-bookmark-empty"></use>
+                    </svg>
+                    <span class="visually-hidden"><?php echo esc_html__( 'Add to Bookmarks', 'borspirit' ); ?></span>
+                </a>
+                <?php
+            } else {
+                $current_user_id = get_current_user_id();
+                $post_id         = get_the_ID();
+                $bookmark_ids    = get_field( 'user_bookmarks', 'user_' . $current_user_id ) ?: [];
+                $is_bookmarked   = in_array( $post_id, $bookmark_ids, true );
+                $bookmark_icon   = $is_bookmarked ? 'bookmark' : 'bookmark-empty';
+                $bookmark_text   = $is_bookmarked ? __( 'Remove from bookmarks', 'borspirit' ) : __( 'Add to Bookmarks', 'borspirit' );
+                ?>
+                <a id="btn-bookmark" class="woocommerce-loop-product__bookmark" href="#" data-post-id="<?php echo esc_attr( $post_id ); ?>" data-bookmarked="<?php echo esc_attr( $is_bookmarked ? 'true' : 'false' ); ?>">
+                    <svg class="icon icon-<?php echo esc_attr( $bookmark_icon ); ?>">
+                        <use xlink:href="#icon-<?php echo esc_attr( $bookmark_icon ); ?>"></use>
+                    </svg>
+                    <span class="visually-hidden"><?php echo esc_html( $bookmark_text ); ?></span>
+                </a>
+                <?php
+            }
         }
         add_action( 'woocommerce_before_shop_loop_item_title', 'custom_woocommerce_loop_image_wrapper', 1 );
     }
@@ -628,18 +655,18 @@
                 $page_id = get_the_ID();
 
                 if ( empty($page_id) || !is_numeric($page_id) ) {
-                    throw new Exception( __('Az oldalazonosító hiányzik vagy érvénytelen.', 'borspirit') );
+                    throw new Exception( __('The page ID is missing or invalid.', 'borspirit') );
                 }
 
                 // Define the base directory for template section files
                 $template_dir = trailingslashit(get_template_directory()) . 'template-parts/sections/';
                 if ( ! is_dir($template_dir) ) {
-                    throw new Exception( sprintf( __('A szükséges sablonkönyvtár nem létezik: %s', 'borspirit'), $template_dir ) );
+                    throw new Exception( sprintf( __('The required template directory does not exist: %s.', 'borspirit'), $template_dir ) );
                 }
 
                 // Check for ACF
                 if ( ! function_exists('get_field') ) {
-                    throw new Exception( __('Az Advanced Custom Fields bővítmény nincs aktiválva. Telepítse vagy aktiválja az ACF-et a szekciók használatához.', 'borspirit') );
+                    throw new Exception( __('The Advanced Custom Fields plugin is not activated. Please install or activate ACF to use sections.', 'borspirit') );
                 }
 
                 // First try product-specific sections
@@ -664,7 +691,7 @@
                         if ( ! is_array($section) || empty($section['acf_fc_layout']) ) {
                             printf(
                                 '<div class="alert alert-warning" role="alert">%s</div>',
-                                esc_html( sprintf( __('A(z) #%d szekció hibásan van formázva és nem jeleníthető meg.', 'borspirit'), $section_num ) )
+                                esc_html( sprintf( __('Section #%d is incorrectly formatted and cannot be displayed.', 'borspirit'), $section_num ) )
                             );
                             continue;
                         }
@@ -678,7 +705,7 @@
                             printf(
                                 '<div class="alert alert-danger" role="alert">%s</div>',
                                 sprintf(
-                                    __('A(z) <code>%s</code> szekció sablonja hiányzik. Kérjük, hozza létre a fájlt: <code>%s</code>', 'borspirit'),
+                                    __('The template for <code>%s</code> section is missing. Please create the file: <code>%s</code>', 'borspirit'),
                                     esc_html( $section_name ),
                                     esc_html( $section_file )
                                 )

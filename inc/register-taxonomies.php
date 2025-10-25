@@ -11,26 +11,26 @@
 		function register_award_taxonomy() {
 
 			$labels = array(
-				'name'                       => _x( 'Díjak', 'Taxonomy General Name', 'borspirit' ),
-				'singular_name'              => _x( 'Díj', 'Taxonomy Singular Name', 'borspirit' ),
-				'menu_name'                  => __( 'Díjak', 'borspirit' ),
-				'all_items'                  => __( 'Összes díj', 'borspirit' ),
-				'parent_item'                => __( 'Szülő díj', 'borspirit' ),
-				'parent_item_colon'          => __( 'Szülő díj:', 'borspirit' ),
-				'new_item_name'              => __( 'Új díj neve', 'borspirit' ),
-				'add_new_item'               => __( 'Új díj hozzáadása', 'borspirit' ),
-				'edit_item'                  => __( 'Díj szerkesztése', 'borspirit' ),
-				'update_item'                => __( 'Díj frissítése', 'borspirit' ),
-				'view_item'                  => __( 'Díj megtekintése', 'borspirit' ),
-				'separate_items_with_commas' => __( 'Díjakat vesszővel válasszon el', 'borspirit' ),
-				'add_or_remove_items'        => __( 'Díj hozzáadása vagy eltávolítása', 'borspirit' ),
-				'choose_from_most_used'      => __( 'A leggyakrabban használt díjak közül válasszon', 'borspirit' ),
-				'popular_items'              => __( 'Népszerű díjak', 'borspirit' ),
-				'search_items'               => __( 'Díjak keresése', 'borspirit' ),
-				'not_found'                  => __( 'Nem található', 'borspirit' ),
-				'no_terms'                   => __( 'Nincs díj', 'borspirit' ),
-				'items_list'                 => __( 'Díjak listája', 'borspirit' ),
-				'items_list_navigation'      => __( 'Díjak listájának navigációja', 'borspirit' ),
+				'name'                       => _x( 'Awards', 'Taxonomy General Name', 'borspirit' ),
+				'singular_name'              => _x( 'Award', 'Taxonomy Singular Name', 'borspirit' ),
+				'menu_name'                  => __( 'Awards', 'borspirit' ),
+				'all_items'                  => __( 'All Awards', 'borspirit' ),
+				'parent_item'                => __( 'Parent Award', 'borspirit' ),
+				'parent_item_colon'          => __( 'Parent Award:', 'borspirit' ),
+				'new_item_name'              => __( 'New Award Name', 'borspirit' ),
+				'add_new_item'               => __( 'Add New Award', 'borspirit' ),
+				'edit_item'                  => __( 'Edit Award', 'borspirit' ),
+				'update_item'                => __( 'Update Award', 'borspirit' ),
+				'view_item'                  => __( 'View Award', 'borspirit' ),
+				'separate_items_with_commas' => __( 'Separate awards with commas', 'borspirit' ),
+				'add_or_remove_items'        => __( 'Add or remove awards', 'borspirit' ),
+				'choose_from_most_used'      => __( 'Choose from the most used awards', 'borspirit' ),
+				'popular_items'              => __( 'Popular Awards', 'borspirit' ),
+				'search_items'               => __( 'Search Awards', 'borspirit' ),
+				'not_found'                  => __( 'Not found', 'borspirit' ),
+				'no_terms'                   => __( 'No awards', 'borspirit' ),
+				'items_list'                 => __( 'Awards list', 'borspirit' ),
+				'items_list_navigation'      => __( 'Awards list navigation', 'borspirit' ),
 			);
 
 			$rewrite = array(
@@ -40,8 +40,8 @@
 			);
 
 			$default_term = array(
-				'name'        => 'Egyéb',
-				'slug'        => 'egyeb',
+				'name'        => 'Other',
+				'slug'        => 'other',
 				'description' => '',
 			);
 

@@ -50,7 +50,7 @@
 
                     $aria_label = sprintf(
                         /* translators: %1$s is the file title */
-                        __('A(z) "%1$s" letöltése', 'borspirit'),
+                        __('Download "%1$s"', 'borspirit'),
                         $file_title
                     );
                 ?>
@@ -77,7 +77,7 @@
 
                         <?php if ($file_url) : ?>
                             <a href="<?php echo esc_url($file_url); ?>" target="_self" aria-label="<?php echo esc_attr($aria_label); ?>" download class="card__button btn btn-secondary">
-                                <span><?php esc_html_e('Download', 'borspirit'); ?></span>
+                                <span><?php echo esc_html__('Download', 'borspirit'); ?></span>
                             </a>
                         <?php endif; ?>
                     </div>

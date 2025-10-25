@@ -70,3 +70,9 @@
         define( 'CHECKOUT_PAGE_ID', wc_get_page_id( 'checkout' ) );
         define( 'MY_ACCOUNT_PAGE_ID', wc_get_page_id( 'myaccount' ) );
     }
+
+    // Mailchimp
+    if ( class_exists( 'MailchimpService' ) ) {
+        define( 'MAILCHIMP_API_KEY', 'ae0da8ad3bcffc67ee33226e942bc534-us3' ); // For 'daniel.nagy0125@gmail.com' account
+        define( 'MAILCHIMP_AUDIENCE_ID', '409e8ec6a8' );                       // For 'daniel.nagy0125@gmail.com' account
+    }

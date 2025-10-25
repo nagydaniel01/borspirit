@@ -20,8 +20,8 @@ function wc_send_table_based_daily_order_summary_email() {
         <table width="100%" cellspacing="0" cellpadding="0" style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
             <tr>
                 <td style="padding:15px 0;">
-                    <strong><?php esc_html_e( 'Date:', 'wc-daily-summary' ); ?></strong> <?php echo esc_html( $today ); ?><br/>
-                    <strong><?php esc_html_e( 'Total Orders:', 'wc-daily-summary' ); ?></strong> <?php echo esc_html( $total_orders ); ?>
+                    <strong><?php echo esc_html__( 'Date:', 'wc-daily-summary' ); ?></strong> <?php echo esc_html( $today ); ?><br/>
+                    <strong><?php echo esc_html__( 'Total Orders:', 'wc-daily-summary' ); ?></strong> <?php echo esc_html( $total_orders ); ?>
                 </td>
             </tr>
 
@@ -43,18 +43,18 @@ function wc_send_table_based_daily_order_summary_email() {
                         <?php printf( esc_html__( 'Order #%d', 'wc-daily-summary' ), esc_html( $order_id ) ); ?>
                     </p>
                     <p style="margin:0;">
-                        <strong><?php esc_html_e( 'Customer:', 'wc-daily-summary' ); ?></strong> <?php echo esc_html( $order->get_formatted_billing_full_name() ); ?><br>
-                        <strong><?php esc_html_e( 'Status:', 'wc-daily-summary' ); ?></strong> <?php echo esc_html( wc_get_order_status_name( $order->get_status() ) ); ?><br>
-                        <strong><?php esc_html_e( 'Placed:', 'wc-daily-summary' ); ?></strong> <?php echo esc_html( $order->get_date_created()->date_i18n( 'Y-m-d H:i' ) ); ?>
+                        <strong><?php echo esc_html__( 'Customer:', 'wc-daily-summary' ); ?></strong> <?php echo esc_html( $order->get_formatted_billing_full_name() ); ?><br>
+                        <strong><?php echo esc_html__( 'Status:', 'wc-daily-summary' ); ?></strong> <?php echo esc_html( wc_get_order_status_name( $order->get_status() ) ); ?><br>
+                        <strong><?php echo esc_html__( 'Placed:', 'wc-daily-summary' ); ?></strong> <?php echo esc_html( $order->get_date_created()->date_i18n( 'Y-m-d H:i' ) ); ?>
                     </p>
 
                     <!-- Order Items Table -->
                     <table width="100%" cellspacing="0" cellpadding="6" style="border-collapse:collapse;margin-top:8px;font-family: Arial, sans-serif; font-size: 14px; color: #333;">
                         <tr style="background:#f7f7f7;">
-                            <td style="border:1px solid #ddd;font-weight:bold;"><?php esc_html_e( 'Product', 'wc-daily-summary' ); ?></td>
-                            <td style="border:1px solid #ddd;text-align:center;font-weight:bold;"><?php esc_html_e( 'Qty', 'wc-daily-summary' ); ?></td>
-                            <td style="border:1px solid #ddd;text-align:right;font-weight:bold;"><?php esc_html_e( 'Excl. Tax', 'wc-daily-summary' ); ?></td>
-                            <td style="border:1px solid #ddd;text-align:right;font-weight:bold;"><?php esc_html_e( 'Incl. Tax', 'wc-daily-summary' ); ?></td>
+                            <td style="border:1px solid #ddd;font-weight:bold;"><?php echo esc_html__( 'Product', 'wc-daily-summary' ); ?></td>
+                            <td style="border:1px solid #ddd;text-align:center;font-weight:bold;"><?php echo esc_html__( 'Qty', 'wc-daily-summary' ); ?></td>
+                            <td style="border:1px solid #ddd;text-align:right;font-weight:bold;"><?php echo esc_html__( 'Excl. Tax', 'wc-daily-summary' ); ?></td>
+                            <td style="border:1px solid #ddd;text-align:right;font-weight:bold;"><?php echo esc_html__( 'Incl. Tax', 'wc-daily-summary' ); ?></td>
                         </tr>
 
                         <?php foreach ( $order->get_items() as $item ) :
@@ -83,19 +83,19 @@ function wc_send_table_based_daily_order_summary_email() {
                     <!-- Order Totals Table -->
                     <table width="100%" cellspacing="0" cellpadding="6" style="border-collapse:collapse;margin-top:8px;font-family: Arial, sans-serif; font-size: 14px; color: #333;">
                         <tr>
-                            <td style="border:1px solid #ddd;"><strong><?php esc_html_e( 'Subtotal (Excl. Tax):', 'wc-daily-summary' ); ?></strong></td>
+                            <td style="border:1px solid #ddd;"><strong><?php echo esc_html__( 'Subtotal (Excl. Tax):', 'wc-daily-summary' ); ?></strong></td>
                             <td style="border:1px solid #ddd;text-align:right;"><?php echo wc_price( $order_subtotal, ['currency' => $currency] ); ?></td>
                         </tr>
                         <tr>
-                            <td style="border:1px solid #ddd;"><strong><?php esc_html_e( 'Tax:', 'wc-daily-summary' ); ?></strong></td>
+                            <td style="border:1px solid #ddd;"><strong><?php echo esc_html__( 'Tax:', 'wc-daily-summary' ); ?></strong></td>
                             <td style="border:1px solid #ddd;text-align:right;"><?php echo wc_price( $order_tax, ['currency' => $currency] ); ?></td>
                         </tr>
                         <tr>
-                            <td style="border:1px solid #ddd;"><strong><?php esc_html_e( 'Shipping:', 'wc-daily-summary' ); ?></strong></td>
+                            <td style="border:1px solid #ddd;"><strong><?php echo esc_html__( 'Shipping:', 'wc-daily-summary' ); ?></strong></td>
                             <td style="border:1px solid #ddd;text-align:right;"><?php echo wc_price( $order_shipping, ['currency' => $currency] ); ?></td>
                         </tr>
                         <tr>
-                            <td style="border:1px solid #ddd;"><strong><?php esc_html_e( 'Total (Incl. Tax):', 'wc-daily-summary' ); ?></strong></td>
+                            <td style="border:1px solid #ddd;"><strong><?php echo esc_html__( 'Total (Incl. Tax):', 'wc-daily-summary' ); ?></strong></td>
                             <td style="border:1px solid #ddd;text-align:right;"><?php echo wc_price( $order_total, ['currency' => $currency] ); ?></td>
                         </tr>
                     </table>
@@ -106,13 +106,13 @@ function wc_send_table_based_daily_order_summary_email() {
             <!-- Product Summary Table -->
             <tr>
                 <td style="padding:15px 0;border-top:2px solid #ddd;">
-                    <p style="font-size:16px;font-weight:bold;margin-bottom:8px;"><?php esc_html_e( 'Product Sales Summary', 'wc-daily-summary' ); ?></p>
+                    <p style="font-size:16px;font-weight:bold;margin-bottom:8px;"><?php echo esc_html__( 'Product Sales Summary', 'wc-daily-summary' ); ?></p>
                     <table width="100%" cellspacing="0" cellpadding="6" style="border-collapse:collapse;font-family: Arial, sans-serif; font-size: 14px; color: #333;">
                         <tr style="background:#f7f7f7;">
-                            <td style="border:1px solid #ddd;font-weight:bold;"><?php esc_html_e( 'Product', 'wc-daily-summary' ); ?></td>
-                            <td style="border:1px solid #ddd;text-align:center;font-weight:bold;"><?php esc_html_e( 'Qty Sold', 'wc-daily-summary' ); ?></td>
-                            <td style="border:1px solid #ddd;text-align:right;font-weight:bold;"><?php esc_html_e( 'Total (Excl. Tax)', 'wc-daily-summary' ); ?></td>
-                            <td style="border:1px solid #ddd;text-align:right;font-weight:bold;"><?php esc_html_e( 'Total (Incl. Tax)', 'wc-daily-summary' ); ?></td>
+                            <td style="border:1px solid #ddd;font-weight:bold;"><?php echo esc_html__( 'Product', 'wc-daily-summary' ); ?></td>
+                            <td style="border:1px solid #ddd;text-align:center;font-weight:bold;"><?php echo esc_html__( 'Qty Sold', 'wc-daily-summary' ); ?></td>
+                            <td style="border:1px solid #ddd;text-align:right;font-weight:bold;"><?php echo esc_html__( 'Total (Excl. Tax)', 'wc-daily-summary' ); ?></td>
+                            <td style="border:1px solid #ddd;text-align:right;font-weight:bold;"><?php echo esc_html__( 'Total (Incl. Tax)', 'wc-daily-summary' ); ?></td>
                         </tr>
                         <?php foreach ( $product_summary as $product_name => $data ) : ?>
                             <tr>
@@ -129,18 +129,18 @@ function wc_send_table_based_daily_order_summary_email() {
             <!-- Daily Totals Table -->
             <tr>
                 <td style="padding:15px 0;border-top:2px solid #ddd;">
-                    <p style="font-size:16px;font-weight:bold;margin-bottom:8px;"><?php esc_html_e( 'Daily Totals', 'wc-daily-summary' ); ?></p>
+                    <p style="font-size:16px;font-weight:bold;margin-bottom:8px;"><?php echo esc_html__( 'Daily Totals', 'wc-daily-summary' ); ?></p>
                     <table width="100%" cellspacing="0" cellpadding="6" style="border-collapse:collapse;font-family: Arial, sans-serif; font-size: 14px; color: #333;">
                         <tr>
-                            <td style="border:1px solid #ddd;"><strong><?php esc_html_e( 'Total Revenue (Excl. Tax):', 'wc-daily-summary' ); ?></strong></td>
+                            <td style="border:1px solid #ddd;"><strong><?php echo esc_html__( 'Total Revenue (Excl. Tax):', 'wc-daily-summary' ); ?></strong></td>
                             <td style="border:1px solid #ddd;text-align:right;"><?php echo wc_price( $total_revenue_excl ); ?></td>
                         </tr>
                         <tr>
-                            <td style="border:1px solid #ddd;"><strong><?php esc_html_e( 'Total Revenue (Incl. Tax):', 'wc-daily-summary' ); ?></strong></td>
+                            <td style="border:1px solid #ddd;"><strong><?php echo esc_html__( 'Total Revenue (Incl. Tax):', 'wc-daily-summary' ); ?></strong></td>
                             <td style="border:1px solid #ddd;text-align:right;"><?php echo wc_price( $total_revenue_incl ); ?></td>
                         </tr>
                         <tr>
-                            <td style="border:1px solid #ddd;"><strong><?php esc_html_e( 'Average Order Value (Incl. Tax):', 'wc-daily-summary' ); ?></strong></td>
+                            <td style="border:1px solid #ddd;"><strong><?php echo esc_html__( 'Average Order Value (Incl. Tax):', 'wc-daily-summary' ); ?></strong></td>
                             <td style="border:1px solid #ddd;text-align:right;"><?php echo wc_price( $total_revenue_incl / $total_orders ); ?></td>
                         </tr>
                     </table>

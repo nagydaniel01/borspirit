@@ -203,6 +203,27 @@
         }
       }
 
+      // Product bookmark
+      .woocommerce-loop-product__bookmark {
+        position: absolute;
+        top: .5rem;
+        right: .5rem;
+        width: 2rem;
+        height: 2rem;
+        display: grid;
+        place-items: center;
+        background-color: rgba($white, .8);
+        border-radius: 2rem;
+
+        .icon {
+          margin: 0;
+        }
+
+        span {
+          @extend .visually-hidden;
+        }
+      }
+
       // Card Body
       .woocommerce-loop-product__body {
         padding: 1rem;
