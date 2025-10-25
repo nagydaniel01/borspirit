@@ -17,16 +17,16 @@
     <div class="row">
         <div class="col-md-6 mb-3">
             <label class="form-label visually-hidden" for="<?php echo esc_attr($prefix); ?>name">
-                <?php echo esc_html__( 'Name', TEXT_DOMAIN ); ?> <span class="required">*</span>
+                <?php echo esc_html__( 'Name', 'borspirit' ); ?> <span class="required">*</span>
             </label>
-            <input type="text" class="form-control" id="<?php echo esc_attr($prefix); ?>name" name="<?php echo esc_attr($prefix); ?>name" value="" placeholder="<?php echo esc_attr__( 'Enter your name', TEXT_DOMAIN ); ?>" required aria-required="true">
+            <input type="text" class="form-control" id="<?php echo esc_attr($prefix); ?>name" name="<?php echo esc_attr($prefix); ?>name" value="" placeholder="<?php echo esc_attr__( 'Enter your name', 'borspirit' ); ?>" required aria-required="true">
         </div>
     
         <div class="col-md-6 mb-3">
             <label class="form-label visually-hidden" for="<?php echo esc_attr($prefix); ?>email">
-                <?php echo esc_html__( 'E-mail', TEXT_DOMAIN ); ?> <span class="required">*</span>
+                <?php echo esc_html__( 'E-mail', 'borspirit' ); ?> <span class="required">*</span>
             </label>
-            <input type="email" class="form-control" id="<?php echo esc_attr($prefix); ?>email" name="<?php echo esc_attr($prefix); ?>email" value="" placeholder="<?php echo esc_attr__( 'Enter your email address', TEXT_DOMAIN ); ?>" required aria-required="true">
+            <input type="email" class="form-control" id="<?php echo esc_attr($prefix); ?>email" name="<?php echo esc_attr($prefix); ?>email" value="" placeholder="<?php echo esc_attr__( 'Enter your email address', 'borspirit' ); ?>" required aria-required="true">
         </div>
     </div>
 
@@ -36,8 +36,8 @@
             <label class="form-check-label" for="<?php echo esc_attr($prefix); ?>privacy_policy">
                 <?php 
                     echo sprintf(
-                        esc_html__( 'I agree to the %s', TEXT_DOMAIN ), 
-                        '<a href="' . esc_url( get_privacy_policy_url() ) . '" target="_blank">' . esc_html__( 'Privacy Policy', TEXT_DOMAIN ) . '</a>'
+                        esc_html__( 'I agree to the %s', 'borspirit' ), 
+                        '<a href="' . esc_url( get_privacy_policy_url() ) . '" target="_blank">' . esc_html__( 'Privacy Policy', 'borspirit' ) . '</a>'
                     ); 
                 ?>
                 <span class="required">*</span>
@@ -47,7 +47,7 @@
 
     <div class="form__actions">
         <button type="submit" class="btn btn-primary mb-3">
-            <span><?php echo esc_html__( 'Subscribe', TEXT_DOMAIN ); ?></span>
+            <span><?php echo esc_html__( 'Subscribe', 'borspirit' ); ?></span>
             <svg class="icon icon-paper-plane"><use xlink:href="#icon-paper-plane"></use></svg>
         </button>
         <div id="<?php echo esc_attr($prefix); ?>response" role="status" aria-live="polite"></div>
@@ -61,7 +61,7 @@
             printf( 
                 '<div class="alert alert-danger" role="alert">%s</div>',
                 sprintf(
-                    __('Mailchimp configuration is missing. Please set <code>%s</code> and <code>%s</code> in the theme options.', TEXT_DOMAIN),
+                    __('Mailchimp configuration is missing. Please set <code>%s</code> and <code>%s</code> in the theme options.', 'borspirit'),
                     esc_html('mailchimp_api_key'),
                     esc_html('mailchimp_audience_id')
                 )
@@ -69,7 +69,7 @@
         } else {
             printf(
                 '<div class="alert alert-warning" role="alert">%s</div>',
-                esc_html__( 'Subscription form is temporarily unavailable. Please try again later.', TEXT_DOMAIN )
+                esc_html__( 'Subscription form is temporarily unavailable. Please try again later.', 'borspirit' )
             );
         }
     ?>

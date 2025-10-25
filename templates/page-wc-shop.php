@@ -86,9 +86,7 @@ wc_set_loop_prop( 'total_pages', $max_num_pages );
 <main class="page page--default page--archive page--archive-product page--<?php echo esc_attr( $page_slug ); ?>">
     <section class="section section--archive section--archive-product">
         <div class="container">
-            <div class="woocommerce-breadcrumb-wrapper">
-                <?php do_action( 'woocommerce_before_main_content' ); ?>
-            </div>
+            <?php do_action( 'woocommerce_before_main_content' ); ?>
 
             <header class="woocommerce-products-header">
                 <h1 class="woocommerce-products-header__title page-title"><?php the_title(); ?></h1>

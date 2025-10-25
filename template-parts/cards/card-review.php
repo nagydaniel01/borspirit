@@ -19,7 +19,7 @@
 
 <div class="card card--review">
     <div class="card__content">
-        <h3 class="card__title"><?php echo esc_html($customer_first_name ?: __('Anonymous', TEXT_DOMAIN)); ?></h3>
+        <h3 class="card__title"><?php echo esc_html($customer_first_name ?: __('Anonymous', 'borspirit')); ?></h3>
 
         <?php if ($stars) : ?>
             <div class="card__rating"><?php echo $stars; ?></div>

@@ -12,7 +12,7 @@
     //$description = term_description($term_id, $taxonomy);
 
     $image_id = PLACEHOLDER_IMAGE_ID;
-    $alt_text = __('', TEXT_DOMAIN);
+    $alt_text = __('', 'borspirit');
 
     // Get gallery field (ACF)
     $gallery = get_field('gallery', $taxonomy . '_' . $term_id);

@@ -26,14 +26,14 @@
                 <?php
                 // Ensure Gravity Forms is loaded
                 if (!class_exists('GFAPI')) {
-                    echo esc_html__('A Gravity Forms nincs telepítve vagy nincs aktiválva.', TEXT_DOMAIN);
+                    echo esc_html__('A Gravity Forms nincs telepítve vagy nincs aktiválva.', 'borspirit');
                     return;
                 }
 
                 $form = GFAPI::get_form((int) $form_id);
 
                 if (!$form) {
-                    echo esc_html__('Űrlap nem található.', TEXT_DOMAIN);
+                    echo esc_html__('Űrlap nem található.', 'borspirit');
                     return;
                 }
 

@@ -15,7 +15,7 @@ if ( post_password_required() ) {
 						'%1$s thoughts on "%2$s"',
 						get_comments_number(),
 						'comments title',
-						TEXT_DOMAIN
+						'borspirit'
 					),
 					number_format_i18n( get_comments_number() ),
 					'<span>' . get_the_title() . '</span>'
@@ -38,20 +38,20 @@ if ( post_password_required() ) {
 
 			<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : ?>
 				<nav class="nav nav--comment" role="navigation">
-					<span class="visually-hidden"><?php _e( 'Comment navigation', TEXT_DOMAIN ); ?></span>
+					<span class="visually-hidden"><?php _e( 'Comment navigation', 'borspirit' ); ?></span>
 					<div class="nav__content">
 						<?php if ( get_previous_comments_link() ) : ?>
-							<div class="nav__item nav__item--prev"><?php previous_comments_link( __( '&larr; Older Comments', TEXT_DOMAIN ) ); ?></div>
+							<div class="nav__item nav__item--prev"><?php previous_comments_link( __( '&larr; Older Comments', 'borspirit' ) ); ?></div>
 						<?php endif; ?>
 						<?php if ( get_next_comments_link() ) : ?>
-							<div class="nav__item nav__item--next"><?php next_comments_link( __( 'Newer Comments &rarr;', TEXT_DOMAIN ) ); ?></div>
+							<div class="nav__item nav__item--next"><?php next_comments_link( __( 'Newer Comments &rarr;', 'borspirit' ) ); ?></div>
 						<?php endif; ?>
 					</div>
 				</nav>
 			<?php endif; ?>
 
 			<?php if ( ! comments_open() && get_comments_number() ) : ?>
-				<p class="no-comments"><?php _e( 'Comments are closed.', TEXT_DOMAIN ); ?></p>
+				<p class="no-comments"><?php _e( 'Comments are closed.', 'borspirit' ); ?></p>
 			<?php endif; ?>
 		</div>
 	<?php endif; ?>

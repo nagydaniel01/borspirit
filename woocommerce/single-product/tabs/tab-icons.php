@@ -10,16 +10,16 @@ $product_sold_message = sprintf(
         '%s person has already tried it – get yours now!',
         '%s people have already tried it – get yours now!',
         $units_sold,
-        TEXT_DOMAIN
+        'borspirit'
     ),
     number_format_i18n( $units_sold )
 );
 
 // --- Get selected icons from ACF checkbox field ---
-$selected_icons = get_field( 'product_icons', $product->get_id() ) ?? [];
+$selected_icons = get_field( 'product_icons', $product->get_id() ) ?: [];
 
 if ( empty($selected_icons) ) {
-    $selected_icons = get_field( 'product_page_icons', 'option' ) ?? [];
+    $selected_icons = get_field( 'product_page_icons', 'option' ) ?: [];
 }
 
 // --- Existing icon items ---
@@ -63,7 +63,7 @@ if ( in_array('free_shipping_limit_message', $selected_icons) ) {
                 if ( isset( $method->min_amount ) && is_numeric( $method->min_amount ) && $method->min_amount > 0 ) {
                     $formatted_amount = wc_price( $method->min_amount );
                     $free_shipping_limit_message = sprintf(
-                        __( 'Free shipping on orders over %1$s', TEXT_DOMAIN ),
+                        __( 'Free shipping on orders over %1$s', 'borspirit' ),
                         $formatted_amount
                     );
                     break;
@@ -129,17 +129,17 @@ if ( in_array('estimated_delivery_message', $selected_icons) ) {
     $estimated_date = $formatter->format($estimated_timestamp);
 
     $estimated_delivery_message = sprintf(
-        __( 'Free in-store pickup as early as %1$s', TEXT_DOMAIN ),
+        __( 'Free in-store pickup as early as %1$s', 'borspirit' ),
         $estimated_date
     );
 }
 ?>
 
 <div class="section__content">
-    <?php if ( ! empty( $icon_items ) || ! empty( $free_shipping_limit_message ) || ! empty( $estimated_delivery_message ) ) : ?>
+    <?php if ( ! empty( $icon_items ) || $units_sold > 0 || ! empty( $free_shipping_limit_message ) || ! empty( $estimated_delivery_message ) ) : ?>
         <div class="section__list">
 
-            <?php if ( ! empty( $units_sold > 0 ) ) : // Only display if at least one unit has been sold ?>
+            <?php if ( $units_sold > 0 ) : // Only display if at least one unit has been sold ?>
                 <div class="section__listitem">
                     <svg class="section__icon icon icon-wine-bottle"><use xlink:href="#icon-wine-bottle"></use></svg>
                     <span class="section__text"><?php echo esc_html( $product_sold_message ); ?></span>
@@ -176,6 +176,6 @@ if ( in_array('estimated_delivery_message', $selected_icons) ) {
 
         </div>
     <?php else : ?>
-        <?php echo wpautop( __( 'No icon items found.', TEXT_DOMAIN ) ); ?>
+        <?php echo wpautop( __( 'No icon items found.', 'borspirit' ) ); ?>
     <?php endif; ?>
 </div>

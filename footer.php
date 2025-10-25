@@ -29,7 +29,7 @@
 
         <a href="#top" class="back-to-top">
             <svg class="icon icon-arrow-up"><use xlink:href="#icon-arrow-up"></use></svg>
-            <span class="visually-hidden"><?php echo esc_html__('Back to top', TEXT_DOMAIN); ?></span>
+            <span class="visually-hidden"><?php echo esc_html__('Back to top', 'borspirit'); ?></span>
         </a>
 
         <?php wp_footer(); ?>

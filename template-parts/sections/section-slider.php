@@ -3,7 +3,7 @@
     $section_hide_title = $section['slider_section_hide_title'] ?? false;
     $section_slug       = sanitize_title($section_title);
     $section_lead       = $section['slider_section_lead'] ?? '';
-    $slider_items       = $section['slider_items'] ?? [];
+    $slider_items       = $section['slider_items'] ?: [];
     $slider_height      = $section['slider_height'] ?? '';
     $slider_ratio       = $section['slider_ratio'] ?? '16x9'; // e.g. "16x9", "4x3"
     $slider_text_align  = $section['slider_text_align'] ?? 'center'; // left, center, right

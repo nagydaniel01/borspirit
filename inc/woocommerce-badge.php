@@ -116,7 +116,7 @@
             $datediff  = strtotime( $now ) - strtotime( $post_date );
 
             if ( $datediff / DAY_IN_SECONDS <= $days_new ) {
-                echo '<span class="badge badge--new">' . esc_html__( 'New Arrival', TEXT_DOMAIN ) . '</span>';
+                echo '<span class="badge badge--new">' . esc_html__( 'New Arrival', 'borspirit' ) . '</span>';
             }
         }
     }
@@ -135,7 +135,7 @@
             }
 
             if ( $product->get_total_sales() >= $sales_threshold ) {
-                echo '<span class="badge badge--bestseller">' . esc_html__( 'Best Seller', TEXT_DOMAIN ) . '</span>';
+                echo '<span class="badge badge--bestseller">' . esc_html__( 'Best Seller', 'borspirit' ) . '</span>';
             }
         }
     }
@@ -154,7 +154,7 @@
             }
 
             if ( $product->managing_stock() && $product->get_stock_quantity() <= $stock_limit ) {
-                echo '<span class="badge badge--limited">' . esc_html__( 'Limited Stock', TEXT_DOMAIN ) . '</span>';
+                echo '<span class="badge badge--limited">' . esc_html__( 'Limited Stock', 'borspirit' ) . '</span>';
             }
         }
     }
@@ -175,7 +175,7 @@
                 $percentage = round(
                     ( ( $product->get_regular_price() - $product->get_sale_price() ) / $product->get_regular_price() ) * 100
                 );
-                echo '<span class="badge badge--discount">' . sprintf( esc_html__( '%d%%', TEXT_DOMAIN ), $percentage ) . '</span>';
+                echo '<span class="badge badge--discount">' . sprintf( esc_html__( '%d%%', 'borspirit' ), $percentage ) . '</span>';
             }
         }
     }
@@ -201,7 +201,7 @@
                 }
                 */
 
-                echo '<span class="badge badge--award">' . esc_html__( 'Award Winner', TEXT_DOMAIN ) . '</span>';
+                echo '<span class="badge badge--award">' . esc_html__( 'Award Winner', 'borspirit' ) . '</span>';
             }
         }
     }
@@ -277,7 +277,7 @@
 
                 // If any of the terms matches the current year
                 if ( in_array( $current_year, $terms, true ) ) {
-                    echo '<span class="badge badge--new-vintage">' . esc_html__( 'New vintage', TEXT_DOMAIN ) . '</span>';
+                    echo '<span class="badge badge--new-vintage">' . esc_html__( 'New vintage', 'borspirit' ) . '</span>';
                 }
             }
         }
@@ -296,7 +296,7 @@
             }
 
             if ( 'yes' === get_post_meta( $product->get_id(), 'organic', true ) ) {
-                echo '<span class="badge badge--organic">' . esc_html__( 'Organic', TEXT_DOMAIN ) . '</span>';
+                echo '<span class="badge badge--organic">' . esc_html__( 'Organic', 'borspirit' ) . '</span>';
             }
         }
     }
@@ -320,14 +320,14 @@
 
             // Define all badge flash functions you want available
             $badge_functions = array(
-                'wc_wine_store_sale_flash'          => __( 'Sale Badge', TEXT_DOMAIN ),
-                'wc_wine_store_new_flash'           => __( 'New Arrival Badge', TEXT_DOMAIN ),
-                'wc_wine_store_bestseller_flash'    => __( 'Best Seller Badge', TEXT_DOMAIN ),
-                'wc_wine_store_limited_stock_flash' => __( 'Limited Stock Badge', TEXT_DOMAIN ),
-                'wc_wine_store_discount_flash'      => __( 'Discount Badge', TEXT_DOMAIN ),
-                'wc_wine_store_award_flash'         => __( 'Award Winner Badge', TEXT_DOMAIN ),
-                'wc_wine_store_new_vintage_flash'   => __( 'New vintage', TEXT_DOMAIN ),
-                'wc_wine_store_category_flash'      => __( 'A hónap bora', TEXT_DOMAIN ),
+                'wc_wine_store_sale_flash'          => __( 'Sale Badge', 'borspirit' ),
+                'wc_wine_store_new_flash'           => __( 'New Arrival Badge', 'borspirit' ),
+                'wc_wine_store_bestseller_flash'    => __( 'Best Seller Badge', 'borspirit' ),
+                'wc_wine_store_limited_stock_flash' => __( 'Limited Stock Badge', 'borspirit' ),
+                'wc_wine_store_discount_flash'      => __( 'Discount Badge', 'borspirit' ),
+                'wc_wine_store_award_flash'         => __( 'Award Winner Badge', 'borspirit' ),
+                'wc_wine_store_new_vintage_flash'   => __( 'New vintage', 'borspirit' ),
+                'wc_wine_store_category_flash'      => __( 'A hónap bora', 'borspirit' ),
             );
 
             // Loop through and only add existing functions (safety check)

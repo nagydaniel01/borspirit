@@ -31,7 +31,7 @@
             // Locate query template
             $query_template = get_template_directory() . '/template-parts/queries/query-post-type.php';
             if (!file_exists($query_template)) {
-                wp_send_json_error(['message' => __('Query template not found.', TEXT_DOMAIN)], 500);
+                wp_send_json_error(['message' => __('Query template not found.', 'borspirit')], 500);
             }
 
             // Make variables available to the included template

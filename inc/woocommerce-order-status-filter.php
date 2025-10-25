@@ -33,7 +33,7 @@
          * Hooks into 'woocommerce_before_account_orders'.
          */
         function custom_my_account_orders_filters() {
-            echo '<p>' . __('Filter by:', TEXT_DOMAIN) . ' ';
+            echo '<p>' . __('Filter by:', 'borspirit') . ' ';
 
             $customer_orders = 0;
 
@@ -62,9 +62,9 @@
             // Display "All statuses" link
             $all_status_link = remove_query_arg('status');
             if (!empty($_GET['status'])) {
-                echo '<a href="' . esc_url($all_status_link) . '">' . __('All statuses', TEXT_DOMAIN) . ' (' . esc_html($customer_orders) . ')</a>';
+                echo '<a href="' . esc_url($all_status_link) . '">' . __('All statuses', 'borspirit') . ' (' . esc_html($customer_orders) . ')</a>';
             } else {
-                echo '<b>' . __('All statuses', TEXT_DOMAIN) . ' (' . esc_html($customer_orders) . ')</b>';
+                echo '<b>' . __('All statuses', 'borspirit') . ' (' . esc_html($customer_orders) . ')</b>';
             }
 
             echo '</p>';

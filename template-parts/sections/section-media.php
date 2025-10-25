@@ -37,16 +37,16 @@
                         <div class="section__video-wrapper ratio ratio-16x9">
                             <video width="<?php echo esc_attr($width); ?>" height="<?php echo esc_attr($height); ?>" controls <?php echo $poster_url ? 'poster="' . esc_url($poster_url) . '"' : ''; ?> class="section__video">
                                 <source src="<?php echo esc_url($url); ?>" type="<?php echo esc_attr($mime_type); ?>">
-                                <?php echo esc_html__('Your browser does not support the video tag.', TEXT_DOMAIN); ?>
+                                <?php echo esc_html__('Your browser does not support the video tag.', 'borspirit'); ?>
                             </video>
                         </div>
                     <?php elseif ($is_audio) : ?>
                         <audio controls class="section__audio">
                             <source src="<?php echo esc_url($url); ?>" type="<?php echo esc_attr($mime_type); ?>">
-                            <?php echo esc_html__('Your browser does not support the audio tag.', TEXT_DOMAIN); ?>
+                            <?php echo esc_html__('Your browser does not support the audio tag.', 'borspirit'); ?>
                         </audio>
                     <?php else : ?>
-                        <p><?php echo esc_html__('Unsupported media type.', TEXT_DOMAIN); ?></p>
+                        <p><?php echo esc_html__('Unsupported media type.', 'borspirit'); ?></p>
                     <?php endif; ?>
                 </div>
             </div>

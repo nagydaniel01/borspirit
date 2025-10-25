@@ -6,7 +6,7 @@
     $section_slug          = sanitize_title($section_title);
     $section_lead          = $section['wysiwyg_editor_section_lead'] ?? '';
     $wysiwyg_editor_layout = $section['wysiwyg_editor_layout'] ?? 'left';
-    $wysiwyg_editor_items  = $section['wysiwyg_editor_items'] ?? [];
+    $wysiwyg_editor_items  = $section['wysiwyg_editor_items'] ?: [];
 
     // Filter out empty items (WYSIWYG empty)
     $wysiwyg_editor_items = array_filter($wysiwyg_editor_items, function ($item) {

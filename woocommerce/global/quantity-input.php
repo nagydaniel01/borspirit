@@ -57,7 +57,7 @@ $label = ! empty( $args['product_name'] ) ? sprintf( esc_html__( '%s quantity', 
 				autocomplete="<?php echo esc_attr( isset( $autocomplete ) ? $autocomplete : 'on' ); ?>"
 			<?php endif; ?>
 		/>
-		<span class="quantity__label"><?php echo esc_html__( 'pcs.', TEXT_DOMAIN ); ?></span>
+		<span class="quantity__label"><?php echo esc_html__( 'pcs.', 'borspirit' ); ?></span>
 	</div>
 	<?php
 	/**

@@ -8,7 +8,7 @@
 
     $slider             = $section['card_slider'] ?? '';
 
-    $card_items         = $section['card_items'] ?? [];
+    $card_items         = $section['card_items'] ?: [];
     $card_style         = $section['card_style'] ?? 'unordered';
 
     // Filter out empty items (title & description both empty)
@@ -42,16 +42,16 @@
                             <?php foreach ($card_items as $key => $item) : ?>
                                 <div class="slider__item">
                                     <?php
-                                        if (!empty($template)) {
-                                            $template_args = array(
+                                        if ($template) {
+                                            $template_args = [
                                                 'card_image'       => $item['card_image'],
                                                 'card_title'       => $item['card_title'],
                                                 'card_description' => $item['card_description'],
                                                 'card_button'      => $item['card_button'],
-                                            );
-
+                                            ];
+                                            
                                             // File does not exist, handle accordingly
-                                            get_template_part('template-parts/cards/card', '', $template_args);
+                                            get_template_part( 'template-parts/cards/card', '', $template_args );
                                         }
                                     ?>
                                 </div>
@@ -64,16 +64,16 @@
                         <?php foreach ($card_items as $key => $item) : ?>
                             <div class="col-lg-6 col-xl-4">
                                 <?php
-                                    if (!empty($template)) {
-                                        $template_args = array(
+                                    if ($template) {
+                                        $template_args = [
                                             'card_image'       => $item['card_image'],
                                             'card_title'       => $item['card_title'],
                                             'card_description' => $item['card_description'],
                                             'card_button'      => $item['card_button'],
-                                        );
-    
+                                        ];
+
                                         // File does not exist, handle accordingly
-                                        get_template_part('template-parts/cards/card', '', $template_args);
+                                        get_template_part( 'template-parts/cards/card', '', $template_args );
                                     }
                                 ?>
                             </div>

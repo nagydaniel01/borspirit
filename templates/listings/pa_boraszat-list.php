@@ -8,7 +8,7 @@
 <main class="page page--default">
     <section class="section section--default">
         <div class="container">
-            <h1 class="section__title"><?php printf( esc_html__( 'All %s', TEXT_DOMAIN ), esc_html( mb_strtolower($taxonomy_obj->labels->singular_name) ) ); ?></h1>
+            <h1 class="section__title"><?php printf( esc_html__( 'All %s', 'borspirit' ), esc_html( mb_strtolower($taxonomy_obj->labels->singular_name) ) ); ?></h1>
             <div class="section__content">
                 <?php
                     $terms = get_terms([
@@ -29,9 +29,11 @@
 
                                 $template_slug = 'template-parts/cards/card-' . $template_args['taxonomy'] . '.php';
 
-                                if ( locate_template($template_slug) ) {
+                                if ( locate_template( $template_slug ) ) {
+                                    // File exists, include it
                                     get_template_part( 'template-parts/cards/card', $template_args['taxonomy'], $template_args );
                                 } else {
+                                    // File does not exist, handle accordingly
                                     get_template_part( 'template-parts/cards/card', 'term-default', $template_args );
                                 }
                             ?>
@@ -39,7 +41,7 @@
                         <?php endforeach; ?>
                     </div>
                 <?php else : ?>
-                    <p><?php printf( esc_html__( 'No %s found.', TEXT_DOMAIN ), esc_html( mb_strtolower($taxonomy_obj->labels->singular_name) ) ); ?></p>
+                    <p><?php printf( esc_html__( 'No %s found.', 'borspirit' ), esc_html( mb_strtolower($taxonomy_obj->labels->singular_name) ) ); ?></p>
                 <?php endif; ?>
             </div>
         </div>

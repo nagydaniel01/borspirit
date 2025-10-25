@@ -15,7 +15,7 @@
             // Ensure the user is logged in
             if ( ! $current_user_id ) {
                 wp_send_json_error([
-                    'message' => __('You must be logged in', TEXT_DOMAIN)
+                    'message' => __('You must be logged in', 'borspirit')
                 ], 401);
             }
 

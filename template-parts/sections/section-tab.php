@@ -5,7 +5,7 @@
     $section_hide_title = $section['tab_section_hide_title'] ?? false;
     $section_slug       = sanitize_title($section_title);
     $section_lead       = $section['tab_section_lead'] ?? '';
-    $tab_items          = $section['tab_items'] ?? [];
+    $tab_items          = $section['tab_items'] ?: [];
     $tab_style          = $section['tab_style'] ?? 'tabs';
     $tab_layout         = $section['tab_layout'] ?? 'horizontal';
 

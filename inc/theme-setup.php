@@ -123,11 +123,11 @@
             // Register menu
             register_nav_menus(
                 array(
-                    'primary_menu'      => __( 'Header menu', TEXT_DOMAIN ),
-                    'footer_menu_1'     => __( 'Footer menu 1', TEXT_DOMAIN ),
-                    'footer_menu_2'     => __( 'Footer menu 2', TEXT_DOMAIN ),
-                    'footer_menu_3'     => __( 'Footer menu 3', TEXT_DOMAIN ),
-                    'footer_menu_4'     => __( 'Footer menu 4', TEXT_DOMAIN )
+                    'primary_menu'      => __( 'Header menu', 'borspirit' ),
+                    'footer_menu_1'     => __( 'Footer menu 1', 'borspirit' ),
+                    'footer_menu_2'     => __( 'Footer menu 2', 'borspirit' ),
+                    'footer_menu_3'     => __( 'Footer menu 3', 'borspirit' ),
+                    'footer_menu_4'     => __( 'Footer menu 4', 'borspirit' )
                 )
             );
 
@@ -142,8 +142,8 @@
          * @return void
          */
         function theme_textdomain_init() {
-            load_theme_textdomain( TEXT_DOMAIN, get_template_directory() . '/languages' );
-            //load_theme_textdomain( TEXT_DOMAIN, WP_LANG_DIR . '/themes' );
+            load_theme_textdomain( 'borspirit', get_template_directory() . '/languages' );
+            //load_theme_textdomain( 'borspirit', WP_LANG_DIR . '/themes' );
         }
         add_action( 'init', 'theme_textdomain_init' );
     }

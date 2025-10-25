@@ -12,8 +12,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
-                    <h3 class="footer__title"><?php echo esc_html__('Ízek, történetek, élmények – kéthetente a legizgalmasabb borokkal', TEXT_DOMAIN); ?></h3>
-                    <p><?php echo esc_html__('...egyenesen a postaládádba.', TEXT_DOMAIN); ?></p>
+                    <h3 class="footer__title"><?php echo esc_html__('Ízek, történetek, élmények – kéthetente a legizgalmasabb borokkal', 'borspirit'); ?></h3>
+                    <p><?php echo esc_html__('...egyenesen a postaládádba.', 'borspirit'); ?></p>
                 </div>
                 <div class="col-lg-6">
                     <?php get_template_part('template-parts/forms/form', 'subscribe_form'); ?>
@@ -44,7 +44,7 @@
                 <div class="col-md-6 col-xl">
                     <div class="footer__block">
                         <?php if (!empty($social) && is_array($social)) : ?>
-                            <h3 class="footer__title"><?php echo esc_html__('Közösségi média', TEXT_DOMAIN); ?></h3>
+                            <h3 class="footer__title"><?php echo esc_html__('Közösségi média', 'borspirit'); ?></h3>
                             <?php
                                 $custom_names = [
                                     'linkedin'     => 'LinkedIn',
@@ -115,7 +115,7 @@
 
                     if (!empty($categories) && !is_wp_error($categories)) : ?>
                         <div class="footer__block">
-                            <h3 class="footer__title"><?php echo esc_html__('Cikkeink', TEXT_DOMAIN); ?></h3>
+                            <h3 class="footer__title"><?php echo esc_html__('Cikkeink', 'borspirit'); ?></h3>
                             <nav class="footer__nav nav nav--footer">
                                 <ul class="nav__list">
                                     <?php
@@ -142,7 +142,7 @@
 
                     if (!empty($categories) && !is_wp_error($categories)) : ?>
                         <div class="footer__block">
-                            <h3 class="footer__title"><?php echo esc_html__('Tudástár', TEXT_DOMAIN); ?></h3>
+                            <h3 class="footer__title"><?php echo esc_html__('Tudástár', 'borspirit'); ?></h3>
                             <nav class="footer__nav nav nav--footer">
                                 <ul class="nav__list">
                                     <?php

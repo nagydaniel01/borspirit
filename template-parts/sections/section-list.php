@@ -5,7 +5,7 @@
     $section_hide_title = $section['list_section_hide_title'] ?? false;
     $section_slug       = sanitize_title($section_title);
     $section_lead       = $section['list_section_lead'] ?? '';
-    $list_items         = $section['list_items'] ?? [];
+    $list_items         = $section['list_items'] ?: [];
     $list_style         = $section['list_style'] ?? 'unordered';
 
     // Filter out empty items (description empty)

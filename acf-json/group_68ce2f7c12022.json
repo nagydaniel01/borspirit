@@ -675,6 +675,28 @@
             "selected": 0
         },
         {
+            "key": "field_68f3c91843147",
+            "label": "Szekciók",
+            "name": "product_page",
+            "aria-label": "",
+            "type": "clone",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "clone": [
+                "group_68a4803434de3"
+            ],
+            "display": "seamless",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 1
+        },
+        {
             "key": "field_68da95af0b35d",
             "label": "Ikonok",
             "name": "product_page_icons",
@@ -1069,5 +1091,6 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1759845343
+    "display_title": "",
+    "modified": 1760809926
 }

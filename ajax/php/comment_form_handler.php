@@ -15,14 +15,14 @@
                 // Only allow POST requests
                 if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
                     wp_send_json_error([
-                        'message' => __('Invalid request method.', TEXT_DOMAIN)
+                        'message' => __('Invalid request method.', 'borspirit')
                     ], 405);
                 }
 
                 // Verify that required fields exist and are valid
                 if ( empty( $_POST['comment_post_ID'] ) || ! is_numeric( $_POST['comment_post_ID'] ) ) {
                     wp_send_json_error([
-                        'message' => __('Invalid post ID.', TEXT_DOMAIN)
+                        'message' => __('Invalid post ID.', 'borspirit')
                     ], 400);
                 }
 
@@ -36,7 +36,7 @@
 
                 if ( ! $comment || empty( $comment->comment_ID ) ) {
                     wp_send_json_error([
-                        'message' => __('Comment could not be saved.', TEXT_DOMAIN),
+                        'message' => __('Comment could not be saved.', 'borspirit'),
                     ], 500);
                 }
 
@@ -73,13 +73,13 @@
                 wp_send_json_success([
                     'comment'     => $comment_html,
                     'comment_id'  => $comment->comment_ID,
-                    'message'     => __('Your comment has been sent successfully!', TEXT_DOMAIN)
+                    'message'     => __('Your comment has been sent successfully!', 'borspirit')
                 ], 200);
 
             } catch ( Exception $e ) {
                 // Catch any unexpected errors
                 wp_send_json_error([
-                    'message' => sprintf(__('Unexpected error: %s', TEXT_DOMAIN), $e->getMessage())
+                    'message' => sprintf(__('Unexpected error: %s', 'borspirit'), $e->getMessage())
                 ], 500);
             }
         }

@@ -23,7 +23,7 @@
                     <input type="checkbox" id="edit-menu-item-is-mega-<?php echo esc_attr( $item_id ); ?>"
                         name="menu-item-is-mega[<?php echo esc_attr( $item_id ); ?>]"
                         value="1" <?php checked( $is_mega, '1' ); ?> />
-                    <?php esc_html_e( 'Enable Mega Menu', TEXT_DOMAIN ); ?>
+                    <?php esc_html_e( 'Enable Mega Menu', 'borspirit' ); ?>
                 </label>
             </p>
             <?php

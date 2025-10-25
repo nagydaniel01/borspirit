@@ -3647,6 +3647,60 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                "layout_68f3c62d74426": {
+                    "key": "layout_68f3c62d74426",
+                    "name": "product_page_main",
+                    "label": "Termék oldal - adatlap",
+                    "display": "block",
+                    "sub_fields": [],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_68f3c6e47442c": {
+                    "key": "layout_68f3c6e47442c",
+                    "name": "product_page_description",
+                    "label": "Termék oldal - Leírás",
+                    "display": "block",
+                    "sub_fields": [],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_68f3c69374429": {
+                    "key": "layout_68f3c69374429",
+                    "name": "product_page_attributes",
+                    "label": "Termék oldal - Attribútumok",
+                    "display": "block",
+                    "sub_fields": [],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_68f3c71f7442e": {
+                    "key": "layout_68f3c71f7442e",
+                    "name": "product_page_reviews",
+                    "label": "Termék oldal - Vélemények",
+                    "display": "block",
+                    "sub_fields": [],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_68f3c7437442f": {
+                    "key": "layout_68f3c7437442f",
+                    "name": "product_page_upsells",
+                    "label": "Termék oldal - További értékesítések",
+                    "display": "block",
+                    "sub_fields": [],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_68f3c70c7442d": {
+                    "key": "layout_68f3c70c7442d",
+                    "name": "product_page_related",
+                    "label": "Termék oldal - Kapcsolódó termékek",
+                    "display": "block",
+                    "sub_fields": [],
+                    "min": "",
+                    "max": ""
                 }
             },
             "min": "",
@@ -3678,5 +3732,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1760704481
+    "modified": 1760806847
 }

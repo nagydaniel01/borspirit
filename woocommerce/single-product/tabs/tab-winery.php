@@ -63,7 +63,7 @@ if ( $show_tab_title ) : ?>
                                         if ( empty( $alt ) ) {
                                             $alt = sprintf(
                                                 /* translators: %s: taxonomy term name */
-                                                __( '%s image (%s)', TEXT_DOMAIN ),
+                                                __( '%s image (%s)', 'borspirit' ),
                                                 $term->name,
                                                 $key + 1
                                             );
@@ -94,12 +94,12 @@ if ( $show_tab_title ) : ?>
                         <?php
                             $aria_label = sprintf(
                                 // translators: %1$s is the post title
-                                __('Read more about %1$s', TEXT_DOMAIN),
+                                __('Read more about %1$s', 'borspirit'),
                                 $title
                             );
                         ?>
                         <a href="<?php echo esc_url( $term_link ); ?>" class="btn btn-outline-primary" aria-label="<?php echo esc_attr( $aria_label ); ?>">
-                            <span><?php echo esc_html__( 'Read more', TEXT_DOMAIN ); ?></span>
+                            <span><?php echo esc_html__( 'Read more', 'borspirit' ); ?></span>
                             <svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg>
                         </a>
                     <?php endif; ?>
@@ -114,8 +114,8 @@ if ( $show_tab_title ) : ?>
         echo wpautop(
             sprintf(
                 /* translators: %s: taxonomy name */
-                __( 'No valid %s terms found.', TEXT_DOMAIN ),
-                esc_html__( 'Boraszat', TEXT_DOMAIN )
+                __( 'No valid %s terms found.', 'borspirit' ),
+                esc_html__( 'Boraszat', 'borspirit' )
             )
         );
     ?>

@@ -129,7 +129,7 @@
         {
             "key": "field_68d548a148814",
             "label": "Gyakori kérdések",
-            "name": "product_faq",
+            "name": "product_faqs",
             "aria-label": "",
             "type": "relationship",
             "instructions": "",
@@ -142,6 +142,38 @@
             },
             "post_type": [
                 "faq"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "filters": [
+                "search"
+            ],
+            "return_format": "object",
+            "min": "",
+            "max": "",
+            "allow_in_bindings": 0,
+            "elements": "",
+            "bidirectional": 0,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_68fa42b5aac82",
+            "label": "Kapcsolódó bejegyzések",
+            "name": "product_related_posts",
+            "aria-label": "",
+            "type": "relationship",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "post"
             ],
             "post_status": [
                 "publish"
@@ -177,5 +209,6 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1759339449
+    "display_title": "",
+    "modified": 1761233687
 }

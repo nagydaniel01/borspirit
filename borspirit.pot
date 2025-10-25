@@ -1,0 +1,1458 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: BorSpirit\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-25 12:14+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.8.0; wp-6.8.3; php-8.3.16\n"
+"X-Domain: borspirit"
+
+#: inc/woocommerce-badge.php:178
+#, php-format
+msgid "%d%%"
+msgstr ""
+
+#. %s: taxonomy term name
+#: woocommerce/single-product/tabs/tab-winery.php:66
+#, php-format
+msgid "%s image (%s)"
+msgstr ""
+
+#. %s: Estimated reading time in minutes
+#: single.php:113
+#, php-format
+msgid "%s minute reading"
+msgid_plural "%s minutes reading"
+msgstr[0] ""
+msgstr[1] ""
+
+#: woocommerce/single-product/tabs/tab-icons.php:9
+#, php-format
+msgid "%s person has already tried it – get yours now!"
+msgid_plural "%s people have already tried it – get yours now!"
+msgstr[0] ""
+msgstr[1] ""
+
+#: comments.php:44
+msgid "&larr; Older Comments"
+msgstr ""
+
+#: template-parts/global/footer.php:16
+msgid "...egyenesen a postaládádba."
+msgstr ""
+
+#. %1$s: site title, %2$s: order number
+#: inc/woocommerce-awaiting-pickup.php:157
+#, php-format
+msgid "[%1$s] Your order #%2$s is ready for pickup"
+msgstr ""
+
+#: ajax/php/contact_form_handler.php:94
+#, php-format
+msgid "[%s] New message: %s"
+msgstr ""
+
+#: ajax/php/event_registration_form_handler.php:120
+#, php-format
+msgid "[Event ID: %d] %s (%s)"
+msgstr ""
+
+#: template-parts/sections/section-gravity_forms.php:29
+msgid "A Gravity Forms nincs telepítve vagy nincs aktiválva."
+msgstr ""
+
+#: inc/woocommerce-badge.php:330
+msgid "A hónap bora"
+msgstr ""
+
+#: inc/register-taxonomies.php:27
+msgid "A leggyakrabban használt díjak közül válasszon"
+msgstr ""
+
+#: inc/register-ajax.php:90 inc/register-ajax.php:118 inc/register-ajax.php:146
+msgid "A network error occurred."
+msgstr ""
+
+#: inc/register-ajax.php:62
+msgid "A network error occurred. Please try again."
+msgstr ""
+
+#: inc/woocommerce-actions.php:637 template-parts/flexibile-elements.php:13
+#, php-format
+msgid "A szükséges sablonkönyvtár nem létezik: %s"
+msgstr ""
+
+#. %1$s is the file title, %2$s is the singular post type name
+#: template-parts/sections/section-flipbook.php:14
+#, php-format
+msgid "A(z) \"%1$s\" című %2$s letöltése"
+msgstr ""
+
+#. %1$s is the file title
+#: template-parts/sections/section-download.php:53
+#, php-format
+msgid "A(z) \"%1$s\" letöltése"
+msgstr ""
+
+#: inc/woocommerce-actions.php:667 template-parts/flexibile-elements.php:33
+msgid "A(z) #%d szekció hibásan van formázva és nem jeleníthető meg."
+msgstr ""
+
+#: inc/woocommerce-myaccount.php:72 inc/woocommerce-myaccount.php:109
+#, php-format
+msgid ""
+"A(z) <code>%s</code> oldal sablonja hiányzik. Kérjük, hozza létre a fájlt: "
+"<code>%s</code>"
+msgstr ""
+
+#: inc/woocommerce-actions.php:681 template-parts/flexibile-elements.php:47
+#, php-format
+msgid ""
+"A(z) <code>%s</code> szekció sablonja hiányzik. Kérjük, hozza létre a fájlt: "
+"<code>%s</code>"
+msgstr ""
+
+#: inc/shortcodes.php:301
+msgid "ACF plugin is not active."
+msgstr ""
+
+#: woocommerce/single-product-reviews.php:72
+msgid "Add a Review"
+msgstr ""
+
+#. Get singular name of post type for ARIA label
+#. $post_type_singular_name = '';
+#. $post_type_obj = get_post_type_object($post_type);
+#. if (is_object($post_type_obj) && isset($post_type_obj->labels->singular_name)) {
+#. $post_type_singular_name = mb_strtolower($post_type_obj->labels->singular_name);
+#. }
+#. $aria_label = sprintf(
+#. %1$s is the post title, %2$s is the singular post type name
+#. __('A(z) "%1$s" című %2$s megtekintése', 'borspirit'),
+#. $title,
+#. $post_type_singular_name
+#. );
+#: single.php:130 single.php:137 template-parts/cards/card-default.php:98
+#: template-parts/cards/card-default.php:105
+msgid "Add to Bookmarks"
+msgstr ""
+
+#: ajax/php/contact_form_handler.php:81
+#: ajax/php/event_registration_form_handler.php:151
+msgid "Admin email is not configured properly."
+msgstr ""
+
+#: templates/listings/pa_boraszat-list.php:11
+#: templates/listings/pa_taxonomy-list.php:11
+#, php-format
+msgid "All %s"
+msgstr ""
+
+#: ajax/php/contact_form_handler.php:59
+#: ajax/php/event_registration_form_handler.php:67
+#: ajax/php/mc_form_handler.php:69
+msgid "All required fields must be filled out."
+msgstr ""
+
+#: inc/woocommerce-order-status-filter.php:65
+#: inc/woocommerce-order-status-filter.php:67
+msgid "All statuses"
+msgstr ""
+
+#: inc/register-ajax.php:89 inc/register-ajax.php:117 inc/register-ajax.php:145
+msgid "An unexpected error occurred."
+msgstr ""
+
+#: template-parts/cards/card-review.php:22
+msgid "Anonymous"
+msgstr ""
+
+#: template-parts/dialogs/modal-age_gate.php:7
+msgid "Are you over 18 years of age?"
+msgstr ""
+
+#: home.php:68
+msgid "Authors"
+msgstr ""
+
+#: inc/woocommerce-awaiting-pickup.php:20
+#: inc/woocommerce-awaiting-pickup.php:43
+msgid "Awaiting Pickup"
+msgstr ""
+
+#: inc/woocommerce-badge.php:204
+msgid "Award Winner"
+msgstr ""
+
+#: inc/woocommerce-badge.php:328
+msgid "Award Winner Badge"
+msgstr ""
+
+#: inc/woocommerce-extras.php:398
+msgid "Awards"
+msgstr ""
+
+#: inc/woocommerce-actions.php:642 template-parts/flexibile-elements.php:18
+msgid ""
+"Az Advanced Custom Fields bővítmény nincs aktiválva. Telepítse vagy "
+"aktiválja az ACF-et a szekciók használatához."
+msgstr ""
+
+#: inc/woocommerce-actions.php:631 template-parts/flexibile-elements.php:7
+msgid "Az oldalazonosító hiányzik vagy érvénytelen."
+msgstr ""
+
+#: templates/page-thank-you.php:55
+msgid "Back to Home"
+msgstr ""
+
+#: 404.php:41
+msgid "Back to homepage"
+msgstr ""
+
+#: footer.php:32
+msgid "Back to top"
+msgstr ""
+
+#: inc/woocommerce-myaccount.php:146
+msgid "Beauty profile"
+msgstr ""
+
+#: inc/woocommerce-badge.php:138
+msgid "Best Seller"
+msgstr ""
+
+#: inc/woocommerce-badge.php:325
+msgid "Best Seller Badge"
+msgstr ""
+
+#: inc/register-post-types.php:40
+msgid "Beszúrás a gyakori kérdésbe"
+msgstr ""
+
+#: inc/woocommerce-myaccount.php:147
+msgid "Bookmarks"
+msgstr ""
+
+#: woocommerce/single-product/tabs/tab-winery.php:118
+msgid "Boraszat"
+msgstr ""
+
+#. Name of the theme
+msgid "BorSpirit"
+msgstr ""
+
+#: template-parts/global/header.php:45 template-parts/global/header.php:110
+msgid "Cart"
+msgstr ""
+
+#: home.php:45 single.php:186
+msgid "Categories"
+msgstr ""
+
+#: inc/woocommerce-awaiting-pickup.php:58
+msgid "Change status to Awaiting Pickup"
+msgstr ""
+
+#: template-parts/global/footer.php:118
+msgid "Cikkeink"
+msgstr ""
+
+#: template-parts/dialogs/modal-demo.php:12
+msgid "Close"
+msgstr ""
+
+#: inc/utils.php:827
+msgid "Closed 🔴"
+msgstr ""
+
+#: inc/utils.php:825
+msgid "Closing soon 🕒"
+msgstr ""
+
+#: ajax/php/comment_form_handler.php:39
+msgid "Comment could not be saved."
+msgstr ""
+
+#: comments.php:41
+msgid "Comment navigation"
+msgstr ""
+
+#: comments.php:54
+msgid "Comments are closed."
+msgstr ""
+
+#: comments.php:13
+#, php-format
+msgctxt "comments title"
+msgid "One thought on \"%2$s\""
+msgid_plural "%1$s thoughts on \"%2$s\""
+msgstr[0] ""
+msgstr[1] ""
+
+#: template-parts/forms/form-poll_form.php:38
+msgid "Could be better"
+msgstr ""
+
+#: inc/utils.php:693
+msgid "Csütörtök"
+msgstr ""
+
+#. Name of the template
+#: templates/page-wc-shop.php:2
+msgid "Custom WooCommerce Shop Template"
+msgstr ""
+
+#. Description of the theme
+msgid "Custom WordPress Theme."
+msgstr ""
+
+#: inc/woocommerce-extras.php:717
+msgid "Customers also bought…"
+msgstr ""
+
+#. Author of the theme
+msgid "Daniel Nagy"
+msgstr ""
+
+#: inc/woocommerce-badge.php:327
+msgid "Discount Badge"
+msgstr ""
+
+#: template-parts/sections/section-download.php:80
+msgid "Download"
+msgstr ""
+
+#: inc/woocommerce-extras.php:338
+msgid "DRS"
+msgstr ""
+
+#: inc/woocommerce-extras.php:348
+#, php-format
+msgid "DRS - kötelező visszaváltási díj: %s / db."
+msgstr ""
+
+#: inc/register-taxonomies.php:23
+msgid "Díj frissítése"
+msgstr ""
+
+#: inc/register-taxonomies.php:26
+msgid "Díj hozzáadása vagy eltávolítása"
+msgstr ""
+
+#: inc/register-taxonomies.php:24
+msgid "Díj megtekintése"
+msgstr ""
+
+#: inc/register-taxonomies.php:22
+msgid "Díj szerkesztése"
+msgstr ""
+
+#: inc/register-taxonomies.php:16
+msgid "Díjak"
+msgstr ""
+
+#: inc/register-taxonomies.php:29
+msgid "Díjak keresése"
+msgstr ""
+
+#: inc/register-taxonomies.php:32
+msgid "Díjak listája"
+msgstr ""
+
+#: inc/register-taxonomies.php:33
+msgid "Díjak listájának navigációja"
+msgstr ""
+
+#: inc/register-taxonomies.php:25
+msgid "Díjakat vesszővel válasszon el"
+msgstr ""
+
+#: template-parts/forms/form-contact_form.php:19
+#: template-parts/forms/form-event_registration.php:19
+#: template-parts/forms/form-subscribe_form.php:27
+msgid "E-mail"
+msgstr ""
+
+#: template-parts/sections/section-flipbook.php:16
+msgid "ebook"
+msgstr ""
+
+#: inc/woocommerce-extras.php:298
+#, php-format
+msgid "Egységár: %s / liter"
+msgstr ""
+
+#: template-parts/flexibile-elements.php:57
+msgid "Ehhez az oldalhoz nem találhatók tartalmi szekciók."
+msgstr ""
+
+#: template-parts/queries/query-post-type.php:263
+msgid "Első"
+msgstr ""
+
+#: search.php:36
+msgid "Előző"
+msgstr ""
+
+#: templates/page-thank-you.php:31
+msgid "Email:"
+msgstr ""
+
+#: inc/menu-item.php:26
+msgid "Enable Mega Menu"
+msgstr ""
+
+#: inc/woocommerce-extras.php:971
+msgid "Enter a special price for club members."
+msgstr ""
+
+#: template-parts/forms/form-contact_form.php:36
+msgid "Enter subject"
+msgstr ""
+
+#: template-parts/forms/form-contact_form.php:21
+#: template-parts/forms/form-event_registration.php:21
+#: template-parts/forms/form-subscribe_form.php:29
+msgid "Enter your email address"
+msgstr ""
+
+#: template-parts/forms/form-contact_form.php:13
+#: template-parts/forms/form-event_registration.php:14
+msgid "Enter your full name"
+msgstr ""
+
+#: template-parts/forms/form-subscribe_form.php:22
+msgid "Enter your name"
+msgstr ""
+
+#: template-parts/forms/form-contact_form.php:28
+msgid "Enter your phone number"
+msgstr ""
+
+#: inc/register-ajax.php:28
+msgid "Error while adding comment"
+msgstr ""
+
+#: inc/class-mailchimp.php:194
+#, php-format
+msgid "Error: %s"
+msgstr ""
+
+#: inc/woocommerce-extras.php:256
+msgid "Error: Price and volume must be numeric."
+msgstr ""
+
+#: inc/woocommerce-extras.php:260
+msgid "Error: Price cannot be negative."
+msgstr ""
+
+#: inc/register-ajax.php:29
+msgid "Error: Server doesn’t respond."
+msgstr ""
+
+#: inc/woocommerce-extras.php:264
+msgid "Error: Volume must be greater than zero."
+msgstr ""
+
+#: inc/wordpress-actions.php:158
+msgid ""
+"Error: You did not add a rating. Hit the Back button on your Web browser and "
+"resubmit your comment with a rating."
+msgstr ""
+
+#: inc/acf-actions.php:319
+msgid "Estimated Delivery"
+msgstr ""
+
+#: inc/shortcodes.php:449
+msgid "Feedback:"
+msgstr ""
+
+#: inc/register-post-types.php:41
+msgid "Feltöltve ehhez a gyakori kérdéshez"
+msgstr ""
+
+#: home.php:46 home.php:69
+#, php-format
+msgid "Filter by %s"
+msgstr ""
+
+#: inc/woocommerce-order-status-filter.php:36
+msgid "Filter by:"
+msgstr ""
+
+#: inc/wordpress-admin-actions.php:808
+msgid "Fiók váltás"
+msgstr ""
+
+#. Name of the template
+#: templates/page-flexibile-elements.php:2
+msgid "Flexibile Elements Template"
+msgstr ""
+
+#: woocommerce/single-product/tabs/additional-information.php:50
+msgid "Food that goes well with this wine"
+msgstr ""
+
+#: inc/theme-setup.php:127
+msgid "Footer menu 1"
+msgstr ""
+
+#: inc/theme-setup.php:128
+msgid "Footer menu 2"
+msgstr ""
+
+#: inc/theme-setup.php:129
+msgid "Footer menu 3"
+msgstr ""
+
+#: inc/theme-setup.php:130
+msgid "Footer menu 4"
+msgstr ""
+
+#: woocommerce/single-product/tabs/tab-icons.php:132
+#, php-format
+msgid "Free in-store pickup as early as %1$s"
+msgstr ""
+
+#: inc/acf-actions.php:318
+msgid "Free Shipping Limit"
+msgstr ""
+
+#: woocommerce/single-product/tabs/tab-icons.php:66
+#, php-format
+msgid "Free shipping on orders over %1$s"
+msgstr ""
+
+#: inc/woocommerce-extras.php:620
+msgid "Frequently asked questions"
+msgstr ""
+
+#: template-parts/forms/form-poll_form.php:37
+msgid "Good enough"
+msgstr ""
+
+#: inc/register-post-types.php:21 inc/register-post-types.php:48
+msgid "Gyakori kérdés"
+msgstr ""
+
+#: inc/register-post-types.php:23
+msgid "Gyakori kérdés attribútumok"
+msgstr ""
+
+#: inc/register-post-types.php:30
+msgid "Gyakori kérdés frissítése"
+msgstr ""
+
+#: inc/register-post-types.php:31
+msgid "Gyakori kérdés megtekintése"
+msgstr ""
+
+#: inc/register-post-types.php:29
+msgid "Gyakori kérdés szerkesztése"
+msgstr ""
+
+#: inc/register-post-types.php:20 inc/register-post-types.php:22
+msgid "Gyakori kérdések"
+msgstr ""
+
+#: inc/register-post-types.php:33
+msgid "Gyakori kérdések keresése"
+msgstr ""
+
+#: inc/register-post-types.php:43
+msgid "Gyakori kérdések lista navigáció"
+msgstr ""
+
+#: inc/register-post-types.php:44
+msgid "Gyakori kérdések lista szűrése"
+msgstr ""
+
+#: inc/register-post-types.php:42
+msgid "Gyakori kérdések listája"
+msgstr ""
+
+#: inc/register-post-types.php:32
+msgid "Gyakori kérdések megtekintése"
+msgstr ""
+
+#: under-construction.php:6 under-construction.php:60
+msgid "Hamarosan"
+msgstr ""
+
+#: inc/theme-setup.php:126
+msgid "Header menu"
+msgstr ""
+
+#: inc/woocommerce-myaccount.php:162 template-parts/global/header.php:33
+#: template-parts/global/header.php:98
+#, php-format
+msgid "Hello %s!"
+msgstr ""
+
+#. %1$s: customer first name, %2$s: order number
+#: inc/woocommerce-awaiting-pickup.php:167
+#, php-format
+msgid ""
+"Hi %1$s,\n"
+"\n"
+"Good news! Your order #%2$s is now ready for pickup at our store.\n"
+"\n"
+"Thank you for shopping with us!"
+msgstr ""
+
+#: ajax/php/event_registration_form_handler.php:167
+#, php-format
+msgid ""
+"Hi %s,\n"
+"\n"
+"Thank you for registering for Event #%d.\n"
+"\n"
+"We’ve reserved your spot and will contact you with more details soon.\n"
+"\n"
+"Best regards,\n"
+"%s"
+msgstr ""
+
+#: template-parts/forms/form-poll_form.php:31
+msgid "How would you describe our shop?"
+msgstr ""
+
+#: template-parts/forms/form-poll_form.php:15
+msgid "How would you rate your experience?"
+msgstr ""
+
+#. Author URI of the theme
+msgid "https://github.com/nagydaniel01"
+msgstr ""
+
+#: inc/utils.php:690
+msgid "Hétfő"
+msgstr ""
+
+#: template-parts/forms/form-contact_form.php:52
+#: template-parts/forms/form-event_registration.php:30
+#: template-parts/forms/form-subscribe_form.php:39
+#, php-format
+msgid "I agree to the %s"
+msgstr ""
+
+#: template-parts/dialogs/modal-age_gate.php:24
+msgid "I am old enough"
+msgstr ""
+
+#. %s: minimum age required
+#: template-parts/dialogs/modal-age_gate.php:29
+#, php-format
+msgid "I am under %s"
+msgstr ""
+
+#: inc/woocommerce-extras.php:531
+msgid "Ikonok"
+msgstr ""
+
+#: ajax/php/contact_form_handler.php:66
+#: ajax/php/event_registration_form_handler.php:74
+#: ajax/php/mc_form_handler.php:74
+msgid "Invalid email format."
+msgstr ""
+
+#: ajax/php/event_registration_form_handler.php:81
+msgid "Invalid event ID."
+msgstr ""
+
+#: ajax/php/comment_form_handler.php:25
+msgid "Invalid post ID."
+msgstr ""
+
+#: ajax/php/save_post_handler.php:16
+msgid "Invalid request"
+msgstr ""
+
+#: ajax/php/comment_form_handler.php:18 ajax/php/contact_form_handler.php:23
+#: ajax/php/event_registration_form_handler.php:23
+#: ajax/php/mc_form_handler.php:36
+msgid "Invalid request method."
+msgstr ""
+
+#: ajax/php/event_registration_form_handler.php:44
+msgid "Invalid security token"
+msgstr ""
+
+#: ajax/php/contact_form_handler.php:44 ajax/php/mc_form_handler.php:57
+msgid "Invalid security token."
+msgstr ""
+
+#: template-parts/sidebars/offcanvas-minicart.php:8
+msgid "item"
+msgid_plural "items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/utils.php:691
+msgid "Kedd"
+msgstr ""
+
+#: under-construction.php:61
+msgid "Keményen dolgozunk az új weboldalunk elindításán. Maradjanak velünk!"
+msgstr ""
+
+#: search.php:48
+#, php-format
+msgid "Keresés erre: %s"
+msgstr ""
+
+#: inc/register-post-types.php:36
+msgid "Kiemelt kép"
+msgstr ""
+
+#: inc/register-post-types.php:37
+msgid "Kiemelt kép beállítása"
+msgstr ""
+
+#: inc/register-post-types.php:38
+msgid "Kiemelt kép eltávolítása"
+msgstr ""
+
+#: inc/register-post-types.php:39
+msgid "Kiemelt képként használ"
+msgstr ""
+
+#: inc/woocommerce-extras.php:923 inc/woocommerce-extras.php:969
+msgid "Klub ár"
+msgstr ""
+
+#: search.php:37
+msgid "Következő"
+msgstr ""
+
+#: template-parts/global/footer.php:47
+msgid "Közösségi média"
+msgstr ""
+
+#: template-parts/sections/section-featured.php:20
+#: template-parts/sections/section-featured.php:27
+msgid "Learn More"
+msgstr ""
+
+#: inc/woocommerce-extras.php:496
+msgid "Learn more about the product!"
+msgstr ""
+
+#: inc/woocommerce-badge.php:157
+msgid "Limited Stock"
+msgstr ""
+
+#: inc/woocommerce-badge.php:326
+msgid "Limited Stock Badge"
+msgstr ""
+
+#: inc/register-ajax.php:26
+msgid "Loading..."
+msgstr ""
+
+#: template-parts/global/header.php:38 template-parts/global/header.php:103
+msgid "Login / Register"
+msgstr ""
+
+#: template-parts/dialogs/modal-register.php:14
+msgid "Login or Register"
+msgstr ""
+
+#: ajax/php/mc_form_handler.php:26
+msgid "Mailchimp configuration is missing. Please contact site administrator."
+msgstr ""
+
+#: template-parts/forms/form-subscribe_form.php:64
+#, php-format
+msgid ""
+"Mailchimp configuration is missing. Please set <code>%s</code> and <code>"
+"%s</code> in the theme options."
+msgstr ""
+
+#: ajax/php/mc_form_handler.php:88
+msgid "Mailchimp request failed. Please try again later."
+msgstr ""
+
+#: template-parts/global/header.php:62
+msgid "Menu"
+msgstr ""
+
+#: template-parts/forms/form-contact_form.php:41
+msgid "Message"
+msgstr ""
+
+#: ajax/php/contact_form_handler.php:128
+#: ajax/php/event_registration_form_handler.php:179
+msgid "Message could not be sent. Please try again later."
+msgstr ""
+
+#: inc/register-ajax.php:115
+msgid "Message sent successfully!"
+msgstr ""
+
+#: templates/page-thank-you.php:45
+msgid "Message:"
+msgstr ""
+
+#: template-parts/dialogs/modal-demo.php:5
+msgid "Modal title"
+msgstr ""
+
+#: inc/woocommerce-extras.php:510
+msgid "More product details"
+msgstr ""
+
+#: template-parts/forms/form-contact_form.php:11
+#: template-parts/forms/form-event_registration.php:12
+#: template-parts/forms/form-subscribe_form.php:20
+msgid "Name"
+msgstr ""
+
+#: templates/page-thank-you.php:27
+msgid "Name:"
+msgstr ""
+
+#: inc/register-taxonomies.php:30
+msgid "Nem található"
+msgstr ""
+
+#: inc/woocommerce-badge.php:119
+msgid "New Arrival"
+msgstr ""
+
+#: inc/woocommerce-badge.php:324
+msgid "New Arrival Badge"
+msgstr ""
+
+#: inc/woocommerce-badge.php:280 inc/woocommerce-badge.php:329
+msgid "New vintage"
+msgstr ""
+
+#: comments.php:47
+msgid "Newer Comments &rarr;"
+msgstr ""
+
+#: inc/woocommerce-myaccount.php:148
+msgid "Newsletter"
+msgstr ""
+
+#: inc/register-taxonomies.php:31
+msgid "Nincs díj"
+msgstr ""
+
+#: inc/register-post-types.php:35
+msgid "Nincs gyakori kérdés a kukában"
+msgstr ""
+
+#: inc/register-post-types.php:34
+msgid "Nincs gyakori kérdés találat"
+msgstr ""
+
+#: templates/listings/pa_boraszat-list.php:44
+#: templates/listings/pa_taxonomy-list.php:44
+#, php-format
+msgid "No %s found."
+msgstr ""
+
+#: templates/page-privacy-policy.php:28
+#: templates/page-terms-and-conditions.php:26
+msgid "No content found."
+msgstr ""
+
+#: woocommerce/single-product/tabs/tab-faq.php:69
+msgid "No FAQs found."
+msgstr ""
+
+#: inc/shortcodes.php:399
+msgid "No feedback yet."
+msgstr ""
+
+#: ajax/php/contact_form_handler.php:30
+#: ajax/php/event_registration_form_handler.php:30
+#: ajax/php/mc_form_handler.php:43
+msgid "No form data received."
+msgstr ""
+
+#: woocommerce/single-product/tabs/tab-icons.php:179
+msgid "No icon items found."
+msgstr ""
+
+#: inc/shortcodes.php:307
+msgid "No opening hours specified."
+msgstr ""
+
+#: woocommerce/single-product/tabs/tab-related_posts.php:51
+msgid "No related posts found."
+msgstr ""
+
+#. %s: taxonomy name
+#: woocommerce/single-product/tabs/tab-winery.php:117
+#, php-format
+msgid "No valid %s terms found."
+msgstr ""
+
+#: inc/acf-actions.php:253
+msgid "None"
+msgstr ""
+
+#: inc/register-taxonomies.php:28
+msgid "Népszerű díjak"
+msgstr ""
+
+#: search.php:40
+msgid "Oldal"
+msgstr ""
+
+#. Name of the template
+#: templates/page-onsale.php:1
+msgid "On Sale Page"
+msgstr ""
+
+#: 404.php:17
+msgid "Oops! Page not found"
+msgstr ""
+
+#: template-parts/global/header.php:55
+msgid "Open menu"
+msgstr ""
+
+#: inc/shortcodes.php:446
+msgid "Opinion:"
+msgstr ""
+
+#: inc/woocommerce-badge.php:299
+msgid "Organic"
+msgstr ""
+
+#: inc/acf-actions.php:123
+msgid "Other"
+msgstr ""
+
+#. Name of the template
+#: 404.php:2
+msgid "Page 404"
+msgstr ""
+
+#: single.php:176
+msgid "Pages:"
+msgstr ""
+
+#: woocommerce/global/quantity-input.php:60
+msgid "pcs."
+msgstr ""
+
+#: template-parts/sections/section-flipbook.php:37
+msgid "PDF letöltése"
+msgstr ""
+
+#: template-parts/forms/form-contact_form.php:26
+msgid "Phone"
+msgstr ""
+
+#: templates/page-thank-you.php:36
+msgid "Phone:"
+msgstr ""
+
+#: template-parts/global/header.php:88
+msgid "Please assign a menu in Appearance → Menus."
+msgstr ""
+
+#: template-parts/forms/form-poll_form.php:7
+msgid "Please fill our poll!"
+msgstr ""
+
+#: inc/register-ajax.php:56
+msgid "Please select a rating."
+msgstr ""
+
+#: inc/register-ajax.php:57
+msgid "Please select your opinion about the shop."
+msgstr ""
+
+#: inc/register-ajax.php:58
+msgid "Please write your feedback."
+msgstr ""
+
+#: inc/woocommerce-extras.php:883
+msgid "Polci ár"
+msgstr ""
+
+#: inc/woocommerce-myaccount.php:39 inc/woocommerce-myaccount.php:98
+#: inc/woocommerce-myaccount.php:150
+msgid "Post Bookmarks"
+msgstr ""
+
+#: inc/register-post-types.php:18
+msgctxt "Post Type General Name"
+msgid "Gyakori kérdések"
+msgstr ""
+
+#: inc/register-post-types.php:19
+msgctxt "Post Type Singular Name"
+msgid "Gyakori kérdés"
+msgstr ""
+
+#: templates/page-privacy-policy.php:24
+#: template-parts/forms/form-contact_form.php:53
+#: template-parts/forms/form-event_registration.php:31
+#: template-parts/forms/form-subscribe_form.php:40
+msgid "Privacy Policy"
+msgstr ""
+
+#. Name of the template
+#: templates/page-privacy-policy.php:2
+msgid "Privacy Policy Template"
+msgstr ""
+
+#: inc/woocommerce-myaccount.php:38 inc/woocommerce-myaccount.php:61
+#: inc/woocommerce-myaccount.php:149
+msgid "Product Bookmarks"
+msgstr ""
+
+#: inc/woocommerce-extras.php:1054
+msgid "Product subtitle"
+msgstr ""
+
+#. %s: Post date
+#: single.php:101
+#, php-format
+msgid "Published on %s"
+msgstr ""
+
+#: inc/utils.php:694
+msgid "Péntek"
+msgstr ""
+
+#: inc/filter-functions.php:34 inc/woocommerce-product-filter.php:24
+#: inc/woocommerce-product-filter.php:52
+msgid "Query template not found."
+msgstr ""
+
+#: inc/wordpress-actions.php:114
+msgid "Rating"
+msgstr ""
+
+#: woocommerce/single-product/tabs/tab-winery.php:102
+msgid "Read more"
+msgstr ""
+
+#. %1$s is the post title
+#: woocommerce/single-product/tabs/tab-winery.php:97
+#, php-format
+msgid "Read more about %1$s"
+msgstr ""
+
+#: inc/woocommerce-extras.php:462
+msgid "Recently viewed products"
+msgstr ""
+
+#: template-parts/forms/form-event_registration.php:41
+msgid "Register"
+msgstr ""
+
+#: inc/register-ajax.php:86
+msgid "Registering…"
+msgstr ""
+
+#: ajax/php/event_registration_form_handler.php:163
+msgid "Registration Confirmation for #%d"
+msgstr ""
+
+#: ajax/php/event_registration_form_handler.php:143
+msgid "Registration failed, please try again."
+msgstr ""
+
+#: ajax/php/event_registration_form_handler.php:137
+#, php-format
+msgid "Registration failed: %s"
+msgstr ""
+
+#: inc/woocommerce-extras.php:663
+msgid "Related posts"
+msgstr ""
+
+#: single.php:137 template-parts/cards/card-default.php:105
+msgid "Remove form bookmarks"
+msgstr ""
+
+#. 1: Theme name, 2: Theme version, 3: PHP version
+#: inc/wordpress-admin-actions.php:76
+#, php-format
+msgid "Sablon: %1$s %2$s verzió, PHP: %3$s verzió"
+msgstr ""
+
+#: search.php:177
+msgid ""
+"Sajnáljuk, de nem találtunk találatot a keresési feltételek alapján. Kérjük, "
+"próbálkozzon újra más kulcsszavakkal."
+msgstr ""
+
+#: inc/woocommerce-badge.php:323
+msgid "Sale Badge"
+msgstr ""
+
+#: template-parts/dialogs/modal-demo.php:13
+msgid "Save changes"
+msgstr ""
+
+#. Name of the template
+#: search.php:1 template-parts/global/header.php:120
+msgid "Search"
+msgstr ""
+
+#: home.php:35
+#, php-format
+msgid "Search for %s"
+msgstr ""
+
+#: template-parts/dialogs/modal-search.php:5
+msgid "Search for:"
+msgstr ""
+
+#: template-parts/forms/form-contact_form.php:63
+msgid "Send message"
+msgstr ""
+
+#: inc/register-ajax.php:114
+msgid "Sending…"
+msgstr ""
+
+#: inc/include-scripts.php:29
+msgid "Show less"
+msgstr ""
+
+#: inc/include-scripts.php:28
+#: woocommerce/single-product/tabs/description.php:36
+msgid "Show more"
+msgstr ""
+
+#: template-parts/queries/query-post-type.php:331
+msgid "Sorry, no posts matched your criteria."
+msgstr ""
+
+#: templates/page-thank-you.php:51
+msgid ""
+"Sorry, we couldn’t find your message details or the session has expired."
+msgstr ""
+
+#: template-parts/forms/form-contact_form.php:34
+msgid "Subject"
+msgstr ""
+
+#: templates/page-thank-you.php:41
+msgid "Subject:"
+msgstr ""
+
+#: template-parts/forms/form-poll_form.php:64
+msgid "Submit Feedback"
+msgstr ""
+
+#. %s = feedback date
+#: inc/shortcodes.php:454
+#, php-format
+msgid "Submitted on %s"
+msgstr ""
+
+#: inc/register-ajax.php:59
+msgid "Submitting your feedback…"
+msgstr ""
+
+#: template-parts/forms/form-subscribe_form.php:50
+msgid "Subscribe"
+msgstr ""
+
+#: inc/register-ajax.php:142
+msgid "Subscribing…"
+msgstr ""
+
+#: template-parts/forms/form-subscribe_form.php:72
+msgid "Subscription form is temporarily unavailable. Please try again later."
+msgstr ""
+
+#: inc/woocommerce-extras.php:1136 inc/woocommerce-extras.php:1173
+msgid "Subtitle"
+msgstr ""
+
+#: inc/woocommerce-awaiting-pickup.php:101
+#, php-format
+msgid "Successfully changed the status of %s order(s) to Awaiting Pickup."
+msgstr ""
+
+#: inc/register-ajax.php:87 ajax/php/event_registration_form_handler.php:185
+msgid "Successfully registered!"
+msgstr ""
+
+#: template-parts/forms/form-poll_form.php:36
+msgid "Superb"
+msgstr ""
+
+#: inc/utils.php:692
+msgid "Szerda"
+msgstr ""
+
+#: inc/utils.php:695
+msgid "Szombat"
+msgstr ""
+
+#: inc/register-taxonomies.php:18
+msgid "Szülő díj"
+msgstr ""
+
+#: inc/register-taxonomies.php:19
+msgid "Szülő díj:"
+msgstr ""
+
+#: inc/register-post-types.php:24
+msgid "Szülő gyakori kérdés:"
+msgstr ""
+
+#: inc/table-of-contents.php:28
+msgid "Table of contents"
+msgstr ""
+
+#: inc/register-taxonomies.php:14
+msgctxt "Taxonomy General Name"
+msgid "Díjak"
+msgstr ""
+
+#: inc/register-taxonomies.php:15
+msgctxt "Taxonomy Singular Name"
+msgid "Díj"
+msgstr ""
+
+#: template-parts/forms/form-poll_form.php:59
+msgid "Tell us more..."
+msgstr ""
+
+#: templates/page-terms-and-conditions.php:23
+msgid "Terms and Conditions"
+msgstr ""
+
+#. Name of the template
+#: templates/page-terms-and-conditions.php:2
+msgid "Terms and Conditions Template"
+msgstr ""
+
+#: inc/woocommerce-thankyou-poll-feedback.php:33
+msgid "Thank you for your feedback!"
+msgstr ""
+
+#. Name of the template
+#: templates/page-thank-you.php:2
+msgid "Thank You Template"
+msgstr ""
+
+#: templates/page-thank-you.php:19
+msgid "Thank You!"
+msgstr ""
+
+#: inc/register-ajax.php:60
+msgid "Thank you! Your feedback has been sent."
+msgstr ""
+
+#: 404.php:22
+msgid ""
+"The page you are looking for does not exist. It might have been moved or "
+"deleted."
+msgstr ""
+
+#: ajax/php/save_post_handler.php:48
+msgid "The post saved successfully"
+msgstr ""
+
+#: inc/register-ajax.php:61
+msgid "There was an error sending your feedback."
+msgstr ""
+
+#: inc/register-ajax.php:144
+msgid "There was an error while processing your subscription."
+msgstr ""
+
+#: inc/register-ajax.php:116
+msgid "There was an error while sending your message."
+msgstr ""
+
+#: inc/register-ajax.php:88
+msgid "There was an error while sending your registration."
+msgstr ""
+
+#: 404.php:23
+msgid "Try using the navigation menu or go back to the homepage."
+msgstr ""
+
+#: template-parts/global/footer.php:145
+msgid "Tudástár"
+msgstr ""
+
+#: ajax/php/comment_form_handler.php:82 ajax/php/contact_form_handler.php:153
+#: ajax/php/event_registration_form_handler.php:193
+#: ajax/php/mc_form_handler.php:108
+#, php-format
+msgid "Unexpected error: %s"
+msgstr ""
+
+#: template-parts/sections/section-media.php:49
+msgid "Unsupported media type."
+msgstr ""
+
+#. %s: Post modified date
+#: single.php:94
+#, php-format
+msgid "Updated on %s"
+msgstr ""
+
+#: ajax/php/mc_form_handler.php:94
+msgid "User could not be subscribed. Please try again later."
+msgstr ""
+
+#: template-parts/queries/query-post-type.php:323
+msgid "Utolsó"
+msgstr ""
+
+#: inc/utils.php:696
+msgid "Vasárnap"
+msgstr ""
+
+#: template-parts/dialogs/modal-register.php:6
+msgid "Want to know more? Register now!"
+msgstr ""
+
+#: inc/acf-actions.php:123
+msgid "WC Product Attribute"
+msgstr ""
+
+#: inc/woocommerce-extras.php:701
+msgid "We also recommend…"
+msgstr ""
+
+#. %s: minimum age required
+#: template-parts/dialogs/modal-age_gate.php:17
+#, php-format
+msgid ""
+"We are committed advocates and supporters of responsible, civilized drinking."
+" Therefore, we do not recommend the consumption of alcoholic beverages to "
+"persons under the age of %s and cannot serve them."
+msgstr ""
+
+#: inc/utils.php:823
+msgid "We are open! 🟢"
+msgstr ""
+
+#: templates/page-thank-you.php:23
+msgid "We’ve received your message. Here’s a summary of what you submitted:"
+msgstr ""
+
+#: inc/woocommerce-extras.php:572
+msgid "Winery"
+msgstr ""
+
+#: template-parts/dialogs/modal-register.php:10
+msgid "Would you like to save your favorites?"
+msgstr ""
+
+#: template-parts/forms/form-contact_form.php:43
+msgid "Write your message here..."
+msgstr ""
+
+#: ajax/php/event_registration_form_handler.php:111
+msgid "You are already registered for this event."
+msgstr ""
+
+#: inc/register-ajax.php:143
+msgid "You have been subscribed successfully!"
+msgstr ""
+
+#: inc/register-ajax.php:85 inc/register-ajax.php:113 inc/register-ajax.php:141
+#: ajax/php/contact_form_handler.php:73
+#: ajax/php/event_registration_form_handler.php:88
+#: ajax/php/mc_form_handler.php:79
+msgid "You must agree to the privacy policy."
+msgstr ""
+
+#: ajax/php/update_bookmark_list_handler.php:18
+msgid "You must be logged in"
+msgstr ""
+
+#: ajax/php/save_post_handler.php:26
+msgid "You must be logged in."
+msgstr ""
+
+#: template-parts/sections/section-media.php:46
+msgid "Your browser does not support the audio tag."
+msgstr ""
+
+#: template-parts/sections/section-media.php:40
+msgid "Your browser does not support the video tag."
+msgstr ""
+
+#: template-parts/sidebars/offcanvas-minicart.php:5
+msgid "Your cart"
+msgstr ""
+
+#: ajax/php/comment_form_handler.php:76
+msgid "Your comment has been sent successfully!"
+msgstr ""
+
+#: template-parts/forms/form-poll_form.php:57
+msgid "Your feedback"
+msgstr ""
+
+#: ajax/php/contact_form_handler.php:145
+msgid "Your message has been sent successfully!"
+msgstr ""
+
+#: inc/woocommerce-awaiting-pickup.php:162
+msgid "Your Order is Ready for Pickup!"
+msgstr ""
+
+#: template-parts/global/footer.php:15
+msgid "Ízek, történetek, élmények – kéthetente a legizgalmasabb borokkal"
+msgstr ""
+
+#: inc/wordpress-admin-actions.php:226 inc/wordpress-admin-actions.php:241
+#, php-format
+msgid "Összes %s"
+msgstr ""
+
+#: inc/register-taxonomies.php:17
+msgid "Összes díj"
+msgstr ""
+
+#: inc/register-post-types.php:25
+msgid "Összes gyakori kérdés"
+msgstr ""
+
+#: inc/wordpress-admin-actions.php:284
+msgid "Összes szerző"
+msgstr ""
+
+#: inc/register-taxonomies.php:21
+msgid "Új díj hozzáadása"
+msgstr ""
+
+#: inc/register-taxonomies.php:20
+msgid "Új díj neve"
+msgstr ""
+
+#: inc/register-post-types.php:27 inc/register-post-types.php:28
+msgid "Új gyakori kérdés"
+msgstr ""
+
+#: inc/register-post-types.php:26
+msgid "Új gyakori kérdés hozzáadása"
+msgstr ""
+
+#: template-parts/sections/section-gravity_forms.php:36
+msgid "Űrlap nem található."
+msgstr ""

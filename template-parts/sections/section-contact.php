@@ -30,8 +30,8 @@
                     </div>
                     <div class="col-lg-6">
                         <?php
-                            $form_args = array();
-                            get_template_part('template-parts/forms/form', $form_id, $form_args);
+                            $template_args = [];
+                            get_template_part('template-parts/forms/form', $form_id, $template_args);
                         ?>
                     </div>
                 </div>

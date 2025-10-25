@@ -69,7 +69,7 @@ if ( ! comments_open() ) {
 
 		<!-- Button to trigger modal -->
 		<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#reviewFormModal">
-			<?php esc_html_e( 'Add a Review', TEXT_DOMAIN ); ?>
+			<?php esc_html_e( 'Add a Review', 'borspirit' ); ?>
 		</button>
 
 		<!-- Bootstrap Modal -->

@@ -5,7 +5,7 @@
     $section_hide_title = $section['accordion_section_hide_title'] ?? false;
     $section_slug       = sanitize_title($section_title);
     $section_lead       = $section['accordion_section_lead'] ?? '';
-    $accordion_items    = $section['accordion_items'] ?? [];
+    $accordion_items    = $section['accordion_items'] ?: [];
     $accordion_style    = $section['accordion_style'] ?? 'chevron';
     $accordion_behavior = $section['accordion_behavior'] ?? 'standard';
 

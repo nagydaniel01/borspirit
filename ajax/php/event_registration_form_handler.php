@@ -20,14 +20,14 @@
                 // Ensure the request method is POST
                 if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
                     wp_send_json_error([
-                        'message' => __('Invalid request method.', TEXT_DOMAIN)
+                        'message' => __('Invalid request method.', 'borspirit')
                     ], 405);
                 }
 
                 // Check if form data is present
                 if ( empty($_POST['form_data']) ) {
                     wp_send_json_error([
-                        'message' => __('No form data received.', TEXT_DOMAIN)
+                        'message' => __('No form data received.', 'borspirit')
                     ], 400);
                 }
 
@@ -41,7 +41,7 @@
                 if ( ! isset($form['event_registration_form_nonce']) ||
                     ! wp_verify_nonce($form['event_registration_form_nonce'], 'event_registration_form_action') ) {
                     wp_send_json_error([
-                        'message' => __('Invalid security token', TEXT_DOMAIN)
+                        'message' => __('Invalid security token', 'borspirit')
                     ], 403);
                 }
 
@@ -56,7 +56,7 @@
                 // Validate user
                 if ( ! $user_id ) {
                     wp_send_json_error([
-                        'message' => __('You must be logged in to register.', TEXT_DOMAIN)
+                        'message' => __('You must be logged in to register.', 'borspirit')
                     ], 401);
                 }
                 */
@@ -64,28 +64,28 @@
                 // Validate required fields
                 if ( empty($name) || empty($email) ) {
                     wp_send_json_error([
-                        'message' => __('All required fields must be filled out.', TEXT_DOMAIN)
+                        'message' => __('All required fields must be filled out.', 'borspirit')
                     ], 422);
                 }
 
                 // Validate email format
                 if ( ! is_email($email) ) {
                     wp_send_json_error([
-                        'message' => __('Invalid email format.', TEXT_DOMAIN)
+                        'message' => __('Invalid email format.', 'borspirit')
                     ], 422);
                 }
 
                 // Validate event ID
                 if ( ! $event_id ) {
                     wp_send_json_error([
-                        'message' => __('Invalid event ID.', TEXT_DOMAIN)
+                        'message' => __('Invalid event ID.', 'borspirit')
                     ], 400);
                 }
 
                 // Validate privacy policy consent
                 if ( empty($privacy) || $privacy !== 'on' ) {
                     wp_send_json_error([
-                        'message' => __('You must agree to the privacy policy.', TEXT_DOMAIN)
+                        'message' => __('You must agree to the privacy policy.', 'borspirit')
                     ], 422);
                 }
 
@@ -108,7 +108,7 @@
 
                 if ( $existing ) {
                     wp_send_json_error([
-                        'message' => __('You are already registered for this event.', TEXT_DOMAIN)
+                        'message' => __('You are already registered for this event.', 'borspirit')
                     ], 409);
                 }
 
@@ -117,7 +117,7 @@
                     'post_type'   => 'attendee',
                     'post_status' => 'publish',
                     'post_title'  => sprintf(
-                        __('[Event ID: %d] %s (%s)', TEXT_DOMAIN),
+                        __('[Event ID: %d] %s (%s)', 'borspirit'),
                         $event_id,
                         $name,
                         $email
@@ -134,13 +134,13 @@
                 // Handle insertion errors
                 if ( is_wp_error($registration_id) ) {
                     wp_send_json_error([
-                        'message' => sprintf(__('Registration failed: %s', TEXT_DOMAIN), $registration_id->get_error_message())
+                        'message' => sprintf(__('Registration failed: %s', 'borspirit'), $registration_id->get_error_message())
                     ], 500);
                 }
 
                 if ( $registration_id === false ) {
                     wp_send_json_error([
-                        'message' => __('Registration failed, please try again.', TEXT_DOMAIN)
+                        'message' => __('Registration failed, please try again.', 'borspirit')
                     ], 500);
                 }
 
@@ -148,7 +148,7 @@
                 $admin_email = get_option('admin_email');
                 if ( ! $admin_email || ! is_email($admin_email) ) {
                     wp_send_json_error([
-                        'message' => __('Admin email is not configured properly.', TEXT_DOMAIN)
+                        'message' => __('Admin email is not configured properly.', 'borspirit')
                     ], 500);
                 }
 
@@ -160,11 +160,11 @@
                 ];
 
                 // Prepare email subject with site name
-                $subject = sprintf(__('Registration Confirmation for #%d', TEXT_DOMAIN), get_the_title($event_id));
+                $subject = sprintf(__('Registration Confirmation for #%d', 'borspirit'), get_the_title($event_id));
 
                 // Prepare email message
                 $message = sprintf(
-                    __("Hi %s,\n\nThank you for registering for Event #%d.\n\nWe’ve reserved your spot and will contact you with more details soon.\n\nBest regards,\n%s", TEXT_DOMAIN),
+                    __("Hi %s,\n\nThank you for registering for Event #%d.\n\nWe’ve reserved your spot and will contact you with more details soon.\n\nBest regards,\n%s", 'borspirit'),
                     $name,
                     get_the_title($event_id),
                     get_bloginfo('name')
@@ -176,13 +176,13 @@
                 // Handle email sending errors
                 if ( ! $sent ) {
                     wp_send_json_error([
-                        'message' => __('Message could not be sent. Please try again later.', TEXT_DOMAIN)
+                        'message' => __('Message could not be sent. Please try again later.', 'borspirit')
                     ], 500);
                 }
 
                 // Success response
                 wp_send_json_success([
-                    'message'      => __('Successfully registered!', TEXT_DOMAIN),
+                    'message'      => __('Successfully registered!', 'borspirit'),
                     'redirect_url' => esc_url( trailingslashit( home_url('/thank-you') ) ),
                     'attendee_id'  => $registration_id
                 ], 200);
@@ -190,7 +190,7 @@
             } catch ( Exception $e ) {
                 // Catch unexpected errors
                 wp_send_json_error([
-                    'message' => sprintf(__('Unexpected error: %s', TEXT_DOMAIN), $e->getMessage())
+                    'message' => sprintf(__('Unexpected error: %s', 'borspirit'), $e->getMessage())
                 ], 500);
             }
         }

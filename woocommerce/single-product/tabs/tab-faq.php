@@ -7,13 +7,14 @@ global $product;
 $heading = get_query_var( 'tab_title' );
 
 // Try to get FAQs linked to this product
-$faq_posts = get_field( 'product_faq', $product->get_id() ) ??  [];
+$faq_posts = get_field( 'product_faqs', $product->get_id() ) ?: [];
 
-// Fallback: get FAQs from global "product_page_faq" option if product has none
+// Fallback: get FAQs from global "product_page_faq_items" option if product has none
 if ( empty( $faq_posts ) ) {
-    $faq_posts = get_field( 'product_page_faq', 'option' ) ?? [];
+    $faq_posts = get_field( 'product_page_faq_items', 'option' ) ?: [];
 }
 
+/*
 // Fallback: get all FAQs if none found yet
 if ( empty( $faq_posts ) ) {
     $faq_posts = get_posts( [
@@ -23,6 +24,7 @@ if ( empty( $faq_posts ) ) {
         'order'          => 'ASC',
     ] );
 }
+*/
 
 // Filter out items where either title or content is empty
 $faq_posts = array_filter( $faq_posts ?? [], function ($faq) {
@@ -64,6 +66,6 @@ $faq_posts = array_filter( $faq_posts ?? [], function ($faq) {
             <?php endforeach; ?>
         </div>
     <?php else : ?>
-        <?php echo wpautop( __( 'No FAQs found.', 'your-text-domain' ) ); ?>
+        <?php echo wpautop( __( 'No FAQs found.', 'borspirit' ) ); ?>
     <?php endif; ?>
 </div>

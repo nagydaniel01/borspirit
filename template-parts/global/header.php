@@ -30,19 +30,19 @@
                     <?php if ( is_user_logged_in() ) : ?>
                         <a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>" class="header-actions__item ms-3">
                             <?php echo $avatar; ?>
-                            <span class="visually-hidden"><?php echo sprintf( esc_html__( 'Hello %s!', TEXT_DOMAIN ), esc_html( $user_name ) ); ?></span>
+                            <span class="visually-hidden"><?php echo sprintf( esc_html__( 'Hello %s!', 'borspirit' ), esc_html( $user_name ) ); ?></span>
                         </a>
                     <?php else : ?>
                         <button type="button" class="header-actions__item btn ms-3" data-bs-toggle="modal" data-bs-target="#login_formModal">
                             <svg class="icon icon-user"><use xlink:href="#icon-user"></use></svg>
-                            <span class="visually-hidden"><?php echo esc_html__( 'Login / Register', TEXT_DOMAIN ); ?></span>
+                            <span class="visually-hidden"><?php echo esc_html__( 'Login / Register', 'borspirit' ); ?></span>
                         </button>
                     <?php endif; ?>
 
                     <!-- Mobile Cart Trigger -->
                     <button class="header-actions__item btn position-relative ms-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#minicartCanvas" aria-controls="minicartCanvas">
                         <svg class="icon icon-bag-shopping"><use xlink:href="#icon-bag-shopping"></use></svg>
-                        <span class="visually-hidden"><?php echo esc_html__( 'Cart', TEXT_DOMAIN ); ?></span>
+                        <span class="visually-hidden"><?php echo esc_html__( 'Cart', 'borspirit' ); ?></span>
                         <div class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-white">
                             <span class="cart_contents_count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
                         </div>
@@ -52,14 +52,14 @@
                 <!-- Navbar Toggler -->
                 <button class="header-actions__item btn ms-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#mainMenu" aria-controls="mainMenu">
                     <svg class="icon icon-menu"><use xlink:href="#icon-menu"></use></svg>
-                    <span class="visually-hidden"><?php echo esc_html__( 'Open menu', TEXT_DOMAIN ); ?></span>
+                    <span class="visually-hidden"><?php echo esc_html__( 'Open menu', 'borspirit' ); ?></span>
                 </button>
             </div>
 
             <!-- Offcanvas container (mobile right, desktop inline) -->
             <div class="offcanvas offcanvas-end" tabindex="-1" id="mainMenu" aria-labelledby="mainMenuLabel">
                 <div class="offcanvas-header d-lg-none">
-                    <h5 class="offcanvas-title" id="mainMenuLabel"><?php echo esc_html__( 'Menu', TEXT_DOMAIN ); ?></h5>
+                    <h5 class="offcanvas-title" id="mainMenuLabel"><?php echo esc_html__( 'Menu', 'borspirit' ); ?></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
                 </div>
 
@@ -85,7 +85,7 @@
                             ) );
                         ?>
                     <?php else : ?>
-                        <p class="no-menu-assigned"><?php echo esc_html__( 'Please assign a menu in Appearance → Menus.', TEXT_DOMAIN ); ?></p>
+                        <p class="no-menu-assigned"><?php echo esc_html__( 'Please assign a menu in Appearance → Menus.', 'borspirit' ); ?></p>
                     <?php endif; ?>
 
                     <!-- Desktop header actions -->
@@ -95,19 +95,19 @@
                             <?php if ( is_user_logged_in() ) : ?>
                                 <a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>" class="header-actions__item ms-lg-4">
                                     <?php echo $avatar; ?>
-                                    <span class="ms-2"><?php echo sprintf( esc_html__( 'Hello %s!', TEXT_DOMAIN ), esc_html( $user_name ) ); ?></span>
+                                    <span class="ms-2"><?php echo sprintf( esc_html__( 'Hello %s!', 'borspirit' ), esc_html( $user_name ) ); ?></span>
                                 </a>
                             <?php else : ?>
                                 <button type="button" class="header-actions__item btn ms-lg-4" data-bs-toggle="modal" data-bs-target="#login_formModal">
                                     <svg class="icon icon-user"><use xlink:href="#icon-user"></use></svg>
-                                    <span class="visually-hidden"><?php echo esc_html__( 'Login / Register', TEXT_DOMAIN ); ?></span>
+                                    <span class="visually-hidden"><?php echo esc_html__( 'Login / Register', 'borspirit' ); ?></span>
                                 </button>
                             <?php endif; ?>
 
                             <!-- Cart Trigger -->
                             <button class="header-actions__item btn position-relative ms-lg-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#minicartCanvas" aria-controls="minicartCanvas">
                                 <svg class="icon icon-bag-shopping"><use xlink:href="#icon-bag-shopping"></use></svg>
-                                <span class="visually-hidden"><?php echo esc_html__( 'Cart', TEXT_DOMAIN ); ?></span>
+                                <span class="visually-hidden"><?php echo esc_html__( 'Cart', 'borspirit' ); ?></span>
                                 <div class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-white">
                                     <span class="cart_contents_count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
                                 </div>
@@ -117,7 +117,7 @@
                         <!-- Search bar Trigger -->
                         <button class="header-actions__item btn ms-lg-4" data-bs-toggle="modal" data-bs-target="#searchModal">
                             <svg class="icon icon-magnifying-glass"><use xlink:href="#icon-magnifying-glass"></use></svg>
-                            <span class="visually-hidden"><?php echo esc_html__('Search', TEXT_DOMAIN); ?></span>
+                            <span class="visually-hidden"><?php echo esc_html__('Search', 'borspirit'); ?></span>
                         </button>
                     </div>
                 </div>

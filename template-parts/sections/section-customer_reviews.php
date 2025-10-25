@@ -9,13 +9,13 @@
     $slider             = $section['customer_reviews_slider'] ?? '';
 
     // Query all orders that have the _poll_feedback meta key
-    $orders = wc_get_orders( array(
+    $orders = wc_get_orders( [
         'limit'         => -1,
         'meta_key'      => '_poll_feedback',
         'meta_compare'  => 'EXISTS',
         'return'        => 'objects',
-        'status'        => array( 'wc-completed' ),
-    ) );
+        'status'        => ['wc-completed'],
+    ] );
 ?>
 
 <?php if (!empty($orders)) : ?>
@@ -46,8 +46,8 @@
                                             continue;
                                         }
 
-                                        $template_args = array( 'order' => $order, 'feedback_data' => $feedback_data);
-                                        get_template_part('template-parts/cards/card', 'review', $template_args );
+                                        $template_args = ['order' => $order, 'feedback_data' => $feedback_data];
+                                        get_template_part( 'template-parts/cards/card', 'review', $template_args );
                                     ?>
                                 </div>
                             <?php endforeach; ?>
@@ -66,8 +66,8 @@
                                         continue;
                                     }
 
-                                    $template_args = array( 'order' => $order, 'feedback_data' => $feedback_data);
-                                    get_template_part('template-parts/cards/card', 'review', $template_args );
+                                    $template_args = ['order' => $order, 'feedback_data' => $feedback_data];
+                                    get_template_part( 'template-parts/cards/card', 'review', $template_args );
                                 ?>
                             </div>
                         <?php endforeach; ?>

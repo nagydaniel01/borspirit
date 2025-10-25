@@ -21,7 +21,7 @@
 
             // Only allow poll if order is paid
             if ( ! $order || ! $order->is_paid() ) {
-                //echo '<p>' . esc_html__( 'Poll is available only for paid orders.', TEXT_DOMAIN ) . '</p>';
+                //echo '<p>' . esc_html__( 'Poll is available only for paid orders.', 'borspirit' ) . '</p>';
                 return;
             }
 
@@ -30,7 +30,7 @@
 
             if ( $feedback_submitted ) {
                 // Optional: show a thank-you message instead
-                echo '<p>' . esc_html__( 'Thank you for your feedback!', TEXT_DOMAIN ) . '</p>';
+                echo '<p>' . esc_html__( 'Thank you for your feedback!', 'borspirit' ) . '</p>';
                 return;
             }
             ?>

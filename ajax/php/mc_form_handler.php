@@ -23,7 +23,7 @@
 
                 if ( empty($api_key) || empty($audience_id) ) {
                     wp_send_json_error([
-                        'message' => __('Mailchimp configuration is missing. Please contact site administrator.', TEXT_DOMAIN)
+                        'message' => __('Mailchimp configuration is missing. Please contact site administrator.', 'borspirit')
                     ], 500);
                 }
 
@@ -33,14 +33,14 @@
                 // Ensure the request method is POST
                 if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
                     wp_send_json_error([
-                        'message' => __('Invalid request method.', TEXT_DOMAIN)
+                        'message' => __('Invalid request method.', 'borspirit')
                     ], 405);
                 }
 
                 // Check if form data is present
                 if ( empty($_POST['form_data']) ) {
                     wp_send_json_error([
-                        'message' => __('No form data received.', TEXT_DOMAIN)
+                        'message' => __('No form data received.', 'borspirit')
                     ], 400);
                 }
 
@@ -54,7 +54,7 @@
                 if ( ! isset($form['subscribe_form_nonce']) ||
                     ! wp_verify_nonce($form['subscribe_form_nonce'], 'subscribe_form_action') ) {
                     wp_send_json_error([
-                        'message' => __('Invalid security token.', TEXT_DOMAIN)
+                        'message' => __('Invalid security token.', 'borspirit')
                     ], 403);
                 }
 
@@ -66,17 +66,17 @@
 
                 // Validate required fields
                 if ( empty($name) || empty($email) ) {
-                    wp_send_json_error(['message' => __('All required fields must be filled out.', TEXT_DOMAIN)], 422);
+                    wp_send_json_error(['message' => __('All required fields must be filled out.', 'borspirit')], 422);
                 }
 
                 // Validate email
                 if ( ! is_email($email) ) {
-                    wp_send_json_error(['message' => __('Invalid email format.', TEXT_DOMAIN)], 422);
+                    wp_send_json_error(['message' => __('Invalid email format.', 'borspirit')], 422);
                 }
 
                 // Validate privacy consent
                 if ( empty($privacy) || $privacy !== 'on' ) {
-                    wp_send_json_error(['message' => __('You must agree to the privacy policy.', TEXT_DOMAIN)], 422);
+                    wp_send_json_error(['message' => __('You must agree to the privacy policy.', 'borspirit')], 422);
                 }
 
                 $subscribe = $mailchimp->subscribe($email, $name, '', ['webshop'], 'subscribed');
@@ -85,13 +85,13 @@
                 if ( is_wp_error($subscribe) ) {
                     error_log('Mailchimp WP_Error: ' . $subscribe->get_error_message());
                     wp_send_json_error([
-                        'message' => __('Mailchimp request failed. Please try again later.', TEXT_DOMAIN)
+                        'message' => __('Mailchimp request failed. Please try again later.', 'borspirit')
                     ], 500);
                 }
 
                 if ( empty($subscribe['success']) ) {
                     wp_send_json_error([
-                        'message' => $subscribe['message'] ?? __('User could not be subscribed. Please try again later.', TEXT_DOMAIN)
+                        'message' => $subscribe['message'] ?? __('User could not be subscribed. Please try again later.', 'borspirit')
                     ], 500);
                 }
 
@@ -105,7 +105,7 @@
             } catch ( Exception $e ) {
                 // Catch any unexpected errors
                 wp_send_json_error([
-                    'message' => sprintf(__('Unexpected error: %s', TEXT_DOMAIN), $e->getMessage())
+                    'message' => sprintf(__('Unexpected error: %s', 'borspirit'), $e->getMessage())
                 ], 500);
             }
         }

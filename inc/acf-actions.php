@@ -63,6 +63,7 @@
                     'page_title'    => 'Sablon beállítások',
                     'menu_title'    => 'Sablon beállítások',
                     'menu_slug'     => 'theme-settings',
+                    'parent_slug'   => 'themes.php',
                     'capability'    => 'edit_posts',
                     'redirect'      => false,
                 ) );
@@ -98,7 +99,7 @@
                 'href'  => esc_url( admin_url( 'themes.php?page=theme-settings' ) ),
                 'meta'  => array(
                     'class' => 'theme-settings-link',
-                    'title' => esc_attr__( '', TEXT_DOMAIN )
+                    'title' => esc_attr__( '', 'borspirit' )
                 )
             );
 
@@ -119,7 +120,7 @@
                 $choices = [];
             }
 
-            $choices[ __( 'Other', TEXT_DOMAIN ) ]['wc_prod_attr'] = __( 'WC Product Attribute', TEXT_DOMAIN );
+            $choices[ __( 'Other', 'borspirit' ) ]['wc_prod_attr'] = __( 'WC Product Attribute', 'borspirit' );
 
             return $choices;
         }
@@ -249,7 +250,7 @@
                 return $field;
             }
 
-            $choices = [ 'none' => __( 'None', TEXT_DOMAIN ) ];
+            $choices = [ 'none' => __( 'None', 'borspirit' ) ];
             $forms   = GFFormsModel::get_forms();
 
             if ( ! empty( $forms ) ) {
@@ -314,8 +315,8 @@
             $field['choices'] = array();
 
             // Add fixed/static choices
-            $field['choices']['free_shipping_limit_message'] = __( 'Free Shipping Limit', TEXT_DOMAIN );
-            $field['choices']['estimated_delivery_message'] = __( 'Estimated Delivery', TEXT_DOMAIN );
+            $field['choices']['free_shipping_limit_message'] = __( 'Free Shipping Limit', 'borspirit' );
+            $field['choices']['estimated_delivery_message'] = __( 'Estimated Delivery', 'borspirit' );
 
             // Check if repeater has rows of data (replace 'option' if not on Options page)
             if ( have_rows( 'icon_items', 'option' ) ) {

@@ -191,7 +191,7 @@ class MailchimpService
     private function handleResponse($response, string $successMessage): array
     {
         if (is_wp_error($response)) {
-            return $this->jsonResponse(false, sprintf(__('Error: %s', TEXT_DOMAIN), $response->get_error_message()));
+            return $this->jsonResponse(false, sprintf(__('Error: %s', 'borspirit'), $response->get_error_message()));
         }
 
         return $this->jsonResponse(true, $successMessage);

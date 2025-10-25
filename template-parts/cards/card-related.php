@@ -13,7 +13,7 @@
     $categories   = get_the_terms($post_id, 'category');
 
     if ($image_id === $fallback_id) {
-        $alt_text = __('', TEXT_DOMAIN);
+        $alt_text = __('', 'borspirit');
     } else {
         $alt_text = get_post_meta($image_id, '_wp_attachment_image_alt', true) ?: $title;
     }
@@ -36,7 +36,7 @@
 
         $aria_label = sprintf(
             // translators: %1$s is the post title, %2$s is the singular post type name
-            __('A(z) "%1$s" című %2$s megtekintése', TEXT_DOMAIN),
+            __('A(z) "%1$s" című %2$s megtekintése', 'borspirit'),
             $title,
             $post_type_singular_name
         );

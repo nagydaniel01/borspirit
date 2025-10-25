@@ -25,7 +25,7 @@
             <div class="section__content">
                 <div class="slider slider--gallery" id="<?php echo esc_attr($section_slug); ?>-slider">
                     <div class="slider__list">
-                        <?php foreach( $gallery as $index => $image ): ?>
+                        <?php foreach($gallery as $index => $image) : ?>
                             <figure class="slider__item">
                                 <a href="<?php echo esc_url($image['url']); ?>" class="slider__link" data-fancybox="<?php echo esc_attr($section_slug); ?>-gallery" <?php if(!empty($image['caption'])): ?>data-caption="<?php echo esc_attr($image['caption']); ?>"<?php endif; ?>>
                                     <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>" class="slider__image">

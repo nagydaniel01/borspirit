@@ -17,6 +17,29 @@
         
         $estimated_reading_time = get_estimated_reading_time( get_the_content() );
 
+        // Get related products linked to this post
+        $products = get_field('post_related_products', get_the_ID()) ?: [];
+
+        // Normalize into WC_Product objects
+        $products = array_map(function($item) {
+            // If it's a Post object, convert to product ID
+            if ($item instanceof WP_Post) {
+                $item = $item->ID;
+            }
+
+            // If numeric ID, try to get WC product
+            if (is_numeric($item)) {
+                return wc_get_product($item);
+            }
+
+            // If somehow already a WC_Product, return it
+            if ($item instanceof WC_Product) {
+                return $item;
+            }
+
+            return null;
+        }, $products);
+
         // Related posts
         $related_posts = new WP_Query([
             'post_status'    => 'publish',
@@ -68,14 +91,14 @@
                                     // Show last modified date if different
                                     printf(
                                         /* translators: %s: Post modified date */
-                                        __('Updated on %s', TEXT_DOMAIN),
+                                        __('Updated on %s', 'borspirit'),
                                         esc_html( $modified )
                                     );
                                 } else {
                                     // Otherwise show published date
                                     printf(
                                         /* translators: %s: Post date */
-                                        __('Published on %s', TEXT_DOMAIN),
+                                        __('Published on %s', 'borspirit'),
                                         esc_html( $published )
                                     );
                                 }
@@ -91,7 +114,7 @@
                                             '%s minute reading',   // singular
                                             '%s minutes reading',  // plural
                                             $estimated_reading_time,
-                                            TEXT_DOMAIN
+                                            'borspirit'
                                         ),
                                         esc_html( $estimated_reading_time )
                                     );
@@ -104,14 +127,14 @@
                                 <svg class="icon icon-bookmark-empty">
                                     <use xlink:href="#icon-bookmark-empty"></use>
                                 </svg>
-                                <span><?php echo esc_html__('Add to Bookmarks', TEXT_DOMAIN); ?></span>
+                                <span><?php echo esc_html__('Add to Bookmarks', 'borspirit'); ?></span>
                             </a>
                         <?php else : ?>
                             <?php
                                 $bookmark_ids  = get_field('user_bookmarks', 'user_'.$current_user_id) ?: [];
                                 $is_bookmarked = in_array( get_the_ID(), $bookmark_ids, true );
                                 $bookmark_icon = $is_bookmarked ? 'bookmark' : 'bookmark-empty';
-                                $bookmark_text = $is_bookmarked ? __('Remove form bookmarks', TEXT_DOMAIN) : __('Add to Bookmarks', TEXT_DOMAIN);
+                                $bookmark_text = $is_bookmarked ? __('Remove form bookmarks', 'borspirit') : __('Add to Bookmarks', 'borspirit');
                             ?>
                             <a id="btn-bookmark" class="section__bookmark" href="#" data-post-id="<?php echo esc_attr($post_id); ?>" data-bookmarked="<?php echo esc_attr($is_bookmarked ? 'true' : 'false'); ?>">
                                 <svg class="icon icon-<?php echo esc_attr($bookmark_icon); ?>">
@@ -150,7 +173,7 @@
 
                     // Optional: Pagination for multi-page posts
                     wp_link_pages(array(
-                        'before' => '<div class="page-links">' . __('Pages:', TEXT_DOMAIN),
+                        'before' => '<div class="page-links">' . __('Pages:', 'borspirit'),
                         'after'  => '</div>',
                     ));
                     ?>
@@ -160,7 +183,7 @@
                     <?php if ( $taxonomy ) : ?>
                         <?php 
                             $taxonomy_obj   = get_taxonomy( $taxonomy ); 
-                            $taxonomy_label = $taxonomy_obj ? $taxonomy_obj->labels->name : __('Categories', TEXT_DOMAIN);
+                            $taxonomy_label = $taxonomy_obj ? $taxonomy_obj->labels->name : __('Categories', 'borspirit');
                         ?>
                         <span class="section__categories category">
                             <div class="category__container">
@@ -194,22 +217,54 @@
                         </span>
                     <?php endif; ?>
 
+                    <?php if ( !empty($products) ) : ?>
+                        <div class="section__related-products">
+                            <h2 class="section__title"><?php echo esc_html('Related Products', 'borspirit'); ?></h2>
+
+                            <div class="slider slider--product-query slider--related-products">
+                                <div class="slider__list">
+                                    <?php foreach ( $products as $product ) : ?>
+                                        <?php
+                                        // Allow WooCommerce template parts to work correctly
+                                        $post_object = get_post($product->get_id());
+                                        setup_postdata($GLOBALS['post'] =& $post_object);
+
+                                        /**
+                                         * Hook: woocommerce_shop_loop.
+                                         */
+                                        do_action('woocommerce_shop_loop');
+
+                                        // Load WooCommerce product card template (content-product.php)
+                                        wc_get_template_part('content', 'product');
+                                        ?>
+                                    <?php endforeach; wp_reset_postdata(); ?>
+                                </div>
+                                <div class="slider__controls"></div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
                     <?php if ( $related_posts->have_posts() ) : ?>
-                        <?php
-                            $template_args = array('post_type' => esc_attr($post_type));
-                            $template      = locate_template("template-parts/cards/card-related.php");
-                        ?>
                         <div class="section__related-posts">
-                            <h2 class="section__title"><?php _e('You may also be interested in', TEXT_DOMAIN); ?></h2>
+                            <h2 class="section__title"><?php echo esc_html('You may also be interested in', 'borspirit'); ?></h2>
+
                             <div class="slider slider--related" id="related-posts-slider">
                                 <div class="slider__list">
                                     <?php while ( $related_posts->have_posts() ) : $related_posts->the_post(); ?>
                                         <div class="slider__item">
                                             <?php
-                                                if ( ! empty( $template ) ) {
-                                                    get_template_part('template-parts/cards/card', 'related', $template_args);
+                                                $template_args = [
+                                                    'post_type' => esc_attr($post_type)
+                                                ];
+                                                
+                                                $template_slug = 'template-parts/cards/card-related.php';
+
+                                                if ( locate_template( $template_slug ) ) {
+                                                    // File exists, include it
+                                                    get_template_part( 'template-parts/cards/card', 'related', $template_args );
                                                 } else {
-                                                    get_template_part('template-parts/cards/card', 'default', $template_args);
+                                                    // File does not exist, handle accordingly
+                                                    get_template_part( 'template-parts/cards/card', 'default', $template_args );
                                                 }
                                             ?>
                                         </div>

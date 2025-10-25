@@ -33,11 +33,11 @@
         'show_all'              => false,
         'end_size'              => 1,
         'mid_size'              => 2,
-        'prev_text'             => sprintf('<span class="page-numbers__label">%s</span><svg class="icon icon-arrow-left"><use xlink:href="#icon-arrow-left"></use></svg>', __('Előző', TEXT_DOMAIN)),
-        'next_text'             => sprintf('<span class="page-numbers__label">%s</span><svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg>', __('Következő', TEXT_DOMAIN)),
+        'prev_text'             => sprintf('<span class="page-numbers__label">%s</span><svg class="icon icon-arrow-left"><use xlink:href="#icon-arrow-left"></use></svg>', __('Előző', 'borspirit')),
+        'next_text'             => sprintf('<span class="page-numbers__label">%s</span><svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg>', __('Következő', 'borspirit')),
         'type'                  => 'list',
         //'before_page_number'    => '',
-        'after_page_number'     => '<span class="visually-hidden"> ' . __('Oldal', TEXT_DOMAIN) . '</span>',
+        'after_page_number'     => '<span class="visually-hidden"> ' . __('Oldal', 'borspirit') . '</span>',
     ];
 ?>
 
@@ -45,7 +45,7 @@
     <section class="section section--archive section--archive-search">
         <div class="section__header">
             <div class="container">
-                <h1 class="section__title fs-2"><?php printf( esc_html__('Keresés erre: %s', TEXT_DOMAIN), '<span>' . $search_query . '</span>' ); ?></h1>
+                <h1 class="section__title fs-2"><?php printf( esc_html__('Keresés erre: %s', 'borspirit'), '<span>' . $search_query . '</span>' ); ?></h1>
             </div>
         </div>
 
@@ -62,7 +62,7 @@
                         ) );
                     ?>
 
-                    <?php if ( is_object($query) && $query->have_posts() ) : ?>
+                    <?php if ( $query->have_posts() ) : ?>
                         <div class="block block--search block--search-<?php echo esc_attr($post_type_filter); ?>">
                             <div class="container">
                                 <header class="block__header">
@@ -94,12 +94,13 @@
                                             ?>
                                             <div class="<?php echo $col_class; ?>">
                                                 <?php 
-                                                    $template_args = array(
+                                                    $template_args = [
                                                         'post_type' => esc_attr(get_post_type())
-                                                    );
+                                                    ];
 
                                                     $template_slug = 'template-parts/cards/card-' . $template_args['post_type'] . '.php';
-                                                    if ( locate_template($template_slug) ) {
+                                                    
+                                                    if ( locate_template( $template_slug ) ) {
                                                         get_template_part( 'template-parts/cards/card', $template_args['post_type'], $template_args );
                                                     } else {
                                                         get_template_part( 'template-parts/cards/card', 'default', $template_args );
@@ -125,7 +126,7 @@
                             $total_posts = $query->found_posts;
                         ?>
 
-                        <?php if ( is_object($query) && $query->have_posts() ) : ?>
+                        <?php if ( $query->have_posts() ) : ?>
                             <div class="block block--search block--<?php echo esc_attr($post_type->name); ?>">
                                 <div class="container">
                                     <header class="block__header">
@@ -155,7 +156,8 @@
                                                         );
 
                                                         $template_slug = 'template-parts/cards/card-' . $template_args['post_type'] . '.php';
-                                                        if ( locate_template($template_slug) ) {
+
+                                                        if ( locate_template( $template_slug ) ) {
                                                             get_template_part( 'template-parts/cards/card', $template_args['post_type'], $template_args );
                                                         } else {
                                                             get_template_part( 'template-parts/cards/card', 'default', $template_args );
@@ -172,7 +174,7 @@
                 <?php endif; ?>
             <?php else : ?>
                 <div class="container">
-                    <p class="text-center"><?php echo esc_html__('Sajnáljuk, de nem találtunk találatot a keresési feltételek alapján. Kérjük, próbálkozzon újra más kulcsszavakkal.', TEXT_DOMAIN); ?></p>
+                    <p class="text-center"><?php echo esc_html__('Sajnáljuk, de nem találtunk találatot a keresési feltételek alapján. Kérjük, próbálkozzon újra más kulcsszavakkal.', 'borspirit'); ?></p>
                 </div>
             <?php endif; ?>
         </div>

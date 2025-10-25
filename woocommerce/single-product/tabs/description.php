@@ -33,7 +33,7 @@ $heading = apply_filters( 'woocommerce_product_description_heading', __( 'Descri
             <?php the_content(); ?>
         </div>
         <div class="text-collapse__toggle">
-            <button type="button" class="btn read-more-button js-collapse-toggle is-hidden"><?php echo esc_html__( 'Show more', TEXT_DOMAIN ); ?></a>
+            <button type="button" class="btn read-more-button js-collapse-toggle is-hidden"><?php echo esc_html__( 'Show more', 'borspirit' ); ?></a>
         </div>
     </div>
 </div>

@@ -253,15 +253,15 @@
         function calculate_unit_price_per_liter($priceFt, $volumeMl) {
             // Validate inputs
             if (!is_numeric($priceFt) || !is_numeric($volumeMl)) {
-                return __("Error: Price and volume must be numeric.", TEXT_DOMAIN);
+                return __("Error: Price and volume must be numeric.", 'borspirit');
             }
 
             if ($priceFt < 0) {
-                return __("Error: Price cannot be negative.", TEXT_DOMAIN);
+                return __("Error: Price cannot be negative.", 'borspirit');
             }
 
             if ($volumeMl <= 0) {
-                return __("Error: Volume must be greater than zero.", TEXT_DOMAIN);
+                return __("Error: Volume must be greater than zero.", 'borspirit');
             }
 
             // Calculate unit price
@@ -295,7 +295,7 @@
                     // Format with WooCommerce currency
                     $formatted_price = wc_price($unit_price);
 
-                    echo '<p class="unit-price">' . sprintf(__("Egységár: %s / liter", TEXT_DOMAIN), $formatted_price) . '</p>';
+                    echo '<p class="unit-price">' . sprintf(__("Egységár: %s / liter", 'borspirit'), $formatted_price) . '</p>';
                 } else {
                     // Show error message
                     echo '<p class="unit-price">' . esc_html($unit_price) . '</p>';
@@ -335,7 +335,7 @@
                 $image = sprintf(
                     '<img width="60" height="60" src="%s" alt="%s" />',
                     esc_url( $icon_url ),
-                    esc_attr__( 'DRS', TEXT_DOMAIN )
+                    esc_attr__( 'DRS', 'borspirit' )
                 );
             }
 
@@ -345,7 +345,7 @@
 
             // Translatable text (without HTML)
             $drs_price_text   = sprintf(
-                __( 'DRS - kötelező visszaváltási díj: %s / db.', TEXT_DOMAIN ),
+                __( 'DRS - kötelező visszaváltási díj: %s / db.', 'borspirit' ),
                 wc_price( $drs_price )
             );
 
@@ -395,7 +395,7 @@
 
             if ( $awards && ! is_wp_error( $awards ) ) {
                 echo '<div class="product-awards">';
-                echo '<strong>' . __( 'Awards', TEXT_DOMAIN ) . ': </strong>';
+                echo '<strong>' . __( 'Awards', 'borspirit' ) . ': </strong>';
                 echo '<ul class="product-awards__list">';
 
                 foreach ( $awards as $award ) {
@@ -459,7 +459,7 @@
 
             if ( $recently_viewed_query->have_posts() ) {
                 echo '<div class="section section--recently-viewed-products"><div class="container">';
-                echo '<h2>' . __( 'Recently viewed products', TEXT_DOMAIN ) . '</h2>';
+                echo '<h2>' . __( 'Recently viewed products', 'borspirit' ) . '</h2>';
                 
                 woocommerce_product_loop_start();
 
@@ -475,7 +475,7 @@
 
             wp_reset_postdata();
         }
-        add_action( 'woocommerce_after_single_product_summary', 'custom_recently_viewed_products', 25 );
+        add_action( 'woocommerce_after_single_product_summary', 'custom_recently_viewed_products', 30 );
     }
 
     // ============================================================
@@ -493,27 +493,24 @@
          * @return string The modified tab title.
          */
         function rename_description_tab( $title ) {
-            $title = __( 'Learn more about the product!', TEXT_DOMAIN ); // Ismerd meg jobban a terméket
+            $title = __( 'Learn more about the product!', 'borspirit' ); // Ismerd meg jobban a terméket
             return $title;
         }
         add_filter( 'woocommerce_product_description_heading', 'rename_description_tab' );
     }
 
-    if ( ! function_exists( 'rename_related_products_heading' ) ) {
+    if ( ! function_exists( 'rename_additional_information_heading' ) ) {
         /**
-         * Rename the WooCommerce related products section heading.
+         * Rename the heading inside the Additional Information tab.
          *
-         * This function changes the default "Related products" heading
-         * to your custom text.
-         *
-         * @param string $heading The original related products heading.
-         * @return string The modified heading.
+         * @param string $heading The original heading.
+         * @return string Modified heading.
          */
-        function rename_related_products_heading( $heading ) {
-            $heading = __( 'We also recommend…', TEXT_DOMAIN ); // Suggested translation
+        function rename_additional_information_heading( $heading ) {
+            $heading = __( 'More product details', 'borspirit' ); // Suggested: További termékinformációk
             return $heading;
         }
-        add_filter( 'woocommerce_product_related_products_heading', 'rename_related_products_heading' );
+        add_filter( 'woocommerce_product_additional_information_heading', 'rename_additional_information_heading' );
     }
 
     if ( ! function_exists( 'custom_product_icons_tab' ) ) {
@@ -530,12 +527,8 @@
                 return;
             }
 
-            //$product_id = $product->get_id();
-            //$icons = get_post_meta($product_id, '_product_icons', true); // Optional meta key if you only want icons for specific products
-
-            // Add the tab (you can wrap it with a condition if needed, like only if icons exist)
             $tabs['icons'] = array(
-                'title'    => __( 'Ikonok', TEXT_DOMAIN ), // Change "Ikonok" to your desired title
+                'title'    => __( 'Ikonok', 'borspirit' ), // Change "Ikonok" to your desired title
                 'priority' => 5,
                 'callback' => 'icons_tab_content'
             );
@@ -571,12 +564,12 @@
                 return;
             }
 
-            // Get 'pa_boraszat' terms assigned to this product
-            $boraszat_terms = wp_get_post_terms( $product->get_id(), 'pa_boraszat' );
+            // Only add the 'Winery' tab for specific products if needed
+            $boraszat_terms = wp_get_post_terms( $product->get_id(), 'pa_boraszat' ); // Get 'pa_boraszat' terms assigned to this product
 
             if ( ! is_wp_error( $boraszat_terms ) && ! empty( $boraszat_terms ) ) {
                 $tabs['winery'] = array(
-                    'title'    => __( 'Winery', TEXT_DOMAIN ),
+                    'title'    => __( 'Winery', 'borspirit' ),
                     'priority' => 20,
                     'callback' => 'winery_tab_content'
                 );
@@ -614,16 +607,21 @@
             }
 
             // Only add the 'FAQ' tab for specific products if needed
-            //$product_id = $product->get_id();
-            //$faqs = get_post_meta($product_id, '_product_faqs', true); // Replace with your actual meta key
+            $product_id = $product->get_id();
+            $faqs = get_post_meta($product_id, 'product_faqs', true) ?: []; // Replace with your actual meta key
 
-            //if ( !empty($faqs) ) {
+            // Fallback: get FAQs from global "product_page_faq_items" option if product has none
+            if ( empty( $faqs ) ) {
+                $faqs = get_field( 'product_page_faq_items', 'option' ) ?: [];
+            }
+
+            if ( !empty($faqs) ) {
                 $tabs['faq'] = array(
-                    'title'    => __( 'Frequently asked questions', TEXT_DOMAIN ),
+                    'title'    => __( 'Frequently asked questions', 'borspirit' ),
                     'priority' => 30,
                     'callback' => 'faq_tab_content'
                 );
-            //}
+            }
 
             return $tabs;
         }
@@ -642,8 +640,125 @@
         }
     }
 
+    if ( ! function_exists( 'custom_product_related_posts_tab' ) ) {
+        /**
+         * Adds a custom 'Related posts' tab to the WooCommerce product page.
+         *
+         * @param array $tabs Existing product tabs.
+         * @return array Modified list of product tabs including the new 'related posts' tab.
+         */
+        function custom_product_related_posts_tab($tabs) {
+            global $product;
+
+            if ( ! $product ) {
+                return;
+            }
+
+            // Only add the 'Related posts' tab for specific products if needed
+            $product_id = $product->get_id();
+            $product_related_posts = get_post_meta($product_id, 'product_related_posts', true) ?: []; // Replace with your actual meta key
+
+            if ( !empty($product_related_posts) ) {
+                $tabs['related_posts'] = array(
+                    'title'    => __( 'Related posts', 'borspirit' ),
+                    'priority' => 40,
+                    'callback' => 'related_posts_tab_content'
+                );
+            }
+
+            return $tabs;
+        }
+        //add_filter( 'woocommerce_product_tabs', 'custom_product_related_posts_tab' );
+
+        /**
+         * Callback function to render Related posts tab content.
+         *
+         * @param string $slug The slug of the tab.
+         * @param array  $tab The tab configuration.
+         */
+        function related_posts_tab_content($slug, $tab) {
+            set_query_var('tab_title', $tab['title']);
+            // Load external template from your theme: /woocommerce/single-product/tabs/tab-related_posts.php
+            echo get_template_part('woocommerce/single-product/tabs/tab', 'related_posts');
+        }
+    }
+
     // ============================================================
-    // 9. SHOP LOOP MODIFICATIONS
+    // 9. RELATED, UPSELLS
+    // ============================================================
+
+    if ( ! function_exists( 'rename_related_products_heading' ) ) {
+        /**
+         * Rename the WooCommerce related products section heading.
+         *
+         * This function changes the default "Related products" heading
+         * to your custom text.
+         *
+         * @param string $heading The original related products heading.
+         * @return string The modified heading.
+         */
+        function rename_related_products_heading( $heading ) {
+            $heading = __( 'We also recommend…', 'borspirit' ); // Suggested translation - Ajánljuk még…
+            return $heading;
+        }
+        add_filter( 'woocommerce_product_related_products_heading', 'rename_related_products_heading' );
+    }
+
+    if ( ! function_exists( 'rename_upsell_products_heading' ) ) {
+        /**
+         * Rename the WooCommerce upsell products section heading.
+         *
+         * This modifies the default "You may also like…" heading.
+         *
+         * @param string $heading The original upsell products heading.
+         * @return string The modified heading.
+         */
+        function rename_upsell_products_heading( $heading ) {
+            $heading = __( 'Customers also bought…', 'borspirit' ); // Suggested translation: Vásárlók még ezeket választották…
+            return $heading;
+        }
+        add_filter( 'woocommerce_product_upsells_products_heading', 'rename_upsell_products_heading' );
+    }
+
+    if ( ! function_exists( 'custom_product_related_posts_after_upsells' ) ) {
+        /**
+         * Display "Related Posts" section on the WooCommerce single product page,
+         * positioned after the Upsells section and before Related Products.
+         *
+         * This function retrieves custom related post IDs stored in product meta
+         * and renders a template part if related posts exist.
+         *
+         * Expected meta field: `product_related_posts` (array of post IDs)
+         *
+         * @return void
+         */
+        function custom_product_related_posts_after_upsells() {
+            global $product;
+
+            if ( ! $product ) {
+                return;
+            }
+
+            $product_id = $product->get_id();
+            $product_related_posts = get_post_meta( $product_id, 'product_related_posts', true ) ?: [];
+
+            // Only show if related posts exist
+            if ( ! empty( $product_related_posts ) ) {
+                echo '<div class="section section--related-posts"><div class="container">';
+
+                set_query_var( 'tab_title', 'Related Posts' );
+
+                // Load template if you have one
+                get_template_part( 'woocommerce/single-product/tabs/tab', 'related_posts' );
+
+                echo '</div></div>';
+            }
+        }
+        add_action( 'woocommerce_after_single_product_summary', 'custom_product_related_posts_after_upsells', 25 );
+    }
+
+    // ============================================================
+    // 10. SHOP LOOP MODIFICATIONS
     // ============================================================
 
     if ( ! function_exists( 'show_product_stock_in_loop' ) ) {
@@ -733,7 +848,7 @@
     }
 
     // ============================================================
-    // 10. PRICE MODIFICATIONS
+    // 11. PRICE MODIFICATIONS
     // ============================================================
 
     if ( ! function_exists( 'borspirit_add_label_before_price' ) ) {
@@ -765,7 +880,7 @@
                 }
 
                 // Only add label on single product pages
-                $label = '<span class="price-label">' . esc_html__( 'Polci ár', TEXT_DOMAIN ) . ': </span>';
+                $label = '<span class="price-label">' . esc_html__( 'Polci ár', 'borspirit' ) . ': </span>';
                 return $label . '<span>' . $price . '</span>';
 
             } catch ( Exception $e ) {
@@ -805,7 +920,7 @@
                 if ( $club_price !== '' && is_numeric( $club_price ) ) {
                     $club_price_html = wc_price( $club_price );
 
-                    $label = '<span class="price-label">' . esc_html__( 'Klub ár', TEXT_DOMAIN ) . ': </span>';
+                    $label = '<span class="price-label">' . esc_html__( 'Klub ár', 'borspirit' ) . ': </span>';
                     $price .= '<span class="price__club">' . $label . '<ins aria-hidden="true">' . $club_price_html . '</ins></span>';
                 }
 
@@ -821,7 +936,7 @@
                         $amount_saved = $regular_price - $sale_price;
                         $percent_saved = round( ( $amount_saved / $regular_price ) * 100 );
 
-                        $difference_html = ' <span class="price__savings"><span class="price-label">' . esc_html__( 'Kedvezmény', TEXT_DOMAIN ) . ': </span><span class="discount-amount">' . sprintf( esc_html__( '%s (-%s%%)', TEXT_DOMAIN ), wc_price( $amount_saved ), $percent_saved ) . '</span></span>';
+                        $difference_html = ' <span class="price__savings"><span class="price-label">' . esc_html__( 'Kedvezmény', 'borspirit' ) . ': </span><span class="discount-amount">' . sprintf( esc_html__( '%s (-%s%%)', 'borspirit' ), wc_price( $amount_saved ), $percent_saved ) . '</span></span>';
 
                         // Append after price HTML
                         $price .= $difference_html;
@@ -851,9 +966,9 @@
                 woocommerce_wp_text_input(
                     array(
                         'id'          => '_club_price',
-                        'label'       => __( 'Klub ár', TEXT_DOMAIN ),
+                        'label'       => __( 'Klub ár', 'borspirit' ),
                         'desc_tip'    => true,
-                        'description' => __( 'Enter a special price for club members.', TEXT_DOMAIN ),
+                        'description' => __( 'Enter a special price for club members.', 'borspirit' ),
                         'type'        => 'text',
                         'data_type'   => 'price',
                     )
@@ -936,7 +1051,7 @@
             printf(
                 '<input type="text" id="product-subtitle" name="product-subtitle" value="%s" placeholder="%s" style="width:100%%; height:1.7em; margin:10px 0 20px 0; padding:3px 8px; font-size:1.7em; line-height:100%%;" />',
                 esc_attr( $subtitle ),
-                esc_attr__( 'Product subtitle', TEXT_DOMAIN )
+                esc_attr__( 'Product subtitle', 'borspirit' )
             );
         }
         //add_action( 'edit_form_after_title', 'add_product_subtitle_input' );
@@ -1018,7 +1133,7 @@
             foreach ( $columns as $key => $value ) {
                 $new_columns[ $key ] = $value;
                 if ( 'name' === $key ) {
-                    $new_columns['product_subtitle'] = __( 'Subtitle', TEXT_DOMAIN );
+                    $new_columns['product_subtitle'] = __( 'Subtitle', 'borspirit' );
                 }
             }
             return $new_columns;
@@ -1055,7 +1170,7 @@
                 <fieldset class="inline-edit-col-right">
                     <div class="inline-edit-col">
                         <label>
-                            <span class="title"><?php echo esc_html__( 'Subtitle', TEXT_DOMAIN ); ?></span>
+                            <span class="title"><?php echo esc_html__( 'Subtitle', 'borspirit' ); ?></span>
                             <span class="input-text-wrap">
                                 <input type="text" name="product_subtitle" class="ptitle" value="">
                             </span>
@@ -1123,7 +1238,7 @@
     }
 
     // ============================================================
-    // 11. SHIPPING
+    // 12. SHIPPING
     // ============================================================
 
     if ( ! function_exists( 'show_free_shipping_notice' ) ) {

@@ -20,14 +20,14 @@
                 // Ensure the request method is POST
                 if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
                     wp_send_json_error([
-                        'message' => __('Invalid request method.', TEXT_DOMAIN)
+                        'message' => __('Invalid request method.', 'borspirit')
                     ], 405);
                 }
 
                 // Check if form data is present
                 if ( empty($_POST['form_data']) ) {
                     wp_send_json_error([
-                        'message' => __('No form data received.', TEXT_DOMAIN)
+                        'message' => __('No form data received.', 'borspirit')
                     ], 400);
                 }
 
@@ -41,7 +41,7 @@
                 if ( ! isset($form['contact_form_nonce']) ||
                     ! wp_verify_nonce($form['contact_form_nonce'], 'contact_form_action') ) {
                     wp_send_json_error([
-                        'message' => __('Invalid security token.', TEXT_DOMAIN)
+                        'message' => __('Invalid security token.', 'borspirit')
                     ], 403);
                 }
 
@@ -56,21 +56,21 @@
                 // Validate required fields
                 if ( empty($name) || empty($email) || empty($subject) || empty($message) ) {
                     wp_send_json_error([
-                        'message' => __('All required fields must be filled out.', TEXT_DOMAIN)
+                        'message' => __('All required fields must be filled out.', 'borspirit')
                     ], 422);
                 }
 
                 // Validate email format
                 if ( ! is_email($email) ) {
                     wp_send_json_error([
-                        'message' => __('Invalid email format.', TEXT_DOMAIN)
+                        'message' => __('Invalid email format.', 'borspirit')
                     ], 422);
                 }
 
                 // Validate privacy policy consent
                 if ( empty($privacy) || $privacy !== 'on' ) {
                     wp_send_json_error([
-                        'message' => __('You must agree to the privacy policy.', TEXT_DOMAIN)
+                        'message' => __('You must agree to the privacy policy.', 'borspirit')
                     ], 422);
                 }
 
@@ -78,7 +78,7 @@
                 $admin_email = get_option('admin_email');
                 if ( ! $admin_email || ! is_email($admin_email) ) {
                     wp_send_json_error([
-                        'message' => __('Admin email is not configured properly.', TEXT_DOMAIN)
+                        'message' => __('Admin email is not configured properly.', 'borspirit')
                     ], 500);
                 }
 
@@ -91,7 +91,7 @@
 
                 // Prepare email subject with site name
                 $mail_subject = sprintf(
-                    __('[%s] New message: %s', TEXT_DOMAIN),
+                    __('[%s] New message: %s', 'borspirit'),
                     get_bloginfo('name'),
                     $subject
                 );
@@ -125,7 +125,7 @@
                 // Handle email sending errors
                 if ( ! $sent ) {
                     wp_send_json_error([
-                        'message' => __('Message could not be sent. Please try again later.', TEXT_DOMAIN)
+                        'message' => __('Message could not be sent. Please try again later.', 'borspirit')
                     ], 500);
                 }
 
@@ -142,7 +142,7 @@
                 
                 // Success response
                 wp_send_json_success([
-                    'message'      => __('Your message has been sent successfully!', TEXT_DOMAIN),
+                    'message'      => __('Your message has been sent successfully!', 'borspirit'),
                     'redirect_url' => esc_url( trailingslashit( get_the_permalink( THANK_YOU_PAGE_ID ) ) ),
                     'message_id'   => $message_id
                 ], 200);
@@ -150,7 +150,7 @@
             } catch ( Exception $e ) {
                 // Catch any unexpected errors
                 wp_send_json_error([
-                    'message' => sprintf(__('Unexpected error: %s', TEXT_DOMAIN), $e->getMessage())
+                    'message' => sprintf(__('Unexpected error: %s', 'borspirit'), $e->getMessage())
                 ], 500);
             }
         }

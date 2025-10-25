@@ -4,7 +4,7 @@
 ?>
 
 <form id="poll_form" class="form form--poll" method="post" action="<?php echo esc_url( admin_url('admin-ajax.php') ); ?>" novalidate>
-    <h2><?php echo esc_html__( 'Please fill our poll!', TEXT_DOMAIN ); ?></h2>
+    <h2><?php echo esc_html__( 'Please fill our poll!', 'borspirit' ); ?></h2>
     
     <?php wp_nonce_field( 'poll' . $order_id, 'poll_nonce' ); ?>
     <input type="hidden" name="action" value="collect_feedback" />
@@ -12,7 +12,7 @@
 
     <fieldset class="mb-3">
         <legend>
-            <?php echo esc_html__( 'How would you rate your experience?', TEXT_DOMAIN ); ?> <span class="required">*</span>
+            <?php echo esc_html__( 'How would you rate your experience?', 'borspirit' ); ?> <span class="required">*</span>
         </legend>
         <div id="<?php echo esc_attr( $prefix ); ?>rating" class="form-check-group">
             <?php for ( $i = 5; $i >= 1; $i-- ) : ?>
@@ -28,14 +28,14 @@
 
     <fieldset class="mb-3">
         <legend>
-            <?php echo esc_html__( 'How would you describe our shop?', TEXT_DOMAIN ); ?> <span class="required">*</span>
+            <?php echo esc_html__( 'How would you describe our shop?', 'borspirit' ); ?> <span class="required">*</span>
         </legend>
         <div id="<?php echo esc_attr( $prefix ); ?>like" class="form-check-group">
             <?php
                 $options = [
-                    'superb'         => __( 'Superb', TEXT_DOMAIN ),
-                    'good enough'    => __( 'Good enough', TEXT_DOMAIN ),
-                    'could be better'=> __( 'Could be better', TEXT_DOMAIN ),
+                    'superb'         => __( 'Superb', 'borspirit' ),
+                    'good enough'    => __( 'Good enough', 'borspirit' ),
+                    'could be better'=> __( 'Could be better', 'borspirit' ),
                 ];
                 
                 $index = 0;
@@ -54,14 +54,14 @@
 
     <div class="mb-3">
         <label class="form-label" for="<?php echo esc_attr( $prefix ); ?>feedback_text">
-            <?php echo esc_html__( 'Your feedback', TEXT_DOMAIN ); ?>
+            <?php echo esc_html__( 'Your feedback', 'borspirit' ); ?>
         </label>
-        <textarea class="form-control" id="<?php echo esc_attr( $prefix ); ?>feedback_text" name="feedback_text" rows="4" placeholder="<?php echo esc_attr__( 'Tell us more...', TEXT_DOMAIN ); ?>"></textarea>
+        <textarea class="form-control" id="<?php echo esc_attr( $prefix ); ?>feedback_text" name="feedback_text" rows="4" placeholder="<?php echo esc_attr__( 'Tell us more...', 'borspirit' ); ?>"></textarea>
     </div>
 
     <div class="form__actions">
         <button type="submit" class="btn btn-primary mb-3" id="poll_form_submit">
-            <span><?php echo esc_html__( 'Submit Feedback', TEXT_DOMAIN ); ?></span>
+            <span><?php echo esc_html__( 'Submit Feedback', 'borspirit' ); ?></span>
             <svg class="icon icon-paper-plane"><use xlink:href="#icon-paper-plane"></use></svg>
         </button>
         <div id="<?php echo esc_attr( $prefix ); ?>response" role="status" aria-live="polite"></div>

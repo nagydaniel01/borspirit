@@ -103,7 +103,6 @@ if ( ! class_exists( 'Custom_Mega_Menu_Walker' ) ) {
      * Custom Mega Menu Walker
      * Handles both standard and mega menu rendering for WordPress navigation.
      */
-
     class Custom_Mega_Menu_Walker extends Walker_Nav_Menu {
 
         // Mega menu state flags
@@ -129,7 +128,6 @@ if ( ! class_exists( 'Custom_Mega_Menu_Walker' ) ) {
                 $n = "\n";
             }
             $indent = str_repeat( $t, $depth );
-
             $level_class = 'level' . ($depth + 1);
 
             // Mega menu top-level wrapper
@@ -139,6 +137,12 @@ if ( ! class_exists( 'Custom_Mega_Menu_Walker' ) ) {
                 $output .= "{$indent}<div id=\"megaMenu-{$root_id}\" class=\"nav__mega-menu\">\n";
                 $output .= "{$indent}\t<div class=\"container\">\n";
                 $output .= "{$indent}\t\t<ul id=\"megaMenuTabs-{$root_id}\" class=\"nav nav-tabs nav__list {$level_class}\" role=\"tablist\">\n";
+                return;
+            }
+
+            // Handle nested levels INSIDE tab panes (level ≥ 2)
+            if ($this->mega_menu && $depth >= 2) {
+                $this->tab_buffer .= "\n{$indent}<ul class=\"nav__list {$level_class}\">\n";
                 return;
             }
 
@@ -179,6 +183,12 @@ if ( ! class_exists( 'Custom_Mega_Menu_Walker' ) ) {
                 $this->mega_menu = false;
                 $this->tab_panes = [];
                 $this->first_tab_done = false;
+                return;
+            }
+
+            // Close nested levels inside tab panes
+            if ($this->mega_menu && $depth >= 2) {
+                $this->tab_buffer .= "{$indent}</ul>{$n}";
                 return;
             }
 
@@ -230,7 +240,7 @@ if ( ! class_exists( 'Custom_Mega_Menu_Walker' ) ) {
                 'href'  => !empty($item->url) ? esc_url($item->url) : '#',
                 'id'    => 'menu-link-' . $item->ID,
                 'class' => 'nav__link js-nav-link level' . $depth,
-                'title' => $item->title,
+                //'title' => $item->title,
             ];
 
             // Mega menu tab handling (depth 1)
@@ -273,8 +283,8 @@ if ( ! class_exists( 'Custom_Mega_Menu_Walker' ) ) {
 
             $html .= '<a' . $attr_str . '>' . esc_html($item->title) . $icon_html . '</a>';
 
-            // Buffer level 2 items for mega menu tabs
-            if ($this->mega_menu && $depth === 2) {
+            // Buffer ALL deeper levels (2+)
+            if ($this->mega_menu && $depth >= 2) {
                 $this->tab_buffer .= $html;
             } else {
                 $output .= $html;
@@ -295,8 +305,8 @@ if ( ! class_exists( 'Custom_Mega_Menu_Walker' ) ) {
 
             $html = "</li>{$n}";
 
-            // Buffering level 2 mega menu items
-            if ($this->mega_menu && $depth === 2) {
+            // Buffer ALL deeper levels (2+)
+            if ($this->mega_menu && $depth >= 2) {
                 $this->tab_buffer .= $html;
                 return;
             }

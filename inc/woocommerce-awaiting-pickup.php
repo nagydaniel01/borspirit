@@ -17,14 +17,14 @@
          */
         function register_awaiting_pickup_order_status() {
             register_post_status( 'wc-awaiting-pickup', array(
-                'label'                     => __( 'Awaiting Pickup', TEXT_DOMAIN ),
+                'label'                     => __( 'Awaiting Pickup', 'borspirit' ),
                 'public'                    => true,
                 'exclude_from_search'       => true,
                 'show_in_admin_all_list'    => true,
                 'show_in_admin_status_list' => true,
                 'label_count'               => _n_noop(
-                    __( 'Awaiting Pickup <span class="count">(%s)</span>', TEXT_DOMAIN ),
-                    __( 'Awaiting Pickup <span class="count">(%s)</span>', TEXT_DOMAIN )
+                    __( 'Awaiting Pickup <span class="count">(%s)</span>', 'borspirit' ),
+                    __( 'Awaiting Pickup <span class="count">(%s)</span>', 'borspirit' )
                 ),
             ) );
         }
@@ -40,7 +40,7 @@
          * @return array Modified order statuses including 'Awaiting Pickup'.
          */
         function add_awaiting_pickup_to_order_statuses( $order_statuses ) {
-            $order_statuses['wc-awaiting-pickup'] = __( 'Awaiting Pickup', TEXT_DOMAIN );
+            $order_statuses['wc-awaiting-pickup'] = __( 'Awaiting Pickup', 'borspirit' );
             return $order_statuses;
         }
         add_filter( 'wc_order_statuses', 'add_awaiting_pickup_to_order_statuses' );
@@ -55,7 +55,7 @@
          * @return array Modified bulk actions including Awaiting Pickup.
          */
         function add_awaiting_pickup_to_bulk_actions( $bulk_actions ) {
-            $bulk_actions['mark_awaiting-pickup'] = __( 'Change status to Awaiting Pickup', TEXT_DOMAIN );
+            $bulk_actions['mark_awaiting-pickup'] = __( 'Change status to Awaiting Pickup', 'borspirit' );
             return $bulk_actions;
         }
         add_filter( 'bulk_actions-edit-shop_order', 'add_awaiting_pickup_to_bulk_actions' );
@@ -98,7 +98,7 @@
             if ( ! empty( $_GET['bulk_awaiting_pickup'] ) ) {
                 $messages['updated'] = array(
                     0 => sprintf(
-                        __( 'Successfully changed the status of %s order(s) to Awaiting Pickup.', TEXT_DOMAIN ),
+                        __( 'Successfully changed the status of %s order(s) to Awaiting Pickup.', 'borspirit' ),
                         $_GET['bulk_awaiting_pickup']
                     ),
                 );
@@ -154,17 +154,17 @@
             // Prepare email subject and heading
             $subject = sprintf(
                 /* translators: %1$s: site title, %2$s: order number */
-                __( '[%1$s] Your order #%2$s is ready for pickup', TEXT_DOMAIN ),
+                __( '[%1$s] Your order #%2$s is ready for pickup', 'borspirit' ),
                 get_bloginfo( 'name' ),
                 $order->get_order_number()
             );
 
-            $heading = __( 'Your Order is Ready for Pickup!', TEXT_DOMAIN );
+            $heading = __( 'Your Order is Ready for Pickup!', 'borspirit' );
 
             // Prepare email body content
             $message = sprintf(
                 /* translators: %1$s: customer first name, %2$s: order number */
-                __( "Hi %1\$s,\n\nGood news! Your order #%2\$s is now ready for pickup at our store.\n\nThank you for shopping with us!", TEXT_DOMAIN ),
+                __( "Hi %1\$s,\n\nGood news! Your order #%2\$s is now ready for pickup at our store.\n\nThank you for shopping with us!", 'borspirit' ),
                 $order->get_billing_first_name(),
                 $order->get_order_number()
             );

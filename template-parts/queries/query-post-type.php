@@ -177,9 +177,12 @@ $post_type_query = new WP_Query($post_type_args);
     <div class="row gy-4">
         <?php while ($post_type_query->have_posts()) : $post_type_query->the_post(); ?>
             <?php 
-                $post_type = get_post_type(); // Get the current post type once
-                $template_args = array('post_type' => esc_attr($post_type));
-                $template = locate_template("template-parts/cards/card-{$post_type}.php");
+                $template_args = [
+                    'post_type' => esc_attr(get_post_type())
+                ];
+
+                $template_slug = 'template-parts/cards/card-' . $template_args['post_type'] . '.php';
+                $template = locate_template($template_slug);
 
                 switch ($post_type) {
                     case 'event':
@@ -187,12 +190,12 @@ $post_type_query = new WP_Query($post_type_args);
 
                         <div class="col-12">
                             <?php
-                                if (!empty($template)) {
+                                if ($template) {
                                     // File exists, include it
-                                    get_template_part('template-parts/cards/card', $post_type, $template_args);
+                                    get_template_part( 'template-parts/cards/card', $post_type, $template_args );
                                 } else {
                                     // File does not exist, handle accordingly
-                                    get_template_part('template-parts/cards/card', 'default', $template_args);
+                                    get_template_part( 'template-parts/cards/card', 'default', $template_args );
                                 }
                             ?>
                         </div>
@@ -205,12 +208,12 @@ $post_type_query = new WP_Query($post_type_args);
 
                         <div class="col-lg-6 col-xl-4">
                             <?php
-                                if (!empty($template)) {
+                                if ($template) {
                                     // File exists, include it
-                                    get_template_part('template-parts/cards/card', $post_type, $template_args);
+                                    get_template_part( 'template-parts/cards/card', $post_type, $template_args );
                                 } else {
                                     // File does not exist, handle accordingly
-                                    get_template_part('template-parts/cards/card', 'default', $template_args);
+                                    get_template_part( 'template-parts/cards/card', 'default', $template_args );
                                 }
                             ?>
                         </div>
@@ -257,7 +260,7 @@ $post_type_query = new WP_Query($post_type_args);
                 <?php if ($current_page > 1) : ?>
                     <li>
                         <a href="" data-number="1" class="page-numbers first js-pagination-link">
-                            <span class="page-numbers__label"><?php _e('Első', TEXT_DOMAIN); ?></span>
+                            <span class="page-numbers__label"><?php _e('Első', 'borspirit'); ?></span>
                         </a>
                     </li>
                 <?php endif; ?>
@@ -317,7 +320,7 @@ $post_type_query = new WP_Query($post_type_args);
                 <?php if ($current_page < $max_page) : ?>
                     <li>
                         <a href="" data-number="<?php echo $max_page; ?>" class="page-numbers last js-pagination-link">
-                            <span class="page-numbers__label"><?php _e('Utolsó', TEXT_DOMAIN); ?></span>
+                            <span class="page-numbers__label"><?php _e('Utolsó', 'borspirit'); ?></span>
                         </a>
                     </li>
                 <?php endif; ?>
@@ -325,5 +328,5 @@ $post_type_query = new WP_Query($post_type_args);
         </nav>
     </div>
 <?php else : ?>
-    <p class="no-result"><?php echo esc_html__('Sorry, no posts matched your criteria.', TEXT_DOMAIN); ?></p>
+    <p class="no-result"><?php echo esc_html__('Sorry, no posts matched your criteria.', 'borspirit'); ?></p>
 <?php endif; ?>

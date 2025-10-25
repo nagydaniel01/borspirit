@@ -17,14 +17,14 @@
         $default_title         = get_the_title($featured_object);
         $default_url           = get_permalink($featured_object);
         $default_button_target = '_self';
-        $default_button_text   = __( 'Learn More', TEXT_DOMAIN );
+        $default_button_text   = __( 'Learn More', 'borspirit' );
         $default_image         = get_post_thumbnail_id($featured_object);
         $default_description   = apply_filters('the_content', $featured_object->post_excerpt ?? '');
     } else {
         $default_title         = '';
         $default_url           = '';
         $default_button_target = '_self';
-        $default_button_text   = __( 'Learn More', TEXT_DOMAIN );
+        $default_button_text   = __( 'Learn More', 'borspirit' );
         $default_image         = '';
         $default_description   = '';
     }

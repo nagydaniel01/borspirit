@@ -5,7 +5,7 @@
     $section_hide_title = $section['faq_section_hide_title'] ?? false;
     $section_slug       = sanitize_title($section_title);
     $section_lead       = $section['faq_section_lead'] ?? '';
-    $accordion_items    = $section['faq_items'] ?? [];
+    $accordion_items    = $section['faq_items'] ?: [];
     $accordion_style    = $section['faq_style'] ?? 'chevron';
     $accordion_behavior = $section['faq_behavior'] ?? 'standard';
 

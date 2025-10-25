@@ -47,7 +47,7 @@ $heading = apply_filters( 'woocommerce_product_additional_information_heading', 
 			// Check if the repeater exists on the Options page
 			if ( have_rows('food_pairing_tip_items', 'option') ) :
 
-				echo '<h3>' . esc_html__( 'Food that goes well with this wine', TEXT_DOMAIN ) . '</h3>';
+				echo '<h3>' . esc_html__( 'Food that goes well with this wine', 'borspirit' ) . '</h3>';
 
 				if ( $tips_description ) {
 					echo wp_kses_post($tips_description);
@@ -105,12 +105,12 @@ $heading = apply_filters( 'woocommerce_product_additional_information_heading', 
 
 			else :
 				// No repeater rows found
-				//echo wpautop( esc_html__( 'No food pairing tips available.', TEXT_DOMAIN ) );
+				//echo wpautop( esc_html__( 'No food pairing tips available.', 'borspirit' ) );
 			endif;
 
 		else :
 			// No tips selected in the checkbox
-			//echo wpautop( esc_html__( 'No food pairing tips selected for this product.', TEXT_DOMAIN ) );
+			//echo wpautop( esc_html__( 'No food pairing tips selected for this product.', 'borspirit' ) );
 		endif;
 		?>
 	</div>

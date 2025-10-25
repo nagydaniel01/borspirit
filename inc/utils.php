@@ -687,13 +687,13 @@
 
             // Day labels with translation support
             $days = [
-                'monday'    => __('Hétfő', TEXT_DOMAIN),
-                'tuesday'   => __('Kedd', TEXT_DOMAIN),
-                'wednesday' => __('Szerda', TEXT_DOMAIN),
-                'thursday'  => __('Csütörtök', TEXT_DOMAIN),
-                'friday'    => __('Péntek', TEXT_DOMAIN),
-                'saturday'  => __('Szombat', TEXT_DOMAIN),
-                'sunday'    => __('Vasárnap', TEXT_DOMAIN),
+                'monday'    => __('Hétfő', 'borspirit'),
+                'tuesday'   => __('Kedd', 'borspirit'),
+                'wednesday' => __('Szerda', 'borspirit'),
+                'thursday'  => __('Csütörtök', 'borspirit'),
+                'friday'    => __('Péntek', 'borspirit'),
+                'saturday'  => __('Szombat', 'borspirit'),
+                'sunday'    => __('Vasárnap', 'borspirit'),
             ];
 
             $result = [];
@@ -749,3 +749,87 @@
     var_dump($opening_hours);
     echo '</pre>';
     */
+
+    if ( ! function_exists( 'get_shop_status' ) ) {
+        /**
+         * Get the current shop status (open, closing soon, closed).
+         *
+         * @param array       $opening_hours The array returned from get_opening_hours().
+         * @param string|null $day Optional. Specific day key (monday, tuesday, etc.) to check.
+         *
+         * @return string One of 'open', 'closing_soon', or 'closed'.
+         */
+        function get_shop_status($opening_hours, $day = null) {
+
+            if ( empty($day) ) {
+                $day = strtolower( date('l') ); // e.g. 'monday'
+            }
+
+            if ( ! isset( $opening_hours[$day] ) ) {
+                return 'closed';
+            }
+
+            $today = $opening_hours[$day];
+            $open  = (int) $today['open'];
+            $close = (int) $today['close'];
+
+            if ( $open === 0 && $close === 0 ) {
+                return 'closed';
+            }
+
+            $current_hour = (int) current_time('G'); // respects WP timezone
+
+            if ( $current_hour < $open || $current_hour >= $close ) {
+                return 'closed';
+            }
+
+            if ( ($close - $current_hour) <= 1 ) {
+                return 'closing_soon';
+            }
+
+            return 'open';
+        }
+    }
+
+
+    if ( ! function_exists( 'shop_status_shortcode' ) ) {
+        /**
+         * Shortcode to display current shop status.
+         *
+         * Usage: [shop_status]
+         * Optional attributes:
+         *   - label="true"   (shows text like "We are open!" instead of raw status)
+         *   - day="monday"   (check another day manually)
+         *
+         * Example:
+         *   [shop_status]
+         *   [shop_status label="true"]
+         *   [shop_status day="sunday"]
+         */
+        function shop_status_shortcode($atts) {
+            $atts = shortcode_atts([
+                'label' => 'false',
+                'day'   => '',
+            ], $atts, 'shop_status');
+
+            // Get opening hours from ACF (adjust if stored elsewhere)
+            $hours = get_opening_hours( get_field('opening_hours', 'option') );
+
+            $status = get_shop_status($hours, $atts['day'] ?: null);
+
+            if ( $atts['label'] === 'true' ) {
+                switch ( $status ) {
+                    case 'open':
+                        return '<span class="shop-status open">' . __('We are open! 🟢', 'borspirit') . '</span>';
+                    case 'closing_soon':
+                        return '<span class="shop-status closing-soon">' . __('Closing soon 🕒', 'borspirit') . '</span>';
+                    default:
+                        return '<span class="shop-status closed">' . __('Closed 🔴', 'borspirit') . '</span>';
+                }
+            }
+
+            // Raw output (just "open", "closing_soon", "closed")
+            return esc_html($status);
+        }
+        add_shortcode('shop_status', 'shop_status_shortcode');
+    }

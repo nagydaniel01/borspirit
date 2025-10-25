@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title><?php echo esc_html__( 'Hamarosan', TEXT_DOMAIN ); ?></title>
+        <title><?php echo esc_html__( 'Hamarosan', 'borspirit' ); ?></title>
         <link rel="icon" href="<?php echo esc_url( TEMPLATE_DIR_URI . '/assets/src/images/mmki_logo_short.svg' ); ?>" type="image/svg+xml">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
         <style>
@@ -57,8 +57,8 @@
             <div class="logo">
                 <img src="<?php echo esc_url( TEMPLATE_DIR_URI . '/assets/src/images/lindamestyle-logo.png' ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
             </div>
-            <h1><?php echo esc_html__( 'Hamarosan', TEXT_DOMAIN ); ?></h1>
-            <p><?php echo esc_html__( 'Keményen dolgozunk az új weboldalunk elindításán. Maradjanak velünk!', TEXT_DOMAIN ); ?></p>
+            <h1><?php echo esc_html__( 'Hamarosan', 'borspirit' ); ?></h1>
+            <p><?php echo esc_html__( 'Keményen dolgozunk az új weboldalunk elindításán. Maradjanak velünk!', 'borspirit' ); ?></p>
         </div>
     </body>
 </html>

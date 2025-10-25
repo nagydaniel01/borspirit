@@ -13,7 +13,7 @@
             // Security check: ensure post_id is provided
             if ( ! isset($_POST['post_id']) ) {
                 wp_send_json_error([
-                    'message' => __('Invalid request', TEXT_DOMAIN)
+                    'message' => __('Invalid request', 'borspirit')
                 ], 400);
             }
 
@@ -23,7 +23,7 @@
             // Ensure the user is logged in
             if ( ! $current_user_id ) {
                 wp_send_json_error([
-                    'message' => __('You must be logged in.', TEXT_DOMAIN)
+                    'message' => __('You must be logged in.', 'borspirit')
                 ], 401);
             }
 
@@ -45,7 +45,7 @@
 
             // Return success response
             wp_send_json_success([
-                'message' => __('The post saved successfully', TEXT_DOMAIN),
+                'message' => __('The post saved successfully', 'borspirit'),
             ], 200);
         }
 

@@ -111,7 +111,7 @@
             }
             ?>
             <p id="comment-form-rating">
-                <label for="rating"><?php echo esc_html__('Rating', TEXT_DOMAIN); ?><span class="required">*</span></label>
+                <label for="rating"><?php echo esc_html__('Rating', 'borspirit'); ?><span class="required">*</span></label>
                 <span class="stars">
                     <?php for ( $i = 5; $i >= 1; $i-- ) : ?>
                         <input type="radio" id="rating-<?php echo esc_attr( $i ); ?>" name="rating" value="<?php echo esc_attr( $i ); ?>" /><label for="rating-<?php echo esc_attr( $i ); ?>"><?php echo esc_html( $i ); ?></label>
@@ -155,7 +155,7 @@
          */
         function comment_rating_require_rating( $commentdata ) {
             if ( ! is_admin() && ( ! isset( $_POST['rating'] ) || 0 === intval( $_POST['rating'] ) ) )
-                wp_die( __( 'Error: You did not add a rating. Hit the Back button on your Web browser and resubmit your comment with a rating.', TEXT_DOMAIN ) );
+                wp_die( __( 'Error: You did not add a rating. Hit the Back button on your Web browser and resubmit your comment with a rating.', 'borspirit' ) );
             return $commentdata;
         }
         add_filter( 'preprocess_comment', 'comment_rating_require_rating' );

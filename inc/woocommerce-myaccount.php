@@ -35,8 +35,8 @@
                 $new[ $key ] = $value;
 
                 if ( 'dashboard' === $key ) {
-                    $new['product-bookmarks'] = __( 'Product Bookmarks', TEXT_DOMAIN );
-                    $new['post-bookmarks']    = __( 'Post Bookmarks', TEXT_DOMAIN );
+                    $new['product-bookmarks'] = __( 'Product Bookmarks', 'borspirit' );
+                    $new['post-bookmarks']    = __( 'Post Bookmarks', 'borspirit' );
                 }
             }
 
@@ -58,7 +58,7 @@
          * @return void
          */
         function custom_product_bookmarks_content() {
-            $section_name = __( 'Product Bookmarks', TEXT_DOMAIN );
+            $section_name = __( 'Product Bookmarks', 'borspirit' );
             $section_file = 'woocommerce/myaccount/product-bookmarks.php';
 
             $template = locate_template( $section_file );
@@ -71,7 +71,7 @@
                     sprintf(
                         __(
                             'A(z) <code>%s</code> oldal sablonja hiányzik. Kérjük, hozza létre a fájlt: <code>%s</code>',
-                            TEXT_DOMAIN
+                            'borspirit'
                         ),
                         esc_html( $section_name ),
                         esc_html( $section_file )
@@ -95,7 +95,7 @@
          * @return void
          */
         function custom_post_bookmarks_content() {
-            $section_name = __( 'Post Bookmarks', TEXT_DOMAIN );
+            $section_name = __( 'Post Bookmarks', 'borspirit' );
             $section_file = 'woocommerce/myaccount/post-bookmarks.php';
 
             $template = locate_template( $section_file );
@@ -108,7 +108,7 @@
                     sprintf(
                         __(
                             'A(z) <code>%s</code> oldal sablonja hiányzik. Kérjük, hozza létre a fájlt: <code>%s</code>',
-                            TEXT_DOMAIN
+                            'borspirit'
                         ),
                         esc_html( $section_name ),
                         esc_html( $section_file )
@@ -143,11 +143,11 @@
                     'customer-logout'   => __( 'Logout', 'woocommerce' ),
                     'subscriptions'     => __( 'My Subscription', 'woocommerce-subscriptions' ),
                     'view-subscription' => __( 'Subscription Details', 'woocommerce-subscriptions' ),
-                    'beauty-profile'    => __( 'Beauty profile', TEXT_DOMAIN ),
-                    'bookmarks'         => __( 'Bookmarks', TEXT_DOMAIN ),
-                    'email-marketing'   => __( 'Newsletter', TEXT_DOMAIN ),
-                    'product-bookmarks' => __( 'Product Bookmarks', TEXT_DOMAIN ),
-                    'post-bookmarks'    => __( 'Post Bookmarks', TEXT_DOMAIN ),
+                    'beauty-profile'    => __( 'Beauty profile', 'borspirit' ),
+                    'bookmarks'         => __( 'Bookmarks', 'borspirit' ),
+                    'email-marketing'   => __( 'Newsletter', 'borspirit' ),
+                    'product-bookmarks' => __( 'Product Bookmarks', 'borspirit' ),
+                    'post-bookmarks'    => __( 'Post Bookmarks', 'borspirit' ),
                 );
 
                 foreach ( $titles as $endpoint => $endpoint_title ) {
@@ -159,7 +159,7 @@
                 $current_user = wp_get_current_user();
                 $user_name    = $current_user->display_name ?: $current_user->first_name;
 
-                return sprintf( __( 'Hello %s!', TEXT_DOMAIN ), esc_html( $user_name ) );
+                return sprintf( __( 'Hello %s!', 'borspirit' ), esc_html( $user_name ) );
             }
 
             return $title;

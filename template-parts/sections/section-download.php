@@ -5,10 +5,10 @@
     $section_hide_title = $section['download_section_hide_title'] ?? false;
     $section_slug       = sanitize_title($section_title);
     $section_lead       = $section['download_section_lead'] ?? '';
-    $items              = $section['download_items'] ?? [];
+    $download_items     = $section['download_items'] ?: [];
 
     // Filter out items without a file
-    $items = array_filter($items, function ($item) {
+    $download_items = array_filter($download_items, function ($item) {
         if (empty($item['download_file'])) {
             return false;
         }
@@ -21,7 +21,7 @@
     });
 ?>
 
-<?php if (!empty($items)) : ?>
+<?php if (!empty($download_items)) : ?>
     <section id="<?php echo esc_attr($section_slug); ?>" class="section section--download <?php echo esc_attr($section_classes); ?>">
         <div class="container">
             <?php if (($section_title && $section_hide_title !== true) || $section_lead) : ?>
@@ -36,7 +36,7 @@
             <?php endif; ?>
             
             <div class="section__content">
-                <?php foreach ($items as $key => $item) : 
+                <?php foreach ($download_items as $key => $item) : 
                     $title       = $item['download_title'] ?? '';
                     $description = $item['download_description'] ?? '';
                     $file        = $item['download_file'] ?? '';
@@ -50,7 +50,7 @@
 
                     $aria_label = sprintf(
                         /* translators: %1$s is the file title */
-                        __('A(z) "%1$s" letöltése', TEXT_DOMAIN),
+                        __('A(z) "%1$s" letöltése', 'borspirit'),
                         $file_title
                     );
                 ?>
@@ -77,7 +77,7 @@
 
                         <?php if ($file_url) : ?>
                             <a href="<?php echo esc_url($file_url); ?>" target="_self" aria-label="<?php echo esc_attr($aria_label); ?>" download class="card__button btn btn-secondary">
-                                <span><?php esc_html_e('Download', TEXT_DOMAIN); ?></span>
+                                <span><?php esc_html_e('Download', 'borspirit'); ?></span>
                             </a>
                         <?php endif; ?>
                     </div>

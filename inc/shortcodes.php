@@ -12,7 +12,7 @@
          */
         function custom_wc_registration_form_shortcode() {
             if ( is_user_logged_in() ) {
-                return '<p>' . esc_html__( 'You are already registered.', 'woocommerce' ) . '</p>';
+                return '<p>' . esc_html__( 'You are already registered.', 'borspirit' ) . '</p>';
             }
 
             ob_start();
@@ -22,7 +22,7 @@
             $html = wc_get_template_html( 'myaccount/form-login.php' );
 
             if ( empty( $html ) ) {
-                return '<p>' . esc_html__( 'Registration form not available.', 'woocommerce' ) . '</p>';
+                return '<p>' . esc_html__( 'Registration form not available.', 'borspirit' ) . '</p>';
             }
 
             libxml_use_internal_errors( true );
@@ -38,7 +38,7 @@
             libxml_clear_errors();
 
             if ( ! $loaded ) {
-                return '<p>' . esc_html__( 'Error loading registration form.', 'woocommerce' ) . '</p>';
+                return '<p>' . esc_html__( 'Error loading registration form.', 'borspirit' ) . '</p>';
             }
 
             $xpath = new DOMXPath( $dom );
@@ -48,7 +48,7 @@
             if ( $form ) {
                 echo $dom->saveHTML( $form );
             } else {
-                echo '<p>' . esc_html__( 'Registration form not found.', 'woocommerce' ) . '</p>';
+                echo '<p>' . esc_html__( 'Registration form not found.', 'borspirit' ) . '</p>';
             }
 
             return ob_get_clean();
@@ -67,7 +67,7 @@
          */
         function custom_wc_login_form_shortcode() {
             if ( is_user_logged_in() ) {
-                return '<p>' . esc_html__( 'You are already logged in.', 'woocommerce' ) . '</p>';
+                return '<p>' . esc_html__( 'You are already logged in.', 'borspirit' ) . '</p>';
             }
 
             ob_start();
@@ -215,7 +215,7 @@
          * @param bool   $acf_mode      If true, expects ACF-style array. If false, expects simple array.
          * @param string $text_domain   Text domain for translations.
          */
-        function render_opening_hours_table( $opening_hours, $acf_mode = true, $text_domain = TEXT_DOMAIN ) {
+        function render_opening_hours_table( $opening_hours, $acf_mode = true, $text_domain = 'borspirit' ) {
 
             // Day labels with translation support
             $days = [
@@ -298,16 +298,16 @@
          */
         function opening_hours_shortcode() {
             if ( ! function_exists( 'get_field' ) ) {
-                return wpautop( esc_html__( 'ACF plugin is not active.', TEXT_DOMAIN ) );
+                return wpautop( esc_html__( 'ACF plugin is not active.', 'borspirit' ) );
             }
 
             $opening_hours = get_field( 'opening_hours', 'option' );
 
             if ( empty( $opening_hours ) ) {
-                return wpautop( esc_html__( 'No opening hours specified.', TEXT_DOMAIN ) );
+                return wpautop( esc_html__( 'No opening hours specified.', 'borspirit' ) );
             }
 
-            return render_opening_hours_table( $opening_hours, true, TEXT_DOMAIN );
+            return render_opening_hours_table( $opening_hours, true, 'borspirit' );
         }
         add_shortcode( 'opening_hours', 'opening_hours_shortcode' );
     }
@@ -329,7 +329,7 @@
          * @return string The formatted free shipping minimum amount (e.g. "$50.00"), or an empty string if not available.
          */
         function get_wc_free_shipping_amount() {
-            if ( ! class_exists( 'WooCommerce' ) ) {
+            if ( ! class_exists( 'borspirit' ) ) {
                 return '';
             }
 
@@ -396,7 +396,7 @@
             ) );
 
             if ( empty( $orders ) ) {
-                return '<p>' . esc_html__( 'No feedback yet.', TEXT_DOMAIN ) . '</p>';
+                return '<p>' . esc_html__( 'No feedback yet.', 'borspirit' ) . '</p>';
             }
 
             $output = '<div class="thankyou-feedback-list">';
@@ -443,15 +443,15 @@
                     $output .= '<div class="rating">' . $stars . '</div>';
                 }
                 if ( $like ) {
-                    $output .= '<p><strong>' . esc_html__( 'Opinion:', TEXT_DOMAIN ) . '</strong> ' . esc_html( $like ) . '</p>';
+                    $output .= '<p><strong>' . esc_html__( 'Opinion:', 'borspirit' ) . '</strong> ' . esc_html( $like ) . '</p>';
                 }
                 if ( $feedback ) {
-                    $output .= '<p><strong>' . esc_html__( 'Feedback:', TEXT_DOMAIN ) . '</strong> ' . esc_html( $feedback ) . '</p>';
+                    $output .= '<p><strong>' . esc_html__( 'Feedback:', 'borspirit' ) . '</strong> ' . esc_html( $feedback ) . '</p>';
                 }
                 if ( $date ) {
                     $output .= '<p class="date">' . sprintf(
                         /* translators: %s = feedback date */
-                        esc_html__( 'Submitted on %s', TEXT_DOMAIN ),
+                        esc_html__( 'Submitted on %s', 'borspirit' ),
                         esc_html( $date )
                     ) . '</p>';
                 }

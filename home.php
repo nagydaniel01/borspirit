@@ -32,7 +32,7 @@
 
                 <div class="section__title-wrapper">
                     <h1 class="section__title"><?php echo esc_html($page_title); ?></h1>
-                    <input type="text" name="filter-search" id="filter-search" class="form-control filter filter--search js-filter-search" placeholder="<?php echo esc_attr(sprintf(__('Search for %s', TEXT_DOMAIN), strtolower($post_type_obj->labels->name))); ?>" >
+                    <input type="text" name="filter-search" id="filter-search" class="form-control filter filter--search js-filter-search" placeholder="<?php echo esc_attr(sprintf(__('Search for %s', 'borspirit'), strtolower($post_type_obj->labels->name))); ?>" >
                 </div>
 
                 <div class="section__toolbar">
@@ -42,8 +42,8 @@
                                 <fieldset id="filter-categories">
                                     <legend>
                                         <?php 
-                                            $filter_label = __('Categories', TEXT_DOMAIN);
-                                            echo esc_html(sprintf(__('Filter by %s', TEXT_DOMAIN), strtolower($filter_label)));
+                                            $filter_label = __('Categories', 'borspirit');
+                                            echo esc_html(sprintf(__('Filter by %s', 'borspirit'), strtolower($filter_label)));
                                         ?>
                                     </legend>
     
@@ -65,8 +65,8 @@
     
                         <?php if (!empty($authors) && count($authors) > 1) : ?>
                             <div class="col-md-4 mb-3">
-                                <?php $filter_label = __('Authors', TEXT_DOMAIN); ?>
-                                <select name="author[]" multiple="multiple" id="filter-author" class="form-select filter js-filter js-filter-default" data-filter="author" data-placeholder="<?php echo esc_attr(sprintf(__('Filter by %s', TEXT_DOMAIN), strtolower($filter_label))); ?>">
+                                <?php $filter_label = __('Authors', 'borspirit'); ?>
+                                <select name="author[]" multiple="multiple" id="filter-author" class="form-select filter js-filter js-filter-default" data-filter="author" data-placeholder="<?php echo esc_attr(sprintf(__('Filter by %s', 'borspirit'), strtolower($filter_label))); ?>">
                                     <?php foreach ($authors as $key => $author) : ?>
                                         <option value="<?php echo esc_attr($author->ID); ?>" <?php selected(get_query_var('author_filter'), $author->ID); ?>>
                                             <?php echo esc_html($author->display_name); ?>
@@ -82,7 +82,9 @@
             <div class="section__body">
                 <div id="post-list" class="section__content">
                     <?php 
-                        $template_args = array('post_type' => esc_attr($post_type));
+                        $template_args = [
+                            'post_type' => esc_attr($post_type)
+                        ];
                         get_template_part( 'template-parts/queries/query', 'post-type', $template_args );
                     ?>
                 </div>

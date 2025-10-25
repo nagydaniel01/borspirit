@@ -23,10 +23,10 @@
                 // Localize script for use in JS
                 wp_localize_script( 'comment_form_ajax_script', 'comment_form_ajax_object', array(
                     'ajax_url'        => admin_url( 'admin-ajax.php' ),
-                    'loading_text'    => __( 'Loading...', TEXT_DOMAIN ),
+                    'loading_text'    => __( 'Loading...', 'borspirit' ),
                     'post_comment'    => __( 'Post Comment' ),
-                    'error_adding'    => __( 'Error while adding comment', TEXT_DOMAIN ),
-                    'error_timeout'   => __( 'Error: Server doesn’t respond.', TEXT_DOMAIN )
+                    'error_adding'    => __( 'Error while adding comment', 'borspirit' ),
+                    'error_timeout'   => __( 'Error: Server doesn’t respond.', 'borspirit' )
                 ) );
             } else {
                 error_log( 'Script file does not exist: ' . $script_path );
@@ -53,13 +53,13 @@
                 // Pass dynamic data to JS
                 wp_localize_script( 'poll_form_ajax_script', 'poll_form_ajax_object', array(
                     'ajax_url'           => admin_url( 'admin-ajax.php' ),
-                    'msg_select_rating'  => __( 'Please select a rating.', TEXT_DOMAIN ),
-                    'msg_select_opinion' => __( 'Please select your opinion about the shop.', TEXT_DOMAIN ),
-                    'msg_enter_feedback' => __( 'Please write your feedback.', TEXT_DOMAIN ),
-                    'msg_sending'        => __( 'Submitting your feedback…', TEXT_DOMAIN ),
-                    'msg_success'        => __( 'Thank you! Your feedback has been sent.', TEXT_DOMAIN ),
-                    'msg_error'          => __( 'There was an error sending your feedback.', TEXT_DOMAIN ),
-                    'msg_network_error'  => __( 'A network error occurred. Please try again.', TEXT_DOMAIN ),
+                    'msg_select_rating'  => __( 'Please select a rating.', 'borspirit' ),
+                    'msg_select_opinion' => __( 'Please select your opinion about the shop.', 'borspirit' ),
+                    'msg_enter_feedback' => __( 'Please write your feedback.', 'borspirit' ),
+                    'msg_sending'        => __( 'Submitting your feedback…', 'borspirit' ),
+                    'msg_success'        => __( 'Thank you! Your feedback has been sent.', 'borspirit' ),
+                    'msg_error'          => __( 'There was an error sending your feedback.', 'borspirit' ),
+                    'msg_network_error'  => __( 'A network error occurred. Please try again.', 'borspirit' ),
                 ) );
             } else {
                 error_log( 'Thank You feedback script not found: ' . $script_path );
@@ -82,12 +82,12 @@
                 wp_localize_script( 'event_registration_form_ajax_script', 'event_registration_form_ajax_object', array(
                     'ajax_url'             => admin_url( 'admin-ajax.php' ),
                     'user_id'              => get_current_user_id(),
-                    'msg_privacy_required' => __( 'You must agree to the privacy policy.', TEXT_DOMAIN ),
-                    'msg_registering'      => __( 'Registering…', TEXT_DOMAIN ),
-                    'msg_success'          => __( 'Successfully registered!', TEXT_DOMAIN ),
-                    'msg_error_sending'    => __( 'There was an error while sending your registration.', TEXT_DOMAIN ),
-                    'msg_unexpected'       => __( 'An unexpected error occurred.', TEXT_DOMAIN ),
-                    'msg_network_error'    => __( 'A network error occurred.', TEXT_DOMAIN )
+                    'msg_privacy_required' => __( 'You must agree to the privacy policy.', 'borspirit' ),
+                    'msg_registering'      => __( 'Registering…', 'borspirit' ),
+                    'msg_success'          => __( 'Successfully registered!', 'borspirit' ),
+                    'msg_error_sending'    => __( 'There was an error while sending your registration.', 'borspirit' ),
+                    'msg_unexpected'       => __( 'An unexpected error occurred.', 'borspirit' ),
+                    'msg_network_error'    => __( 'A network error occurred.', 'borspirit' )
                 ) );
             } else {
                 error_log( 'Event registration form script file does not exist: ' . $script_path );
@@ -110,12 +110,12 @@
                 wp_localize_script( 'contact_form_ajax_script', 'contact_form_ajax_object', array(
                     'ajax_url'             => admin_url( 'admin-ajax.php' ),
                     'user_id'              => get_current_user_id(),
-                    'msg_privacy_required' => __( 'You must agree to the privacy policy.', TEXT_DOMAIN ),
-                    'msg_sending'          => __( 'Sending…', TEXT_DOMAIN ),
-                    'msg_success'          => __( 'Message sent successfully!', TEXT_DOMAIN ),
-                    'msg_error_sending'    => __( 'There was an error while sending your message.', TEXT_DOMAIN ),
-                    'msg_unexpected'       => __( 'An unexpected error occurred.', TEXT_DOMAIN ),
-                    'msg_network_error'    => __( 'A network error occurred.', TEXT_DOMAIN )
+                    'msg_privacy_required' => __( 'You must agree to the privacy policy.', 'borspirit' ),
+                    'msg_sending'          => __( 'Sending…', 'borspirit' ),
+                    'msg_success'          => __( 'Message sent successfully!', 'borspirit' ),
+                    'msg_error_sending'    => __( 'There was an error while sending your message.', 'borspirit' ),
+                    'msg_unexpected'       => __( 'An unexpected error occurred.', 'borspirit' ),
+                    'msg_network_error'    => __( 'A network error occurred.', 'borspirit' )
                 ) );
             } else {
                 error_log( 'Contact form script file does not exist: ' . $script_path );
@@ -138,12 +138,12 @@
                 wp_localize_script( 'mc_form_ajax_script', 'mc_form_ajax_object', array(
                     'ajax_url'             => admin_url( 'admin-ajax.php' ),
                     'user_id'              => get_current_user_id(),
-                    'msg_privacy_required' => __( 'You must agree to the privacy policy.', TEXT_DOMAIN ),
-                    'msg_sending'          => __( 'Subscribing…', TEXT_DOMAIN ),
-                    'msg_success'          => __( 'You have been subscribed successfully!', TEXT_DOMAIN ),
-                    'msg_error_sending'    => __( 'There was an error while processing your subscription.', TEXT_DOMAIN ),
-                    'msg_unexpected'       => __( 'An unexpected error occurred.', TEXT_DOMAIN ),
-                    'msg_network_error'    => __( 'A network error occurred.', TEXT_DOMAIN )
+                    'msg_privacy_required' => __( 'You must agree to the privacy policy.', 'borspirit' ),
+                    'msg_sending'          => __( 'Subscribing…', 'borspirit' ),
+                    'msg_success'          => __( 'You have been subscribed successfully!', 'borspirit' ),
+                    'msg_error_sending'    => __( 'There was an error while processing your subscription.', 'borspirit' ),
+                    'msg_unexpected'       => __( 'An unexpected error occurred.', 'borspirit' ),
+                    'msg_network_error'    => __( 'A network error occurred.', 'borspirit' )
                 ) );
             } else {
                 error_log( 'Mailchimp script file does not exist: ' . $script_path );

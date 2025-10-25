@@ -11,9 +11,9 @@
 
     $aria_label = sprintf(
         /* translators: %1$s is the file title, %2$s is the singular post type name */
-        __('A(z) "%1$s" című %2$s letöltése', TEXT_DOMAIN),
+        __('A(z) "%1$s" című %2$s letöltése', 'borspirit'),
         $file_title,
-        __('ebook', TEXT_DOMAIN)
+        __('ebook', 'borspirit')
     );
 ?>
 
@@ -34,7 +34,7 @@
             <div class="section__content">
                 <?php echo do_shortcode('[real3dflipbook id="1" pdf="' . esc_url($file_url) . '"]'); ?>
                 <a href="<?php echo esc_url($file_url); ?>" target="_self" aria-label="<?php echo esc_attr($aria_label); ?>" download class="section__button btn btn-primary">
-                    <span><?php echo esc_html__('PDF letöltése', TEXT_DOMAIN); ?></span>
+                    <span><?php echo esc_html__('PDF letöltése', 'borspirit'); ?></span>
                     <svg class="icon icon-download"><use xlink:href="#icon-download"></use></svg>
                 </a>
             </div>    

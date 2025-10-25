@@ -102,7 +102,7 @@ $post_query = new WP_Query($query_args);
                     
                     <?php if (!empty($url)) : ?>
                         <a href="<?php echo esc_url($url); ?>" target="<?php echo esc_attr($target); ?>" <?php echo $is_external ? 'rel="noopener noreferrer"' : ''; ?> class="btn btn-link section__link">
-                            <span><?php esc_html_e($title, TEXT_DOMAIN); ?></span>
+                            <span><?php esc_html_e($title, 'borspirit'); ?></span>
                             <svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg>
                         </a>
                     <?php endif; ?>
@@ -120,45 +120,46 @@ $post_query = new WP_Query($query_args);
                             <?php while ( $post_query->have_posts() ) : $post_query->the_post(); ?>
                                 <div class="slider__item">
                                     <?php 
-                                        $post_type = get_post_type(); // Get the current post type once
-                                        $template_args = array('post_type' => esc_attr($post_type));
-                                        $template = locate_template("template-parts/cards/card-{$post_type}.php");
+                                        $template_args = [
+                                            'post_type' => esc_attr(get_post_type())
+                                        ];
 
-                                        if (!empty($template)) {
+                                        $template_slug = 'template-parts/cards/card-' . $template_args['post_type'] . '.php';
+                                        
+                                        if ( locate_template( $template_slug ) ) {
                                             // File exists, include it
-                                            get_template_part('template-parts/cards/card', $post_type, $template_args);
+                                            get_template_part( 'template-parts/cards/card', $template_args['post_type'], $template_args );
                                         } else {
                                             // File does not exist, handle accordingly
-                                            get_template_part('template-parts/cards/card', 'default', $template_args);
+                                            get_template_part( 'template-parts/cards/card', 'default', $template_args );
                                         }
                                     ?>
                                 </div>
-                            <?php endwhile; ?>
+                            <?php endwhile; wp_reset_postdata(); ?>
                         </div>
                         <div class="slider__controls"></div>
                     </div>
                 <?php else : ?>
                     <div class="row gy-4">
-                        <?php while ($post_query->have_posts()) : $post_query->the_post(); ?>
-                            <?php 
-                                $post_type = get_post_type(); // Get the current post type once
-                                $template_args = array('post_type' => esc_attr($post_type));
-                                $template = locate_template("template-parts/cards/card-{$post_type}.php");
-                            ?>
-
+                        <?php while ( $post_query->have_posts() ) : $post_query->the_post(); ?>
                             <div class="col-lg-6 col-xl-4">
                                 <?php
-                                    if (!empty($template)) {
+                                    $template_args = [
+                                        'post_type' => esc_attr(get_post_type())
+                                    ];
+
+                                    $template_slug = 'template-parts/cards/card-' . $template_args['post_type'] . '.php';
+
+                                    if ( locate_template( $template_slug ) ) {
                                         // File exists, include it
-                                        get_template_part('template-parts/cards/card', $post_type, $template_args);
+                                        get_template_part( 'template-parts/cards/card', $template_args['post_type'], $template_args );
                                     } else {
                                         // File does not exist, handle accordingly
-                                        get_template_part('template-parts/cards/card', 'default', $template_args);
+                                        get_template_part( 'template-parts/cards/card', 'default', $template_args );
                                     }
                                 ?>
                             </div>
-                        <?php endwhile; ?>
-                        <?php wp_reset_postdata(); ?>
+                        <?php endwhile; wp_reset_postdata(); ?>
                     </div>
                 <?php endif; ?>
             </div>

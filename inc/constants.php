@@ -3,7 +3,6 @@
 
     // Theme Constants
     define( 'THEME_NAME', get_bloginfo( 'name' ) );
-    define( 'TEXT_DOMAIN', basename( get_template_directory() ) );
 
     define( 'TEMPLATE_PATH', get_template_directory() );
     define( 'TEMPLATE_DIR_URI', esc_url( get_template_directory_uri() ) );

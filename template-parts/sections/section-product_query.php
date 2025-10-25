@@ -123,7 +123,7 @@ $products      = $product_query->get_products();
 
                     <?php if (!empty($url)) : ?>
                         <a href="<?php echo esc_url($url); ?>" target="<?php echo esc_attr($target); ?>" <?php echo $is_external ? 'rel="noopener noreferrer"' : ''; ?> class="btn btn-link section__link">
-                            <span><?php esc_html_e($title, TEXT_DOMAIN); ?></span>
+                            <span><?php esc_html_e($title, 'borspirit'); ?></span>
                             <svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg>
                         </a>
                     <?php endif; ?>
@@ -169,6 +169,7 @@ $products      = $product_query->get_products();
                              */
                             do_action('woocommerce_shop_loop');
 
+                            // Load WooCommerce product card template (content-product.php)
                             wc_get_template_part('content', 'product');
                             ?>
                         <?php endforeach; ?>

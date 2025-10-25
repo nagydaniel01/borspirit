@@ -25,7 +25,7 @@
                 $html .= '  <div class="accordion-item">';
                 $html .= '    <h2 class="accordion-header" id="heading-toc">';
                 $html .= '      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-toc" aria-expanded="false" aria-controls="collapse-toc">';
-                $html .=            esc_html__( 'Table of contents', TEXT_DOMAIN );
+                $html .=            esc_html__( 'Table of contents', 'borspirit' );
                 $html .= '      </button>';
                 $html .= '    </h2>';
                 $html .= '    <div id="collapse-toc" class="accordion-collapse collapse" aria-labelledby="heading-toc" data-bs-parent="#accordion-toc">';

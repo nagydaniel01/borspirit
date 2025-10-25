@@ -77,7 +77,7 @@ $term_query = new WP_Term_Query($query_args);
 
                     <?php if (!empty($url)) : ?>
                         <a href="<?php echo esc_url($url); ?>" target="<?php echo esc_attr($target); ?>" <?php echo $is_external ? 'rel="noopener noreferrer"' : ''; ?> class="btn btn-link section__link">
-                            <span><?php esc_html_e($title, TEXT_DOMAIN); ?></span>
+                            <span><?php esc_html_e($title, 'borspirit'); ?></span>
                             <svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg>
                         </a>
                     <?php endif; ?>
@@ -92,17 +92,22 @@ $term_query = new WP_Term_Query($query_args);
                 <?php if ($slider != false) : ?>
                     <div class="slider slider--term-query">
                         <div class="slider__list">
-                            <?php foreach ($term_query->terms as $key => $term) : ?>
+                            <?php foreach ( $term_query->terms as $key => $term ) : ?>
                                 <div class="slider__item">
                                     <?php 
-                                        $taxonomy = esc_attr($term->taxonomy);
-                                        $template_args = ['term' => $term];
-                                        $template = locate_template("template-parts/cards/card-term-{$taxonomy}.php");
+                                        $template_args = [
+                                            'taxonomy' => esc_attr($term->taxonomy),
+                                            'term'     => $term
+                                        ];
 
-                                        if (!empty($template)) {
-                                            get_template_part('template-parts/cards/card-term', $taxonomy, $template_args);
+                                        $template_slug = 'template-parts/cards/card-term-' . $template_args['taxonomy'] . '.php';
+
+                                        if ( locate_template( $template_slug ) ) {
+                                            // File exists, include it
+                                            get_template_part( 'template-parts/cards/card-term', $template_args['taxonomy'], $template_args );
                                         } else {
-                                            get_template_part('template-parts/cards/card-term', 'default', $template_args);
+                                            // File does not exist, handle accordingly
+                                            get_template_part( 'template-parts/cards/card-term', 'default', $template_args );
                                         }
                                     ?>
                                 </div>
@@ -112,18 +117,22 @@ $term_query = new WP_Term_Query($query_args);
                     </div>
                 <?php else : ?>
                     <div class="row gy-4">
-                        <?php foreach ($term_query->terms as $key => $term) : ?>
-                            <?php 
-                                $taxonomy = esc_attr($term->taxonomy);
-                                $template_args = ['term' => $term];
-                                $template = locate_template("template-parts/cards/card-term-{$taxonomy}.php");
-                            ?>
+                        <?php foreach ( $term_query->terms as $key => $term ) : ?>
                             <div class="col-lg-6 col-xl-4">
                                 <?php
-                                    if (!empty($template)) {
-                                        get_template_part('template-parts/cards/card-term', $taxonomy, $template_args);
+                                    $template_args = [
+                                        'taxonomy' => esc_attr($term->taxonomy),
+                                        'term'     => $term
+                                    ];
+
+                                    $template_slug = 'template-parts/cards/card-term-' . $template_args['taxonomy'] . '.php';
+
+                                    if ( locate_template( $template_slug ) ) {
+                                        // File exists, include it
+                                        get_template_part( 'template-parts/cards/card-term', $template_args['taxonomy'], $template_args );
                                     } else {
-                                        get_template_part('template-parts/cards/card-term', 'default', $template_args);
+                                        // File does not exist, handle accordingly
+                                        get_template_part( 'template-parts/cards/card-term', 'default', $template_args );
                                     }
                                 ?>
                             </div>
