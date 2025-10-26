@@ -34,18 +34,17 @@ class BorSpirit_Wine_Quiz {
         // Admin: menu and posts
         add_action( 'admin_menu', array( $this, 'register_admin_menu' ) );
 
-        // Rules handlers (existing)
+        // Rules handlers
         add_action( 'admin_post_bsp_save_rule', array( $this, 'admin_save_rule' ) );
         add_action( 'admin_post_bsp_delete_rule', array( $this, 'admin_delete_rule' ) );
 
-        // Questions handlers (new)
+        // Questions handlers
         add_action( 'admin_post_bsp_save_question', array( $this, 'admin_save_question' ) );
         add_action( 'admin_post_bsp_delete_question', array( $this, 'admin_delete_question' ) );
     }
 
     /* -------------------------- Public UI -------------------------- */
     public function enqueue_scripts() {
-        // Ensure your JS file exists at this location in the theme
         $script_path = get_template_directory_uri() . '/ajax/js/bsp_quiz_ajax.js';
 
         wp_register_script( 'bsp-quiz-js', $script_path, array( 'jquery' ), '1.3', true );
@@ -180,10 +179,12 @@ class BorSpirit_Wine_Quiz {
         );
     }
 
+    /* -------------------------- Questions save/delete -------------------------- */
     public function admin_save_question() {
         if ( ! current_user_can( 'manage_options' ) ) wp_die( esc_html__( 'Insufficient permissions.', $this->td ) );
         if ( ! isset( $_POST['bsp_admin_nonce'] ) || ! wp_verify_nonce( wp_unslash( $_POST['bsp_admin_nonce'] ), 'bsp_admin_nonce' ) ) wp_die( esc_html__( 'Invalid request.', $this->td ) );
 
+        $questions = $this->get_questions();
         $index = isset( $_POST['edit_index'] ) ? intval( $_POST['edit_index'] ) : null;
         $text = isset( $_POST['question_text'] ) ? sanitize_text_field( wp_unslash( $_POST['question_text'] ) ) : '';
         $answers_in = isset( $_POST['answers'] ) && is_array( $_POST['answers'] ) ? $_POST['answers'] : array();
@@ -197,15 +198,12 @@ class BorSpirit_Wine_Quiz {
             }
         }
 
-        // load existing
-        $questions = $this->get_questions();
-
         if ( $index !== null && isset( $questions[ $index ] ) ) {
-            // update
+            // update existing
             $questions[ $index ]['text'] = $text;
             $questions[ $index ]['answers'] = $answers;
         } else {
-            // append if space
+            // add new or replace last if max reached
             if ( count( $questions ) < $this->max_questions ) {
                 $questions[] = array(
                     'key' => 'q' . ( count( $questions ) + 1 ),
@@ -213,13 +211,17 @@ class BorSpirit_Wine_Quiz {
                     'answers' => $answers,
                 );
             } else {
-                // replace the last slot if exceed (defensive)
                 $questions[ $this->max_questions - 1 ] = array(
                     'key' => 'q' . $this->max_questions,
                     'text' => $text,
                     'answers' => $answers,
                 );
             }
+        }
+
+        // Ensure keys reindexed q1..qN
+        foreach ( $questions as $k => &$q ) {
+            $q['key'] = 'q' . ( $k + 1 );
         }
 
         update_option( self::OPTION_QUESTIONS_KEY, $questions );
@@ -247,7 +249,7 @@ class BorSpirit_Wine_Quiz {
         exit;
     }
 
-    /* -------------------------- Recommendation logic (unchanged) -------------------------- */
+    /* -------------------------- Recommendation logic -------------------------- */
     private function get_rules() {
         $rules = get_option( self::OPTION_RULES_KEY, array() );
         if ( ! is_array( $rules ) ) $rules = array();
@@ -270,7 +272,7 @@ class BorSpirit_Wine_Quiz {
                 $expected_vals = is_array($expected) ? $expected : [$expected];
 
                 if ( array_intersect($user_answer, $expected_vals) ) {
-                    $score += intval( $rule['weight'] );
+                    $score += intval( isset( $rule['weight'] ) ? $rule['weight'] : 10 );
                 }
             }
 
@@ -383,9 +385,8 @@ class BorSpirit_Wine_Quiz {
                     ]);
                     break;
 
-                // In handle_recommend(), add a new case:
                 case 'attribute':
-                    // Expected format: value = "pa_country:hungary" (taxonomy:term)
+                    // Expected format: taxonomy:term_slug (e.g. pa_country:hungary)
                     if ( empty( $rule['value'] ) || strpos( $rule['value'], ':' ) === false ) {
                         wp_send_json_error(['message' => __('Invalid attribute rule value.', $this->td)], 422);
                     }
@@ -433,7 +434,6 @@ class BorSpirit_Wine_Quiz {
     }
 
     /* -------------------------- Admin UI (questions + rules) -------------------------- */
-
     public function register_admin_menu() {
         add_submenu_page(
             'woocommerce',
@@ -457,6 +457,7 @@ class BorSpirit_Wine_Quiz {
         $edit_r_index = isset( $_GET['edit'] ) ? intval( $_GET['edit'] ) : -1;
         $edit_q = ( $edit_q_index >= 0 && isset( $questions[ $edit_q_index ] ) ) ? $questions[ $edit_q_index ] : null;
         $edit_r = ( $edit_r_index >= 0 && isset( $rules[ $edit_r_index ] ) ) ? $rules[ $edit_r_index ] : null;
+
         ?>
         <div class="wrap">
             <h1><?php echo esc_html__( 'BorSpirit - Quiz Settings', $this->td ); ?></h1>
@@ -489,7 +490,7 @@ class BorSpirit_Wine_Quiz {
                                     $label = isset( $existing[ $r ]['label'] ) ? $existing[ $r ]['label'] : '';
                                 ?>
                                     <div class="bsp-answer-row" style="margin-bottom:6px;">
-                                        <input type="text" name="answers[<?php echo $r; ?>][value]" placeholder="<?php echo esc_attr__( 'value (for rules)', $this->td ); ?>" value="<?php echo esc_attr( $val ); ?>" class="regular-text">
+                                        <input type="text" name="answers[<?php echo $r; ?>][value]" placeholder="<?php echo esc_attr__( 'value (for rules)', $this->td ); ?>" value="<?php echo esc_attr( $val ); ?>" class="regular-text" style="margin-right:4px;">
                                         <input type="text" name="answers[<?php echo $r; ?>][label]" placeholder="<?php echo esc_attr__( 'label (user-facing)', $this->td ); ?>" value="<?php echo esc_attr( $label ); ?>" class="regular-text">
                                     </div>
                                 <?php endfor; ?>
@@ -540,11 +541,8 @@ class BorSpirit_Wine_Quiz {
 
             <hr style="margin: 30px 0;">
 
-            <!-- Rules UI (unchanged structure) -->
+            <!-- Rules UI -->
             <h2><?php echo esc_html__( 'Rules', $this->td ); ?></h2>
-
-            <!-- Existing rules table and add/edit form (same as previous rules UI) -->
-            <!-- We'll reuse the existing HTML for rules from the original plugin -->
 
             <h3><?php echo esc_html__( $edit_r ? 'Edit Rule' : 'Add New Rule', $this->td ); ?></h3>
             <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
@@ -561,11 +559,9 @@ class BorSpirit_Wine_Quiz {
                     </tr>
 
                     <?php
-                    $questions = $this->get_questions(); // should return array of questions with 'key', 'text', 'options'
+                    $questions = $this->get_questions(); // re-fetch to ensure consistency
 
                     foreach ( $questions as $q ) :
-                        //var_dump($q);
-                        
                         $q_key = $q['key'];   // e.g., q1, q2, q3...
                         $q_text = $q['text']; // full question text for label
 
@@ -596,18 +592,75 @@ class BorSpirit_Wine_Quiz {
                     <?php endforeach; ?>
 
                     <tr>
-                        <th scope="row"><label><?php echo esc_html__( 'Type (product/category)', $this->td ); ?></label></th>
+                        <th scope="row"><label><?php echo esc_html__( 'Type', $this->td ); ?></label></th>
                         <td>
-                            <select name="type" class="regular-text">
-                                <option value="product" <?php echo $edit_r && $edit_r['type'] == 'product' ? 'selected' : ''; ?>><?php echo esc_html__( 'product', $this->td ); ?></option>
-                                <option value="category" <?php echo $edit_r && $edit_r['type'] == 'category' ? 'selected' : ''; ?>><?php echo esc_html__( 'category', $this->td ); ?></option>
+                            <select name="type" id="bsp-rule-type" class="regular-text">
+                                <option value="product" <?php echo $edit_r && $edit_r['type'] == 'product' ? 'selected' : ''; ?>><?php echo esc_html__( 'Product', $this->td ); ?></option>
+                                <option value="category" <?php echo $edit_r && $edit_r['type'] == 'category' ? 'selected' : ''; ?>><?php echo esc_html__( 'Category', $this->td ); ?></option>
+                                <option value="attribute" <?php echo $edit_r && $edit_r['type'] == 'attribute' ? 'selected' : ''; ?>><?php echo esc_html__( 'Attribute', $this->td ); ?></option>
                             </select>
                         </td>
                     </tr>
 
-                    <tr>
-                        <th scope="row"><label><?php echo esc_html__( 'Value (term slug or product ID)', $this->td ); ?></label></th>
-                        <td><input type="text" name="value" class="regular-text" required value="<?php echo $edit_r ? esc_attr( $edit_r['value'] ) : ''; ?>"></td>
+                    <tr class="bsp-type-row bsp-product-row" style="display:none;">
+                        <th scope="row"><label><?php echo esc_html__( 'Product', $this->td ); ?></label></th>
+                        <td>
+                            <select name="product_id[]" class="regular-text" multiple>
+                                <?php
+                                $products = wc_get_products( array( 'limit' => -1 ) );
+                                // $edit_r['value'] is now an array
+                                $selected_products = $edit_r && $edit_r['type'] === 'product' ? (array) $edit_r['value'] : array();
+                                foreach ( $products as $p ) {
+                                    $selected = in_array( $p->get_id(), $selected_products ) ? 'selected' : '';
+                                    echo '<option value="' . esc_attr( $p->get_id() ) . '" ' . $selected . '>' . esc_html( $p->get_name() ) . '</option>';
+                                }
+                                ?>
+                            </select>
+                            <p class="description"><?php echo esc_html__( 'Hold Ctrl/Cmd to select multiple options.', $this->td ); ?></p>
+                        </td>
+                    </tr>
+
+                    <tr class="bsp-type-row bsp-category-row" style="display:none;">
+                        <th scope="row"><label><?php echo esc_html__( 'Category', $this->td ); ?></label></th>
+                        <td>
+                            <select name="category_slug" class="regular-text">
+                                <option value=""><?php echo esc_html__( '-- Select Category --', $this->td ); ?></option>
+                                <?php
+                                $cats = get_terms( array( 'taxonomy' => 'product_cat', 'hide_empty' => false ) );
+                                if ( ! is_wp_error( $cats ) ) {
+                                    foreach ( $cats as $c ) {
+                                        $selected = $edit_r && $edit_r['type'] === 'category' && $edit_r['value'] == $c->slug ? 'selected' : '';
+                                        echo '<option value="' . esc_attr( $c->slug ) . '" ' . $selected . '>' . esc_html( $c->name ) . '</option>';
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr class="bsp-type-row bsp-attribute-row" style="display:none;">
+                        <th scope="row"><label><?php echo esc_html__( 'Attribute', $this->td ); ?></label></th>
+                        <td>
+                            <select name="attribute_value" class="regular-text">
+                                <option value=""><?php echo esc_html__( '-- Select Attribute / Term --', $this->td ); ?></option>
+                                <?php
+                                $attribute_taxonomies = wc_get_attribute_taxonomies();
+                                if ( $attribute_taxonomies ) {
+                                    foreach ( $attribute_taxonomies as $attr ) {
+                                        $taxonomy = wc_attribute_taxonomy_name( $attr->attribute_name );
+                                        $terms = get_terms( array( 'taxonomy' => $taxonomy, 'hide_empty' => false ) );
+                                        if ( ! is_wp_error( $terms ) ) {
+                                            foreach ( $terms as $term ) {
+                                                $val = $taxonomy . ':' . $term->slug;
+                                                $selected = $edit_r && $edit_r['type'] === 'attribute' && $edit_r['value'] == $val ? 'selected' : '';
+                                                echo '<option value="' . esc_attr( $val ) . '" ' . $selected . '>' . esc_html( $attr->attribute_label . ' → ' . $term->name ) . '</option>';
+                                            }
+                                        }
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </td>
                     </tr>
 
                     <tr>
@@ -624,6 +677,7 @@ class BorSpirit_Wine_Quiz {
                 <p><input type="submit" class="button button-primary" value="<?php echo esc_attr__( $edit_r ? 'Save Rule' : 'Add Rule', $this->td ); ?>"></p>
             </form>
 
+            <!-- Rules table -->
             <h2><?php echo esc_html__( 'Existing Rules', $this->td ); ?></h2>
             <table class="widefat fixed striped">
                 <thead>
@@ -641,23 +695,90 @@ class BorSpirit_Wine_Quiz {
                 <tbody>
                 <?php if ( empty( $rules ) ): ?>
                     <tr><td colspan="8"><?php echo esc_html__( 'No rules yet. Use the form above to add rules.', $this->td ); ?></td></tr>
-                <?php else: foreach ( $rules as $i => $r ): ?>
+                <?php else: foreach ( $rules as $i => $r ): 
+                    // Resolve human-readable value
+                    $display_value = '';
+                    if ( isset( $r['type'] ) ) {
+                        switch ( $r['type'] ) {
+                            case 'product':
+                                $product_ids = isset($r['value']) ? (array) $r['value'] : array();
+                                $links = array();
+
+                                foreach ( $product_ids as $pid ) {
+                                    $prod = wc_get_product( $pid );
+                                    if ( $prod ) {
+                                        $links[] = '<a href="' . esc_url(get_edit_post_link($pid)) . '" target="_blank">'
+                                            . esc_html($prod->get_name()) . ' (ID: ' . $pid . ')</a>';
+                                    }
+                                }
+
+                                // Display comma-separated links
+                                $display_value = implode(', ', $links);
+                                break;
+
+                            case 'category':
+                                $raw = isset( $r['value'] ) ? $r['value'] : '';
+                                $cat = get_term_by( 'slug', $raw, 'product_cat' );
+                                if ( ! $cat && is_numeric( $raw ) ) {
+                                    $cat = get_term( intval( $raw ), 'product_cat' );
+                                }
+                                if ( $cat && ! is_wp_error( $cat ) ) {
+                                    $term_link = get_term_link( $cat );
+                                    $term_edit = get_edit_term_link( $cat->term_id, 'product_cat' );
+
+                                    $display_value = '<a href="' . esc_url( $term_edit ) . '" target="_blank">' . esc_html( $cat->name ) . ' (' . esc_html( $cat->slug ) . ')</a>';
+                                } else {
+                                    $display_value = esc_html( $raw );
+                                }
+                                break;
+
+                            case 'attribute':
+                                // stored as "taxonomy:term_slug" (you confirmed option 2)
+                                $raw = isset( $r['value'] ) ? $r['value'] : '';
+                                if ( $raw && strpos( $raw, ':' ) !== false ) {
+                                    list( $taxonomy, $term_slug ) = explode( ':', $raw, 2 );
+                                    $term = get_term_by( 'slug', $term_slug, $taxonomy );
+
+                                    if ( $term && ! is_wp_error( $term ) ) {
+                                        $term_link = get_term_link( $term );
+                                        $term_edit = get_edit_term_link( $term->term_id, $taxonomy );
+
+                                        $display_value = '<a href="' . esc_url( $term_edit ) . '" target="_blank">' . esc_html( $term->name ) . ' (' . esc_html( $term->slug ) . ')</a>';
+                                    } else {
+                                        $display_value = esc_html( $raw );
+                                    }
+                                } else {
+                                    $display_value = esc_html( $raw );
+                                }
+                                break;
+
+                            default:
+                                $display_value = isset($r['value']) ? esc_html($r['value']) : '';
+                                break;
+                        }
+                    }
+                    ?>
                     <tr>
                         <td><?php echo intval( $i + 1 ); ?></td>
-                        <td><?php echo esc_html( $r['name'] ); ?></td>
+                        <td><?php echo esc_html( isset($r['name']) ? $r['name'] : '' ); ?></td>
                         <td>
-                            <?php foreach ( array( 'q1', 'q2', 'q3', 'q4' ) as $q ) {
-                                if ( ! empty( $r['conditions'][ $q ] ) ) {
-                                    echo '<strong>' . esc_html( $q ) . ':</strong> ' . esc_html( implode( ',', (array) $r['conditions'][ $q ] ) ) . '<br/>';
+                            <?php
+                            if ( ! empty( $r['conditions'] ) && is_array( $r['conditions'] ) ) {
+                                foreach ( $r['conditions'] as $qk => $vals ) {
+                                    echo '<strong>' . esc_html( $qk ) . ':</strong> ' . esc_html( implode( ',', (array) $vals ) ) . '<br/>';
                                 }
-                            } ?>
+                            } else {
+                                echo '<em>' . esc_html__( 'No conditions', $this->td ) . '</em>';
+                            }
+                            ?>
                         </td>
-                        <td><?php echo esc_html( $r['type'] ); ?></td>
-                        <td><?php echo esc_html( $r['value'] ); ?></td>
-                        <td><?php echo esc_html( $r['weight'] ); ?></td>
-                        <td><?php echo esc_html( $r['priority'] ); ?></td>
+                        <td><?php echo esc_html( isset($r['type']) ? $r['type'] : '' ); ?></td>
+                        <td><?php echo $display_value; ?></td>
+                        <td><?php echo esc_html( isset($r['weight']) ? $r['weight'] : '' ); ?></td>
+                        <td><?php echo esc_html( isset($r['priority']) ? $r['priority'] : '' ); ?></td>
                         <td>
                             <a href="<?php echo esc_url( admin_url( 'admin.php?page=borspirit-quiz&edit=' . $i ) ); ?>" class="button button-primary"><?php echo esc_html__( 'Edit', $this->td ); ?></a>
+
                             <form style="display:inline;" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
                                 <input type="hidden" name="action" value="bsp_delete_rule">
                                 <input type="hidden" name="index" value="<?php echo esc_attr( $i ); ?>">
@@ -673,7 +794,22 @@ class BorSpirit_Wine_Quiz {
 
         <script>
         (function(){
-            // small admin helper: add new answer input row
+            function toggleTypeRows(){
+                var sel = document.getElementById('bsp-rule-type');
+                if (!sel) return;
+                var type = sel.value;
+                document.querySelectorAll('.bsp-type-row').forEach(function(row){ row.style.display='none'; });
+                if(type==='product') document.querySelector('.bsp-product-row').style.display='';
+                if(type==='category') document.querySelector('.bsp-category-row').style.display='';
+                if(type==='attribute') document.querySelector('.bsp-attribute-row').style.display='';
+            }
+            var select = document.getElementById('bsp-rule-type');
+            if(select){
+                select.addEventListener('change', toggleTypeRows);
+                toggleTypeRows();
+            }
+
+            // Add answer row button
             var addBtn = document.getElementById('bsp-add-answer');
             if (addBtn) {
                 addBtn.addEventListener('click', function(e){
@@ -695,16 +831,32 @@ class BorSpirit_Wine_Quiz {
         <?php
     } // end render_admin_page
 
-    /* -------------------------- Rules save/delete (unchanged) -------------------------- */
+    /* -------------------------- Rules save/delete -------------------------- */
     public function admin_save_rule() {
         if ( ! current_user_can( 'manage_options' ) ) wp_die( esc_html__( 'Insufficient permissions.', $this->td ) );
         if ( ! isset( $_POST['bsp_admin_nonce'] ) || ! wp_verify_nonce( wp_unslash( $_POST['bsp_admin_nonce'] ), 'bsp_admin_nonce' ) ) wp_die( esc_html__( 'Invalid request.', $this->td ) );
 
+        $rules = $this->get_rules();
+
+        $index   = isset( $_POST['edit_index'] ) ? intval( $_POST['edit_index'] ) : null;
         $name     = isset( $_POST['name'] ) ? sanitize_text_field( wp_unslash( $_POST['name'] ) ) : '';
-        $type     = isset( $_POST['type'] ) && in_array( $_POST['type'], array( 'product', 'category' ), true ) ? sanitize_text_field( wp_unslash( $_POST['type'] ) ) : 'category';
-        $value    = isset( $_POST['value'] ) ? sanitize_text_field( wp_unslash( $_POST['value'] ) ) : '';
-        $weight   = isset( $_POST['weight'] ) ? intval( $_POST['weight'] ) : 10;
-        $priority = isset( $_POST['priority'] ) ? intval( $_POST['priority'] ) : 0;
+        $type     = isset( $_POST['type'] ) && in_array( $_POST['type'], array( 'product', 'category', 'attribute' ), true ) ? sanitize_text_field( wp_unslash( $_POST['type'] ) ) : 'category';
+        $value    = '';
+        if ( $type === 'product' ) {
+            $value = array();
+            if ( ! empty( $_POST['product_ids'] ) && is_array($_POST['product_ids']) ) {
+                foreach ( $_POST['product_ids'] as $pid ) {
+                    $pid = intval( wp_unslash($pid) );
+                    if ( $pid ) $value[] = $pid;
+                }
+            }
+        } elseif ( $type === 'category' ) {
+            $value = isset( $_POST['category_slug'] ) ? sanitize_text_field( wp_unslash( $_POST['category_slug'] ) ) : '';
+        } elseif ( $type === 'attribute' ) {
+            $value = isset( $_POST['attribute_value'] ) ? sanitize_text_field( wp_unslash( $_POST['attribute_value'] ) ) : '';
+        }
+        $weight   = isset( $_POST['weight'] ) ? intval( wp_unslash( $_POST['weight'] ) ) : 10;
+        $priority = isset( $_POST['priority'] ) ? intval( wp_unslash( $_POST['priority'] ) ) : 0;
 
         $conds = array();
         if ( ! empty( $_POST['conds'] ) && is_array( $_POST['conds'] ) ) {
@@ -720,29 +872,19 @@ class BorSpirit_Wine_Quiz {
             }
         }
 
-        $rules = $this->get_rules();
+        $rule_data = array(
+            'name'       => $name,
+            'conditions' => $conds,
+            'type'       => $type,
+            'value'      => $value,
+            'weight'     => $weight,
+            'priority'   => $priority,
+        );
 
-        if ( isset( $_POST['edit_index'] ) ) {
-            $idx = intval( $_POST['edit_index'] );
-            if ( isset( $rules[ $idx ] ) ) {
-                $rules[ $idx ] = array(
-                    'name'       => $name,
-                    'conditions' => $conds,
-                    'type'       => $type,
-                    'value'      => $value,
-                    'weight'     => $weight,
-                    'priority'   => $priority,
-                );
-            }
+        if ( $index !== null && isset( $rules[ $index ] ) ) {
+            $rules[ $index ] = $rule_data;
         } else {
-            $rules[] = array(
-                'name'       => $name,
-                'conditions' => $conds,
-                'type'       => $type,
-                'value'      => $value,
-                'weight'     => $weight,
-                'priority'   => $priority,
-            );
+            $rules[] = $rule_data;
         }
 
         update_option( self::OPTION_RULES_KEY, $rules );
