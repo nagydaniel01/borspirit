@@ -1,0 +1,142 @@
+<?php
+if ( ! function_exists('bsp_quiz_handle_recommend') ) {
+    function bsp_quiz_handle_recommend() {
+        try {
+            // Ensure POST request
+            if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
+                wp_send_json_error(['message' => __('Invalid request method.', 'bsp-wine-quiz')], 405);
+            }
+
+            // Check nonce
+            if ( ! isset($_POST['nonce']) || ! wp_verify_nonce($_POST['nonce'], 'bsp_quiz_action') ) {
+                wp_send_json_error(['message' => __('Invalid security token.', 'bsp-wine-quiz')], 403);
+            }
+
+            // Collect all question answers
+            $answers = [];
+            foreach ($_POST as $key => $value) {
+                if ( preg_match('/^q\d+$/', $key) ) {
+                    $answers[$key] = is_array($value) ? array_map('sanitize_text_field', $value) : sanitize_text_field($value);
+                }
+            }
+
+            // Compute recommendation
+            $quiz = new BorSpirit_Wine_Quiz(); // Make sure this class exists
+            $rule = $quiz->compute_recommendation($answers);
+
+            // ---------- Product recommendation ----------
+            if ( $rule['type'] === 'product' ) {
+                $product_ids = is_array($rule['value']) ? $rule['value'] : explode(',', $rule['value']);
+                $products = [];
+
+                foreach ( $product_ids as $id ) {
+                    $prod = wc_get_product(intval($id));
+                    if ($prod) $products[] = $prod;
+                }
+
+                if ( empty($products) ) {
+                    wp_send_json_error(['message' => __('Recommended products not found.', 'bsp-wine-quiz')]);
+                }
+
+                // Capture WooCommerce template HTML
+                ob_start();
+                echo '<ul class="products columns-4">';
+                foreach ( $products as $product ) {
+                    $GLOBALS['post'] = get_post($product->get_id());
+                    setup_postdata($GLOBALS['post']);
+                    wc_get_template_part('content', 'product');
+                }
+                echo '</ul>';
+                wp_reset_postdata();
+
+                wp_send_json_success([
+                    'type' => 'product',
+                    'html' => ob_get_clean(),
+                ]);
+
+                wp_send_json_error(['message' => __('Recommended product not found.', 'bsp-wine-quiz')]);
+            }
+
+            // ---------- Category recommendation ----------
+            if ( $rule['type'] === 'category' ) {
+                $cat = get_term_by('slug', $rule['value'], 'product_cat');
+                if ( ! $cat && is_numeric($rule['value']) ) {
+                    $cat = get_term($rule['value'], 'product_cat');
+                }
+
+                if ( ! $cat || is_wp_error($cat) ) {
+                    wp_send_json_error(['message' => __('Recommended category not found.', 'bsp-wine-quiz')]);
+                }
+
+                // Get products in category
+                $products = wc_get_products([
+                    'limit' => -1,
+                    'category' => [$cat->slug],
+                ]);
+
+                if ( empty($products) ) {
+                    wp_send_json_error(['message' => __('No products found in the recommended category.', 'bsp-wine-quiz')]);
+                }
+
+                ob_start();
+                foreach ( $products as $product ) {
+                    $post_object = get_post($product->get_id());
+                    if ( ! $post_object ) continue;
+
+                    $GLOBALS['post'] =& $post_object;
+                    setup_postdata( $GLOBALS['post'] );
+
+                    do_action('woocommerce_shop_loop');
+                    wc_get_template_part('content', 'product');
+                }
+                wp_reset_postdata();
+                $html = ob_get_clean();
+
+                wp_send_json_success([
+                    'type' => 'category',
+                    'html' => $html,
+                ]);
+            }
+
+            // If type is unknown
+            wp_send_json_error(['message' => __('Unexpected recommendation type.', 'bsp-wine-quiz')]);
+
+        } catch ( Exception $e ) {
+            wp_send_json_error(['message' => sprintf(__('Unexpected error: %s', 'bsp-wine-quiz'), $e->getMessage())], 500);
+        }
+    }
+
+    //add_action('wp_ajax_bsp_recommend', 'bsp_quiz_handle_recommend');
+    //add_action('wp_ajax_nopriv_bsp_recommend', 'bsp_quiz_handle_recommend');
+}
+
+if ( ! function_exists('bsp_quiz_handle_add_to_cart') ) {
+    function bsp_quiz_handle_add_to_cart() {
+        try {
+            if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
+                wp_send_json_error(['message' => __('Invalid request method.', 'bsp-wine-quiz')], 405);
+            }
+
+            if ( ! isset($_POST['nonce']) || ! wp_verify_nonce($_POST['nonce'], 'bsp_quiz_action') ) {
+                wp_send_json_error(['message' => __('Invalid security token.', 'bsp-wine-quiz')], 403);
+            }
+
+            $product_id = isset($_POST['product_id']) ? intval($_POST['product_id']) : 0;
+            if ( ! $product_id ) {
+                wp_send_json_error(['message' => __('Invalid product.', 'bsp-wine-quiz')], 422);
+            }
+
+            if ( WC()->cart->add_to_cart($product_id) ) {
+                wp_send_json_success(['message' => __('Product added to cart.', 'bsp-wine-quiz')]);
+            } else {
+                wp_send_json_error(['message' => __('Failed to add product to cart.', 'bsp-wine-quiz')], 500);
+            }
+
+        } catch ( Exception $e ) {
+            wp_send_json_error(['message' => sprintf(__('Unexpected error: %s', 'bsp-wine-quiz'), $e->getMessage())], 500);
+        }
+    }
+
+    add_action('wp_ajax_bsp_add_to_cart', 'bsp_quiz_handle_add_to_cart');
+    add_action('wp_ajax_nopriv_bsp_add_to_cart', 'bsp_quiz_handle_add_to_cart');
+}

@@ -80,13 +80,12 @@
                 "id": ""
             },
             "choices": {
-                "default": "Alapértelmezett",
                 "none": "Nincs",
                 "large": "Nagyobb"
             },
             "default_value": "default",
             "return_format": "value",
-            "allow_null": 0,
+            "allow_null": 1,
             "other_choice": 0,
             "allow_in_bindings": 0,
             "layout": "horizontal",
@@ -107,13 +106,12 @@
                 "id": ""
             },
             "choices": {
-                "default": "Alapértelmezett",
                 "none": "Nincs",
                 "large": "Nagyobb"
             },
             "default_value": "default",
             "return_format": "value",
-            "allow_null": 0,
+            "allow_null": 1,
             "other_choice": 0,
             "allow_in_bindings": 0,
             "layout": "horizontal",
@@ -134,7 +132,6 @@
                 "id": ""
             },
             "choices": {
-                "default": "Alapértelmezett",
                 "white": "Fehér",
                 "primary-05": "Elsődleges (5%)",
                 "primary-25": "Elsődleges (25%)",
@@ -143,7 +140,7 @@
             },
             "default_value": "default",
             "return_format": "value",
-            "allow_null": 0,
+            "allow_null": 1,
             "other_choice": 0,
             "allow_in_bindings": 0,
             "layout": "horizontal",
@@ -168,5 +165,6 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1759421169
+    "display_title": "",
+    "modified": 1761466320
 }
