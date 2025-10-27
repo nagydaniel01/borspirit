@@ -23,7 +23,7 @@ class BorSpirit_Wine_Quiz {
 
     public function __construct() {
         add_shortcode( 'borspirit_wine_quiz', array( $this, 'render_quiz' ) );
-        add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+        add_action( 'wp_enqueue_scripts', array( $this, 'bsp_enqueue_scripts' ) );
 
         // AJAX
         add_action( 'wp_ajax_bsp_recommend', array( $this, 'handle_recommend' ) );
@@ -44,7 +44,7 @@ class BorSpirit_Wine_Quiz {
     }
 
     /* -------------------------- Public UI -------------------------- */
-    public function enqueue_scripts() {
+    public function bsp_enqueue_scripts() {
         $script_path = get_template_directory_uri() . '/ajax/js/bsp_quiz_ajax.js';
 
         wp_register_script( 'bsp-quiz-js', $script_path, array( 'jquery' ), '1.3', true );
@@ -435,12 +435,11 @@ class BorSpirit_Wine_Quiz {
 
     /* -------------------------- Admin UI (questions + rules) -------------------------- */
     public function register_admin_menu() {
-        add_submenu_page(
-            'woocommerce',
-            __( 'BorSpirit Quiz Settings', $this->td ),
-            __( 'BorSpirit Quiz', $this->td ),
+        add_options_page(
+            __( 'Product Recommendation Quiz settings', $this->td ),
+            __( 'Product Recommendation Quiz', $this->td ),
             'manage_options',
-            'borspirit-quiz',
+            'product-recommendation-quiz',
             array( $this, 'render_admin_page' )
         );
     }
@@ -460,7 +459,7 @@ class BorSpirit_Wine_Quiz {
 
         ?>
         <div class="wrap">
-            <h1><?php echo esc_html__( 'BorSpirit - Quiz Settings', $this->td ); ?></h1>
+            <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
             <h2><?php echo $edit_q ? esc_html__( 'Edit Question', $this->td ) : esc_html__( 'Add New Question', $this->td ); ?></h2>
 
@@ -607,7 +606,12 @@ class BorSpirit_Wine_Quiz {
                         <td>
                             <select name="product_id[]" class="regular-text" multiple>
                                 <?php
-                                $products = wc_get_products( array( 'limit' => -1 ) );
+                                $products = wc_get_products( array(
+                                    'limit'   => -1,
+                                    'orderby' => 'name',
+                                    'order'   => 'ASC'
+                                ) );
+
                                 // $edit_r['value'] is now an array
                                 $selected_products = $edit_r && $edit_r['type'] === 'product' ? (array) $edit_r['value'] : array();
                                 foreach ( $products as $p ) {
@@ -626,7 +630,13 @@ class BorSpirit_Wine_Quiz {
                             <select name="category_slug" class="regular-text">
                                 <option value=""><?php echo esc_html__( '-- Select Category --', $this->td ); ?></option>
                                 <?php
-                                $cats = get_terms( array( 'taxonomy' => 'product_cat', 'hide_empty' => false ) );
+                                $cats = get_terms( array(
+                                    'taxonomy'   => 'product_cat',
+                                    'hide_empty' => false,
+                                    'orderby'    => 'name',
+                                    'order'      => 'ASC'
+                                ) );
+
                                 if ( ! is_wp_error( $cats ) ) {
                                     foreach ( $cats as $c ) {
                                         $selected = $edit_r && $edit_r['type'] === 'category' && $edit_r['value'] == $c->slug ? 'selected' : '';
@@ -704,11 +714,38 @@ class BorSpirit_Wine_Quiz {
                                 $product_ids = isset($r['value']) ? (array) $r['value'] : array();
                                 $links = array();
 
+                                // Ensure product_ids variable is an array
+                                $product_ids = (array) $product_ids;
+
                                 foreach ( $product_ids as $pid ) {
+
+                                    // Validate product ID
+                                    $pid = absint( $pid );
+                                    if ( ! $pid ) {
+                                        continue;
+                                    }
+
+                                    // Load product object
                                     $prod = wc_get_product( $pid );
-                                    if ( $prod ) {
-                                        $links[] = '<a href="' . esc_url(get_edit_post_link($pid)) . '" target="_blank">'
-                                            . esc_html($prod->get_name()) . ' (ID: ' . $pid . ')</a>';
+
+                                    if ( $prod instanceof WC_Product ) {
+
+                                        // Product Name (fallback)
+                                        $name = $prod->get_name() ?: __( 'Unknown Product', 'textdomain' );
+
+                                        // Link to product edit page if in admin; otherwise link to product page
+                                        if ( is_admin() && current_user_can( 'edit_product', $pid ) ) {
+                                            $url = get_edit_post_link( $pid );
+                                        } else {
+                                            $url = get_permalink( $pid );
+                                        }
+
+                                        $links[] = sprintf(
+                                            '<a href="%s" target="_blank">%s (ID: %d)</a>',
+                                            esc_url( $url ),
+                                            esc_html( $name ),
+                                            $pid
+                                        );
                                     }
                                 }
 
