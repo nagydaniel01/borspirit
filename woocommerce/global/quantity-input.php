@@ -20,6 +20,9 @@
 
 defined( 'ABSPATH' ) || exit;
 
+// Get product safely.
+$product = isset( $args['product'] ) ? $args['product'] : ( isset( $GLOBALS['product'] ) ? $GLOBALS['product'] : false );
+
 /* translators: %s: Quantity. */
 $label = ! empty( $args['product_name'] ) ? sprintf( esc_html__( '%s quantity', 'woocommerce' ), wp_strip_all_tags( $args['product_name'] ) ) : esc_html__( 'Quantity', 'woocommerce' );
 
@@ -57,7 +60,9 @@ $label = ! empty( $args['product_name'] ) ? sprintf( esc_html__( '%s quantity', 
 				autocomplete="<?php echo esc_attr( isset( $autocomplete ) ? $autocomplete : 'on' ); ?>"
 			<?php endif; ?>
 		/>
-		<span class="quantity__label"><?php echo esc_html__( 'pcs.', 'borspirit' ); ?></span>
+		<?php if ( $product && ! $product->is_sold_individually() ) : ?>
+			<span class="quantity__label"><?php echo esc_html__( 'pcs.', 'borspirit' ); ?></span>
+		<?php endif; ?>
 	</div>
 	<?php
 	/**

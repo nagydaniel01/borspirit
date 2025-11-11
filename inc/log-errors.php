@@ -1,4 +1,9 @@
 <?php
+    // Exit early if in admin, AJAX, or REST requests (optional but recommended)
+    if ( is_admin() || wp_doing_ajax() || defined('REST_REQUEST') ) {
+        return;
+    }
+
     register_shutdown_function(function () {
         // Get the last error that occurred
         $lastError = error_get_last();

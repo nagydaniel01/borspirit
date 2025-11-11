@@ -42,7 +42,7 @@ body {
   display: inline-block;
   width: 16px;
   height: 16px;
-  color: $black;
+  color: $white;
   fill: currentColor;
   transition: $transition-base;
 }
@@ -349,8 +349,8 @@ mark, .mark {
 /* Default WordPress Elements */
 /* -------------------------- */
 h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
-  //letter-spacing: -1px;
-  word-spacing: -6px;
+  letter-spacing: -1px;
+  //word-spacing: -6px;
 }
 
 b, strong {

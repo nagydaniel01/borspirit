@@ -133,8 +133,10 @@
             },
             "choices": {
                 "white": "Fehér",
+                "primary": "Elsődleges",
                 "primary-05": "Elsődleges (5%)",
                 "primary-25": "Elsődleges (25%)",
+                "secondary": "Másodlagos",
                 "secondary-05": "Másodlagos (5%)",
                 "secondary-25": "Másodlagos (25%)"
             },
@@ -166,5 +168,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1761466320
+    "modified": 1761833421
 }

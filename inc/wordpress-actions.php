@@ -263,3 +263,56 @@
         }
         add_shortcode( 'average_rating', 'average_rating_shortcode' );
     }
+
+    if ( ! function_exists( 'open_external_links_in_new_tab' ) ) {
+        /**
+         * Open External Links in a New Tab
+         *
+         * This function scans post content and modifies all external links
+         * so that they open in a new browser tab with proper security attributes.
+         *
+         * It is applied to both regular post content and ACF WYSIWYG fields.
+         *
+         * @param string $content The post content or ACF WYSIWYG field value.
+         * @return string Modified content with external links opening in a new tab.
+         */
+        function open_external_links_in_new_tab( $content ) {
+            // Ensure content is a string to avoid errors
+            if (!is_string( $content ) || trim( $content ) === '') {
+                return $content;
+            }
+
+            // Get the site's base URL
+            $site_url = get_home_url();
+
+            // Use preg_replace_callback safely to find anchor tags
+            $modified_content = @preg_replace_callback(
+                '/<a\s+([^>]*?)href=["\'](https?:\/\/[^"\']+)["\']([^>]*)>/i',
+                function ($matches) use ($site_url) {
+                    $before = $matches[1];
+                    $link   = trim($matches[2]);
+                    $after  = $matches[3];
+
+                    // Skip internal links (including subpages)
+                    if (strpos($link, $site_url) === 0) {
+                        return '<a ' . $before . 'href="' . esc_url($link) . '"' . $after . '>';
+                    }
+
+                    // Add target and rel attributes safely for external links
+                    $new_tag = '<a ' . $before . 'href="' . esc_url($link) . '" target="_blank" rel="noopener noreferrer"' . $after . '>';
+                    return $new_tag;
+                },
+                $content
+            );
+
+            // If regex fails, fall back to the original content
+            if ($modified_content === null) {
+                return $content;
+            }
+
+            return $modified_content;
+        }
+        add_filter( 'the_content', 'open_external_links_in_new_tab' );
+        add_filter( 'acf/format_value/type=wysiwyg', 'open_external_links_in_new_tab' );
+        add_filter('acf/format_value/type=textarea', 'open_external_links_in_new_tab');
+    }

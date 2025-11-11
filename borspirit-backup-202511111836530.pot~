@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BorSpirit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-11 19:27+0000\n"
+"POT-Creation-Date: 2025-11-10 18:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -73,13 +73,15 @@ msgstr ""
 msgid "A network error occurred. Please try again."
 msgstr ""
 
-#: inc/shortcodes.php:380
+#: inc/shortcodes.php:349
 msgid "ACF plugin is not active."
 msgstr ""
 
 #: inc/woocommerce-extras.php:1365 inc/woocommerce-extras.php:1444
 #, php-format
-msgid "Add %s more to your cart to qualify for free shipping!"
+msgid ""
+"Add %s more to your cart to qualify for "
+"free shipping!"
 msgstr ""
 
 #: inc/register-taxonomies.php:21
@@ -106,8 +108,8 @@ msgstr ""
 #. $title,
 #. $post_type_singular_name
 #. );
-#: single.php:130 single.php:137 inc/woocommerce-actions.php:268
-#: inc/woocommerce-actions.php:277 template-parts/cards/card-default.php:98
+#: single.php:130 single.php:137 inc/woocommerce-actions.php:249
+#: inc/woocommerce-actions.php:258 template-parts/cards/card-default.php:98
 #: template-parts/cards/card-default.php:105
 msgid "Add to Bookmarks"
 msgstr ""
@@ -117,7 +119,7 @@ msgstr ""
 msgid "Admin email is not configured properly."
 msgstr ""
 
-#: inc/woocommerce-extras.php:1567
+#: inc/woocommerce-extras.php:1554
 msgid "Adult Confirm"
 msgstr ""
 
@@ -397,7 +399,7 @@ msgstr ""
 msgid "Enter your phone number"
 msgstr ""
 
-#: inc/shortcodes.php:62
+#: inc/shortcodes.php:41
 msgid "Error loading registration form."
 msgstr ""
 
@@ -460,7 +462,7 @@ msgstr ""
 msgid "Featured Image"
 msgstr ""
 
-#: inc/shortcodes.php:555
+#: inc/shortcodes.php:497
 msgid "Feedback:"
 msgstr ""
 
@@ -510,7 +512,7 @@ msgstr ""
 msgid "Form not found"
 msgstr ""
 
-#: woocommerce/single-product/tabs/tab-icons.php:150
+#: woocommerce/single-product/tabs/tab-icons.php:132
 #, php-format
 msgid "Free in-store pickup as early as %1$s"
 msgstr ""
@@ -519,7 +521,7 @@ msgstr ""
 msgid "Free Shipping Limit"
 msgstr ""
 
-#: woocommerce/single-product/tabs/tab-icons.php:83
+#: woocommerce/single-product/tabs/tab-icons.php:66
 #, php-format
 msgid "Free shipping on orders over %1$s"
 msgstr ""
@@ -621,8 +623,8 @@ msgstr ""
 msgid "I am under %s"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1529
-msgid "I confirm I am %d years or older"
+#: inc/woocommerce-extras.php:1521
+msgid "I confirm I am 18 years or older"
 msgstr ""
 
 #: inc/woocommerce-extras.php:595
@@ -717,6 +719,10 @@ msgstr ""
 msgid "Mailchimp request failed. Please try again later."
 msgstr ""
 
+#: template-parts/global/header.php:62
+msgid "Menu"
+msgstr ""
+
 #: template-parts/forms/form-contact_form.php:41
 msgid "Message"
 msgstr ""
@@ -770,10 +776,6 @@ msgstr ""
 
 #: templates/page-thank-you.php:27
 msgid "Name:"
-msgstr ""
-
-#: template-parts/global/header.php:62
-msgid "Navigation"
 msgstr ""
 
 #: inc/woocommerce-badge.php:119
@@ -844,7 +846,7 @@ msgstr ""
 msgid "No FAQs found."
 msgstr ""
 
-#: inc/shortcodes.php:505
+#: inc/shortcodes.php:447
 msgid "No feedback yet."
 msgstr ""
 
@@ -854,11 +856,11 @@ msgstr ""
 msgid "No form data received."
 msgstr ""
 
-#: woocommerce/single-product/tabs/tab-icons.php:197
+#: woocommerce/single-product/tabs/tab-icons.php:179
 msgid "No icon items found."
 msgstr ""
 
-#: inc/shortcodes.php:386
+#: inc/shortcodes.php:355
 msgid "No opening hours specified."
 msgstr ""
 
@@ -891,7 +893,7 @@ msgstr ""
 msgid "Open menu"
 msgstr ""
 
-#: inc/shortcodes.php:552
+#: inc/shortcodes.php:494
 msgid "Opinion:"
 msgstr ""
 
@@ -1058,11 +1060,11 @@ msgstr ""
 msgid "Registration failed: %s"
 msgstr ""
 
-#: inc/shortcodes.php:46
+#: inc/shortcodes.php:25
 msgid "Registration form not available."
 msgstr ""
 
-#: inc/shortcodes.php:72
+#: inc/shortcodes.php:51
 msgid "Registration form not found."
 msgstr ""
 
@@ -1078,7 +1080,7 @@ msgstr ""
 msgid "Remove form bookmarks"
 msgstr ""
 
-#: inc/woocommerce-actions.php:277
+#: inc/woocommerce-actions.php:258
 msgid "Remove from bookmarks"
 msgstr ""
 
@@ -1121,7 +1123,7 @@ msgstr ""
 msgid "Search for: %s"
 msgstr ""
 
-#: inc/woocommerce-actions.php:713 template-parts/flexibile-elements.php:33
+#: inc/woocommerce-actions.php:694 template-parts/flexibile-elements.php:33
 msgid "Section #%d is incorrectly formatted and cannot be displayed."
 msgstr ""
 
@@ -1176,7 +1178,7 @@ msgid "Submit feedback"
 msgstr ""
 
 #. %s = feedback date
-#: inc/shortcodes.php:560
+#: inc/shortcodes.php:502
 #, php-format
 msgid "Submitted on %s"
 msgstr ""
@@ -1272,13 +1274,13 @@ msgstr ""
 msgid "Thank you! Your feedback has been sent."
 msgstr ""
 
-#: inc/woocommerce-actions.php:688 template-parts/flexibile-elements.php:18
+#: inc/woocommerce-actions.php:669 template-parts/flexibile-elements.php:18
 msgid ""
 "The Advanced Custom Fields plugin is not activated. Please install or "
 "activate ACF to use sections."
 msgstr ""
 
-#: inc/woocommerce-actions.php:677 template-parts/flexibile-elements.php:7
+#: inc/woocommerce-actions.php:658 template-parts/flexibile-elements.php:7
 msgid "The page ID is missing or invalid."
 msgstr ""
 
@@ -1292,7 +1294,7 @@ msgstr ""
 msgid "The post saved successfully."
 msgstr ""
 
-#: inc/woocommerce-actions.php:683 template-parts/flexibile-elements.php:13
+#: inc/woocommerce-actions.php:664 template-parts/flexibile-elements.php:13
 #, php-format
 msgid "The required template directory does not exist: %s."
 msgstr ""
@@ -1304,7 +1306,7 @@ msgid ""
 "<code>%s</code>"
 msgstr ""
 
-#: inc/woocommerce-actions.php:727 template-parts/flexibile-elements.php:47
+#: inc/woocommerce-actions.php:708 template-parts/flexibile-elements.php:47
 #, php-format
 msgid ""
 "The template for <code>%s</code> section is missing. Please create the file: "
@@ -1412,7 +1414,6 @@ msgstr ""
 
 #: inc/age-gate.php:16 inc/age-gate.php:99
 #: template-parts/dialogs/modal-age_gate.php:17
-#: template-parts/global/footer.php:154
 #, php-format
 msgid ""
 "We are committed advocates and supporters of responsible, civilized drinking."
@@ -1458,7 +1459,7 @@ msgstr ""
 msgid "Write your message here..."
 msgstr ""
 
-#: inc/shortcodes.php:93
+#: inc/shortcodes.php:70
 msgid "You are already logged in."
 msgstr ""
 
@@ -1466,7 +1467,7 @@ msgstr ""
 msgid "You are already registered for this event."
 msgstr ""
 
-#: inc/shortcodes.php:36
+#: inc/shortcodes.php:15
 msgid "You are already registered."
 msgstr ""
 
@@ -1502,8 +1503,8 @@ msgstr ""
 msgid "You must be logged in."
 msgstr ""
 
-#: inc/woocommerce-extras.php:1536
-msgid "You must confirm you are %d+ to place the order."
+#: inc/woocommerce-extras.php:1525
+msgid "You must confirm you are 18+ to place the order."
 msgstr ""
 
 #: template-parts/sections/section-media.php:46

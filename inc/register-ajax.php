@@ -152,20 +152,20 @@
         add_action( 'wp_enqueue_scripts', 'enqueue_mailchimp_form_ajax_scripts' );
     }
 
-    if ( ! function_exists( 'enqueue_bsp_quiz_ajax_scripts' ) ) {
-        function enqueue_bsp_quiz_ajax_scripts() {
-            $script_rel_path = '/ajax/js/bsp_quiz_ajax.js'; // relative to your theme root
+    if ( ! function_exists( 'enqueue_prq_quiz_ajax_scripts' ) ) {
+        function enqueue_prq_quiz_ajax_scripts() {
+            $script_rel_path = '/ajax/js/prq_quiz_ajax.js'; // relative to your theme root
             $script_path     = get_template_directory() . $script_rel_path;
             $script_uri      = get_template_directory_uri() . $script_rel_path;
 
             // Only enqueue if the file exists
             if ( file_exists( $script_path ) ) {
-                wp_enqueue_script( 'bsp_quiz_ajax_script', $script_uri, array( 'jquery' ), null, true );
+                wp_enqueue_script( 'prq_quiz_ajax_script', $script_uri, array( 'jquery' ), null, true );
 
                 // Pass dynamic data to JS
-                wp_localize_script( 'bsp_quiz_ajax_script', 'bsp_quiz_ajax_object', array(
+                wp_localize_script( 'prq_quiz_ajax_script', 'prq_quiz_ajax_object', array(
                     'ajax_url'          => admin_url( 'admin-ajax.php' ),
-                    'nonce'             => wp_create_nonce('bsp_quiz_action'),
+                    'nonce'             => wp_create_nonce('prq_quiz_action'),
                     'user_id'           => get_current_user_id(),
                     'msg_sending'       => __( 'Küldés…', 'bsp-wine-quiz' ),
                     'msg_error_sending' => __( 'Hiba történt a feldolgozás során.', 'bsp-wine-quiz' ),
@@ -177,7 +177,7 @@
                 error_log( 'BorSpirit quiz script file does not exist: ' . $script_path );
             }
         }
-        //add_action( 'wp_enqueue_scripts', 'enqueue_bsp_quiz_ajax_scripts' );
+        //add_action( 'wp_enqueue_scripts', 'enqueue_prq_quiz_ajax_scripts' );
     }
 
     if ( ! function_exists( 'enqueue_save_post_ajax_scripts' ) ) {

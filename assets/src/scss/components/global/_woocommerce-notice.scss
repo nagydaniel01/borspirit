@@ -1,3 +1,7 @@
+.woocommerce-notices-wrapper {
+  margin-bottom: 1rem;
+}
+
 .woocommerce-message,
 .woocommerce-info,
 .woocommerce-error {
@@ -5,8 +9,8 @@
   position: relative;
   display: inline-block;
   width: 100%;
-  margin-bottom: 2.5rem;
-  margin-left: 0;
+  margin: 0;
+  //margin-left: 0;
   padding: 1rem 1.875rem 1rem 3.75rem;
   list-style: none outside;
   line-height: 2rem;

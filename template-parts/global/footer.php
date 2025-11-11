@@ -1,7 +1,7 @@
 <?php
     $site_name = get_field('site_name', 'option') ?: get_bloginfo('name');
     $site_logo = get_field('site_logo', 'option');
-    $social    = get_field('social', 'option');
+    $social    = get_field('social_items', 'option');
     $copyright = get_field('copyright', 'option');
 
     $locations = get_nav_menu_locations();
@@ -28,13 +28,8 @@
                                 </a>
                             </div>
                         <?php endif; ?>
-                    </div>
-                </div>
-        
-                <div class="col-md-6 col-xl">
-                    <div class="footer__block">
+
                         <?php if (!empty($social) && is_array($social)) : ?>
-                            <h3 class="footer__title"><?php echo esc_html__('Social media', 'borspirit'); ?></h3>
                             <?php
                                 $custom_names = [
                                     'linkedin'     => 'LinkedIn',
@@ -67,6 +62,11 @@
                                 </ul>
                             </nav>
                         <?php endif; ?>
+
+                        <?php echo wpautop( do_shortcode( '[site_phone]' ) ); ?>
+                        <?php echo wpautop( do_shortcode( '[site_email]' ) ); ?>
+                        <?php echo wpautop( do_shortcode( '[woocommerce_settings setting="store_postcode"] [woocommerce_settings setting="store_city"], [woocommerce_settings setting="store_address"]' ) ); ?>
+                        <?php echo do_shortcode( '[opening_hours]' ); ?>
                     </div>
                 </div>
         
@@ -88,40 +88,73 @@
                                         'theme_location'    => $theme_location,
                                         'container'         => false,
                                         'menu_class'        => 'nav__list level0',
-                                        'walker'            => new Default_Menu_Walker()
+                                        'walker'            => new Custom_Nav_Walker()
                                     ));
                                 ?>
                             </nav>
                         <?php endif; ?>
                     </div>
                 </div>
-        
-                <div class="col-md-6 col-xl">
-                    <?php
-                    $categories = get_terms(array(
-                        'taxonomy'   => 'category',
-                        'hide_empty' => false,
-                    ));
 
-                    if (!empty($categories) && !is_wp_error($categories)) : ?>
-                        <div class="footer__block">
-                            <h3 class="footer__title"><?php echo esc_html__('Our posts', 'borspirit'); ?></h3>
+                <div class="col-md-6 col-xl">
+                    <div class="footer__block">
+                        <?php 
+                        $theme_location = 'footer_menu_2';
+                        if ($locations && has_nav_menu($theme_location)) : ?>
+                            <?php 
+                                $menu_id = $locations[$theme_location];
+                                $menu = wp_get_nav_menu_object($menu_id);
+                            ?>
+                            <?php if ( is_object($menu) && isset($menu->name) ) : ?>
+                                <h3 class="footer__title"><?php echo esc_html($menu->name); ?></h3>
+                            <?php endif; ?>
                             <nav class="footer__nav nav nav--footer">
-                                <ul class="nav__list">
-                                    <?php
-                                        wp_list_categories(array(
-                                            'title_li'   => '',
-                                            'orderby'    => 'name',
-                                            'order'      => 'ASC',
-                                            'show_count' => false,
-                                            'hide_empty' => true,
-                                        ));
-                                    ?>
-                                </ul>
+                                <?php
+                                    wp_nav_menu(array(
+                                        'theme_location'    => $theme_location,
+                                        'container'         => false,
+                                        'menu_class'        => 'nav__list level0',
+                                        'walker'            => new Custom_Nav_Walker()
+                                    ));
+                                ?>
                             </nav>
-                        </div>
-                    <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
                 </div>
+
+                <div class="col-md-6 col-xl">
+                    <div class="footer__block">
+                        <?php 
+                        $theme_location = 'footer_menu_3';
+                        if ($locations && has_nav_menu($theme_location)) : ?>
+                            <?php 
+                                $menu_id = $locations[$theme_location];
+                                $menu = wp_get_nav_menu_object($menu_id);
+                            ?>
+                            <?php if ( is_object($menu) && isset($menu->name) ) : ?>
+                                <h3 class="footer__title"><?php echo esc_html($menu->name); ?></h3>
+                            <?php endif; ?>
+                            <nav class="footer__nav nav nav--footer">
+                                <?php
+                                    wp_nav_menu(array(
+                                        'theme_location'    => $theme_location,
+                                        'container'         => false,
+                                        'menu_class'        => 'nav__list level0',
+                                        'walker'            => new Custom_Nav_Walker()
+                                    ));
+                                ?>
+                            </nav>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__notice">
+                <?php
+                    echo wpautop( sprintf(
+                        get_option( 'ag_modal_content', __( 'We are committed advocates and supporters of responsible, civilized drinking. Therefore, we do not recommend the consumption of alcoholic beverages to persons under the age of %s and cannot serve them.', 'borspirit' ) ),
+                        esc_html( get_option( 'ag_min_age', 18 ) )
+                    ) );
+                ?>
             </div>
         </div>
     </div>

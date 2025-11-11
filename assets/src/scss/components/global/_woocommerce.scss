@@ -24,14 +24,13 @@
 }
 
 // Pagination
-.woocommerce nav.woocommerce-pagination {
-  .page-numbers li {
-    .page-numbers {
-      @extend .btn, .btn-outline-secondary;
-      margin: 0.25rem;
+.woocommerce-pagination {
+  a.page-numbers,
+  span.page-numbers {
+    @extend .btn, .btn-outline-secondary;
+    margin: 0.25rem;
 
-      &.current { @extend .btn-primary; }
-    }
+    &.current { @extend .btn-primary; }
   }
 }
 
@@ -171,12 +170,13 @@
   // ---------------------------------------------
   .product {
     .woocommerce-loop-product {
+      position: relative;
       background-color: rgba($white, 1);
       border-radius: 0.5rem;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
 
       &:hover {
-        transform: translateY(-5px);
+        //transform: translateY(-5px);
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       }
 
@@ -199,7 +199,7 @@
         }
 
         &:hover img {
-          transform: scale(1.05);
+          //transform: scale(1.05);
         }
       }
 
@@ -212,8 +212,9 @@
         height: 2rem;
         display: grid;
         place-items: center;
-        background-color: rgba($white, .8);
+        background-color: rgba($secondary, 1);
         border-radius: 2rem;
+        z-index: 1;
 
         .icon {
           margin: 0;
@@ -230,8 +231,9 @@
 
         h2.woocommerce-loop-product__title {
           @extend .card-title;
-          font-size: 1.25rem;
+          font-size: 1.125rem;
           font-weight: 600;
+          //color: $primary;
           margin-bottom: 0.5rem;
         }
 
@@ -241,7 +243,13 @@
         }
 
         // Price
-        .price {}
+        .price {
+          font-size: 1.125rem;
+
+          ins {
+            font-size: 1.125rem;
+          }
+        }
 
         // Stock info
         .product-stock {

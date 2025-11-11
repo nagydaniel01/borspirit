@@ -68,6 +68,73 @@
             "preview_size": "medium"
         },
         {
+            "key": "field_6912145c25e87",
+            "label": "Telefonszám",
+            "name": "site_phone",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6912147725e88",
+            "label": "E-mail",
+            "name": "site_email",
+            "aria-label": "",
+            "type": "email",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_69078759c0a4e",
+            "label": "Helykitöltő kép",
+            "name": "placeholder_img",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
+        },
+        {
             "key": "field_68de5913cb953",
             "label": "Nyitvatartás",
             "name": "opening_hours",
@@ -597,6 +664,114 @@
             ]
         },
         {
+            "key": "field_6913792cd8bee",
+            "label": "Copyright",
+            "name": "copyright",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_691209bd045d4",
+            "label": "Közösségi média",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_691209d9045d5",
+            "label": "Közösségi média",
+            "name": "social_items",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Sor hozzáadása",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_691209d9045d6",
+                    "label": "Kép",
+                    "name": "social_image",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "",
+                    "allow_in_bindings": 0,
+                    "preview_size": "medium",
+                    "parent_repeater": "field_691209d9045d5"
+                },
+                {
+                    "key": "field_691209d9045d7",
+                    "label": "Leírás",
+                    "name": "social_link",
+                    "aria-label": "",
+                    "type": "link",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "allow_in_bindings": 0,
+                    "parent_repeater": "field_691209d9045d5"
+                }
+            ]
+        },
+        {
             "key": "field_68e51a739e723",
             "label": "Hírlevél",
             "name": "",
@@ -837,7 +1012,7 @@
                 "wc_wine_store_limited_stock_flash": "Limited Stock Badge",
                 "wc_wine_store_discount_flash": "Discount Badge",
                 "wc_wine_store_award_flash": "Award Winner Badge",
-                "wc_wine_store_new_vintage_flash": "New vintage",
+                "wc_wine_store_new_vintage_flash": "Új évjárat",
                 "wc_wine_store_category_flash": "Wine of the month"
             },
             "default_value": [],
@@ -1134,5 +1309,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1761406271
+    "modified": 1762883916
 }

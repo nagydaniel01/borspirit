@@ -51,15 +51,28 @@
     // ACF Fields (Logo, Placeholder)
     if ( function_exists( 'get_field' ) ) {
         $under_construction_mode = get_field( 'under_construction_mode', 'option' ) ?? false;
-        $placeholder_image       = get_field( 'placeholder_image', 'option' ) ?? [];
+        $placeholder_img         = get_field( 'placeholder_img', 'option' ) ?? [];
         
         if ( ! defined( 'UNDER_CONSTRUCTION_MODE' ) ) {
             define( 'UNDER_CONSTRUCTION_MODE', $under_construction_mode );
         }
         
-        if ( ! defined( 'PLACEHOLDER_IMAGE_ID' ) ) {
-            $placeholder_id = is_array( $placeholder_image ) && isset( $placeholder_image['ID'] ) ? $placeholder_image['ID'] : null;
-            define( 'PLACEHOLDER_IMAGE_ID', $placeholder_id );
+        if ( ! defined( 'PLACEHOLDER_IMG_SRC' ) ) {
+
+            // Check if a custom placeholder image is set and has a URL
+            $placeholder_img_src = is_array( $placeholder_img ) && isset( $placeholder_img['url'] ) ? $placeholder_img['url'] : null;
+
+            // Fallback: use WooCommerce placeholder image if WooCommerce is active
+            if ( empty( $placeholder_img_src ) && class_exists( 'WooCommerce' ) ) {
+                $placeholder_img_src = wc_placeholder_img_src();
+            }
+
+            // Optional: fallback to a local theme image if neither ACF nor WooCommerce provide one
+            if ( empty( $placeholder_img_src ) ) {
+                $placeholder_img_src = get_template_directory_uri() . '/assets/src/images/placeholder.png';
+            }
+
+            define( 'PLACEHOLDER_IMG_SRC', $placeholder_img_src );
         }
     }
 

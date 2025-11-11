@@ -175,7 +175,12 @@
                 $percentage = round(
                     ( ( $product->get_regular_price() - $product->get_sale_price() ) / $product->get_regular_price() ) * 100
                 );
-                echo '<span class="badge badge--discount">' . sprintf( esc_html__( '%d%%', 'borspirit' ), $percentage ) . '</span>';
+
+                printf(
+                    '<span class="badge badge--onsale">%s <span class="badge__discount">−%d%%</span></span>',
+                    esc_html__( 'Sale!', 'woocommerce' ),
+                    esc_html( $percentage )
+                );
             }
         }
     }

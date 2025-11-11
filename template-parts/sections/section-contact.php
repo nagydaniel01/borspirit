@@ -7,9 +7,13 @@
     $section_lead       = $section['contact_section_lead'] ?? '';
     $contact            = $section['contact'] ?? '';
     $form_id            = $section['contact_form'] ?? '';
+
+    // Determine column classes dynamically
+    $contact_col_class = !empty($contact) ? 'col-lg-6' : '';
+    $form_col_class    = !empty($contact) ? 'col-lg-6' : 'col-lg-12';
 ?>
 
-<?php if (!empty($contact)) : ?>
+<?php if (!empty($contact) || !empty($form_id)) : ?>
     <section id="<?php echo esc_attr($section_slug); ?>" class="section section--contact <?php echo esc_attr($section_classes); ?>">
         <div class="container">
             <div class="section__inner">
@@ -25,15 +29,20 @@
                 <?php endif; ?>
                 
                 <div class="section__content row">
-                    <div class="col-lg-6">
-                        <?php echo wp_kses_post($contact); ?>
-                    </div>
-                    <div class="col-lg-6">
-                        <?php
-                            $template_args = [];
-                            get_template_part('template-parts/forms/form', $form_id, $template_args);
-                        ?>
-                    </div>
+                    <?php if (!empty($contact)) : ?>
+                        <div class="<?php echo esc_attr($contact_col_class); ?>">
+                            <?php echo wp_kses_post($contact); ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (!empty($form_id)) : ?>
+                        <div class="<?php echo esc_attr($form_col_class); ?>">
+                            <?php
+                                $template_args = [];
+                                get_template_part('template-parts/forms/form', $form_id, $template_args);
+                            ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

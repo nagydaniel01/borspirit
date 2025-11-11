@@ -113,7 +113,7 @@
         function custom_woocommerce_catalog_ordering_wrapper() {
             echo '<div class="woocommerce-tools">';
         }
-        add_action('woocommerce_before_shop_loop', 'custom_woocommerce_catalog_ordering_wrapper', 10);
+        add_action( 'woocommerce_before_shop_loop', 'custom_woocommerce_catalog_ordering_wrapper', 10 );
     }
 
     if ( ! function_exists( 'custom_woocommerce_catalog_ordering_wrapper_end' ) ) {
@@ -164,6 +164,24 @@
     // 3. SHOP PAGE STRUCTURE
     // ============================================================
 
+    // Move WooCommerce notices before the layout
+    //remove_action( 'woocommerce_before_shop_loop', 'woocommerce_output_all_notices', 10 );
+
+    if ( ! function_exists( 'custom_move_notices_before_shop_layout' ) ) {
+        /**
+         * Output WooCommerce notices before the shop layout wrapper.
+         *
+         * @hooked woocommerce_before_shop_loop - 1
+         */
+        function custom_move_notices_before_shop_layout() {
+            // Display notices manually before the layout
+            echo '<div class="woocommerce-notices-wrapper">';
+            wc_print_notices();
+            echo '</div>';
+        }
+        //add_action( 'woocommerce_before_shop_loop', 'custom_move_notices_before_shop_layout', 1 );
+    }
+
     if ( ! function_exists( 'custom_shop_layout_open' ) ) {
         /**
          * Open layout before products loop.
@@ -179,7 +197,8 @@
             // Products (right on desktop, above on mobile)
             echo '<div class="shop-layout__content col-lg-9 col-md-8 order-0 order-lg-1">';
         }
-        add_action( 'woocommerce_before_shop_loop', 'custom_shop_layout_open', 5 );
+        //add_action( 'woocommerce_before_shop_loop', 'custom_shop_layout_open', 5 );
+        add_action( 'woocommerce_before_shop_loop', 'custom_shop_layout_open', 40 );
     }
 
     if ( ! function_exists( 'custom_shop_layout_close' ) ) {
@@ -238,6 +257,33 @@
          */
         function custom_product_wrapper() {
             echo '<div class="woocommerce-loop-product">';
+
+            // Bookmark button
+            if ( ! is_user_logged_in() ) {
+                ?>
+                <a class="woocommerce-loop-product__bookmark" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">
+                    <svg class="icon icon-bookmark-empty">
+                        <use xlink:href="#icon-bookmark-empty"></use>
+                    </svg>
+                    <span class="visually-hidden"><?php echo esc_html__( 'Add to Bookmarks', 'borspirit' ); ?></span>
+                </a>
+                <?php
+            } else {
+                $current_user_id = get_current_user_id();
+                $post_id         = get_the_ID();
+                $bookmark_ids    = get_field( 'user_bookmarks', 'user_' . $current_user_id ) ?: [];
+                $is_bookmarked   = in_array( $post_id, $bookmark_ids, true );
+                $bookmark_icon   = $is_bookmarked ? 'bookmark' : 'bookmark-empty';
+                $bookmark_text   = $is_bookmarked ? __( 'Remove from bookmarks', 'borspirit' ) : __( 'Add to Bookmarks', 'borspirit' );
+                ?>
+                <a id="btn-bookmark" class="woocommerce-loop-product__bookmark" href="#" data-post-id="<?php echo esc_attr( $post_id ); ?>" data-bookmarked="<?php echo esc_attr( $is_bookmarked ? 'true' : 'false' ); ?>">
+                    <svg class="icon icon-<?php echo esc_attr( $bookmark_icon ); ?>">
+                        <use xlink:href="#icon-<?php echo esc_attr( $bookmark_icon ); ?>"></use>
+                    </svg>
+                    <span class="visually-hidden"><?php echo esc_html( $bookmark_text ); ?></span>
+                </a>
+                <?php
+            }
         }
         add_action( 'woocommerce_before_shop_loop_item', 'custom_product_wrapper', 5 );
     }
@@ -280,33 +326,6 @@
          */
         function custom_woocommerce_loop_image_wrapper() {
             echo '<div class="woocommerce-loop-product__image">';
-
-            // Bookmark button
-            if ( ! is_user_logged_in() ) {
-                ?>
-                <a class="woocommerce-loop-product__bookmark" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">
-                    <svg class="icon icon-bookmark-empty">
-                        <use xlink:href="#icon-bookmark-empty"></use>
-                    </svg>
-                    <span class="visually-hidden"><?php echo esc_html__( 'Add to Bookmarks', 'borspirit' ); ?></span>
-                </a>
-                <?php
-            } else {
-                $current_user_id = get_current_user_id();
-                $post_id         = get_the_ID();
-                $bookmark_ids    = get_field( 'user_bookmarks', 'user_' . $current_user_id ) ?: [];
-                $is_bookmarked   = in_array( $post_id, $bookmark_ids, true );
-                $bookmark_icon   = $is_bookmarked ? 'bookmark' : 'bookmark-empty';
-                $bookmark_text   = $is_bookmarked ? __( 'Remove from bookmarks', 'borspirit' ) : __( 'Add to Bookmarks', 'borspirit' );
-                ?>
-                <a id="btn-bookmark" class="woocommerce-loop-product__bookmark" href="#" data-post-id="<?php echo esc_attr( $post_id ); ?>" data-bookmarked="<?php echo esc_attr( $is_bookmarked ? 'true' : 'false' ); ?>">
-                    <svg class="icon icon-<?php echo esc_attr( $bookmark_icon ); ?>">
-                        <use xlink:href="#icon-<?php echo esc_attr( $bookmark_icon ); ?>"></use>
-                    </svg>
-                    <span class="visually-hidden"><?php echo esc_html( $bookmark_text ); ?></span>
-                </a>
-                <?php
-            }
         }
         add_action( 'woocommerce_before_shop_loop_item_title', 'custom_woocommerce_loop_image_wrapper', 1 );
     }

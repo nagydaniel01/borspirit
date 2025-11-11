@@ -8,7 +8,9 @@
 <main class="page page--default">
     <section class="section section--default">
         <div class="container">
-            <h1 class="section__title"><?php printf( esc_html__( 'All %s', 'borspirit' ), esc_html( mb_strtolower($taxonomy_obj->labels->singular_name) ) ); ?></h1>
+            <div class="section__header">
+                <h1 class="section__title"><?php printf( esc_html__( 'All %s', 'borspirit' ), esc_html( mb_strtolower($taxonomy_obj->labels->singular_name) ) ); ?></h1>
+            </div>
             <div class="section__content">
                 <?php
                     $terms = get_terms([
@@ -41,7 +43,7 @@
                         <?php endforeach; ?>
                     </div>
                 <?php else : ?>
-                    <p><?php printf( esc_html__( 'No %s found.', 'borspirit' ), esc_html( mb_strtolower($taxonomy_obj->labels->singular_name) ) ); ?></p>
+                    <?php wpautop( printf( esc_html__( 'No %s found.', 'borspirit' ), esc_html( mb_strtolower($taxonomy_obj->labels->singular_name) ) ) ); ?>
                 <?php endif; ?>
             </div>
         </div>

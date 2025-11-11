@@ -24,19 +24,13 @@
     }
   }
 
-  .woocommerce-order-details {
-    margin-bottom: 2rem;
-
-    .woocommerce-order-details__title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-    }
-  }
-
-  .woocommerce-customer-details {
+  .woocommerce-order-details,
+  .woocommerce-customer-details,
+  .wc-block-order-confirmation-additional-fields-wrapper {
     margin-top: 2rem;
 
+    h2,
+    .woocommerce-order-details__title,
     .woocommerce-column__title {
       font-size: 1.25rem;
       font-weight: 600;

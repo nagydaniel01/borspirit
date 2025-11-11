@@ -27,16 +27,17 @@ $teal:    #20c997;
 $cyan:    #0dcaf0;
 
 // Override and add colors
+$gold:      #debf67; //#c0a149;
 $ruby:      #690D1A;
 $lava:      #C6161B;
 $alabaster: #F4F1E6;
 $youtube:   #FF0033;
 
 // Override and add theme colors
-$primary: $ruby;
+$primary: $gold;
 $primary-light: tint-color($primary, 80%); // makes it 40% lighter
 $primary-dark:  shade-color($primary, 25%); // makes it 20% lighter
-$secondary: $alabaster;
+$secondary: $gray-900;
 $secondary-light: tint-color($secondary, 80%); // makes it 40% lighter
 $secondary-dark:  shade-color($secondary, 25%); // makes it 20% lighter
 $info: $primary-light;
@@ -93,7 +94,7 @@ $grid-gutter-width: 1.5rem;
 
 // Body
 $body-color: $gray-900;
-$body-bg: $gray-50;
+$body-bg: $white;
 
 // Components
 $border-width: 1px;
@@ -104,10 +105,10 @@ $border-radius-lg: 0.9375rem;
 $border-radius-xl: 1.5rem;
 
 // Typography
-@import url('https://fonts.googleapis.com/css2?family=Libre+Bodoni:ital,wght@0,400..700;1,400..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 $font-family-base: "Poppins", sans-serif;
-$headings-font-family: "Kalam-Regular", serif;
+$headings-font-family: "Libre Baskerville", serif;
 
 $font-size-base: 1.063rem;
 $line-height-base: 1.6;
@@ -123,9 +124,9 @@ $headings-margin-bottom: .5rem;
 $headings-font-style: normal;
 $headings-font-weight: 800;
 $headings-line-height: normal;
-$headings-color: $lava;
+$headings-color: $gold;
 
-$link-color: $lava;
+$link-color: $gold;
 $link-decoration: underline;
 
 // Tables
@@ -247,7 +248,7 @@ $transition-base: all 0.4s ease-in-out;
 
 // Badge
 $badge-font-size:                   .75em;
-$badge-color:                       $primary;
+$badge-color:                       $white;
 $badge-padding-y:                   .5em;
 $badge-padding-x:                   1em;
 $badge-border-radius:               $border-radius;

@@ -20,7 +20,7 @@
             </header>
             <div class="page__content">
                 <?php if ($data) : ?>
-                    <p><?php echo esc_html__('We’ve received your message. Here’s a summary of what you submitted:', 'borspirit'); ?></p>
+                    <?php echo wpautop( esc_html__('We’ve received your message. Here’s a summary of what you submitted:', 'borspirit') ); ?>
 
                     <ul class="thank-you-details">
                         <li>
@@ -48,7 +48,7 @@
                     </ul>
 
                 <?php else : ?>
-                    <p><?php echo esc_html__('Sorry, we couldn’t find your message details or the session has expired.', 'borspirit'); ?></p>
+                    <?php echo wpautop( esc_html__('Sorry, we couldn’t find your message details or the session has expired.', 'borspirit') ); ?>
                 <?php endif; ?>
 
                 <a href="<?php echo esc_url(home_url('/')); ?>" class="button">

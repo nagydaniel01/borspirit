@@ -38,7 +38,7 @@ if ( ! $product ) return;
                                 '<div class="woocommerce-product-gallery__image--placeholder">
                                     <img src="%s" alt="%s" class="wp-post-image" />
                                 </div>',
-                                esc_url( wc_placeholder_img_src( 'woocommerce_single' ) ),
+                                esc_url( wc_placeholder_img_id( 'woocommerce_single' ) ),
                                 esc_html__( 'Awaiting product image', 'woocommerce' )
                             );
                         }

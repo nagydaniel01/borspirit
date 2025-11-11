@@ -46,7 +46,7 @@
                             <?php echo esc_html__('Your browser does not support the audio tag.', 'borspirit'); ?>
                         </audio>
                     <?php else : ?>
-                        <p><?php echo esc_html__('Unsupported media type.', 'borspirit'); ?></p>
+                        <?php echo wpautop( esc_html__('Unsupported media type.', 'borspirit') ); ?>
                     <?php endif; ?>
                 </div>
             </div>

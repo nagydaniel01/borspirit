@@ -1,4 +1,4 @@
-<form id="bsp_quiz_form" class="form bsp-quiz-form" method="post" action="<?php echo esc_url( admin_url('admin-ajax.php') ); ?>" novalidate>
+<form id="prq_quiz_form" class="form bsp-quiz-form" method="post" action="<?php echo esc_url( admin_url('admin-ajax.php') ); ?>" novalidate>
     <div id="bsp-quiz-steps">
         <!-- Step 1 -->
         <div class="bsp-step" data-step="1">

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BorSpirit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-11 19:27+0000\n"
+"POT-Creation-Date: 2025-11-11 18:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -717,6 +717,10 @@ msgstr ""
 msgid "Mailchimp request failed. Please try again later."
 msgstr ""
 
+#: template-parts/global/header.php:62
+msgid "Menu"
+msgstr ""
+
 #: template-parts/forms/form-contact_form.php:41
 msgid "Message"
 msgstr ""
@@ -770,10 +774,6 @@ msgstr ""
 
 #: templates/page-thank-you.php:27
 msgid "Name:"
-msgstr ""
-
-#: template-parts/global/header.php:62
-msgid "Navigation"
 msgstr ""
 
 #: inc/woocommerce-badge.php:119

@@ -22,7 +22,15 @@
         background-color: rgba($white, 1);
 
         .slider__list::after {
-            background: linear-gradient(to right, rgba(250, 250, 250, 0) 0%, rgba($white, 1) 100%) !important;
+            background: linear-gradient(to right, rgba($white, 0) 0%, rgba($white, 1) 100%) !important;
+        }
+    }
+
+    &.section--color-primary {
+        background-color: rgba($primary, 1);
+
+        .section__title {
+            color: rgba($white, 1);
         }
     }
 
@@ -30,7 +38,7 @@
         background-color: rgba($primary, 0.05);
 
         .slider__list::after {
-            background: linear-gradient(to right, rgba(250, 250, 250, 0) 0%, #F2EEEE 100%) !important;
+            background: linear-gradient(to right, rgba($primary, 0) 0%, rgba($primary, 0.05) 100%) !important;
         }
     }
 
@@ -38,23 +46,39 @@
         background-color: rgba($primary, 0.25);
 
         .slider__list::after {
-            background: linear-gradient(to right, rgba(250, 250, 250, 0) 0%, #D5BEC2 100%) !important;
+            background: linear-gradient(to right, rgba($primary, 0) 0%, rgba($primary, 0.25) 100%) !important;
+        }
+    }
+
+    &.section--color-secondary {
+        background-color: rgba($secondary, 1);
+
+        .section__title {
+            color: rgba($primary-dark, 1);
         }
     }
 
     &.section--color-secondary-05 {
         background-color: rgba($secondary, 0.05);
 
+        .section__title {
+            color: rgba($primary-dark, 1);
+        }
+
         .slider__list::after {
-            background: linear-gradient(to right, rgba(250, 250, 250, 0) 0%, #D5BEC2 100%) !important;
+            background: linear-gradient(to right, rgba($secondary, 0) 0%, rgba($secondary, 0.05) 100%) !important;
         }
     }
 
     &.section--color-secondary-25 {
         background-color: rgba($secondary, 0.25);
 
+        .section__title {
+            color: rgba($primary-dark, 1);
+        }
+
         .slider__list::after {
-            background: linear-gradient(to right, rgba(250, 250, 250, 0) 0%, #F8F7F5 100%) !important;
+            background: linear-gradient(to right, rgba($secondary, 0) 0%, rgba($secondary, 0.25) 100%) !important;
         }
     }
 
@@ -82,7 +106,7 @@
     .section__header {
         display: flex;
         flex-direction: column;
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
     }
 
     .section__image-wrapper {
@@ -93,10 +117,6 @@
         width: 100%;
         border-radius: $border-radius-xl;
         box-shadow: 0 8px 20px 0 rgba(0, 0, 0, .15);
-    }
-
-    .section__title {
-        
     }
 
     .section__lead {
@@ -205,8 +225,8 @@
 
 @include media-breakpoint-up(lg) {
     .section {
-        padding-top: 3rem;
-        padding-bottom: 3rem;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
     }
 
     .section__bookmark {

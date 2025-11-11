@@ -1,6 +1,6 @@
 <?php
-if ( ! function_exists('bsp_quiz_handle_recommend') ) {
-    function bsp_quiz_handle_recommend() {
+if ( ! function_exists('prq_quiz_handle_recommend') ) {
+    function prq_quiz_handle_recommend() {
         try {
             // Ensure POST request
             if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
@@ -8,7 +8,7 @@ if ( ! function_exists('bsp_quiz_handle_recommend') ) {
             }
 
             // Check nonce
-            if ( ! isset($_POST['nonce']) || ! wp_verify_nonce($_POST['nonce'], 'bsp_quiz_action') ) {
+            if ( ! isset($_POST['nonce']) || ! wp_verify_nonce($_POST['nonce'], 'prq_quiz_action') ) {
                 wp_send_json_error(['message' => __('Invalid security token.', 'bsp-wine-quiz')], 403);
             }
 
@@ -106,18 +106,18 @@ if ( ! function_exists('bsp_quiz_handle_recommend') ) {
         }
     }
 
-    //add_action('wp_ajax_bsp_recommend', 'bsp_quiz_handle_recommend');
-    //add_action('wp_ajax_nopriv_bsp_recommend', 'bsp_quiz_handle_recommend');
+    //add_action('wp_ajax_prq_recommend', 'prq_quiz_handle_recommend');
+    //add_action('wp_ajax_nopriv_prq_recommend', 'prq_quiz_handle_recommend');
 }
 
-if ( ! function_exists('bsp_quiz_handle_add_to_cart') ) {
-    function bsp_quiz_handle_add_to_cart() {
+if ( ! function_exists('prq_quiz_handle_add_to_cart') ) {
+    function prq_quiz_handle_add_to_cart() {
         try {
             if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
                 wp_send_json_error(['message' => __('Invalid request method.', 'bsp-wine-quiz')], 405);
             }
 
-            if ( ! isset($_POST['nonce']) || ! wp_verify_nonce($_POST['nonce'], 'bsp_quiz_action') ) {
+            if ( ! isset($_POST['nonce']) || ! wp_verify_nonce($_POST['nonce'], 'prq_quiz_action') ) {
                 wp_send_json_error(['message' => __('Invalid security token.', 'bsp-wine-quiz')], 403);
             }
 
@@ -137,6 +137,6 @@ if ( ! function_exists('bsp_quiz_handle_add_to_cart') ) {
         }
     }
 
-    add_action('wp_ajax_bsp_add_to_cart', 'bsp_quiz_handle_add_to_cart');
-    add_action('wp_ajax_nopriv_bsp_add_to_cart', 'bsp_quiz_handle_add_to_cart');
+    add_action('wp_ajax_prq_add_to_cart', 'prq_quiz_handle_add_to_cart');
+    add_action('wp_ajax_nopriv_prq_add_to_cart', 'prq_quiz_handle_add_to_cart');
 }

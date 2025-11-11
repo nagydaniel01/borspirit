@@ -375,6 +375,70 @@
         add_action( 'woocommerce_single_product_summary', 'display_drs_fee_in_summary', 16 );
     }
 
+    if ( ! function_exists( 'add_drs_fee_per_item_to_cart' ) ) {
+        /**
+         * Add DRS fee per item to WooCommerce cart total.
+         *
+         * This checks if the product has the ACF field 'product_drs_fee' enabled.
+         * If yes, it adds the 'drs_price' (from options) multiplied by quantity.
+         */
+        function add_drs_fee_per_item_to_cart( WC_Cart $cart ) {
+            // Avoid running in admin or before cart is ready
+            if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
+                return;
+            }
+
+            // Ensure cart isn't empty
+            if ( count( $cart->get_cart() ) === 0 ) {
+                return;
+            }
+
+            $total_drs_fee = 0;
+            $drs_price     = get_field( 'drs_price', 'option' );
+
+            if ( ! $drs_price || ! is_numeric( $drs_price ) ) {
+                return; // Skip if no fee is defined in options
+            }
+
+            // Loop through cart items
+            foreach ( $cart->get_cart() as $cart_item ) {
+                $product_id = $cart_item['product_id'];
+                $quantity   = $cart_item['quantity'];
+
+                $has_drs_fee = get_field( 'product_drs_fee', $product_id );
+
+                if ( $has_drs_fee ) {
+                    $total_drs_fee += floatval( $drs_price ) * intval( $quantity );
+                }
+            }
+
+            // Add the fee if applicable
+            if ( $total_drs_fee > 0 ) {
+                $cart->add_fee( __( 'DRS - mandatory redemption fee', 'borspirit' ), $total_drs_fee, false );
+            }
+        }
+        add_action( 'woocommerce_cart_calculate_fees', 'add_drs_fee_per_item_to_cart' );
+    }
+
+    if ( ! function_exists( 'display_drs_fee_in_mini_cart' ) ) {
+        /**
+         * Display DRS Fee in the WooCommerce mini cart.
+         */
+        function display_drs_fee_in_mini_cart() {
+            WC()->cart->calculate_totals(); // Ensure fees are calculated
+
+            foreach ( WC()->cart->get_fees() as $fee ) {
+                if ( $fee->name === __( 'DRS - mandatory redemption fee', 'borspirit' ) ) {
+                    echo '<p class="woocommerce-mini-cart__drs_fee">';
+                    echo '<strong>' . esc_html( $fee->name ) . ':</strong> ';
+                    echo wc_price( $fee->amount );
+                    echo '</p>';
+                }
+            }
+        }
+        add_action( 'woocommerce_widget_shopping_cart_total', 'display_drs_fee_in_mini_cart', 5 );
+    }
+
     // ============================================================
     // 6. PRODUCT AWARDS
     // ============================================================
@@ -746,7 +810,7 @@
             if ( ! empty( $product_related_posts ) ) {
                 echo '<div class="section section--related-posts"><div class="container">';
 
-                set_query_var( 'tab_title', 'Related Posts' );
+                set_query_var( 'tab_title', __('Related posts', 'borspirit') );
 
                 // Load template if you have one
                 get_template_part( 'woocommerce/single-product/tabs/tab', 'related_posts' );
@@ -1242,27 +1306,14 @@
     // ============================================================
 
     if ( ! function_exists( 'show_free_shipping_notice' ) ) {
+
         /**
          * Display a notice showing how much more a customer needs to spend 
          * to qualify for free shipping.
-         *
-         * This function:
-         * - Gets the customer's shipping country from their WooCommerce profile or geolocation.
-         * - Finds the matching shipping zone and checks if "Free Shipping" is enabled.
-         * - Determines the minimum cart amount required for free shipping.
-         * - Displays a notice if the customer has not yet reached the free shipping threshold.
-         *
-         * Hooks into various WooCommerce locations:
-         * - Before shop loop
-         * - Before cart
-         * - Before checkout form
-         * - Custom bbloomer hooks for cart and checkout
-         *
-         * @return void
          */
         function show_free_shipping_notice() {
-            if ( ! WC()->cart ) {
-                return;
+            if ( ! WC()->cart || WC()->cart->is_empty() ) {
+                return; // Only show when cart has products
             }
 
             // Determine customer country
@@ -1277,7 +1328,7 @@
                 return;
             }
 
-            // Get the zone
+            // Get shipping zone and methods
             $package = [
                 'destination' => [
                     'country'  => $customer_country,
@@ -1311,15 +1362,209 @@
             $remaining_amount = $minimum_amount - $current_amount;
 
             $message = sprintf(
-                __( 'Add %s more to your cart to qualify for free shipping!', 'woocommerce' ),
+                __( 'Add %s more to your cart to qualify for free shipping!', 'borspirit' ),
                 wc_price( $remaining_amount )
             );
 
-            wc_print_notice( $message, 'notice' );
+            echo '<div class="woocommerce-notices-wrapper"><div class="woocommerce-message free-shipping-notice" role="alert">' . $message . '</div></div>';
         }
-        add_action( 'woocommerce_archive_description', 'show_free_shipping_notice', 20 );
+
+        // Hooks for where to display the message
+        //add_action( 'woocommerce_archive_description', 'show_free_shipping_notice', 20 );
         add_action( 'woocommerce_before_cart', 'show_free_shipping_notice' );
         add_action( 'woocommerce_before_checkout_form', 'show_free_shipping_notice' );
         add_action( 'bbloomer_before_woocommerce/cart', 'show_free_shipping_notice' );
         add_action( 'bbloomer_before_woocommerce/checkout', 'show_free_shipping_notice' );
+
+        /**
+         * AJAX: Return remaining amount + notice HTML
+         */
+        function get_remaining_free_shipping_amount() {
+            if ( ! WC()->cart ) {
+                wp_send_json_error( [ 'message' => 'Cart not found' ] );
+            }
+
+            // If cart empty → hide notice
+            if ( WC()->cart->is_empty() ) {
+                wp_send_json_success( [ 'remaining' => '', 'notice_html' => '' ] );
+            }
+
+            // Determine customer country
+            $customer_country = WC()->customer->get_shipping_country();
+
+            if ( empty( $customer_country ) ) {
+                $geo = WC_Geolocation::geolocate_ip();
+                $customer_country = $geo['country'] ?? '';
+            }
+
+            if ( empty( $customer_country ) ) {
+                wp_send_json_error( [ 'message' => 'No country found' ] );
+            }
+
+            // Find free shipping rule
+            $package = [
+                'destination' => [
+                    'country'  => $customer_country,
+                    'state'    => '',
+                    'postcode' => '',
+                    'city'     => '',
+                    'address'  => '',
+                ],
+            ];
+
+            $zone    = WC_Shipping_Zones::get_zone_matching_package( $package );
+            $methods = $zone->get_shipping_methods();
+
+            $minimum_amount = 0;
+            foreach ( $methods as $method ) {
+                if ( $method->id === 'free_shipping' && $method->enabled === 'yes' ) {
+                    $minimum_amount = (float) ( $method->min_amount ?? 0 );
+                    break;
+                }
+            }
+
+            if ( $minimum_amount <= 0 ) {
+                wp_send_json_error( [ 'message' => 'Free shipping not available' ] );
+            }
+
+            $display_prices_include_tax = wc_prices_include_tax();
+            $current_amount = $display_prices_include_tax
+                ? (float) WC()->cart->get_subtotal() + (float) WC()->cart->get_subtotal_tax()
+                : (float) WC()->cart->get_subtotal();
+
+            $remaining = max( 0, $minimum_amount - $current_amount );
+
+            $remaining_html = wc_price( $remaining );
+
+            $notice_html = '';
+            if ( $remaining > 0 ) {
+                $notice_html = sprintf(
+                    '<div class="woocommerce-message free-shipping-notice" role="alert">%s</div>',
+                    sprintf(
+                        __( 'Add %s more to your cart to qualify for free shipping!', 'borspirit' ),
+                        $remaining_html
+                    )
+                );
+            }
+
+            wp_send_json_success( [
+                'remaining'   => $remaining_html,
+                'notice_html' => $notice_html,
+            ] );
+        }
+        add_action( 'wp_ajax_get_remaining_free_shipping_amount', 'get_remaining_free_shipping_amount' );
+        add_action( 'wp_ajax_nopriv_get_remaining_free_shipping_amount', 'get_remaining_free_shipping_amount' );
+
+        /**
+         * Enqueue inline JS to show/hide free shipping notice dynamically.
+         */
+        function enqueue_free_shipping_notice_script() {
+            $nonce = wp_create_nonce( 'get_remaining_free_shipping_amount' );
+
+            wp_add_inline_script( 'wc-add-to-cart', "
+                jQuery(function($){
+                    function updateFreeShipping() {
+                        $.post(wc_add_to_cart_params.ajax_url, {
+                            action: 'get_remaining_free_shipping_amount',
+                            _ajax_nonce: '{$nonce}'
+                        }, function(response){
+                            if (!response?.success) return;
+
+                            let noticeContainer = $('.woocommerce-notices-wrapper');
+
+                            // Remove any old notices
+                            noticeContainer.find('.free-shipping-notice').remove();
+
+                            // Add new notice if available
+                            if (response.data.notice_html) {
+                                const notice = $(response.data.notice_html);
+
+                                // Ensure no inline display:none remains
+                                notice.removeAttr('style');
+
+                                noticeContainer.append(notice);
+                                notice.fadeIn(300);
+                            }
+                        });
+                    }
+
+                    // Update when cart changes or fragments refresh
+                    $(document.body)
+                        .on('added_to_cart removed_from_cart updated_cart_totals wc_fragments_refreshed', updateFreeShipping);
+
+                    // Initial load
+                    updateFreeShipping();
+                });
+            " );
+        }
+        add_action( 'wp_enqueue_scripts', 'enqueue_free_shipping_notice_script' );
+    }
+
+    // ============================================================
+    // 13. AGE CONFIRMATION
+    // ============================================================
+
+    /**
+     * WooCommerce 18+ Age Confirmation Checkbox for Checkout (HPOS-Compatible)
+     *
+     * Adds an "I confirm I am 18 years or older" checkbox after Order Notes.
+     * Saves the value in HPOS orders and displays it in the admin order page.
+     */
+
+    /**
+     * Register the 18+ age confirmation checkbox field.
+     */
+    if ( ! function_exists( 'my_plugin_register_age_confirmation_field' ) ) {
+        /**
+         * Registers a custom checkout field for age confirmation.
+         */
+        function my_plugin_register_age_confirmation_field() {
+            if ( ! function_exists( 'woocommerce_register_additional_checkout_field' ) ) {
+                return;
+            }
+
+            woocommerce_register_additional_checkout_field( array(
+                'id'            => 'my_plugin/age_confirmation',
+                'label'         => sprintf(
+                    __( 'I confirm I am %d years or older', 'borspirit' ),
+                    get_option( 'ag_min_age', 18 )
+                ),
+                'location'      => 'order',
+                'type'          => 'checkbox',
+                'required'      => true,
+                'error_message' => sprintf(
+                    __( 'You must confirm you are %d+ to place the order.', 'borspirit' ),
+                    get_option( 'ag_min_age', 18 )
+                ),
+            ) );
+        }
+        add_action( 'woocommerce_init', 'my_plugin_register_age_confirmation_field' );
+    }
+
+    if ( ! function_exists( 'my_plugin_save_age_confirmation' ) ) {
+        /**
+         * Save the age confirmation field in HPOS orders.
+         *
+         * @param WC_Order $order The order object.
+         * @param array    $data  Posted checkout data.
+         */
+        function my_plugin_save_age_confirmation( $order, $data ) {
+            if ( ! empty( $_POST['my_plugin/age_confirmation'] ) ) {
+                $order->update_meta_data( '_age_confirmation', sanitize_text_field( $_POST['my_plugin/age_confirmation'] ) );
+            }
+        }
+        add_action( 'woocommerce_checkout_create_order', 'my_plugin_save_age_confirmation', 10, 2 );
+    }
+
+    if ( ! function_exists( 'my_plugin_display_age_confirmation_admin' ) ) {
+        /**
+         * Display the age confirmation field value in the admin order page.
+         *
+         * @param WC_Order $order The order object.
+         */
+        function my_plugin_display_age_confirmation_admin( $order ) {
+            $age_confirm = $order->get_meta( '_age_confirmation' );
+            echo '<p><strong>' . __( 'Adult Confirm', 'borspirit' ) . ':</strong> ' . ( $age_confirm ? 'Yes' : 'No' ) . '</p>';
+        }
+        add_action( 'woocommerce_admin_order_data_after_billing_address', 'my_plugin_display_age_confirmation_admin' );
     }

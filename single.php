@@ -219,7 +219,7 @@
 
                     <?php if ( !empty($products) ) : ?>
                         <div class="section__related-products">
-                            <h2 class="section__title"><?php echo esc_html('Related Products', 'borspirit'); ?></h2>
+                            <h2 class="section__title"><?php echo esc_html('Related products', 'borspirit'); ?></h2>
 
                             <div class="slider slider--product-query slider--related-products">
                                 <div class="slider__list">

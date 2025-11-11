@@ -136,7 +136,7 @@ $products      = $product_query->get_products();
 
             <div class="section__content">
                 <?php if ($slider != false) : ?>
-                    <div class="slider slider--post-query">
+                    <div class="slider slider--product-query">
                         <div class="slider__list">
                             <?php foreach ($products as $product) : ?>
                                 <?php

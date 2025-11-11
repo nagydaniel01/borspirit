@@ -41,7 +41,7 @@
                         <?php endforeach; ?>
                     </div>
                 <?php else : ?>
-                    <p><?php printf( esc_html__( 'No %s found.', 'borspirit' ), esc_html( mb_strtolower($taxonomy_obj->labels->singular_name) ) ); ?></p>
+                    <?php wpautop( printf( esc_html__( 'No %s found.', 'borspirit' ), esc_html( mb_strtolower($taxonomy_obj->labels->singular_name) ) ) ); ?>
                 <?php endif; ?>
             </div>
         </div>

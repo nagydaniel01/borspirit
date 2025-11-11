@@ -1,9 +1,9 @@
 <?php
 /**
- * BorSpirit Wine Quiz - Theme integration (English UI)
+ * Product Recommendation Quiz - Theme integration (English UI)
  *
- * Place this file in your theme (e.g. /inc/wine-quiz.php) and include it from functions.php:
- *   require_once get_template_directory() . '/inc/wine-quiz.php';
+ * Place this file in your theme (e.g. /inc/prq-quiz.php) and include it from functions.php:
+ * require_once get_template_directory() . '/inc/prq-quiz.php';
  *
  * Text domain: 'borspirit'
  */
@@ -12,9 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-if ( ! class_exists( 'BorSpirit_Wine_Quiz' ) ) :
+if ( ! class_exists( 'Product_Recommendation_Quiz' ) ) :
 
-class BorSpirit_Wine_Quiz {
+class Product_Recommendation_Quiz {
 
     const OPTION_RULES_KEY     = 'bsp_quiz_rules_v1';
     const OPTION_QUESTIONS_KEY = 'bsp_quiz_questions_v1';
@@ -22,37 +22,37 @@ class BorSpirit_Wine_Quiz {
     private $max_questions = 4; // keep compatibility with q1..q4
 
     public function __construct() {
-        add_shortcode( 'borspirit_wine_quiz', array( $this, 'render_quiz' ) );
-        add_action( 'wp_enqueue_scripts', array( $this, 'bsp_enqueue_scripts' ) );
+        add_shortcode( 'prq_quiz', array( $this, 'render_quiz' ) );
+        add_action( 'wp_enqueue_scripts', array( $this, 'prq_enqueue_scripts' ) );
 
         // AJAX
-        add_action( 'wp_ajax_bsp_recommend', array( $this, 'handle_recommend' ) );
-        add_action( 'wp_ajax_nopriv_bsp_recommend', array( $this, 'handle_recommend' ) );
-        add_action( 'wp_ajax_bsp_add_to_cart', array( $this, 'handle_add_to_cart' ) );
-        add_action( 'wp_ajax_nopriv_bsp_add_to_cart', array( $this, 'handle_add_to_cart' ) );
+        add_action( 'wp_ajax_prq_recommend', array( $this, 'handle_recommend' ) );
+        add_action( 'wp_ajax_nopriv_prq_recommend', array( $this, 'handle_recommend' ) );
+        add_action( 'wp_ajax_prq_add_to_cart', array( $this, 'handle_add_to_cart' ) );
+        add_action( 'wp_ajax_nopriv_prq_add_to_cart', array( $this, 'handle_add_to_cart' ) );
 
         // Admin: menu and posts
         add_action( 'admin_menu', array( $this, 'register_admin_menu' ) );
 
         // Rules handlers
-        add_action( 'admin_post_bsp_save_rule', array( $this, 'admin_save_rule' ) );
-        add_action( 'admin_post_bsp_delete_rule', array( $this, 'admin_delete_rule' ) );
+        add_action( 'admin_post_prq_save_rule', array( $this, 'admin_save_rule' ) );
+        add_action( 'admin_post_prq_delete_rule', array( $this, 'admin_delete_rule' ) );
 
         // Questions handlers
-        add_action( 'admin_post_bsp_save_question', array( $this, 'admin_save_question' ) );
-        add_action( 'admin_post_bsp_delete_question', array( $this, 'admin_delete_question' ) );
+        add_action( 'admin_post_prq_save_question', array( $this, 'admin_save_question' ) );
+        add_action( 'admin_post_prq_delete_question', array( $this, 'admin_delete_question' ) );
     }
 
     /* -------------------------- Public UI -------------------------- */
-    public function bsp_enqueue_scripts() {
-        $script_path = get_template_directory_uri() . '/ajax/js/bsp_quiz_ajax.js';
+    public function prq_enqueue_scripts() {
+        $script_path = get_template_directory_uri() . '/ajax/js/prq_quiz_ajax.js';
 
         wp_register_script( 'bsp-quiz-js', $script_path, array( 'jquery' ), '1.3', true );
         wp_enqueue_script( 'bsp-quiz-js' );
 
-        wp_localize_script( 'bsp-quiz-js', 'bsp_quiz_ajax', array(
+        wp_localize_script( 'bsp-quiz-js', 'prq_quiz_ajax', array(
             'ajax_url' => admin_url( 'admin-ajax.php' ),
-            'nonce'    => wp_create_nonce( 'bsp_quiz_nonce' ),
+            'nonce'    => wp_create_nonce( 'prq_quiz_nonce' ),
             'i18n'     => array(
                 // Navigation
                 'next'           => __( 'Next', $this->td ),
@@ -182,7 +182,7 @@ class BorSpirit_Wine_Quiz {
     /* -------------------------- Questions save/delete -------------------------- */
     public function admin_save_question() {
         if ( ! current_user_can( 'manage_options' ) ) wp_die( esc_html__( 'Insufficient permissions.', $this->td ) );
-        if ( ! isset( $_POST['bsp_admin_nonce'] ) || ! wp_verify_nonce( wp_unslash( $_POST['bsp_admin_nonce'] ), 'bsp_admin_nonce' ) ) wp_die( esc_html__( 'Invalid request.', $this->td ) );
+        if ( ! isset( $_POST['prq_admin_nonce'] ) || ! wp_verify_nonce( wp_unslash( $_POST['prq_admin_nonce'] ), 'prq_admin_nonce' ) ) wp_die( esc_html__( 'Invalid request.', $this->td ) );
 
         $questions = $this->get_questions();
         $index = isset( $_POST['edit_index'] ) ? intval( $_POST['edit_index'] ) : null;
@@ -226,13 +226,13 @@ class BorSpirit_Wine_Quiz {
 
         update_option( self::OPTION_QUESTIONS_KEY, $questions );
 
-        wp_redirect( admin_url( 'admin.php?page=borspirit-quiz' ) );
+        wp_redirect( admin_url( 'admin.php?page=product-recommendation-quiz' ) );
         exit;
     }
 
     public function admin_delete_question() {
         if ( ! current_user_can( 'manage_options' ) ) wp_die( esc_html__( 'Insufficient permissions.', $this->td ) );
-        if ( ! isset( $_POST['bsp_admin_nonce'] ) || ! wp_verify_nonce( wp_unslash( $_POST['bsp_admin_nonce'] ), 'bsp_admin_nonce' ) ) wp_die( esc_html__( 'Invalid request.', $this->td ) );
+        if ( ! isset( $_POST['prq_admin_nonce'] ) || ! wp_verify_nonce( wp_unslash( $_POST['prq_admin_nonce'] ), 'prq_admin_nonce' ) ) wp_die( esc_html__( 'Invalid request.', $this->td ) );
 
         $idx = isset( $_POST['index'] ) ? intval( $_POST['index'] ) : -1;
         $questions = $this->get_questions();
@@ -245,7 +245,7 @@ class BorSpirit_Wine_Quiz {
             update_option( self::OPTION_QUESTIONS_KEY, $questions );
         }
 
-        wp_redirect( admin_url( 'admin.php?page=borspirit-quiz' ) );
+        wp_redirect( admin_url( 'admin.php?page=product-recommendation-quiz' ) );
         exit;
     }
 
@@ -320,7 +320,7 @@ class BorSpirit_Wine_Quiz {
 
     public function handle_recommend() {
         try {
-            check_ajax_referer('bsp_quiz_nonce', 'nonce');
+            check_ajax_referer('prq_quiz_nonce', 'nonce');
 
             if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
                 wp_send_json_error(['message' => __('Invalid request method.', $this->td)], 405);
@@ -419,7 +419,7 @@ class BorSpirit_Wine_Quiz {
     }
     
     public function handle_add_to_cart() {
-        check_ajax_referer( 'bsp_quiz_nonce', 'nonce' );
+        check_ajax_referer( 'prq_quiz_nonce', 'nonce' );
 
         $product_id = isset( $_POST['product_id'] ) ? intval( $_POST['product_id'] ) : 0;
         if ( ! $product_id ) wp_send_json_error( __( 'Invalid product.', $this->td ) );
@@ -449,7 +449,7 @@ class BorSpirit_Wine_Quiz {
 
         $rules = $this->get_rules();
         $questions = $this->get_questions();
-        $nonce = wp_create_nonce( 'bsp_admin_nonce' );
+        $nonce = wp_create_nonce( 'prq_admin_nonce' );
 
         // check for edit query parameters for questions and rules
         $edit_q_index = isset( $_GET['edit_q'] ) ? intval( $_GET['edit_q'] ) : -1;
@@ -464,8 +464,8 @@ class BorSpirit_Wine_Quiz {
             <h2><?php echo $edit_q ? esc_html__( 'Edit Question', $this->td ) : esc_html__( 'Add New Question', $this->td ); ?></h2>
 
             <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
-                <input type="hidden" name="action" value="bsp_save_question">
-                <input type="hidden" name="bsp_admin_nonce" value="<?php echo esc_attr( $nonce ); ?>">
+                <input type="hidden" name="action" value="prq_save_question">
+                <input type="hidden" name="prq_admin_nonce" value="<?php echo esc_attr( $nonce ); ?>">
                 <?php if ( $edit_q ): ?>
                     <input type="hidden" name="edit_index" value="<?php echo esc_attr( $edit_q_index ); ?>">
                 <?php endif; ?>
@@ -524,12 +524,12 @@ class BorSpirit_Wine_Quiz {
                             <?php endif; ?>
                         </td>
                         <td>
-                            <a href="<?php echo esc_url( admin_url( 'admin.php?page=borspirit-quiz&edit_q=' . $i ) ); ?>" class="button button-primary"><?php echo esc_html__( 'Edit', $this->td ); ?></a>
+                            <a href="<?php echo esc_url( admin_url( 'admin.php?page=product-recommendation-quiz&edit_q=' . $i ) ); ?>" class="button button-primary"><?php echo esc_html__( 'Edit', $this->td ); ?></a>
 
                             <form style="display:inline;" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
-                                <input type="hidden" name="action" value="bsp_delete_question">
+                                <input type="hidden" name="action" value="prq_delete_question">
                                 <input type="hidden" name="index" value="<?php echo esc_attr( $i ); ?>">
-                                <input type="hidden" name="bsp_admin_nonce" value="<?php echo esc_attr( $nonce ); ?>">
+                                <input type="hidden" name="prq_admin_nonce" value="<?php echo esc_attr( $nonce ); ?>">
                                 <input type="submit" class="button button-secondary" value="<?php echo esc_attr__( 'Delete', $this->td ); ?>" onclick="return confirm('<?php echo esc_js( __( 'Are you sure you want to delete this question?', $this->td ) ); ?>');">
                             </form>
                         </td>
@@ -545,8 +545,8 @@ class BorSpirit_Wine_Quiz {
 
             <h3><?php echo esc_html__( $edit_r ? 'Edit Rule' : 'Add New Rule', $this->td ); ?></h3>
             <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
-                <input type="hidden" name="action" value="bsp_save_rule">
-                <input type="hidden" name="bsp_admin_nonce" value="<?php echo esc_attr( $nonce ); ?>">
+                <input type="hidden" name="action" value="prq_save_rule">
+                <input type="hidden" name="prq_admin_nonce" value="<?php echo esc_attr( $nonce ); ?>">
                 <?php if ( $edit_r ): ?>
                     <input type="hidden" name="edit_index" value="<?php echo esc_attr( $edit_r_index ); ?>">
                 <?php endif; ?>
@@ -814,12 +814,12 @@ class BorSpirit_Wine_Quiz {
                         <td><?php echo esc_html( isset($r['weight']) ? $r['weight'] : '' ); ?></td>
                         <td><?php echo esc_html( isset($r['priority']) ? $r['priority'] : '' ); ?></td>
                         <td>
-                            <a href="<?php echo esc_url( admin_url( 'admin.php?page=borspirit-quiz&edit=' . $i ) ); ?>" class="button button-primary"><?php echo esc_html__( 'Edit', $this->td ); ?></a>
+                            <a href="<?php echo esc_url( admin_url( 'admin.php?page=product-recommendation-quiz&edit=' . $i ) ); ?>" class="button button-primary"><?php echo esc_html__( 'Edit', $this->td ); ?></a>
 
                             <form style="display:inline;" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
-                                <input type="hidden" name="action" value="bsp_delete_rule">
+                                <input type="hidden" name="action" value="prq_delete_rule">
                                 <input type="hidden" name="index" value="<?php echo esc_attr( $i ); ?>">
-                                <input type="hidden" name="bsp_admin_nonce" value="<?php echo esc_attr( $nonce ); ?>">
+                                <input type="hidden" name="prq_admin_nonce" value="<?php echo esc_attr( $nonce ); ?>">
                                 <input type="submit" class="button button-secondary" value="<?php echo esc_attr__( 'Delete', $this->td ); ?>" onclick="return confirm('<?php echo esc_js( __( 'Are you sure you want to delete this rule?', $this->td ) ); ?>');">
                             </form>
                         </td>
@@ -871,7 +871,7 @@ class BorSpirit_Wine_Quiz {
     /* -------------------------- Rules save/delete -------------------------- */
     public function admin_save_rule() {
         if ( ! current_user_can( 'manage_options' ) ) wp_die( esc_html__( 'Insufficient permissions.', $this->td ) );
-        if ( ! isset( $_POST['bsp_admin_nonce'] ) || ! wp_verify_nonce( wp_unslash( $_POST['bsp_admin_nonce'] ), 'bsp_admin_nonce' ) ) wp_die( esc_html__( 'Invalid request.', $this->td ) );
+        if ( ! isset( $_POST['prq_admin_nonce'] ) || ! wp_verify_nonce( wp_unslash( $_POST['prq_admin_nonce'] ), 'prq_admin_nonce' ) ) wp_die( esc_html__( 'Invalid request.', $this->td ) );
 
         $rules = $this->get_rules();
 
@@ -926,13 +926,13 @@ class BorSpirit_Wine_Quiz {
 
         update_option( self::OPTION_RULES_KEY, $rules );
 
-        wp_redirect( admin_url( 'admin.php?page=borspirit-quiz' ) );
+        wp_redirect( admin_url( 'admin.php?page=product-recommendation-quiz' ) );
         exit;
     }
 
     public function admin_delete_rule() {
         if ( ! current_user_can( 'manage_options' ) ) wp_die( esc_html__( 'Insufficient permissions.', $this->td ) );
-        if ( ! isset( $_POST['bsp_admin_nonce'] ) || ! wp_verify_nonce( wp_unslash( $_POST['bsp_admin_nonce'] ), 'bsp_admin_nonce' ) ) wp_die( esc_html__( 'Invalid request.', $this->td ) );
+        if ( ! isset( $_POST['prq_admin_nonce'] ) || ! wp_verify_nonce( wp_unslash( $_POST['prq_admin_nonce'] ), 'prq_admin_nonce' ) ) wp_die( esc_html__( 'Invalid request.', $this->td ) );
 
         $idx = isset( $_POST['index'] ) ? intval( $_POST['index'] ) : -1;
         $rules = $this->get_rules();
@@ -941,7 +941,7 @@ class BorSpirit_Wine_Quiz {
             update_option( self::OPTION_RULES_KEY, $rules );
         }
 
-        wp_redirect( admin_url( 'admin.php?page=borspirit-quiz' ) );
+        wp_redirect( admin_url( 'admin.php?page=product-recommendation-quiz' ) );
         exit;
     }
 
@@ -949,4 +949,4 @@ class BorSpirit_Wine_Quiz {
 
 endif;
 
-new BorSpirit_Wine_Quiz();
+new Product_Recommendation_Quiz();

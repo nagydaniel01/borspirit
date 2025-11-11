@@ -34,6 +34,10 @@
       text-decoration: none;
     }
 
+    .icon {
+      color: $black;
+    }
+
     img {
       flex: 0 0 4rem;
       max-width: 4rem;
@@ -103,5 +107,5 @@
 }
 
 .woocommerce-mini-cart__empty-message {
-  padding: 1rem;
+  //padding: 1rem;
 }

@@ -10,15 +10,9 @@
     $post_id      = get_the_ID();
     $title        = get_the_title();
     $thumbnail_id = get_post_thumbnail_id();
-    $fallback_id  = PLACEHOLDER_IMAGE_ID;
-    $image_id     = $thumbnail_id ?: $fallback_id;
+    $image_id     = $thumbnail_id ?? null;
     $categories   = get_the_terms($post_id, 'category');
-
-    if ($image_id === $fallback_id) {
-        $alt_text = __('', 'borspirit');
-    } else {
-        $alt_text = get_post_meta($image_id, '_wp_attachment_image_alt', true) ?: $title;
-    }
+    $alt_text = get_post_meta($image_id, '_wp_attachment_image_alt', true) ?: $title;
 
     if (is_wp_error($categories)) {
         $categories = [];
@@ -52,6 +46,12 @@
             <div class="card__header">
                 <div class="card__image-wrapper">
                     <?php echo wp_get_attachment_image($image_id, 'medium_large', false, ['class' => 'card__image', 'alt' => esc_attr($alt_text), 'loading' => 'lazy']); ?>
+                </div>
+            </div>
+        <?php elseif ( defined( 'PLACEHOLDER_IMG_SRC' ) && PLACEHOLDER_IMG_SRC ) : ?>
+            <div class="card__header">
+                <div class="card__image-wrapper">
+                    <img src="<?php echo esc_url( PLACEHOLDER_IMG_SRC ); ?>" alt="" class="card__image card__image--placeholder" loading="lazy">
                 </div>
             </div>
         <?php endif; ?>

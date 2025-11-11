@@ -847,3 +847,76 @@
         }
         add_action( 'init', 'handle_user_switching' );
     }
+
+    // ============================================================
+    // SEND EMAIL ON ADMIN LOGIN
+    // ============================================================
+
+    if ( ! function_exists( 'email_user_on_admin_login' ) ) {
+        /**
+         * Send an email notification to certain user roles when they log into WordPress admin.
+         *
+         * Adds location lookup (e.g., city, region, country) based on IP address.
+         *
+         * @param string  $user_login Username of the user logging in.
+         * @param WP_User $user       WP_User object of the logged-in user.
+         */
+        function email_user_on_admin_login( $user_login, $user ) {
+
+            // Roles that should receive the email
+            $allowed_roles = array( 'administrator', 'author', 'editor', 'contributor', 'shop_manager' );
+
+            // Only send email if user has at least one allowed role
+            if ( array_intersect( $allowed_roles, (array) $user->roles ) ) {
+
+                $site_name = get_bloginfo( 'name' );
+                $headers   = array( 'Content-Type: text/html; charset=UTF-8' );
+                $to        = $user->user_email;
+                $subject   = sprintf( __( 'You have logged into %s admin', 'borspirit' ), $site_name );
+
+                $ip_address = $_SERVER['REMOTE_ADDR'] ?? 'Unknown';
+                $browser    = $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown';
+                $reset_link = wp_lostpassword_url();
+
+                // Default location text
+                $location = 'Unknown';
+
+                // Try to get user location from IP
+                if ( filter_var( $ip_address, FILTER_VALIDATE_IP ) ) {
+                    $response = wp_remote_get( "https://ipapi.co/{$ip_address}/json/" );
+
+                    if ( ! is_wp_error( $response ) ) {
+                        $data = json_decode( wp_remote_retrieve_body( $response ), true );
+                        if ( ! empty( $data['city'] ) || ! empty( $data['region'] ) || ! empty( $data['country_name'] ) ) {
+                            $location_parts = array_filter( [
+                                $data['city'] ?? '',
+                                $data['region'] ?? '',
+                                $data['country_name'] ?? '',
+                            ] );
+                            $location = implode( ', ', $location_parts );
+                        }
+                    }
+                }
+
+                // Email content
+                $message = sprintf(
+                    __("Hi %1\$s,<br><br>You have successfully logged into the %2\$s admin area.<br><br>
+                    <strong>Time:</strong> %3\$s<br>
+                    <strong>IP Address:</strong> %4\$s<br>
+                    <strong>Location:</strong> %5\$s<br>
+                    <strong>Browser:</strong> %6\$s<br><br>
+                    If this wasn't you, please <a href='%7\$s'>change your password</a> immediately.", 'borspirit'),
+                    $user_login,
+                    esc_html( $site_name ),
+                    date_i18n( 'Y-m-d H:i:s' ),
+                    esc_html( $ip_address ),
+                    esc_html( $location ),
+                    esc_html( $browser ),
+                    esc_url( $reset_link ),
+                );
+
+                wp_mail( $to, $subject, $message, $headers );
+            }
+        }
+        add_action( 'wp_login', 'email_user_on_admin_login', 10, 2 );
+    }

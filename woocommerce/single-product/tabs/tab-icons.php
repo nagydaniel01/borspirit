@@ -34,39 +34,57 @@ $icon_items = array_filter( $icon_items, function ($item) use ($selected_icons) 
 
 // --- Free shipping message ---
 $free_shipping_limit_message = '';
-if ( in_array('free_shipping_limit_message', $selected_icons) ) {
 
-    $customer_country = WC()->customer->get_shipping_country();
-    if ( empty( $customer_country ) ) {
-        $geo = WC_Geolocation::geolocate_ip();
-        $customer_country = $geo['country'] ?? '';
-    }
+if ( in_array( 'free_shipping_limit_message', $selected_icons, true ) ) {
+    // Only run on frontend
+    if ( ! is_admin() && ! wp_doing_ajax() && function_exists( 'WC' ) ) {
 
-    if ( $customer_country ) {
-        $package = [
-            'destination' => [
-                'country'  => $customer_country,
-                'state'    => '',
-                'postcode' => '',
-                'city'     => '',
-                'address'  => '',
-            ],
-        ];
+        $customer_country = '';
+        $wc = WC();
 
-        $customer_zone = WC_Shipping_Zones::get_zone_matching_package( $package );
-        $methods = $customer_zone->get_shipping_methods();
+        // Ensure customer session is ready
+        if ( isset( $wc->customer ) && is_object( $wc->customer ) ) {
+            $customer_country = $wc->customer->get_shipping_country();
+        }
 
-        foreach ( $methods as $method ) {
-            if ( ! is_object( $method ) ) continue;
+        // Fallback to geolocation if country not set
+        if ( empty( $customer_country ) && class_exists( 'WC_Geolocation' ) ) {
+            $geo = WC_Geolocation::geolocate_ip();
+            $customer_country = $geo['country'] ?? '';
+        }
 
-            if ( $method->id === 'free_shipping' && $method->enabled === 'yes' ) {
-                if ( isset( $method->min_amount ) && is_numeric( $method->min_amount ) && $method->min_amount > 0 ) {
-                    $formatted_amount = wc_price( $method->min_amount );
-                    $free_shipping_limit_message = sprintf(
-                        __( 'Free shipping on orders over %1$s', 'borspirit' ),
-                        $formatted_amount
-                    );
-                    break;
+        // If we have a valid country, continue
+        if ( ! empty( $customer_country ) && class_exists( 'WC_Shipping_Zones' ) ) {
+
+            $package = [
+                'destination' => [
+                    'country'  => $customer_country,
+                    'state'    => '',
+                    'postcode' => '',
+                    'city'     => '',
+                    'address'  => '',
+                ],
+            ];
+
+            $zone    = WC_Shipping_Zones::get_zone_matching_package( $package );
+            $methods = $zone->get_shipping_methods();
+
+            foreach ( $methods as $method ) {
+                if ( ! is_object( $method ) ) {
+                    continue;
+                }
+
+                if ( $method->id === 'free_shipping' && $method->enabled === 'yes' ) {
+                    // Use get_option() for compatibility with newer WooCommerce versions
+                    $min_amount = $method->get_option( 'min_amount' );
+
+                    if ( is_numeric( $min_amount ) && $min_amount > 0 ) {
+                        $free_shipping_limit_message = sprintf(
+                            __( 'Free shipping on orders over %1$s', 'borspirit' ),
+                            wc_price( $min_amount )
+                        );
+                        break; // Stop after finding the first valid method
+                    }
                 }
             }
         }

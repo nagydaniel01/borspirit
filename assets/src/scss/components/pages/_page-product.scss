@@ -110,7 +110,7 @@
           svg {
             width: 1.25rem;
             height: 1.25rem;
-            fill: $primary-dark;
+            fill: $primary;
           }
         }
       }
@@ -176,10 +176,11 @@
     display: inline-flex;
     flex-wrap: wrap;
     row-gap: .625rem;
+    column-gap: .625rem;
 
     // Remove gap if .quantity only has a hidden input
     &:has(.quantity input[type="hidden"]) {
-      gap: 0; 
+      gap: 0;
     }
 
     .wc-points-rewards-product-message {
@@ -189,7 +190,6 @@
     .quantity {
       display: flex;
       align-items: center;
-      margin-right: .625rem;
       border-radius: .375rem;
       overflow: hidden;
 
@@ -288,13 +288,13 @@
     grid-template-columns: auto 1fr;
     align-items: center;
     gap: .875rem;
-    color: $primary;
+    color: $secondary;
   }
 
   .section__icon {
     width: 3rem;
     height: 3rem;
-    color: $primary-light;
+    color: $secondary-light;
   }
 
   .section__text {
@@ -307,14 +307,19 @@
 }
 
 .section.section--product--additional_information {
-  background-color: $primary-light;
+  background-color: $secondary;
+  color: rgba($white, 1);
+
+  .section__title {
+    color: rgba($primary-dark, 1);
+  }
 
   .section__listitem {
-    color: $body-color;
+    color: rgba($white, 1);
   }
 
   .section__icon {
-    color: $primary;
+    color: $primary-dark;
   }
 }
 
@@ -337,6 +342,96 @@
   .slick-slide {
     padding-right: 1rem;
     padding-left: 1rem;
+  }
+
+  .slick-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    transition: $transition-base;
+    border: none;
+    border-radius: $border-radius;
+    outline: none;
+    background-color: $white;
+    text-align: center;
+    cursor: pointer;
+    pointer-events: all;
+
+    &:focus,
+    &:active {
+      outline: 0;
+    }
+
+    &.slick-disabled {
+      opacity: 0.25;
+    }
+
+    &.slick-prev {
+      left: -4rem;
+    }
+
+    &.slick-next {
+      right: -4rem;
+    }
+
+    svg {
+      width: 1.25rem;
+      height: 1.25rem;
+      color: $primary;
+      fill: currentColor;
+    }
+  }
+
+  .slick-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    z-index: 1;
+
+    li {
+      position: relative;
+      width: 0.75rem;
+      height: 0.75rem;
+      margin: 0 0.25rem;
+      padding: 0;
+      cursor: pointer;
+
+      button {
+        display: block;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        border: 1px solid rgba($primary, 0.2);
+        border-radius: 50%;
+        outline: none;
+        background-color: transparent;
+        font-size: 0;
+        line-height: 0;
+        cursor: pointer;
+
+        &:hover,
+        &:focus {
+          outline: none;
+        }
+      }
+
+      &.slick-active {
+        button {
+          background-color: $primary;
+          border-color: $primary;
+        }
+      }
+    }
   }
 }
 

@@ -1,5 +1,24 @@
 <?php
     defined( 'ABSPATH' ) || exit;
+
+    if ( ! function_exists( 'should_abort_shortcode' ) ) {
+        /**
+         * Utility: Prevent shortcodes from running in admin/AJAX/CRON/REST.
+         */
+        function should_abort_shortcode() {
+            // Avoid running in admin/AJAX/CRON/REST contexts (these can produce invalid JSON responses)
+            if ( is_admin() || wp_doing_ajax() || wp_doing_cron() ) {
+                return true;
+            }
+
+            // wp_doing_rest() added in WP 5.7 — check existence for backwards compatibility
+            if ( ( function_exists( 'wp_doing_rest' ) && wp_doing_rest() ) || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
+                return true;
+            }
+
+            return false;
+        }
+    }
     
     if ( ! function_exists( 'custom_wc_registration_form_shortcode' ) ) {
         /**
@@ -11,8 +30,10 @@
          * @return string HTML output for registration form or message.
          */
         function custom_wc_registration_form_shortcode() {
+            if ( should_abort_shortcode() ) return '';
+
             if ( is_user_logged_in() ) {
-                return '<p>' . esc_html__( 'You are already registered.', 'borspirit' ) . '</p>';
+                return wpautop( esc_html__( 'You are already registered.', 'borspirit' ) );
             }
 
             ob_start();
@@ -22,7 +43,7 @@
             $html = wc_get_template_html( 'myaccount/form-login.php' );
 
             if ( empty( $html ) ) {
-                return '<p>' . esc_html__( 'Registration form not available.', 'borspirit' ) . '</p>';
+                return wpautop( esc_html__( 'Registration form not available.', 'borspirit' ) );
             }
 
             libxml_use_internal_errors( true );
@@ -38,7 +59,7 @@
             libxml_clear_errors();
 
             if ( ! $loaded ) {
-                return '<p>' . esc_html__( 'Error loading registration form.', 'borspirit' ) . '</p>';
+                return wpautop( esc_html__( 'Error loading registration form.', 'borspirit' ) );
             }
 
             $xpath = new DOMXPath( $dom );
@@ -48,7 +69,7 @@
             if ( $form ) {
                 echo $dom->saveHTML( $form );
             } else {
-                echo '<p>' . esc_html__( 'Registration form not found.', 'borspirit' ) . '</p>';
+                echo wpautop( esc_html__( 'Registration form not found.', 'borspirit' ) );
             }
 
             return ob_get_clean();
@@ -66,8 +87,10 @@
          * @return string HTML output for login form or message.
          */
         function custom_wc_login_form_shortcode() {
+            if ( should_abort_shortcode() ) return '';
+
             if ( is_user_logged_in() ) {
-                return '<p>' . esc_html__( 'You are already logged in.', 'borspirit' ) . '</p>';
+                return wpautop( esc_html__( 'You are already logged in.', 'borspirit' ) );
             }
 
             ob_start();
@@ -168,6 +191,8 @@
          * @return string HTML output containing the requested WooCommerce settings or an error message.
          */
         function woocommerce_general_settings_shortcode( $atts ) {
+            if ( should_abort_shortcode() ) return '';
+
             // Parse shortcode attributes
             $atts = shortcode_atts(
                 [
@@ -185,7 +210,7 @@
 
                 if ( isset( $settings[ $key ] ) ) {
                     $value = is_array( $settings[ $key ] ) ? implode( ', ', $settings[ $key ] ) : $settings[ $key ];
-                    return '<p><strong>' . esc_html( $key ) . ':</strong> ' . esc_html( $value ) . '</p>';
+                    return esc_html( $value );
                 } else {
                     return '<p><em>Setting "' . esc_html( $key ) . '" not found.</em></p>';
                 }
@@ -201,6 +226,58 @@
             return $output;
         }
         add_shortcode( 'woocommerce_settings', 'woocommerce_general_settings_shortcode' );
+    }
+
+    if ( ! function_exists( 'site_phone_shortcode' ) ) {
+        /**
+         * Shortcode: [site_phone]
+         *
+         * Outputs the site phone number from the ACF Options Page as a clickable tel: link.
+         *
+         * @return string HTML anchor tag with phone number or empty string if not set or invalid.
+         */
+        function site_phone_shortcode() {
+            if ( should_abort_shortcode() ) return '';
+
+            $phone = get_field( 'site_phone', 'option' );
+
+            if ( empty( $phone ) || ! is_string( $phone ) ) {
+                return '';
+            }
+
+            $phone_link = preg_replace( '/[^0-9\+]/', '', $phone );
+
+            if ( empty( $phone_link ) ) {
+                return '';
+            }
+
+            return sprintf( '<a href="tel:%s">%s</a>', esc_attr( $phone_link ), esc_html( $phone ) );
+        }
+        add_shortcode( 'site_phone', 'site_phone_shortcode' );
+    }
+
+    if ( ! function_exists( 'site_email_shortcode' ) ) {
+        /**
+         * Shortcode: [site_email]
+         *
+         * Outputs the site email address from the ACF Options Page as a clickable mailto: link.
+         *
+         * @return string HTML anchor tag with email address or empty string if not set or invalid.
+         */
+        function site_email_shortcode() {
+            if ( should_abort_shortcode() ) return '';
+
+            $email = get_field( 'site_email', 'option' );
+
+            if ( empty( $email ) || ! is_string( $email ) || ! is_email( $email ) ) {
+                return '';
+            }
+
+            $email_sanitized = antispambot( sanitize_email( $email ) );
+
+            return sprintf( '<a href="mailto:%s">%s</a>', esc_attr( $email_sanitized ), esc_html( $email_sanitized ) );
+        }
+        add_shortcode( 'site_email', 'site_email_shortcode' );
     }
 
     if ( ! function_exists( 'render_opening_hours_table' ) ) {
@@ -297,6 +374,8 @@
          * @return string HTML markup for the opening hours table, or a message if not available.
          */
         function opening_hours_shortcode() {
+            if ( should_abort_shortcode() ) return '';
+
             if ( ! function_exists( 'get_field' ) ) {
                 return wpautop( esc_html__( 'ACF plugin is not active.', 'borspirit' ) );
             }
@@ -329,34 +408,59 @@
          * @return string The formatted free shipping minimum amount (e.g. "$50.00"), or an empty string if not available.
          */
         function get_wc_free_shipping_amount() {
-            if ( ! class_exists( 'borspirit' ) ) {
+            if ( should_abort_shortcode() ) return '';
+
+            // Ensure WooCommerce is active
+            if ( ! function_exists( 'WC' ) || ! class_exists( 'WC_Shipping_Zones' ) ) {
                 return '';
             }
 
-            $customer_country = WC()->customer->get_shipping_country();
+            // Safely get customer country
+            $customer_country = '';
 
-            // If country is not yet set, try geolocation
+            try {
+                if ( WC()->customer ) {
+                    $customer_country = WC()->customer->get_shipping_country();
+                }
+            } catch ( \Throwable $e ) {
+                // swallow — we'll try other methods
+                $customer_country = '';
+            }
+
             if ( empty( $customer_country ) ) {
-                $geo = WC_Geolocation::geolocate_ip();
-                $customer_country = $geo['country'] ?? '';
+                if ( class_exists( 'WC_Geolocation' ) && is_callable( [ 'WC_Geolocation', 'geolocate_ip' ] ) ) {
+                    $geo = WC_Geolocation::geolocate_ip();
+                    $customer_country = $geo['country'] ?? '';
+                }
+            }
+
+            if ( empty( $customer_country ) ) {
+                // try base store country
+                if ( WC()->customer ) {
+                    WC()->customer->set_to_base();
+                    $customer_country = WC()->customer->get_shipping_country();
+                }
             }
 
             if ( empty( $customer_country ) ) {
                 return '';
             }
 
-            // Prepare package for zone matching
-            $package = [
-                'destination' => [
+            $package = array(
+                'destination' => array(
                     'country'  => $customer_country,
                     'state'    => '',
                     'postcode' => '',
                     'city'     => '',
                     'address'  => '',
-                ],
-            ];
+                ),
+            );
 
             $customer_zone = WC_Shipping_Zones::get_zone_matching_package( $package );
+            if ( ! $customer_zone ) {
+                return '';
+            }
+
             $methods = $customer_zone->get_shipping_methods();
 
             foreach ( $methods as $method ) {
@@ -364,14 +468,16 @@
                     continue;
                 }
 
-                if ( $method->id === 'free_shipping' && $method->enabled === 'yes' ) {
-                    if ( isset( $method->min_amount ) && is_numeric( $method->min_amount ) && $method->min_amount > 0 ) {
-                        return wc_price( $method->min_amount ); // Just return the amount
+                // Method id can be like 'free_shipping' or 'free_shipping:3' depending on instance — use strpos
+                if ( strpos( $method->id, 'free_shipping' ) !== false && ( isset( $method->enabled ) && $method->enabled === 'yes' ) ) {
+                    $min_amount = $method->get_option( 'min_amount' );
+                    if ( is_numeric( $min_amount ) && $min_amount > 0 ) {
+                        return wc_price( $min_amount );
                     }
                 }
             }
 
-            return ''; // No free shipping found
+            return '';
         }
         add_shortcode( 'free_shipping_amount', 'get_wc_free_shipping_amount' );
     }
@@ -396,7 +502,7 @@
             ) );
 
             if ( empty( $orders ) ) {
-                return '<p>' . esc_html__( 'No feedback yet.', 'borspirit' ) . '</p>';
+                return wpautop( esc_html__( 'No feedback yet.', 'borspirit' ) );
             }
 
             $output = '<div class="thankyou-feedback-list">';

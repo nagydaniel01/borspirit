@@ -23,7 +23,7 @@
                 <h1 class="page__title"><?php echo esc_html($title ?? __('Terms and Conditions', 'borspirit')); ?></h1>
             </header>
             <div class="page__content">
-                <?php echo $content ?? '<p>' . esc_html__('No content found.', 'borspirit') . '</p>'; ?>
+                <?php echo $content ?? wpautop( esc_html__('No content found.', 'borspirit') ); ?>
             </div>
         </div>
     </section>

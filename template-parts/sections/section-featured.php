@@ -39,7 +39,7 @@
 ?>
 
 <?php if ($featured_object || (!empty($final_title) && !empty($featured_description) && !empty($final_image))) : ?>
-    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--featured <?php echo esc_attr($section_classes); ?>">
+    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--featured<?php echo esc_attr($section_classes); ?>">
         <div class="container">
             <?php if (($section_title && $section_hide_title !== true) || $section_lead) : ?>
                 <div class="section__header">

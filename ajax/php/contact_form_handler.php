@@ -102,7 +102,7 @@
                 });
 
                 $formatted_message = implode('', array_map(function($line) {
-                    return '<p>' . esc_html($line) . '</p>';
+                    return wpautop( esc_html($line) );
                 }, $message_lines));
 
                 // Prepare email message
