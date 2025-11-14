@@ -49,12 +49,12 @@
 
 	.card__header {
 		position: relative;
-		flex: 0 0 auto;
+		flex: 1;
 	}
 
 	.card__content {
 		display: flex;
-		flex: 1;
+		flex: 1 0 auto;
 		flex-direction: column;
 		justify-content: flex-end;
 		padding: 1.25rem;

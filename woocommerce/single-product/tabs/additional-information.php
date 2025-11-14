@@ -47,7 +47,7 @@ $heading = apply_filters( 'woocommerce_product_additional_information_heading', 
 			// Check if the repeater exists on the Options page
 			if ( have_rows('food_pairing_tip_items', 'option') ) :
 
-				echo '<h3 class="section__title">' . esc_html__( 'Food that goes well with this wine', 'borspirit' ) . '</h3>';
+				echo '<h3 class="section__title">' . esc_html__( 'Food that goes well with this product', 'borspirit' ) . '</h3>';
 
 				if ( $tips_description ) {
 					echo wp_kses_post($tips_description);

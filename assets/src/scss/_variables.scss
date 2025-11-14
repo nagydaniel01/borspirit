@@ -247,8 +247,10 @@ $btn-close-hover-opacity: 1;
 $transition-base: all 0.4s ease-in-out;
 
 // Badge
-$badge-font-size:                   .75em;
-$badge-color:                       $white;
-$badge-padding-y:                   .5em;
-$badge-padding-x:                   1em;
-$badge-border-radius:               $border-radius;
+$badge-font-size: .875em;
+$badge-color: $white;
+$badge-padding-y: .5em;
+$badge-padding-x: .5em;
+$badge-width: 6rem;
+$badge-height: 2.5rem;
+$badge-border-radius: $border-radius-sm;

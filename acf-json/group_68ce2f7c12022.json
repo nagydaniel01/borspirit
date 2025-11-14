@@ -63,7 +63,7 @@
             "max_width": "",
             "max_height": "",
             "max_size": "",
-            "mime_types": "",
+            "mime_types": "svg",
             "allow_in_bindings": 0,
             "preview_size": "medium"
         },
@@ -685,6 +685,32 @@
             "append": ""
         },
         {
+            "key": "field_69148bb037beb",
+            "label": "Elfogadott kártya típusok",
+            "name": "site_payment_logo",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
+        },
+        {
             "key": "field_691209bd045d4",
             "label": "Közösségi média",
             "name": "",
@@ -746,7 +772,7 @@
                     "max_width": "",
                     "max_height": "",
                     "max_size": "",
-                    "mime_types": "",
+                    "mime_types": "svg",
                     "allow_in_bindings": 0,
                     "preview_size": "medium",
                     "parent_repeater": "field_691209d9045d5"
@@ -1086,7 +1112,7 @@
                     "max_width": "",
                     "max_height": "",
                     "max_size": "",
-                    "mime_types": "",
+                    "mime_types": "svg",
                     "allow_in_bindings": 0,
                     "preview_size": "medium",
                     "parent_repeater": "field_68d54e7beb02e"
@@ -1117,7 +1143,7 @@
         },
         {
             "key": "field_68d6b3701a1e0",
-            "label": "Borok és ételek párosítására vonatkozó tippek",
+            "label": "Ételek párosítására vonatkozó tippek",
             "name": "",
             "aria-label": "",
             "type": "tab",
@@ -1135,7 +1161,7 @@
         },
         {
             "key": "field_68d6b38d1a1e1",
-            "label": "Borok és ételek párosítására vonatkozó tippek",
+            "label": "Ételek párosítására vonatkozó tippek",
             "name": "food_pairing_tip_items",
             "aria-label": "",
             "type": "repeater",
@@ -1177,7 +1203,7 @@
                     "max_width": "",
                     "max_height": "",
                     "max_size": "",
-                    "mime_types": "",
+                    "mime_types": "svg",
                     "allow_in_bindings": 0,
                     "preview_size": "medium",
                     "parent_repeater": "field_68d6b38d1a1e1"
@@ -1309,5 +1335,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1762883916
+    "modified": 1763111776
 }

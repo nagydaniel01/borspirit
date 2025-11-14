@@ -23,7 +23,7 @@
         function custom_remove_product_image_link( $html, $post_id ) {
             return preg_replace( "!<(a|/a).*?>!", '', $html );
         }
-        //add_filter( 'woocommerce_single_product_image_thumbnail_html', 'custom_remove_product_image_link', 10, 2 );
+        add_filter( 'woocommerce_single_product_image_thumbnail_html', 'custom_remove_product_image_link', 10, 2 );
     }
 
     if ( ! function_exists( 'custom_woocommerce_image_sizes' ) ) {
@@ -68,6 +68,54 @@
 
         }
         add_action( 'after_setup_theme', 'custom_woocommerce_image_sizes', 10 );
+    }
+
+    if ( ! function_exists( 'custom_wrap_main_product_image_html' ) ) {
+        /**
+         * Wrap the main WooCommerce product image with a custom HTML div.
+         *
+         * This function targets only the main product image on single product pages
+         * and wraps it in a div with the class "product_image_thumbnail".
+         *
+         * @param string $html          The HTML of the product image thumbnail.
+         * @param int    $attachment_id The ID of the image attachment.
+         * @return string Modified HTML with custom wrapper for the main image.
+         */
+        function custom_wrap_main_product_image_html( $html, $attachment_id ) {
+            global $product;
+
+            if ( ! is_a( $product, 'WC_Product' ) ) {
+                return $html;
+            }
+
+            // Only target the main product image
+            $main_image_id = $product->get_image_id();
+
+            if ( $attachment_id == $main_image_id ) {
+                // List of possible random classes
+                $classes = array( 
+                    'product_image_thumbnail--style-01', 
+                    'product_image_thumbnail--style-02', 
+                    'product_image_thumbnail--style-03', 
+                    'product_image_thumbnail--style-04',
+                    'product_image_thumbnail--style-05',
+                    'product_image_thumbnail--style-06',
+                    'product_image_thumbnail--style-07',
+                    'product_image_thumbnail--style-08',
+                    'product_image_thumbnail--style-09',
+                    'product_image_thumbnail--style-10'
+                );
+
+                // Pick one at random
+                $random_class = $classes[ array_rand( $classes ) ];
+
+                // Wrap image in a div with both classes
+                $html = '<div class="product_image_thumbnail ' . esc_attr( $random_class ) . '">' . $html . '</div>';
+            }
+
+            return $html;
+        }
+        add_filter( 'woocommerce_single_product_image_thumbnail_html', 'custom_wrap_main_product_image_html', 10, 2 );
     }
 
     // ============================================================
@@ -825,6 +873,44 @@
     // 10. SHOP LOOP MODIFICATIONS
     // ============================================================
 
+    if ( ! function_exists( 'custom_add_to_cart_text_type' ) ) {
+        /**
+         * Modify the WooCommerce "Add to cart" text by product type.
+         *
+         * @param string $text Default button text.
+         * @return string Modified button text.
+         */
+        function custom_add_to_cart_text_type( $text ) {
+            global $product;
+
+            if ( ! $product || ! is_a( $product, 'WC_Product' ) ) {
+                return $text;
+            }
+
+            switch ( true ) {
+                case $product->is_type( 'simple' ):
+                    $text = __( 'Add to cart', 'borspirit' );
+                    break;
+
+                case $product->is_type( 'variable' ):
+                    $text = __( 'Select options', 'borspirit' );
+                    break;
+
+                case $product->is_type( 'grouped' ):
+                    $text = __( 'View products', 'borspirit' );
+                    break;
+
+                default:
+                    $text = __( 'Buy now', 'borspirit' );
+                    break;
+            }
+
+            return $text;
+        }
+        add_filter( 'woocommerce_product_single_add_to_cart_text', 'custom_add_to_cart_text_type' );
+        add_filter( 'woocommerce_product_add_to_cart_text', 'custom_add_to_cart_text_type' );
+    }
+
     if ( ! function_exists( 'show_product_stock_in_loop' ) ) {
         /**
          * Display product stock status in the WooCommerce product loop.
@@ -915,41 +1001,67 @@
     // 11. PRICE MODIFICATIONS
     // ============================================================
 
+    if ( ! function_exists( 'borspirit_is_club_member' ) ) {
+        /**
+         * Check if user is club member (spent 50 000+ HUF)
+         *
+         * @param int $user_id Optional user ID.
+         * @return bool True if user spent >= 50000 HUF.
+         */
+        function borspirit_is_club_member( $user_id = 0 ) {
+            try {
+                if ( ! $user_id ) {
+                    $user_id = get_current_user_id();
+                }
+                if ( ! $user_id || ! is_numeric( $user_id ) ) {
+                    return false;
+                }
+
+                $total_spent = wc_get_customer_total_spent( $user_id );
+                if ( ! is_numeric( $total_spent ) ) {
+                    return false;
+                }
+
+                return $total_spent >= 50000;
+
+            } catch ( Exception $e ) {
+                error_log( 'Club Member Error: ' . $e->getMessage() );
+                return false;
+            }
+        }
+    }
+
     if ( ! function_exists( 'borspirit_add_label_before_price' ) ) {
         /**
-         * Add a custom label before the WooCommerce product price.
+         * Add custom label before regular price on product pages.
          *
-         * This function modifies the WooCommerce price HTML to prepend
-         * a label before the product price on single product pages.
-         *
-         * @since 1.0.0
-         * @param string $price The original WooCommerce price HTML.
-         * @return string Modified price HTML with label.
+         * @param string     $price   Original price HTML.
+         * @param WC_Product $product WooCommerce product object.
+         * @return string Modified price HTML.
          */
         function borspirit_add_label_before_price( $price, $product ) {
-            // Exit early if in admin
-            if ( is_admin() ) {
-                return $price;
-            }
-
-            // Skip subscription products
-            if ( $product && ( $product->is_type( 'subscription' ) || $product->is_type( 'variable-subscription' ) ) ) {
-                return $price;
-            }
-
             try {
-                // Ensure price is a non-empty string
+                if ( is_admin() ) {
+                    return $price;
+                }
+
+                if ( ! $product || ! is_a( $product, 'WC_Product' ) ) {
+                    return $price;
+                }
+
+                if ( $product->is_type( 'subscription' ) || $product->is_type( 'variable-subscription' ) ) {
+                    return $price;
+                }
+
                 if ( empty( $price ) || ! is_string( $price ) ) {
                     return $price;
                 }
 
-                // Only add label on single product pages
                 $label = '<span class="price-label">' . esc_html__( 'Shelf price', 'borspirit' ) . ': </span>';
                 return $label . '<span>' . $price . '</span>';
 
             } catch ( Exception $e ) {
-                // In case of unexpected errors, return original price safely
-                error_log( 'Error adding label before WooCommerce price: ' . $e->getMessage() );
+                error_log( 'Label Price Error: ' . $e->getMessage() );
                 return $price;
             }
         }
@@ -958,60 +1070,71 @@
 
     if ( ! function_exists( 'borspirit_display_club_price' ) ) {
         /**
-         * Display both regular price and club price for everyone, and show sale difference if applicable.
+         * Display club price for all visitors (manual value or automatic -5%).
+         * Excludes sale products.
          *
-         * @since 1.1.0
-         * @param string     $price   The original WooCommerce price HTML.
-         * @param WC_Product $product The WooCommerce product object.
-         * @return string Modified price HTML including club price and sale difference.
+         * @param string     $price   Original price HTML.
+         * @param WC_Product $product WooCommerce product object.
+         * @return string Modified price output with club price.
          */
         function borspirit_display_club_price( $price, $product ) {
-            // Exit early if in admin
-            if ( is_admin() ) {
-                return $price;
-            }
-            
             try {
-                // =========================
-                // Wrap original price in span
-                // =========================
-                $price = '<span class="price__regular">' . $price . '</span>';
+                if ( is_admin() ) {
+                    return $price;
+                }
+
+                if ( ! $product || ! is_a( $product, 'WC_Product' ) ) {
+                    return $price;
+                }
                 
-                // =========================
-                // Club price
-                // =========================
-                $club_price = get_post_meta( $product->get_id(), '_club_price', true );
-                if ( $club_price !== '' && is_numeric( $club_price ) ) {
-                    $club_price_html = wc_price( $club_price );
-
-                    $label = '<span class="price-label">' . esc_html__( 'Club price', 'borspirit' ) . ': </span>';
-                    $price .= '<span class="price__club">' . $label . '<ins aria-hidden="true">' . $club_price_html . '</ins></span>';
+                if ( $product->is_type( 'subscription' ) || $product->is_type( 'variable-subscription' ) ) {
+                    return $price;
                 }
 
-                // =========================
-                // Sale price difference
-                // =========================
-                /*
+                $price_html = '<span class="price__regular">' . $price . '</span>';
+
                 if ( $product->is_on_sale() ) {
-                    $regular_price = (float) $product->get_regular_price();
-                    $sale_price    = (float) $product->get_sale_price();
 
-                    if ( $regular_price > $sale_price ) {
-                        $amount_saved = $regular_price - $sale_price;
-                        $percent_saved = round( ( $amount_saved / $regular_price ) * 100 );
+                    $regular = floatval( $product->get_regular_price() );
+                    $sale    = floatval( $product->get_sale_price() );
 
-                        $difference_html = ' <span class="price__savings"><span class="price-label">' . esc_html__( 'Kedvezmény', 'borspirit' ) . ': </span><span class="discount-amount">' . sprintf( esc_html__( '%s (-%s%%)', 'borspirit' ), wc_price( $amount_saved ), $percent_saved ) . '</span></span>';
+                    if ( $regular > 0 && $sale > 0 ) {
+                        $amount_saved = $regular - $sale;
+                        //$percent_saved = round( ( $amount_saved / $regular ) * 100 );
 
-                        // Append after price HTML
-                        $price .= $difference_html;
+                        $save_html  = '<span class="price__discount">';
+                        $save_html .= '<span class="price-label">' . esc_html__( 'Savings', 'borspirit' ) . ':</span> ';
+                        $save_html .= wc_price( $amount_saved );
+                        $save_html .= '</span>';
+
+                        return '<span class="price__regular">' . $price . '</span>' . $save_html;
                     }
-                }
-                */
 
-                return $price;
+                    return $price; // fallback
+                }
+
+                $manual_club_price = get_post_meta( $product->get_id(), '_club_price', true );
+
+                if ( $manual_club_price !== '' && is_numeric( $manual_club_price ) ) {
+                    $club_price = floatval( $manual_club_price );
+                } else {
+                    $regular_price = floatval( $product->get_regular_price() );
+                    if ( ! is_numeric( $regular_price ) || $regular_price <= 0 ) {
+                        return $price_html;
+                    }
+                    $club_price = $regular_price * 0.95; // -5%
+                }
+
+                $club_price_html = wc_price( $club_price );
+
+                $price_html .= '<span class="price__club"><span class="price-label">'
+                    . esc_html__( 'Club price', 'borspirit' )
+                    . ':</span> <ins>' . $club_price_html . '</ins></span>';
+
+                return $price_html;
 
             } catch ( Exception $e ) {
-                error_log( 'Error displaying club/sale price: ' . $e->getMessage() );
+                error_log( 'Display Club Price Error: ' . $e->getMessage() );
                 return $price;
             }
         }
@@ -1020,25 +1143,20 @@
 
     if ( ! function_exists( 'borspirit_add_club_price_field' ) ) {
         /**
-         * Add "Club Member Price" custom field in product pricing options.
-         *
-         * @since 1.0.0
-         * @return void
+         * Adds backend custom field for manual club price.
          */
         function borspirit_add_club_price_field() {
             try {
-                woocommerce_wp_text_input(
-                    array(
-                        'id'          => '_club_price',
-                        'label'       => __( 'Club price', 'borspirit' ),
-                        'desc_tip'    => true,
-                        'description' => __( 'Enter a special price for club members.', 'borspirit' ),
-                        'type'        => 'text',
-                        'data_type'   => 'price',
-                    )
-                );
+                woocommerce_wp_text_input([
+                    'id'          => '_club_price',
+                    'label'       => __( 'Club price', 'borspirit' ),
+                    'desc_tip'    => true,
+                    'description' => __( 'Optional: special manual club price. Leave empty to use 5% club discount.', 'borspirit' ),
+                    'type'        => 'text',
+                    'data_type'   => 'price',
+                ]);
             } catch ( Exception $e ) {
-                error_log( 'Error adding club price field: ' . $e->getMessage() );
+                error_log( 'Club Price Field Error: ' . $e->getMessage() );
             }
         }
         add_action( 'woocommerce_product_options_pricing', 'borspirit_add_club_price_field' );
@@ -1046,22 +1164,27 @@
 
     if ( ! function_exists( 'borspirit_save_club_price_field' ) ) {
         /**
-         * Save the "Club Member Price" custom field.
+         * Saves the manual club price field when product is saved.
          *
-         * @since 1.0.0
-         * @param int $post_id The product ID.
-         * @return void
+         * @param int $post_id Product ID.
          */
         function borspirit_save_club_price_field( $post_id ) {
             try {
-                $club_price = isset( $_POST['_club_price'] ) ? wc_clean( wp_unslash( $_POST['_club_price'] ) ) : '';
-                if ( $club_price !== '' ) {
-                    update_post_meta( $post_id, '_club_price', $club_price );
-                } else {
+                if ( ! isset( $_POST['_club_price'] ) ) {
                     delete_post_meta( $post_id, '_club_price' );
+                    return;
                 }
+
+                $club_price = wc_clean( wp_unslash( $_POST['_club_price'] ) );
+
+                if ( $club_price === '' || ! is_numeric( $club_price ) ) {
+                    delete_post_meta( $post_id, '_club_price' );
+                } else {
+                    update_post_meta( $post_id, '_club_price', $club_price );
+                }
+
             } catch ( Exception $e ) {
-                error_log( 'Error saving club price field: ' . $e->getMessage() );
+                error_log( 'Club Price Save Error: ' . $e->getMessage() );
             }
         }
         add_action( 'woocommerce_process_product_meta', 'borspirit_save_club_price_field' );
@@ -1069,31 +1192,114 @@
 
     if ( ! function_exists( 'borspirit_apply_club_price_in_cart' ) ) {
         /**
-         * Apply club price to cart and checkout for members.
+         * Apply club price in cart for logged-in club members only.
          *
-         * @since 1.0.0
-         * @param WC_Cart $cart The WooCommerce cart object.
-         * @return void
+         * @param WC_Cart $cart WooCommerce cart object.
          */
         function borspirit_apply_club_price_in_cart( $cart ) {
             try {
-                if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
-                    return;
+                if ( is_admin() && ! defined( 'DOING_AJAX' ) ) return;
+                if ( ! is_user_logged_in() ) return;
+
+                $user_id = get_current_user_id();
+                if ( ! borspirit_is_club_member( $user_id ) ) return;
+
+                foreach ( $cart->get_cart() as $cart_item ) {
+
+                    if ( empty( $cart_item['data'] ) || ! is_a( $cart_item['data'], 'WC_Product' ) ) {
+                        continue;
+                    }
+
+                    $product = $cart_item['data'];
+
+                    if ( $product->is_type( 'subscription' ) || $product->is_type( 'variable-subscription' ) ) {
+                        continue;
+                    }
+
+                    if ( $product->is_on_sale() ) {
+                        continue;
+                    }
+
+                    $manual_club_price = get_post_meta( $cart_item['product_id'], '_club_price', true );
+
+                    if ( $manual_club_price !== '' && is_numeric( $manual_club_price ) ) {
+                        $club_price = floatval( $manual_club_price );
+                    } else {
+                        $regular_price = floatval( $product->get_regular_price() );
+                        if ( ! is_numeric( $regular_price ) || $regular_price <= 0 ) {
+                            continue;
+                        }
+                        $club_price = $regular_price * 0.95;
+                    }
+
+                    $cart_item['data']->set_price( $club_price );
                 }
 
-                if ( is_user_logged_in() /*&& current_user_can( 'club_member' )*/ ) {
-                    foreach ( $cart->get_cart() as $cart_item ) {
-                        $club_price = get_post_meta( $cart_item['product_id'], '_club_price', true );
-                        if ( $club_price !== '' ) {
-                            $cart_item['data']->set_price( $club_price );
-                        }
-                    }
-                }
             } catch ( Exception $e ) {
-                error_log( 'Error applying club price in cart: ' . $e->getMessage() );
+                error_log( 'Apply Club Price Error: ' . $e->getMessage() );
             }
         }
         add_action( 'woocommerce_before_calculate_totals', 'borspirit_apply_club_price_in_cart' );
+    }
+
+    if ( ! function_exists( 'borspirit_show_club_progress_message' ) ) {
+        /**
+         * Display a message showing how much more the user needs to spend
+         * to become a Club Member (threshold: 50 000 HUF).
+         *
+         * Appears on:
+         * - Single product page
+         * - Cart page
+         * - Checkout
+         *
+         * @return void
+         */
+        function borspirit_show_club_progress_message() {
+            try {
+
+                // Only logged-in users have spending history
+                if ( ! is_user_logged_in() ) {
+                    return;
+                }
+
+                $user_id = get_current_user_id();
+                $total_spent = wc_get_customer_total_spent( $user_id );
+                $threshold   = 50000;
+
+                if ( ! is_numeric( $total_spent ) ) {
+                    return;
+                }
+
+                // User already reached club membership
+                if ( $total_spent >= $threshold ) {
+                    return;
+                }
+
+                // Calculate remaining amount
+                $remaining = $threshold - $total_spent;
+                if ( $remaining <= 0 ) {
+                    return;
+                }
+
+                // Format currency
+                $remaining_html = wc_price( $remaining );
+
+                // Build message
+                $message = sprintf(
+                    __( 'Spend %s more to become a Club Member and unlock exclusive prices!', 'borspirit' ),
+                    $remaining_html
+                );
+
+                // Prevent showing the notice multiple times on the same page load
+                if ( ! wc_has_notice( $message, 'notice' ) ) {
+                    wc_print_notice( $message, 'notice' );
+                }
+
+            } catch ( Exception $e ) {
+                error_log( 'Club Progress Message Error: ' . $e->getMessage() );
+            }
+        }
+        add_action( 'woocommerce_single_product_summary', 'borspirit_show_club_progress_message', 25 );
     }
 
     // Add Subtitle input under product title

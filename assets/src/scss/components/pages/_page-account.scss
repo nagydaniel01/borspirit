@@ -54,9 +54,14 @@
           background-image: url('./../../src/svg/home-user.svg');
         }
 
-        /* Bookmarks */
-        &.woocommerce-MyAccount-navigation-link--bookmarks a:before {
-          background-image: url('./../../src/svg/bookmark-empty.svg');
+        /* Product Bookmarks */
+        &.woocommerce-MyAccount-navigation-link--product-bookmarks a:before {
+          background-image: url('./../../src/svg/bookmark.svg');
+        }
+
+        /* Post Bookmarks */
+        &.woocommerce-MyAccount-navigation-link--post-bookmarks a:before {
+          background-image: url('./../../src/svg/bookmark.svg');
         }
 
         /* Orders */
@@ -89,6 +94,11 @@
           background-image: url('./../../src/svg/user-pen.svg');
         }
 
+        /* Points and rewards */
+        &.woocommerce-MyAccount-navigation-link--points-and-rewards a:before {
+          background-image: url('./../../src/svg/user-pen.svg');
+        }
+
         /* Logout */
         &.woocommerce-MyAccount-navigation-link--customer-logout a:before {
           background-image: url('./../../src/svg/right-from-bracket.svg');
@@ -113,6 +123,19 @@
 
     .section {
       padding: 0;
+    }
+
+    .price {
+      margin: 0 !important;
+    }
+
+    .product-thumbnail-image {
+      width: 100%;
+      max-width: 4rem;
+      height: 4rem;
+      object-fit: contain;
+      border-radius: 0.25rem;
+      background-color: rgba($white, 1);
     }
   }
   

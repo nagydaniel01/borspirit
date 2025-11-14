@@ -72,16 +72,18 @@
 }
 */
 
-.button {
+.button,
+a.wp-block-button__link {
   @extend .btn;
 
-  &:not(.alt):not(.wc-forward):not(.view) {
+  &:not(.alt):not(.wc-forward):not(.view):not(.cancel) {
     @extend .btn-primary;
   }
 
   &.alt,
   &.wc-forward,
-  &.view {
+  &.view,
+  &.cancel {
     @extend .btn-outline-primary;
 
     &.checkout {

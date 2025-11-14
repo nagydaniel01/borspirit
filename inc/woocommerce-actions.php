@@ -265,7 +265,7 @@
                     <svg class="icon icon-bookmark-empty">
                         <use xlink:href="#icon-bookmark-empty"></use>
                     </svg>
-                    <span class="visually-hidden"><?php echo esc_html__( 'Add to Bookmarks', 'borspirit' ); ?></span>
+                    <span class="visually-hidden"><?php echo esc_html__( 'Add to bookmarks', 'borspirit' ); ?></span>
                 </a>
                 <?php
             } else {
@@ -274,7 +274,7 @@
                 $bookmark_ids    = get_field( 'user_bookmarks', 'user_' . $current_user_id ) ?: [];
                 $is_bookmarked   = in_array( $post_id, $bookmark_ids, true );
                 $bookmark_icon   = $is_bookmarked ? 'bookmark' : 'bookmark-empty';
-                $bookmark_text   = $is_bookmarked ? __( 'Remove from bookmarks', 'borspirit' ) : __( 'Add to Bookmarks', 'borspirit' );
+                $bookmark_text   = $is_bookmarked ? __( 'Remove from bookmarks', 'borspirit' ) : __( 'Add to bookmarks', 'borspirit' );
                 ?>
                 <a id="btn-bookmark" class="woocommerce-loop-product__bookmark" href="#" data-post-id="<?php echo esc_attr( $post_id ); ?>" data-bookmarked="<?php echo esc_attr( $is_bookmarked ? 'true' : 'false' ); ?>">
                     <svg class="icon icon-<?php echo esc_attr( $bookmark_icon ); ?>">
@@ -325,6 +325,25 @@
          * Open a wrapper around the WooCommerce product image.
          */
         function custom_woocommerce_loop_image_wrapper() {
+            /*
+            // List of possible random classes
+            $classes = array( 
+                'woocommerce-loop-product__image--style-01', 
+                'woocommerce-loop-product__image--style-02', 
+                'woocommerce-loop-product__image--style-03', 
+                'woocommerce-loop-product__image--style-04',
+                'woocommerce-loop-product__image--style-05',
+                'woocommerce-loop-product__image--style-06',
+                'woocommerce-loop-product__image--style-07',
+                'woocommerce-loop-product__image--style-08',
+                'woocommerce-loop-product__image--style-09',
+                'woocommerce-loop-product__image--style-10'
+            );
+
+            // Pick one at random
+            $random_class = $classes[ array_rand( $classes ) ];
+            */
+
             echo '<div class="woocommerce-loop-product__image">';
         }
         add_action( 'woocommerce_before_shop_loop_item_title', 'custom_woocommerce_loop_image_wrapper', 1 );

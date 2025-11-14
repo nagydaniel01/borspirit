@@ -177,7 +177,7 @@
                 );
 
                 printf(
-                    '<span class="badge badge--onsale">%s <span class="badge__discount">−%d%%</span></span>',
+                    '<span class="badge badge--onsale">%s <span class="badge__discount">%d%%</span></span>',
                     esc_html__( 'Sale!', 'woocommerce' ),
                     esc_html( $percentage )
                 );

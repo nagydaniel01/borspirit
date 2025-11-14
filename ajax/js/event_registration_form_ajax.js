@@ -29,7 +29,7 @@
                 // Before sending, show a loading indicator
                 beforeSend: function() {
                     $submitBtn.prop('disabled', true).addClass('disabled');
-                    $('#reg_response').html('<div class="alert alert-info">'+event_registration_form_ajax_object.msg_registering+'</div>');
+                    $('#reg_response').html('<div class="alert alert-info">'+event_registration_form_ajax_object.msg_sending+'</div>');
                 },
 
                 success: function(response){

@@ -127,14 +127,14 @@
                                 <svg class="icon icon-bookmark-empty">
                                     <use xlink:href="#icon-bookmark-empty"></use>
                                 </svg>
-                                <span><?php echo esc_html__('Add to Bookmarks', 'borspirit'); ?></span>
+                                <span><?php echo esc_html__('Add to bookmarks', 'borspirit'); ?></span>
                             </a>
                         <?php else : ?>
                             <?php
                                 $bookmark_ids  = get_field('user_bookmarks', 'user_'.$current_user_id) ?: [];
                                 $is_bookmarked = in_array( get_the_ID(), $bookmark_ids, true );
                                 $bookmark_icon = $is_bookmarked ? 'bookmark' : 'bookmark-empty';
-                                $bookmark_text = $is_bookmarked ? __('Remove form bookmarks', 'borspirit') : __('Add to Bookmarks', 'borspirit');
+                                $bookmark_text = $is_bookmarked ? __('Remove form bookmarks', 'borspirit') : __('Add to bookmarks', 'borspirit');
                             ?>
                             <a id="btn-bookmark" class="section__bookmark" href="#" data-post-id="<?php echo esc_attr($post_id); ?>" data-bookmarked="<?php echo esc_attr($is_bookmarked ? 'true' : 'false'); ?>">
                                 <svg class="icon icon-<?php echo esc_attr($bookmark_icon); ?>">
@@ -219,7 +219,7 @@
 
                     <?php if ( !empty($products) ) : ?>
                         <div class="section__related-products">
-                            <h2 class="section__title"><?php echo esc_html('Related products', 'borspirit'); ?></h2>
+                            <h2 class="section__title"><?php echo esc_html__('Related products', 'borspirit'); ?></h2>
 
                             <div class="slider slider--product-query slider--related-products">
                                 <div class="slider__list">
@@ -246,7 +246,7 @@
 
                     <?php if ( $related_posts->have_posts() ) : ?>
                         <div class="section__related-posts">
-                            <h2 class="section__title"><?php echo esc_html('You may also be interested in', 'borspirit'); ?></h2>
+                            <h2 class="section__title"><?php echo esc_html__('You may also like…', 'borspirit'); ?></h2>
 
                             <div class="slider slider--related" id="related-posts-slider">
                                 <div class="slider__list">

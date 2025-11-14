@@ -51,9 +51,7 @@
                     <?php echo wpautop( esc_html__('Sorry, we couldn’t find your message details or the session has expired.', 'borspirit') ); ?>
                 <?php endif; ?>
 
-                <a href="<?php echo esc_url(home_url('/')); ?>" class="button">
-                    <?php echo esc_html__('Back to homepage', 'borspirit'); ?>
-                </a>
+                <a href="<?php echo esc_url( trailingslashit( home_url() ) ); ?>" class="btn btn-outline-primary btn-lg page__button"><?php echo sprintf( esc_html__( 'Back to %s', 'borspirit' ), get_the_title( get_option('page_on_front') ) ); ?></a>
             </div>
         </div>
     </section>

@@ -15,6 +15,7 @@
         function custom_add_bookmark_endpoints() {
             add_rewrite_endpoint( 'product-bookmarks', EP_ROOT | EP_PAGES );
             add_rewrite_endpoint( 'post-bookmarks', EP_ROOT | EP_PAGES );
+            add_rewrite_endpoint( 'previously-purchased', EP_ROOT | EP_PAGES );
         }
         add_action( 'init', 'custom_add_bookmark_endpoints' );
     }
@@ -37,6 +38,7 @@
                 if ( 'dashboard' === $key ) {
                     $new['product-bookmarks'] = __( 'Product Bookmarks', 'borspirit' );
                     $new['post-bookmarks']    = __( 'Post Bookmarks', 'borspirit' );
+                    $new['previously-purchased'] = __( 'Previously Purchased', 'borspirit' );
                 }
             }
 
@@ -80,6 +82,43 @@
             }
         }
         add_action( 'woocommerce_account_product-bookmarks_endpoint', 'custom_product_bookmarks_content' );
+    }
+
+    if ( ! function_exists( 'custom_post_bookmarks_content' ) ) {
+        /**
+         * Load Post Bookmarks page template.
+         *
+         * Template hierarchy:
+         *  - yourtheme/woocommerce/myaccount/previously-purchased.php
+         *  - yourtheme/myaccount/previously-purchased.php
+         *  - fallback to plugin's /templates/myaccount/previously-purchased.php
+         *
+         * @since 1.0.0
+         * @return void
+         */
+        function custom_post_bookmarks_content() {
+            $section_name = __( 'Previously Purchased', 'borspirit' );
+            $section_file = 'woocommerce/myaccount/previously-purchased.php';
+
+            $template = locate_template( $section_file );
+
+            if ( $template ) {
+                load_template( $template, true );
+            } else {
+                printf(
+                    '<div class="alert alert-danger" role="alert">%s</div>',
+                    sprintf(
+                        __(
+                            'The template for <code>%s</code> page is missing. Please create the file: <code>%s</code>',
+                            'borspirit'
+                        ),
+                        esc_html( $section_name ),
+                        esc_html( $section_file )
+                    )
+                );
+            }
+        }
+        add_action( 'woocommerce_account_previously-purchased_endpoint', 'custom_post_bookmarks_content' );
     }
 
     if ( ! function_exists( 'custom_post_bookmarks_content' ) ) {
@@ -135,18 +174,17 @@
                 global $wp_query;
 
                 $titles = array(
-                    'dashboard'         => __( 'Dashboard', 'woocommerce' ),
-                    'orders'            => __( 'Orders', 'woocommerce' ),
-                    'downloads'         => __( 'Downloads', 'woocommerce' ),
-                    'edit-address'      => __( 'Address', 'woocommerce' ),
-                    'edit-account'      => __( 'Account details', 'woocommerce' ),
-                    'customer-logout'   => __( 'Logout', 'woocommerce' ),
-                    'subscriptions'     => __( 'My Subscription', 'woocommerce-subscriptions' ),
-                    'view-subscription' => __( 'Subscription Details', 'woocommerce-subscriptions' ),
-                    'bookmarks'         => __( 'Bookmarks', 'borspirit' ),
-                    'email-marketing'   => __( 'Newsletter', 'borspirit' ),
-                    'product-bookmarks' => __( 'Product Bookmarks', 'borspirit' ),
-                    'post-bookmarks'    => __( 'Post Bookmarks', 'borspirit' ),
+                    'dashboard'          => __( 'Dashboard', 'woocommerce' ),
+                    'orders'             => __( 'Orders', 'woocommerce' ),
+                    'downloads'          => __( 'Downloads', 'woocommerce' ),
+                    'edit-address'       => __( 'Addresses', 'woocommerce' ),
+                    'edit-account'       => __( 'Account details', 'woocommerce' ),
+                    'customer-logout'    => __( 'Logout', 'woocommerce' ),
+                    'subscriptions'      => __( 'My Subscription', 'woocommerce-subscriptions' ),
+                    'view-subscription'  => __( 'Subscription Details', 'woocommerce-subscriptions' ),
+                    'points-and-rewards' => __( 'Pontok', 'borspirit' ),
+                    'product-bookmarks'  => __( 'Product Bookmarks', 'borspirit' ),
+                    'post-bookmarks'     => __( 'Post Bookmarks', 'borspirit' ),
                 );
 
                 foreach ( $titles as $endpoint => $endpoint_title ) {
@@ -164,4 +202,28 @@
             return $title;
         }
         add_filter( 'the_title', 'custom_my_account_endpoint_titles', 10, 2 );
+    }
+
+    if ( ! function_exists( 'conditionally_remove_downloads_tab' ) ) {
+        /**
+         * Remove the Downloads tab from WooCommerce My Account menu
+         * if the current user has no downloadable products.
+         *
+         * @param array $items Array of My Account menu items.
+         * @return array Modified array of My Account menu items.
+         */
+        function conditionally_remove_downloads_tab( $items ) {
+            $user_id = get_current_user_id();
+
+            if ( $user_id ) {
+                $downloads = WC()->customer->get_downloadable_products();
+
+                if ( empty( $downloads ) ) {
+                    unset( $items['downloads'] );
+                }
+            }
+
+            return $items;
+        }
+        add_filter( 'woocommerce_account_menu_items', 'conditionally_remove_downloads_tab', 999 );
     }

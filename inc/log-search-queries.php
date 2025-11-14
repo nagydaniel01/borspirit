@@ -111,24 +111,24 @@
          * Display admin notices: GDPR info, deletion success, and export warnings.
          */
         function search_logs_admin_notices() {
-            if ( current_user_can( 'manage_options' ) && isset($_GET['page']) && $_GET['page'] === 'search-logs' ) {
+            if ( current_user_can( 'manage_options' ) && isset($_GET['page']) && $_GET['page'] === 'borspirit' ) {
 
                 // GDPR info notice
                 echo '<div class="notice notice-info is-dismissible"><p><strong>Search Logs:</strong> For GDPR compliance, IPs are anonymized and logs are automatically deleted after 90 days.</p></div>';
 
                 // Single deletion success notice
                 if ( isset($_GET['search_log_deleted']) && $_GET['search_log_deleted'] == 1 ) {
-                    echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Selected search log were successfully deleted.', 'search-logs' ) . '</p></div>';
+                    echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Selected search log were successfully deleted.', 'borspirit' ) . '</p></div>';
                 }
 
                 // Bulk deletion success notice
                 if ( isset($_GET['search_logs_deleted']) && $_GET['search_logs_deleted'] == 1 ) {
-                    echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Selected search logs were successfully deleted.', 'search-logs' ) . '</p></div>';
+                    echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Selected search logs were successfully deleted.', 'borspirit' ) . '</p></div>';
                 }
 
                 // Export empty data warning
                 if ( isset($_GET['search_logs_export']) && $_GET['search_logs_export'] === 'empty' ) {
-                    echo '<div class="notice notice-warning is-dismissible"><p>' . esc_html__( 'No data found to export.', 'search-logs' ) . '</p></div>';
+                    echo '<div class="notice notice-warning is-dismissible"><p>' . esc_html__( 'No data found to export.', 'borspirit' ) . '</p></div>';
                 }
             }
         }
@@ -141,10 +141,10 @@
          */
         function register_search_logs_admin_page() {
             add_management_page(
-                __( 'Search Logs', 'search-logs' ),
-                __( 'Search Logs', 'search-logs' ),
+                __( 'Search Logs', 'borspirit' ),
+                __( 'Search Logs', 'borspirit' ),
                 'manage_options',
-                'search-logs',
+                'borspirit',
                 'display_search_logs'
             );
         }
@@ -200,22 +200,22 @@
             );
 
             echo '<div class="wrap">';
-            echo '<h1>' . esc_html__( 'Search Logs', 'search-logs' ) . '</h1>';
+            echo '<h1>' . esc_html__( 'Search Logs', 'borspirit' ) . '</h1>';
 
             // Filters & buttons
             echo '<form id="posts-filter" method="GET">';
             echo '<div class="tablenav top">';
-            echo '<input type="hidden" name="page" value="search-logs">';
+            echo '<input type="hidden" name="page" value="borspirit">';
             echo '<div class="alignleft actions">';
-            echo '<input type="text" name="s" placeholder="' . esc_attr__( 'Keyword', 'search-logs' ) . '" value="' . esc_attr( $_GET['s'] ?? '' ) . '"> ';
-            echo esc_html__( 'From:', 'search-logs' ) . ' <input type="date" name="date_from" value="' . esc_attr( $_GET['date_from'] ?? '' ) . '"> ';
-            echo esc_html__( 'To:', 'search-logs' ) . ' <input type="date" name="date_to" value="' . esc_attr( $_GET['date_to'] ?? '' ) . '"> ';
-            echo '<input type="submit" class="button" value="' . esc_attr__( 'Filter', 'search-logs' ) . '"> ';
+            echo '<input type="text" name="s" placeholder="' . esc_attr__( 'Keyword', 'borspirit' ) . '" value="' . esc_attr( $_GET['s'] ?? '' ) . '"> ';
+            echo esc_html__( 'From:', 'borspirit' ) . ' <input type="date" name="date_from" value="' . esc_attr( $_GET['date_from'] ?? '' ) . '"> ';
+            echo esc_html__( 'To:', 'borspirit' ) . ' <input type="date" name="date_to" value="' . esc_attr( $_GET['date_to'] ?? '' ) . '"> ';
+            echo '<input type="submit" class="button" value="' . esc_attr__( 'Filter', 'borspirit' ) . '"> ';
 
             // Export CSV button
             $export_url = add_query_arg(
                 [
-                    'page'               => 'search-logs',
+                    'page'               => 'borspirit',
                     'export_search_logs' => 1,
                     's'                  => $_GET['s'] ?? '',
                     'date_from'          => $_GET['date_from'] ?? '',
@@ -223,12 +223,12 @@
                 ],
                 admin_url( 'tools.php' )
             );
-            echo '<a href="' . esc_url( $export_url ) . '" class="button">' . esc_html__( 'Export CSV', 'search-logs' ) . '</a>';
+            echo '<a href="' . esc_url( $export_url ) . '" class="button">' . esc_html__( 'Export CSV', 'borspirit' ) . '</a>';
 
             // Delete Logs button
             $delete_url = add_query_arg(
                 [
-                    'page'                  => 'search-logs',
+                    'page'                  => 'borspirit',
                     'delete_search_logs_bulk' => 1,
                     's'                     => $_GET['s'] ?? '',
                     'date_from'             => $_GET['date_from'] ?? '',
@@ -236,7 +236,7 @@
                 ],
                 admin_url( 'tools.php' )
             );
-            echo '<a href="' . esc_url( $delete_url ) . '" class="button button-danger" onclick="return confirm(\'Are you sure you want to delete these logs?\');">'. esc_html__( 'Delete Logs', 'search-logs' ) . '</a>';
+            echo '<a href="' . esc_url( $delete_url ) . '" class="button button-danger" onclick="return confirm(\'Are you sure you want to delete these logs?\');">'. esc_html__( 'Delete Logs', 'borspirit' ) . '</a>';
 
             echo '</div>';
             echo '</div>';
@@ -245,11 +245,11 @@
             if ( $logs ) {
                 echo '<table class="widefat fixed striped">';
                 echo '<thead><tr>';
-                echo '<th>' . esc_html__( 'ID', 'search-logs' ) . '</th>';
-                echo '<th>' . esc_html__( 'Query', 'search-logs' ) . '</th>';
-                echo '<th>' . esc_html__( 'IP', 'search-logs' ) . '</th>';
-                echo '<th>' . esc_html__( 'Timestamp', 'search-logs' ) . '</th>';
-                echo '<th>' . esc_html__( 'Actions', 'search-logs' ) . '</th>';
+                echo '<th>' . esc_html__( 'ID', 'borspirit' ) . '</th>';
+                echo '<th>' . esc_html__( 'Query', 'borspirit' ) . '</th>';
+                echo '<th>' . esc_html__( 'IP', 'borspirit' ) . '</th>';
+                echo '<th>' . esc_html__( 'Timestamp', 'borspirit' ) . '</th>';
+                echo '<th>' . esc_html__( 'Actions', 'borspirit' ) . '</th>';
                 echo '</tr></thead><tbody>';
 
                 foreach ( $logs as $log ) {
@@ -258,7 +258,7 @@
                     echo '<td>' . esc_html( $log->query ) . '</td>';
                     echo '<td>' . esc_html( $log->ip ) . '</td>';
                     echo '<td>' . esc_html( $log->searched_at ) . '</td>';
-                    echo '<td><a href="' . esc_url( add_query_arg( [ 'delete_search_log' => $log->id ] ) ) . '" onclick="return confirm(\'Are you sure you want to delete this log?\');">'. esc_html__( 'Delete', 'search-logs' ) . '</a></td>';
+                    echo '<td><a href="' . esc_url( add_query_arg( [ 'delete_search_log' => $log->id ] ) ) . '" onclick="return confirm(\'Are you sure you want to delete this log?\');">'. esc_html__( 'Delete', 'borspirit' ) . '</a></td>';
                     echo '</tr>';
                 }
 
@@ -270,13 +270,13 @@
                     echo '<div class="tablenav"><div class="tablenav-pages">';
                     for ( $i = 1; $i <= $pages; $i++ ) {
                         $class = ( $i === $paged ) ? 'current' : '';
-                        $url   = add_query_arg( [ 'paged' => $i, 'page' => 'search-logs' ] );
+                        $url   = add_query_arg( [ 'paged' => $i, 'page' => 'borspirit' ] );
                         echo '<a class="' . esc_attr( $class ) . '" href="' . esc_url( $url ) . '">' . esc_html( $i ) . '</a> ';
                     }
                     echo '</div></div>';
                 }
             } else {
-                echo '<p>' . esc_html__( 'No search logs found.', 'search-logs' ) . '</p>';
+                echo '<p>' . esc_html__( 'No search logs found.', 'borspirit' ) . '</p>';
             }
 
             echo '</div>';
@@ -289,7 +289,7 @@
          */
         function export_search_logs_to_csv() {
             if ( ! current_user_can( 'manage_options' ) ) {
-                wp_die( __( 'Unauthorized user', 'search-logs' ) );
+                wp_die( __( 'Unauthorized user', 'borspirit' ) );
             }
 
             global $wpdb;
@@ -322,12 +322,12 @@
             );
 
             if ( empty( $results ) ) {
-                wp_redirect( add_query_arg( 'search_logs_export', 'empty', admin_url( 'tools.php?page=search-logs' ) ) );
+                wp_redirect( add_query_arg( 'search_logs_export', 'empty', admin_url( 'tools.php?page=borspirit' ) ) );
                 exit;
             }
 
             header( 'Content-Type: text/csv; charset=utf-8' );
-            header( 'Content-Disposition: attachment; filename=search-logs-' . date( 'Y-m-d-H-i-s' ) . '.csv' );
+            header( 'Content-Disposition: attachment; filename=borspirit-' . date( 'Y-m-d-H-i-s' ) . '.csv' );
             header( 'Pragma: no-cache' );
             header( 'Expires: 0' );
 

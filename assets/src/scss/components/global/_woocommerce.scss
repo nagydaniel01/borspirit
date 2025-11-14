@@ -93,6 +93,13 @@
     flex-direction: column;
   }
 
+  span:not([class]) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+  }
+
   del {
     font-size: .875rem;
     color: $body-color;
@@ -160,8 +167,8 @@
 
       &.columns-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
       &.columns-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      &.columns-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      &.columns-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      &.columns-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      &.columns-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
   }
 
@@ -188,7 +195,15 @@
       // Product Image
       .woocommerce-loop-product__image {
         position: relative;
+        padding: 1rem 1rem 0.5rem;
         overflow: hidden;
+
+        /*
+        height: 100%;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        */
 
         img {
           @extend .card-img-top;
@@ -201,6 +216,48 @@
         &:hover img {
           //transform: scale(1.05);
         }
+
+        /*
+        &.woocommerce-loop-product__image--style-01 {
+          background-image: url('./../images/blob-01.png')
+        }
+
+        &.woocommerce-loop-product__image--style-02 {
+          background-image: url('./../images/blob-02.png')
+        }
+
+        &.woocommerce-loop-product__image--style-03 {
+          background-image: url('./../images/blob-03.png')
+        }
+
+        &.woocommerce-loop-product__image--style-04 {
+          background-image: url('./../images/blob-04.png')
+        }
+
+        &.woocommerce-loop-product__image--style-05 {
+          background-image: url('./../images/blob-05.png')
+        }
+
+        &.woocommerce-loop-product__image--style-06 {
+          background-image: url('./../images/blob-06.png')
+        }
+
+        &.woocommerce-loop-product__image--style-07 {
+          background-image: url('./../images/blob-07.png')
+        }
+
+        &.woocommerce-loop-product__image--style-08 {
+          background-image: url('./../images/blob-08.png')
+        }
+
+        &.woocommerce-loop-product__image--style-09 {
+          background-image: url('./../images/blob-09.png')
+        }
+
+        &.woocommerce-loop-product__image--style-10 {
+          background-image: url('./../images/blob-10.png')
+        }
+        */
       }
 
       // Product bookmark
@@ -324,6 +381,26 @@
       img {
         width: 100%;
         aspect-ratio: 16 / 9;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .woocommerce,
+  .woocommerce-page {
+    ul.products {
+      &[class*="columns-"] {
+        display: grid;
+        gap: 2rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        &.columns-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        &.columns-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        &.columns-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        &.columns-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
       }
     }
   }

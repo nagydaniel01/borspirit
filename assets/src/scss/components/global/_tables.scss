@@ -1,15 +1,12 @@
 table:not(.wc-block-cart-items),
-.table,
-.shop_table {
+.table {
   @extend .table;
-  @extend .table-striped;
   @extend .table-bordered;
-  @extend .table-hover;
   margin-bottom: 2rem;
-  font-size: 0.95rem;
+  font-size: .95rem;
   background-color: transparent;
   border-collapse: separate;
-  border-spacing: 0 0.5rem;
+  border-spacing: 0 .5rem;
 
   tr {
     border: none;
@@ -18,7 +15,7 @@ table:not(.wc-block-cart-items),
   th, td {
     vertical-align: middle;
     background-color: $white;
-    padding: 0.75rem 1rem;
+    padding: .75rem 1rem;
     border: none;
 
     p {
@@ -36,7 +33,7 @@ table:not(.wc-block-cart-items),
 
     .product-quantity {
       font-weight: 600;
-      margin-left: 0.25rem;
+      margin-left: .25rem;
     }
 
     &:first-child {
@@ -65,7 +62,8 @@ table:not(.wc-block-cart-items),
 
     th {
       font-weight: 600;
-      background-color: $primary-light;
+      background-color: $secondary;
+      color: $white;
 
       &:first-child {
         border-radius: 15px 0 0 15px;
@@ -80,12 +78,41 @@ table:not(.wc-block-cart-items),
 
   tfoot {
     th, td {
-      background: $gray-200;
-      font-size: 0.95rem;
+      background-color: $gray-100;
+      font-size: .95rem;
     }
   }
 
   &.wc-block-cart-items {
     border: none !important;
+  }
+
+  &.opening-hours {
+    th, td {
+      background-color: transparent;
+    }
+  }
+}
+
+table {
+  &.woocommerce-table,
+  &.shop_table {
+    @extend .table;
+    @extend .table-striped;
+    @extend .table-bordered;
+    @extend .table-hover;
+  }
+
+  &.woocommerce-orders-table {
+    .woocommerce-orders-table__cell-order-actions {
+      .button {
+        @extend .btn-sm;
+        margin-left: .5rem;
+
+        &:first-child {
+          margin: 0;
+        }
+      }
+    }
   }
 }

@@ -4,6 +4,7 @@
             <h5 class="offcanvas-title" id="minicartCanvasLabel">
                 <?php echo esc_html__( 'Your cart', 'borspirit' ); ?>
                 <?php if ( WC()->cart->get_cart_contents_count() > 0 ) : ?>
+                    <span>&dash;</span>
                     <span class="cart_contents_count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
                     <?php echo _n( 'item', 'items', WC()->cart->get_cart_contents_count(), 'borspirit' ); ?>
                 <?php endif; ?>

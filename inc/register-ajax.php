@@ -83,7 +83,7 @@
                     'ajax_url'             => admin_url( 'admin-ajax.php' ),
                     'user_id'              => get_current_user_id(),
                     'msg_privacy_required' => __( 'You must agree to the privacy policy.', 'borspirit' ),
-                    'msg_registering'      => __( 'Registering…', 'borspirit' ),
+                    'msg_sending'          => __( 'Registering…', 'borspirit' ),
                     'msg_success'          => __( 'Successfully registered!', 'borspirit' ),
                     'msg_error_sending'    => __( 'There was an error while processing your registration.', 'borspirit' ),
                     'msg_unexpected'       => __( 'An unexpected error occurred.', 'borspirit' ),
@@ -167,11 +167,11 @@
                     'ajax_url'          => admin_url( 'admin-ajax.php' ),
                     'nonce'             => wp_create_nonce('prq_quiz_action'),
                     'user_id'           => get_current_user_id(),
-                    'msg_sending'       => __( 'Küldés…', 'bsp-wine-quiz' ),
-                    'msg_error_sending' => __( 'Hiba történt a feldolgozás során.', 'bsp-wine-quiz' ),
-                    'msg_success'       => __( 'Az ajánlás elkészült!', 'bsp-wine-quiz' ),
-                    'msg_unexpected'    => __( 'Váratlan hiba történt.', 'bsp-wine-quiz' ),
-                    'msg_network_error' => __( 'Hálózati hiba történt.', 'bsp-wine-quiz' )
+                    'msg_sending'       => __( 'Processing…', 'borspirit' ),
+                    'msg_success'       => __( 'The recommendation is complete!', 'borspirit' ),
+                    'msg_error_sending' => __( 'There was an error while processing your request.', 'borspirit' ),
+                    'msg_unexpected'    => __( 'An unexpected error occurred.', 'borspirit' ),
+                    'msg_network_error' => __( 'A network error occurred.', 'borspirit' )
                 ) );
             } else {
                 error_log( 'BorSpirit quiz script file does not exist: ' . $script_path );

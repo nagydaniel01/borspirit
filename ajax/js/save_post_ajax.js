@@ -6,7 +6,7 @@
             $button.data('bookmarked', newStatus);
             var iconClass = newStatus ? 'icon-bookmark' : 'icon-bookmark-empty';
             var iconHtml = '<svg class="icon ' + iconClass + '"><use xlink:href="#' + iconClass + '"></use></svg>';
-            var label = newStatus ? 'Remove from Bookmarks' : 'Add to Bookmarks';
+            var label = newStatus ? 'Remove from bookmarks' : 'Add to bookmarks';
             var buttonHtml = iconHtml + '<span>' + label + '</span>';
 
             $button.attr('data-bookmarked', newStatus);

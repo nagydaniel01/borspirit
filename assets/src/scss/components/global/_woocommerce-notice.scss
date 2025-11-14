@@ -1,4 +1,7 @@
 .woocommerce-notices-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: .625rem;
   margin-bottom: 1rem;
 }
 
@@ -36,8 +39,8 @@
     .close,
     .btn-close {
       position: absolute;
-      top: 0.5rem;
-      right: 0.75rem;
+      top: .5rem;
+      right: .75rem;
     }
   }
 
@@ -49,7 +52,7 @@
     display: inline-block;
     width: 1.25rem;
     height: 1.25rem;
-    margin-right: 0.5rem;
+    margin-right: .5rem;
     vertical-align: middle;
     content: "";
     mask-size: contain;

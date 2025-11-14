@@ -280,6 +280,7 @@ $('.slider--product-query').each(function() {
             mobileFirst: true,
             slidesToShow: 1,
             slidesToScroll: 1,
+            arrows: false,
             prevArrow: '<button type="button" class="slick-arrow slick-prev" aria-label="Előző"><svg class="icon icon-arrow-left"><use xlink:href="#icon-arrow-left"></use></svg></button>',
             nextArrow: '<button type="button" class="slick-arrow slick-next" aria-label="Következő"><svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg></button>',
             appendArrows: $controls,
@@ -289,6 +290,7 @@ $('.slider--product-query').each(function() {
                     settings: {
                         slidesToShow: 2,
                         slidesToScroll: 1,
+                        arrows: true
                     }
                 },
                 {
@@ -296,13 +298,15 @@ $('.slider--product-query').each(function() {
                     settings: {
                         slidesToShow: 3,
                         slidesToScroll: 1,
+                        arrows: true
                     }
                 },
                 {
                     breakpoint: 1199,
                     settings: {
                         slidesToShow: 3,
-                        slidesToScroll: 1
+                        slidesToScroll: 1,
+                        arrows: true
                     }
                 }
             ]
@@ -324,6 +328,7 @@ $('.slider--term-query').each(function() {
             mobileFirst: true,
             slidesToShow: 1,
             slidesToScroll: 1,
+            arrows: false,
             prevArrow: '<button type="button" class="slick-arrow slick-prev" aria-label="Előző"><svg class="icon icon-arrow-left"><use xlink:href="#icon-arrow-left"></use></svg></button>',
             nextArrow: '<button type="button" class="slick-arrow slick-next" aria-label="Következő"><svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg></button>',
             appendArrows: $controls,
@@ -333,6 +338,7 @@ $('.slider--term-query').each(function() {
                     settings: {
                         slidesToShow: 2,
                         slidesToScroll: 1,
+                        arrows: true
                     }
                 },
                 {
@@ -340,13 +346,15 @@ $('.slider--term-query').each(function() {
                     settings: {
                         slidesToShow: 3,
                         slidesToScroll: 1,
+                        arrows: true
                     }
                 },
                 {
                     breakpoint: 1199,
                     settings: {
                         slidesToShow: 3,
-                        slidesToScroll: 1
+                        slidesToScroll: 1,
+                        arrows: true
                     }
                 }
             ]
@@ -368,6 +376,7 @@ $('.slider--card').each(function() {
             mobileFirst: true,
             slidesToShow: 1,
             slidesToScroll: 1,
+            arrows: false,
             prevArrow: '<button type="button" class="slick-arrow slick-prev" aria-label="Előző"><svg class="icon icon-arrow-left"><use xlink:href="#icon-arrow-left"></use></svg></button>',
             nextArrow: '<button type="button" class="slick-arrow slick-next" aria-label="Következő"><svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg></button>',
             appendArrows: $controls,
@@ -377,6 +386,7 @@ $('.slider--card').each(function() {
                     settings: {
                         slidesToShow: 2,
                         slidesToScroll: 1,
+                        arrows: true
                     }
                 },
                 {
@@ -384,6 +394,7 @@ $('.slider--card').each(function() {
                     settings: {
                         slidesToShow: 3,
                         slidesToScroll: 1,
+                        arrows: true
                     }
                 }
             ]

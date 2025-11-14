@@ -42,6 +42,10 @@
       color: $white;
       border: none;
       outline: none;
+
+      .avatar {
+        border-radius: $border-radius-sm;
+      }
     }
 
     .btn {

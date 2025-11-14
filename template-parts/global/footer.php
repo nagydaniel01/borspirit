@@ -1,13 +1,14 @@
 <?php
-    $site_name = get_field('site_name', 'option') ?: get_bloginfo('name');
-    $site_logo = get_field('site_logo', 'option');
-    $social    = get_field('social_items', 'option');
-    $copyright = get_field('copyright', 'option');
+    $site_name         = get_field('site_name', 'option') ?: get_bloginfo('name');
+    $site_logo         = get_field('site_logo', 'option');
+    $social            = get_field('social_items', 'option');
+    $copyright         = get_field('copyright', 'option');
+    $site_payment_logo = get_field('site_payment_logo', 'option');
 
-    $locations = get_nav_menu_locations();
+    $locations         = get_nav_menu_locations();
 ?>
 
-<footer class="footer">
+<footer class="footer<?php echo is_product() ? ' footer--single-product' : ''; ?>">
     <div class="footer__top">
         <?php get_template_part('template-parts/forms/form', 'subscribe_form'); ?>
     </div>
@@ -41,6 +42,7 @@
                                 <ul class="nav__list">
                                     <?php foreach ($social as $key => $row) : ?>
                                         <?php
+                                            $social_image  = $row['social_image'] ?? '';
                                             $social_url    = $row['social_link']['url'] ?? '';
                                             $social_title  = $row['social_link']['title'] ?? '';
                                             $social_target = isset($row['social_link']['target']) && $row['social_link']['target'] !== '' ? $row['social_link']['target'] : '_self';
@@ -53,7 +55,11 @@
                                         <?php if ($social_url) : ?>
                                             <li class="nav__item">
                                                 <a href="<?php echo esc_url($social_url); ?>" target="<?php echo esc_attr($social_target); ?>" class="nav__link">
-                                                    <svg class="icon icon-<?php echo esc_attr($base); ?>"><use xlink:href="#icon-<?php echo esc_attr($base); ?>"></use></svg>
+                                                    <?php if (!empty($social_image)) : ?>
+                                                        <?php echo wp_get_attachment_image( $social_image['ID'], [24, 24], false, ['class' => 'icon ', 'alt'   => esc_attr($social_name)] ); ?>
+                                                    <?php else : ?>
+                                                        <svg class="icon icon-<?php echo esc_attr($base); ?>"><use xlink:href="#icon-<?php echo esc_attr($base); ?>"></use></svg>
+                                                    <?php endif; ?>
                                                     <span><?php echo esc_html($social_name); ?></span>
                                                 </a>
                                             </li>
@@ -71,7 +77,7 @@
                 </div>
         
                 <div class="col-md-6 col-xl">
-                    <div class="footer__block">
+                    <div class="footer__block footer__block--nav">
                         <?php 
                         $theme_location = 'footer_menu_1';
                         if ($locations && has_nav_menu($theme_location)) : ?>
@@ -97,7 +103,7 @@
                 </div>
 
                 <div class="col-md-6 col-xl">
-                    <div class="footer__block">
+                    <div class="footer__block footer__block--nav">
                         <?php 
                         $theme_location = 'footer_menu_2';
                         if ($locations && has_nav_menu($theme_location)) : ?>
@@ -123,7 +129,7 @@
                 </div>
 
                 <div class="col-md-6 col-xl">
-                    <div class="footer__block">
+                    <div class="footer__block footer__block--nav">
                         <?php 
                         $theme_location = 'footer_menu_3';
                         if ($locations && has_nav_menu($theme_location)) : ?>
@@ -144,6 +150,9 @@
                                     ));
                                 ?>
                             </nav>
+                        <?php endif; ?>
+                        <?php if ($site_payment_logo) : ?>
+                            <?php echo wp_get_attachment_image( $site_payment_logo['ID'], [$site_payment_logo['width'], $site_payment_logo['height']], false, ['class' => 'footer__image', 'alt' => esc_attr($site_payment_logo['alt'] ?? '')] ); ?>
                         <?php endif; ?>
                     </div>
                 </div>

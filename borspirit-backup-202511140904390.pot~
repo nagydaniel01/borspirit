@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BorSpirit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-14 11:45+0000\n"
+"POT-Creation-Date: 2025-11-13 20:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -66,7 +66,6 @@ msgid "[Event ID: %d] %s (%s)"
 msgstr ""
 
 #: inc/register-ajax.php:90 inc/register-ajax.php:118 inc/register-ajax.php:146
-#: inc/register-ajax.php:174
 msgid "A network error occurred."
 msgstr ""
 
@@ -78,11 +77,7 @@ msgstr ""
 msgid "ACF plugin is not active."
 msgstr ""
 
-#: inc/log-search-queries.php:252
-msgid "Actions"
-msgstr ""
-
-#: inc/woocommerce-extras.php:1571 inc/woocommerce-extras.php:1650
+#: inc/woocommerce-extras.php:1451 inc/woocommerce-extras.php:1530
 #, php-format
 msgid "Add %s more to your cart to qualify for free shipping!"
 msgstr ""
@@ -126,7 +121,7 @@ msgstr ""
 msgid "Admin email is not configured properly."
 msgstr ""
 
-#: inc/woocommerce-extras.php:1773
+#: inc/woocommerce-extras.php:1653
 msgid "Adult Confirm"
 msgstr ""
 
@@ -169,7 +164,6 @@ msgid "All statuses"
 msgstr ""
 
 #: inc/register-ajax.php:89 inc/register-ajax.php:117 inc/register-ajax.php:145
-#: inc/register-ajax.php:173
 msgid "An unexpected error occurred."
 msgstr ""
 
@@ -212,9 +206,8 @@ msgstr ""
 msgid "Awards list navigation"
 msgstr ""
 
-#: 404.php:41 templates/page-thank-you.php:54
-#, php-format
-msgid "Back to %s"
+#: 404.php:41 templates/page-thank-you.php:55
+msgid "Back to homepage"
 msgstr ""
 
 #: footer.php:32
@@ -265,7 +258,7 @@ msgstr ""
 msgid "Closing soon 🕒"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1131 inc/woocommerce-extras.php:1152
+#: inc/woocommerce-extras.php:1073 inc/woocommerce-extras.php:1119
 msgid "Club price"
 msgstr ""
 
@@ -316,14 +309,6 @@ msgstr ""
 
 #. Author of the theme
 msgid "Daniel Nagy"
-msgstr ""
-
-#: inc/log-search-queries.php:261
-msgid "Delete"
-msgstr ""
-
-#: inc/log-search-queries.php:239
-msgid "Delete Logs"
 msgstr ""
 
 #: inc/woocommerce-badge.php:332
@@ -389,6 +374,10 @@ msgstr ""
 msgid "Enable Mega Menu"
 msgstr ""
 
+#: inc/woocommerce-extras.php:1121
+msgid "Enter a special price for club members."
+msgstr ""
+
 #: template-parts/forms/form-contact_form.php:36
 msgid "Enter subject"
 msgstr ""
@@ -451,10 +440,6 @@ msgstr ""
 msgid "Estimated Delivery"
 msgstr ""
 
-#: inc/log-search-queries.php:226
-msgid "Export CSV"
-msgstr ""
-
 #: inc/register-post-types.php:21 inc/register-post-types.php:48
 msgid "FAQ"
 msgstr ""
@@ -483,10 +468,6 @@ msgstr ""
 msgid "Feedback:"
 msgstr ""
 
-#: inc/log-search-queries.php:213
-msgid "Filter"
-msgstr ""
-
 #: home.php:46 home.php:69
 #, php-format
 msgid "Filter by %s"
@@ -510,7 +491,7 @@ msgid "Flexibile Elements Template"
 msgstr ""
 
 #: woocommerce/single-product/tabs/additional-information.php:50
-msgid "Food that goes well with this product"
+msgid "Food that goes well with this wine"
 msgstr ""
 
 #: inc/theme-setup.php:127
@@ -555,10 +536,6 @@ msgstr ""
 msgid "Friday"
 msgstr ""
 
-#: inc/log-search-queries.php:211
-msgid "From:"
-msgstr ""
-
 #: inc/age-gate.php:61
 msgid "General Settings"
 msgstr ""
@@ -575,7 +552,7 @@ msgstr ""
 msgid "Header menu"
 msgstr ""
 
-#: inc/woocommerce-myaccount.php:199 template-parts/global/header.php:33
+#: inc/woocommerce-myaccount.php:160 template-parts/global/header.php:33
 #: template-parts/global/header.php:98
 #, php-format
 msgid "Hello %s!"
@@ -630,6 +607,11 @@ msgstr ""
 msgid "https://github.com/nagydaniel01"
 msgstr ""
 
+#: template-parts/forms/form-event_registration.php:30
+#, php-format
+msgid "I agree to the %s"
+msgstr ""
+
 #: inc/age-gate.php:17 inc/age-gate.php:109
 #: template-parts/dialogs/modal-age_gate.php:24
 msgid "I am old enough"
@@ -641,12 +623,11 @@ msgstr ""
 msgid "I am under %s"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1735
+#: inc/woocommerce-extras.php:1615
 msgid "I confirm I am %d years or older"
 msgstr ""
 
 #: template-parts/forms/form-contact_form.php:52
-#: template-parts/forms/form-event_registration.php:30
 #: template-parts/forms/form-subscribe_form.php:52
 #, php-format
 msgid "I have read and accept the %s"
@@ -654,10 +635,6 @@ msgstr ""
 
 #: inc/woocommerce-extras.php:643
 msgid "Icons"
-msgstr ""
-
-#: inc/log-search-queries.php:248
-msgid "ID"
 msgstr ""
 
 #: inc/register-post-types.php:40
@@ -694,19 +671,11 @@ msgstr ""
 msgid "Invalid security token."
 msgstr ""
 
-#: inc/log-search-queries.php:250
-msgid "IP"
-msgstr ""
-
-#: template-parts/sidebars/offcanvas-minicart.php:9
+#: template-parts/sidebars/offcanvas-minicart.php:8
 msgid "item"
 msgid_plural "items"
 msgstr[0] ""
 msgstr[1] ""
-
-#: inc/log-search-queries.php:210
-msgid "Keyword"
-msgstr ""
 
 #: template-parts/queries/query-post-type.php:323
 msgid "Last page"
@@ -867,10 +836,6 @@ msgstr ""
 msgid "No content sections were found for this page."
 msgstr ""
 
-#: inc/log-search-queries.php:131
-msgid "No data found to export."
-msgstr ""
-
 #: inc/register-post-types.php:34
 msgid "No FAQs found"
 msgstr ""
@@ -905,10 +870,6 @@ msgstr ""
 msgid "No related posts found."
 msgstr ""
 
-#: inc/log-search-queries.php:279
-msgid "No search logs found."
-msgstr ""
-
 #: woocommerce/single-product/tabs/tab-winery.php:114
 msgid "No valid terms found."
 msgstr ""
@@ -936,11 +897,6 @@ msgstr ""
 
 #: inc/shortcodes.php:552
 msgid "Opinion:"
-msgstr ""
-
-#: inc/woocommerce-extras.php:1154
-msgid ""
-"Optional: special manual club price. Leave empty to use 5% club discount."
 msgstr ""
 
 #: inc/woocommerce-badge.php:304
@@ -1008,7 +964,7 @@ msgstr ""
 msgid "Please write your feedback."
 msgstr ""
 
-#: inc/woocommerce-myaccount.php:185
+#: inc/woocommerce-myaccount.php:146
 msgid "Pontok"
 msgstr ""
 
@@ -1016,8 +972,8 @@ msgstr ""
 msgid "Popular Awards"
 msgstr ""
 
-#: inc/woocommerce-myaccount.php:40 inc/woocommerce-myaccount.php:137
-#: inc/woocommerce-myaccount.php:187
+#: inc/woocommerce-myaccount.php:39 inc/woocommerce-myaccount.php:98
+#: inc/woocommerce-myaccount.php:148
 msgid "Post Bookmarks"
 msgstr ""
 
@@ -1035,11 +991,8 @@ msgstr ""
 msgid "Previous"
 msgstr ""
 
-#: inc/woocommerce-myaccount.php:41 inc/woocommerce-myaccount.php:100
-msgid "Previously Purchased"
-msgstr ""
-
 #: templates/page-privacy-policy.php:24
+#: template-parts/forms/form-event_registration.php:31
 msgid "Privacy Policy"
 msgstr ""
 
@@ -1048,16 +1001,12 @@ msgstr ""
 msgid "Privacy Policy Template"
 msgstr ""
 
-#: inc/register-ajax.php:170
-msgid "Processing…"
-msgstr ""
-
-#: inc/woocommerce-myaccount.php:39 inc/woocommerce-myaccount.php:63
-#: inc/woocommerce-myaccount.php:186
+#: inc/woocommerce-myaccount.php:38 inc/woocommerce-myaccount.php:61
+#: inc/woocommerce-myaccount.php:147
 msgid "Product Bookmarks"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1324
+#: inc/woocommerce-extras.php:1204
 msgid "Product subtitle"
 msgstr ""
 
@@ -1065,10 +1014,6 @@ msgstr ""
 #: single.php:101
 #, php-format
 msgid "Published on %s"
-msgstr ""
-
-#: inc/log-search-queries.php:249
-msgid "Query"
 msgstr ""
 
 #: inc/filter-functions.php:34 inc/woocommerce-product-filter.php:24
@@ -1159,10 +1104,6 @@ msgstr ""
 msgid "Save changes"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1106
-msgid "Savings"
-msgstr ""
-
 #. Name of the template
 #: search.php:1 template-parts/global/header.php:120
 msgid "Search"
@@ -1190,25 +1131,12 @@ msgstr ""
 msgid "Search for: %s"
 msgstr ""
 
-#: inc/log-search-queries.php:144 inc/log-search-queries.php:145
-#: inc/log-search-queries.php:203
-msgid "Search Logs"
-msgstr ""
-
 #: inc/woocommerce-actions.php:732 template-parts/flexibile-elements.php:33
 msgid "Section #%d is incorrectly formatted and cannot be displayed."
 msgstr ""
 
 #: inc/woocommerce-extras.php:896
 msgid "Select options"
-msgstr ""
-
-#: inc/log-search-queries.php:121
-msgid "Selected search log were successfully deleted."
-msgstr ""
-
-#: inc/log-search-queries.php:126
-msgid "Selected search logs were successfully deleted."
 msgstr ""
 
 #: template-parts/forms/form-contact_form.php:63
@@ -1227,7 +1155,7 @@ msgstr ""
 msgid "Set featured image"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1060
+#: inc/woocommerce-extras.php:1033
 msgid "Shelf price"
 msgstr ""
 
@@ -1247,11 +1175,6 @@ msgstr ""
 #: templates/page-thank-you.php:51
 msgid ""
 "Sorry, we couldn’t find your message details or the session has expired."
-msgstr ""
-
-#: inc/woocommerce-extras.php:1289
-#, php-format
-msgid "Spend %s more to become a Club Member and unlock exclusive prices!"
 msgstr ""
 
 #: template-parts/forms/form-contact_form.php:34
@@ -1288,7 +1211,7 @@ msgstr ""
 msgid "Subscription form is temporarily unavailable. Please try again later."
 msgstr ""
 
-#: inc/woocommerce-extras.php:1406 inc/woocommerce-extras.php:1443
+#: inc/woocommerce-extras.php:1286 inc/woocommerce-extras.php:1323
 msgid "Subtitle"
 msgstr ""
 
@@ -1383,17 +1306,12 @@ msgstr ""
 msgid "The post saved successfully."
 msgstr ""
 
-#: inc/register-ajax.php:171
-msgid "The recommendation is complete!"
-msgstr ""
-
 #: inc/woocommerce-actions.php:702 template-parts/flexibile-elements.php:13
 #, php-format
 msgid "The required template directory does not exist: %s."
 msgstr ""
 
-#: inc/woocommerce-myaccount.php:74 inc/woocommerce-myaccount.php:111
-#: inc/woocommerce-myaccount.php:148
+#: inc/woocommerce-myaccount.php:72 inc/woocommerce-myaccount.php:109
 #, php-format
 msgid ""
 "The template for <code>%s</code> page is missing. Please create the file: "
@@ -1415,10 +1333,6 @@ msgstr ""
 msgid "There was an error while processing your registration."
 msgstr ""
 
-#: inc/register-ajax.php:172
-msgid "There was an error while processing your request."
-msgstr ""
-
 #: inc/register-ajax.php:144
 msgid "There was an error while processing your subscription."
 msgstr ""
@@ -1431,24 +1345,12 @@ msgstr ""
 msgid "Thursday"
 msgstr ""
 
-#: inc/log-search-queries.php:251
-msgid "Timestamp"
-msgstr ""
-
-#: inc/log-search-queries.php:212
-msgid "To:"
-msgstr ""
-
 #: 404.php:23
 msgid "Try using the navigation menu or go back to the homepage."
 msgstr ""
 
 #: inc/utils.php:691
 msgid "Tuesday"
-msgstr ""
-
-#: inc/log-search-queries.php:292
-msgid "Unauthorized user"
 msgstr ""
 
 #: ajax/php/comment_form_handler.php:82 ajax/php/contact_form_handler.php:153
@@ -1528,7 +1430,7 @@ msgstr ""
 
 #: inc/age-gate.php:16 inc/age-gate.php:99
 #: template-parts/dialogs/modal-age_gate.php:17
-#: template-parts/global/footer.php:163
+#: template-parts/global/footer.php:158
 #, php-format
 msgid ""
 "We are committed advocates and supporters of responsible, civilized drinking."
@@ -1604,11 +1506,6 @@ msgstr ""
 msgid "You have logged into %s admin"
 msgstr ""
 
-#: woocommerce/myaccount/previously-purchased.php:23
-#: woocommerce/myaccount/previously-purchased.php:48
-msgid "You have not purchased any products yet."
-msgstr ""
-
 #: single.php:249
 msgid "You may also like…"
 msgstr ""
@@ -1623,12 +1520,11 @@ msgstr ""
 #: ajax/php/save_post_handler.php:26
 #: ajax/php/update_bookmark_list_handler.php:18
 #: woocommerce/myaccount/post-bookmarks.php:7
-#: woocommerce/myaccount/previously-purchased.php:9
 #: woocommerce/myaccount/product-bookmarks.php:7
 msgid "You must be logged in."
 msgstr ""
 
-#: inc/woocommerce-extras.php:1742
+#: inc/woocommerce-extras.php:1622
 msgid "You must confirm you are %d+ to place the order."
 msgstr ""
 

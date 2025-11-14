@@ -30,7 +30,7 @@
                 return;
             }
         
-            // check if we've linked orders for this user at registration
+            // Check if we've linked orders for this user at registration
             $count = get_user_meta( $user_id, '_wc_linked_order_count', true );
         
             if ( $count && $count > 0 ) {
@@ -41,8 +41,11 @@
                 $message .= ' ' . sprintf( _n( 'Your previous order has been linked to this account.', 'Your previous %s orders have been linked to this account.', $count, 'text' ), $count );
                 $message .= ' <a class="button" href="' . esc_url( wc_get_endpoint_url( 'orders' ) ) . '">' . esc_html__( 'View Orders', 'text' ) . '</a>';
         
-                // add a notice with our message and delete our linked order flag
-                wc_print_notice( $message, 'notice' );
+                // Add a notice with our message and delete our linked order flag. Prevent showing the notice multiple times on the same page load.
+                if ( ! wc_has_notice( $message, 'notice' ) ) {
+                    wc_print_notice( $message, 'notice' );
+                }
+
                 delete_user_meta( $user_id, '_wc_linked_order_count' );
             }
         }

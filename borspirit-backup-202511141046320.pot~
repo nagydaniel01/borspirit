@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BorSpirit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-11 18:36+0000\n"
+"POT-Creation-Date: 2025-11-14 09:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -66,6 +66,7 @@ msgid "[Event ID: %d] %s (%s)"
 msgstr ""
 
 #: inc/register-ajax.php:90 inc/register-ajax.php:118 inc/register-ajax.php:146
+#: inc/register-ajax.php:174
 msgid "A network error occurred."
 msgstr ""
 
@@ -77,7 +78,7 @@ msgstr ""
 msgid "ACF plugin is not active."
 msgstr ""
 
-#: inc/woocommerce-extras.php:1365 inc/woocommerce-extras.php:1444
+#: inc/woocommerce-extras.php:1540 inc/woocommerce-extras.php:1619
 #, php-format
 msgid "Add %s more to your cart to qualify for free shipping!"
 msgstr ""
@@ -109,7 +110,11 @@ msgstr ""
 #: single.php:130 single.php:137 inc/woocommerce-actions.php:268
 #: inc/woocommerce-actions.php:277 template-parts/cards/card-default.php:98
 #: template-parts/cards/card-default.php:105
-msgid "Add to Bookmarks"
+msgid "Add to bookmarks"
+msgstr ""
+
+#: inc/woocommerce-extras.php:892
+msgid "Add to cart"
 msgstr ""
 
 #: ajax/php/contact_form_handler.php:81
@@ -117,7 +122,7 @@ msgstr ""
 msgid "Admin email is not configured properly."
 msgstr ""
 
-#: inc/woocommerce-extras.php:1567
+#: inc/woocommerce-extras.php:1742
 msgid "Adult Confirm"
 msgstr ""
 
@@ -160,6 +165,7 @@ msgid "All statuses"
 msgstr ""
 
 #: inc/register-ajax.php:89 inc/register-ajax.php:117 inc/register-ajax.php:145
+#: inc/register-ajax.php:173
 msgid "An unexpected error occurred."
 msgstr ""
 
@@ -190,7 +196,7 @@ msgstr ""
 msgid "Award Winner Badge"
 msgstr ""
 
-#: inc/register-taxonomies.php:16 inc/woocommerce-extras.php:462
+#: inc/register-taxonomies.php:16 inc/woocommerce-extras.php:510
 msgid "Awards"
 msgstr ""
 
@@ -202,8 +208,9 @@ msgstr ""
 msgid "Awards list navigation"
 msgstr ""
 
-#: 404.php:41 templates/page-thank-you.php:55
-msgid "Back to homepage"
+#: 404.php:41 templates/page-thank-you.php:54
+#, php-format
+msgid "Back to %s"
 msgstr ""
 
 #: footer.php:32
@@ -218,12 +225,12 @@ msgstr ""
 msgid "Best Seller Badge"
 msgstr ""
 
-#: inc/woocommerce-myaccount.php:146
-msgid "Bookmarks"
-msgstr ""
-
 #. Name of the theme
 msgid "BorSpirit"
+msgstr ""
+
+#: inc/woocommerce-extras.php:904
+msgid "Buy now"
 msgstr ""
 
 #: template-parts/global/header.php:45 template-parts/global/header.php:110
@@ -254,7 +261,7 @@ msgstr ""
 msgid "Closing soon 🕒"
 msgstr ""
 
-#: inc/woocommerce-extras.php:987 inc/woocommerce-extras.php:1033
+#: inc/woocommerce-extras.php:1104 inc/woocommerce-extras.php:1125
 msgid "Club price"
 msgstr ""
 
@@ -299,7 +306,7 @@ msgstr ""
 msgid "Custom WordPress Theme."
 msgstr ""
 
-#: inc/woocommerce-extras.php:781
+#: inc/woocommerce-extras.php:829
 msgid "Customers also bought…"
 msgstr ""
 
@@ -331,15 +338,15 @@ msgstr ""
 msgid "Download PDF"
 msgstr ""
 
-#: inc/woocommerce-extras.php:338
+#: inc/woocommerce-extras.php:386
 msgid "DRS"
 msgstr ""
 
-#: inc/woocommerce-extras.php:417 inc/woocommerce-extras.php:431
+#: inc/woocommerce-extras.php:465 inc/woocommerce-extras.php:479
 msgid "DRS - mandatory redemption fee"
 msgstr ""
 
-#: inc/woocommerce-extras.php:348
+#: inc/woocommerce-extras.php:396
 #, php-format
 msgid "DRS - mandatory redemption fee: %s / item."
 msgstr ""
@@ -368,10 +375,6 @@ msgstr ""
 
 #: inc/menu-item.php:26
 msgid "Enable Mega Menu"
-msgstr ""
-
-#: inc/woocommerce-extras.php:1035
-msgid "Enter a special price for club members."
 msgstr ""
 
 #: template-parts/forms/form-contact_form.php:36
@@ -410,11 +413,11 @@ msgstr ""
 msgid "Error: %s"
 msgstr ""
 
-#: inc/woocommerce-extras.php:256
+#: inc/woocommerce-extras.php:304
 msgid "Error: Price and volume must be numeric."
 msgstr ""
 
-#: inc/woocommerce-extras.php:260
+#: inc/woocommerce-extras.php:308
 msgid "Error: Price cannot be negative."
 msgstr ""
 
@@ -422,7 +425,7 @@ msgstr ""
 msgid "Error: Server doesn’t respond."
 msgstr ""
 
-#: inc/woocommerce-extras.php:264
+#: inc/woocommerce-extras.php:312
 msgid "Error: Volume must be greater than zero."
 msgstr ""
 
@@ -487,7 +490,7 @@ msgid "Flexibile Elements Template"
 msgstr ""
 
 #: woocommerce/single-product/tabs/additional-information.php:50
-msgid "Food that goes well with this wine"
+msgid "Food that goes well with this product"
 msgstr ""
 
 #: inc/theme-setup.php:127
@@ -524,7 +527,7 @@ msgstr ""
 msgid "Free shipping on orders over %1$s"
 msgstr ""
 
-#: inc/register-post-types.php:20 inc/woocommerce-extras.php:684
+#: inc/register-post-types.php:20 inc/woocommerce-extras.php:732
 msgid "Frequently Asked Questions"
 msgstr ""
 
@@ -548,7 +551,7 @@ msgstr ""
 msgid "Header menu"
 msgstr ""
 
-#: inc/woocommerce-myaccount.php:161 template-parts/global/header.php:33
+#: inc/woocommerce-myaccount.php:160 template-parts/global/header.php:33
 #: template-parts/global/header.php:98
 #, php-format
 msgid "Hello %s!"
@@ -603,13 +606,6 @@ msgstr ""
 msgid "https://github.com/nagydaniel01"
 msgstr ""
 
-#: template-parts/forms/form-contact_form.php:52
-#: template-parts/forms/form-event_registration.php:30
-#: template-parts/forms/form-subscribe_form.php:52
-#, php-format
-msgid "I agree to the %s"
-msgstr ""
-
 #: inc/age-gate.php:17 inc/age-gate.php:109
 #: template-parts/dialogs/modal-age_gate.php:24
 msgid "I am old enough"
@@ -621,11 +617,18 @@ msgstr ""
 msgid "I am under %s"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1529
+#: inc/woocommerce-extras.php:1704
 msgid "I confirm I am %d years or older"
 msgstr ""
 
-#: inc/woocommerce-extras.php:595
+#: template-parts/forms/form-contact_form.php:52
+#: template-parts/forms/form-event_registration.php:30
+#: template-parts/forms/form-subscribe_form.php:52
+#, php-format
+msgid "I have read and accept the %s"
+msgstr ""
+
+#: inc/woocommerce-extras.php:643
 msgid "Icons"
 msgstr ""
 
@@ -678,7 +681,7 @@ msgstr ""
 msgid "Learn more"
 msgstr ""
 
-#: inc/woocommerce-extras.php:560
+#: inc/woocommerce-extras.php:608
 msgid "Learn more about the product!"
 msgstr ""
 
@@ -715,10 +718,6 @@ msgstr ""
 
 #: ajax/php/mc_form_handler.php:88
 msgid "Mailchimp request failed. Please try again later."
-msgstr ""
-
-#: template-parts/global/header.php:62
-msgid "Menu"
 msgstr ""
 
 #: template-parts/forms/form-contact_form.php:41
@@ -762,7 +761,7 @@ msgstr ""
 msgid "Monday"
 msgstr ""
 
-#: inc/woocommerce-extras.php:574
+#: inc/woocommerce-extras.php:622
 msgid "More product details"
 msgstr ""
 
@@ -774,6 +773,10 @@ msgstr ""
 
 #: templates/page-thank-you.php:27
 msgid "Name:"
+msgstr ""
+
+#: template-parts/global/header.php:62
+msgid "Navigation"
 msgstr ""
 
 #: inc/woocommerce-badge.php:119
@@ -798,10 +801,6 @@ msgstr ""
 
 #: comments.php:47
 msgid "Newer Comments &rarr;"
-msgstr ""
-
-#: inc/woocommerce-myaccount.php:147
-msgid "Newsletter"
 msgstr ""
 
 #: search.php:37
@@ -862,7 +861,7 @@ msgstr ""
 msgid "No opening hours specified."
 msgstr ""
 
-#: woocommerce/single-product/tabs/tab-related_posts.php:51
+#: woocommerce/single-product/tabs/tab-related_posts.php:52
 msgid "No related posts found."
 msgstr ""
 
@@ -893,6 +892,11 @@ msgstr ""
 
 #: inc/shortcodes.php:552
 msgid "Opinion:"
+msgstr ""
+
+#: inc/woocommerce-extras.php:1127
+msgid ""
+"Optional: special manual club price. Leave empty to use 5% club discount."
 msgstr ""
 
 #: inc/woocommerce-badge.php:304
@@ -960,12 +964,16 @@ msgstr ""
 msgid "Please write your feedback."
 msgstr ""
 
+#: inc/woocommerce-myaccount.php:146
+msgid "Pontok"
+msgstr ""
+
 #: inc/register-taxonomies.php:28
 msgid "Popular Awards"
 msgstr ""
 
 #: inc/woocommerce-myaccount.php:39 inc/woocommerce-myaccount.php:98
-#: inc/woocommerce-myaccount.php:149
+#: inc/woocommerce-myaccount.php:148
 msgid "Post Bookmarks"
 msgstr ""
 
@@ -984,9 +992,6 @@ msgid "Previous"
 msgstr ""
 
 #: templates/page-privacy-policy.php:24
-#: template-parts/forms/form-contact_form.php:53
-#: template-parts/forms/form-event_registration.php:31
-#: template-parts/forms/form-subscribe_form.php:53
 msgid "Privacy Policy"
 msgstr ""
 
@@ -995,12 +1000,16 @@ msgstr ""
 msgid "Privacy Policy Template"
 msgstr ""
 
+#: inc/register-ajax.php:170
+msgid "Processing…"
+msgstr ""
+
 #: inc/woocommerce-myaccount.php:38 inc/woocommerce-myaccount.php:61
-#: inc/woocommerce-myaccount.php:148
+#: inc/woocommerce-myaccount.php:147
 msgid "Product Bookmarks"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1118
+#: inc/woocommerce-extras.php:1293
 msgid "Product subtitle"
 msgstr ""
 
@@ -1029,7 +1038,7 @@ msgstr ""
 msgid "Read more about %1$s"
 msgstr ""
 
-#: inc/woocommerce-extras.php:526
+#: inc/woocommerce-extras.php:574
 msgid "Recently viewed products"
 msgstr ""
 
@@ -1066,8 +1075,12 @@ msgstr ""
 msgid "Registration form not found."
 msgstr ""
 
-#: inc/woocommerce-extras.php:727 inc/woocommerce-extras.php:813
+#: inc/woocommerce-extras.php:775 inc/woocommerce-extras.php:861
 msgid "Related posts"
+msgstr ""
+
+#: single.php:222
+msgid "Related products"
 msgstr ""
 
 #: inc/register-post-types.php:38
@@ -1121,8 +1134,12 @@ msgstr ""
 msgid "Search for: %s"
 msgstr ""
 
-#: inc/woocommerce-actions.php:713 template-parts/flexibile-elements.php:33
+#: inc/woocommerce-actions.php:732 template-parts/flexibile-elements.php:33
 msgid "Section #%d is incorrectly formatted and cannot be displayed."
+msgstr ""
+
+#: inc/woocommerce-extras.php:896
+msgid "Select options"
 msgstr ""
 
 #: template-parts/forms/form-contact_form.php:63
@@ -1141,7 +1158,7 @@ msgstr ""
 msgid "Set featured image"
 msgstr ""
 
-#: inc/woocommerce-extras.php:947
+#: inc/woocommerce-extras.php:1058
 msgid "Shelf price"
 msgstr ""
 
@@ -1161,6 +1178,11 @@ msgstr ""
 #: templates/page-thank-you.php:51
 msgid ""
 "Sorry, we couldn’t find your message details or the session has expired."
+msgstr ""
+
+#: inc/woocommerce-extras.php:1258
+#, php-format
+msgid "Spend %s more to become a Club Member and unlock exclusive prices!"
 msgstr ""
 
 #: template-parts/forms/form-contact_form.php:34
@@ -1197,7 +1219,7 @@ msgstr ""
 msgid "Subscription form is temporarily unavailable. Please try again later."
 msgstr ""
 
-#: inc/woocommerce-extras.php:1200 inc/woocommerce-extras.php:1237
+#: inc/woocommerce-extras.php:1375 inc/woocommerce-extras.php:1412
 msgid "Subtitle"
 msgstr ""
 
@@ -1272,13 +1294,13 @@ msgstr ""
 msgid "Thank you! Your feedback has been sent."
 msgstr ""
 
-#: inc/woocommerce-actions.php:688 template-parts/flexibile-elements.php:18
+#: inc/woocommerce-actions.php:707 template-parts/flexibile-elements.php:18
 msgid ""
 "The Advanced Custom Fields plugin is not activated. Please install or "
 "activate ACF to use sections."
 msgstr ""
 
-#: inc/woocommerce-actions.php:677 template-parts/flexibile-elements.php:7
+#: inc/woocommerce-actions.php:696 template-parts/flexibile-elements.php:7
 msgid "The page ID is missing or invalid."
 msgstr ""
 
@@ -1292,7 +1314,11 @@ msgstr ""
 msgid "The post saved successfully."
 msgstr ""
 
-#: inc/woocommerce-actions.php:683 template-parts/flexibile-elements.php:13
+#: inc/register-ajax.php:171
+msgid "The recommendation is complete!"
+msgstr ""
+
+#: inc/woocommerce-actions.php:702 template-parts/flexibile-elements.php:13
 #, php-format
 msgid "The required template directory does not exist: %s."
 msgstr ""
@@ -1304,7 +1330,7 @@ msgid ""
 "<code>%s</code>"
 msgstr ""
 
-#: inc/woocommerce-actions.php:727 template-parts/flexibile-elements.php:47
+#: inc/woocommerce-actions.php:746 template-parts/flexibile-elements.php:47
 #, php-format
 msgid ""
 "The template for <code>%s</code> section is missing. Please create the file: "
@@ -1317,6 +1343,10 @@ msgstr ""
 
 #: inc/register-ajax.php:88
 msgid "There was an error while processing your registration."
+msgstr ""
+
+#: inc/register-ajax.php:172
+msgid "There was an error while processing your request."
 msgstr ""
 
 #: inc/register-ajax.php:144
@@ -1346,7 +1376,7 @@ msgstr ""
 msgid "Unexpected error: %s"
 msgstr ""
 
-#: inc/woocommerce-extras.php:298
+#: inc/woocommerce-extras.php:346
 #, php-format
 msgid "Unit price: %s / liter"
 msgstr ""
@@ -1398,6 +1428,10 @@ msgstr ""
 msgid "View FAQs"
 msgstr ""
 
+#: inc/woocommerce-extras.php:900
+msgid "View products"
+msgstr ""
+
 #: template-parts/dialogs/modal-register.php:6
 msgid "Want to know more? Register now!"
 msgstr ""
@@ -1406,13 +1440,13 @@ msgstr ""
 msgid "WC Product Attribute"
 msgstr ""
 
-#: inc/woocommerce-extras.php:765
+#: inc/woocommerce-extras.php:813
 msgid "We also recommend…"
 msgstr ""
 
 #: inc/age-gate.php:16 inc/age-gate.php:99
 #: template-parts/dialogs/modal-age_gate.php:17
-#: template-parts/global/footer.php:154
+#: template-parts/global/footer.php:163
 #, php-format
 msgid ""
 "We are committed advocates and supporters of responsible, civilized drinking."
@@ -1446,7 +1480,7 @@ msgstr ""
 msgid "Wine of the month"
 msgstr ""
 
-#: inc/woocommerce-extras.php:636
+#: inc/woocommerce-extras.php:684
 msgid "Winery"
 msgstr ""
 
@@ -1488,6 +1522,10 @@ msgstr ""
 msgid "You have logged into %s admin"
 msgstr ""
 
+#: single.php:249
+msgid "You may also like…"
+msgstr ""
+
 #: inc/register-ajax.php:85 inc/register-ajax.php:113 inc/register-ajax.php:141
 #: ajax/php/contact_form_handler.php:73
 #: ajax/php/event_registration_form_handler.php:88
@@ -1502,7 +1540,7 @@ msgstr ""
 msgid "You must be logged in."
 msgstr ""
 
-#: inc/woocommerce-extras.php:1536
+#: inc/woocommerce-extras.php:1711
 msgid "You must confirm you are %d+ to place the order."
 msgstr ""
 

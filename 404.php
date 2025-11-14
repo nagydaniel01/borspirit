@@ -27,7 +27,7 @@
 
 <main class="page page--404">
     <div class="container">
-        <div class="page__inner">
+        <div class="page__inner text-center">
             <?php if ($page_title) : ?>
                 <h1 class="page__title"><?php echo $page_title; ?></h1>
             <?php endif; ?>
@@ -38,7 +38,7 @@
                 </div>
             <?php endif; ?>
     
-            <a href="<?php echo esc_url( trailingslashit( home_url() ) ); ?>" class="btn btn-outline-primary btn-lg page__button"><?php echo esc_html__( 'Back to homepage', 'borspirit' ); ?></a>
+            <a href="<?php echo esc_url( trailingslashit( home_url() ) ); ?>" class="btn btn-outline-primary btn-lg page__button"><?php echo sprintf( esc_html__( 'Back to %s', 'borspirit' ), get_the_title( get_option('page_on_front') ) ); ?></a>
         </div>
     </div>
 </main>

@@ -1,47 +1,63 @@
 .section.section--featured {
     .section__content {
         display: flex;
+        flex-direction: column;
         align-items: center;
         position: relative; // for controlled overflow
-    }
-
-    // Image block
-    .section__image-wrapper {
-        flex: 1 0 auto;
-        width: 55%;
-        max-width: 720px;
-        margin: 0 -2rem 0 0;
-        z-index: 2;
-    }
-
-    .section__image {
-        aspect-ratio: 16 / 9;
-        object-fit: cover;
-        background-color: $white;
-    }
-
-    // Text block
-    .section__inner {
-        position: relative;
-        /*
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        */
-        flex: 1;
-        gap: 1rem;
-        width: 45%;
-        //min-height: 480px;
-        padding: 4rem;
-        padding-left: 8rem;
-        margin: 3.125rem 0 0 -2rem; // image overlaps into it a bit
         background-color: $primary-light;
         border-radius: $border-radius-xl;
-        //box-shadow: 0 8px 20px 0 rgba(0, 0, 0, .15);
-        z-index: 1; // text stays above image
+    }
+
+    .section__inner {
+        padding: 0 1.25rem 1.25rem;
     }
 
     .btn {
         width: max-content;
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    .section.section--featured {
+        .section__content {
+            flex-direction: row;
+            background-color: transparent;
+        }
+
+        // Image block
+        .section__image-wrapper {
+            flex: 1 0 auto;
+            width: 55%;
+            max-width: 720px;
+            margin: 0 -2rem 0 0;
+            z-index: 2;
+        }
+
+        .section__image {
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            background-color: $white;
+        }
+
+        // Text block
+        .section__inner {
+            position: relative;
+            /*
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            */
+            flex: 1;
+            gap: 1rem;
+            width: 45%;
+            //min-height: 480px;
+            padding: 4rem;
+            padding-left: 8rem;
+            margin: 3.125rem 0 0 -2rem; // image overlaps into it a bit
+            background-color: $primary-light;
+            border-radius: $border-radius-xl;
+            //box-shadow: 0 8px 20px 0 rgba(0, 0, 0, .15);
+            z-index: 1; // text stays above image
+        }
     }
 }

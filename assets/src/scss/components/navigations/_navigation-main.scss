@@ -8,7 +8,7 @@
     .icon {
       width: 1.5rem;
       height: 1.5rem;
-      color: $primary-dark;
+      color: $secondary-dark;
     }
   }
 
@@ -18,15 +18,9 @@
     list-style: none;
   }
 
-  .nav__item {
-    &.level0 {
-      margin-right: 1.25rem;
-    }
-  }
-
   .nav__link {
     display: block;
-    color: $primary;
+    color: $secondary;
     text-decoration: none;
 
     &.level0,
@@ -72,13 +66,17 @@
       padding-top: 0;
     }
 
+    .container {
+      padding: 0;
+    }
+
     .nav__list {
       width: 100%;
       flex-direction: column;
     }
 
     .nav__item {
-      border-top: 1px solid rgba($primary, 0.5);
+      border-top: 1px solid rgba($secondary, 0.5);
 
       &:first-child {
         border-top: none;
@@ -109,7 +107,7 @@
       &.level0 {
         padding: 0.5rem 0;
         font-weight: 700;
-        color: $primary;
+        color: $secondary;
       }
     }
 
@@ -153,6 +151,12 @@
       margin-top: 0.5rem;
     }
 
+    .nav__item {
+      &.level0 {
+        margin-right: 1.25rem;
+      }
+    }
+
     // -------------------------------------------------------------------------
     // SIMPLE DROPDOWN (no mega menu)
     // -------------------------------------------------------------------------
@@ -167,7 +171,7 @@
         min-width: 14rem;
         padding: 1rem;
         background-color: $white;
-        border: 1px solid rgba($primary-dark, 0.1);
+        border: 1px solid rgba($secondary-dark, 0.1);
         box-shadow: 0 4px 12px rgba($black, 0.1);
         flex-direction: column;
         z-index: 99;
@@ -195,23 +199,24 @@
         width: 100vw;
         padding: 2.5rem 4rem 3rem;
         background-color: $white;
-        border-top: 1px solid rgba($primary-dark, 0.2);
-        border-bottom: 1px solid rgba($primary-dark, 0.2);
+        border-top: 1px solid rgba($secondary-dark, 0.2);
+        border-bottom: 1px solid rgba($secondary-dark, 0.2);
         z-index: 98;
 
         .nav-tabs {
           justify-content: center;
           margin-bottom: 2rem;
+          border-color: rgba($secondary-dark, 0.2);
 
           .nav__link.level1 {
             border-color: transparent;
-            color: $primary-dark;
+            color: $secondary-dark;
             font-weight: 600;
 
             &.active {
               background: transparent;
-              color: $primary;
-              border-bottom: 3px solid $primary;
+              color: $secondary;
+              border-bottom: 3px solid $secondary;
             }
           }
         }
@@ -240,14 +245,16 @@
               display: flex;
               flex-direction: column;
               flex-wrap: wrap;
-              gap: 1rem 2rem;
+              gap: .25rem 2rem;
+              height: 22.75rem;
 
               .nav__link.level2 {
-                color: $primary-dark;
+                display: inline-block;
+                color: $secondary-dark;
                 font-size: 1rem;
 
                 &:hover {
-                  color: $primary;
+                  color: $secondary;
                 }
               }
             }
@@ -260,11 +267,11 @@
               margin-left: 1rem;
 
               .nav__link.level3 {
-                color: $primary-dark;
+                color: $secondary-dark;
                 font-size: 1rem;
 
                 &:hover {
-                  color: $primary;
+                  color: $secondary;
                 }
               }
             }

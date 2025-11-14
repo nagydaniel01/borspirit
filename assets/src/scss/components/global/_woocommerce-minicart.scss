@@ -31,7 +31,9 @@
       flex: 1;
       padding: 0 1rem;
       font-family: $headings-font-family;
+      font-size: .875rem;
       text-decoration: none;
+      color: $black;
     }
 
     .icon {
@@ -84,7 +86,6 @@
   margin-bottom: 0;
   padding: 1rem;
   border-top: 1px solid rgba($primary, 0.2);
-  font-size: 1.25rem;
 
   strong {
     font-weight: 400;

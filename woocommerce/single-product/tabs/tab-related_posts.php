@@ -24,7 +24,7 @@ $related_posts = array_filter( $related_posts ?? [], function ($post) {
 
 <div class="section__content">
     <?php if ( ! empty( $related_posts ) ) : ?>
-        <div class="slider slider--post-query">
+        <div class="slider slider--related">
             <div class="slider__list">
                 <?php foreach ( $related_posts as $post ) : setup_postdata( $post ); ?>
                     <div class="slider__item">
@@ -33,10 +33,11 @@ $related_posts = array_filter( $related_posts ?? [], function ($post) {
                                 'post_type' => esc_attr(get_post_type($post))
                             ];
 
-                            $template_slug = 'template-parts/cards/card-' . $template_args['post_type'] . '.php';
+                            $template_slug = 'template-parts/cards/card-related.php';
+
                             if ( locate_template( $template_slug ) ) {
                                 // File exists, include it
-                                get_template_part( 'template-parts/cards/card', $template_args['post_type'], $template_args );
+                                get_template_part( 'template-parts/cards/card', 'related', $template_args );
                             } else {
                                 // File does not exist, handle accordingly
                                 get_template_part( 'template-parts/cards/card', 'default', $template_args );

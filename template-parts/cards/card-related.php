@@ -10,7 +10,7 @@
     $thumbnail_id = get_post_thumbnail_id();
     $image_id     = $thumbnail_id ?? null;
     $categories   = get_the_terms($post_id, 'category');
-    $alt_text = get_post_meta($image_id, '_wp_attachment_image_alt', true) ?: $title;
+    $alt_text     = get_post_meta($image_id, '_wp_attachment_image_alt', true) ?: $title;
 
     if (is_wp_error($categories)) {
         $categories = [];
@@ -49,7 +49,7 @@
         <?php elseif ( defined( 'PLACEHOLDER_IMG_SRC' ) && PLACEHOLDER_IMG_SRC ) : ?>
             <div class="card__header">
                 <div class="card__image-wrapper">
-                    <img src="<?php echo esc_url( PLACEHOLDER_IMG_SRC ); ?>" alt="" class="card__image card__image--placeholder" loading="lazy">
+                    <img width="150" height="150" src="<?php echo esc_url( PLACEHOLDER_IMG_SRC ); ?>" alt="" class="card__image card__image--placeholder" loading="lazy">
                 </div>
             </div>
         <?php endif; ?>

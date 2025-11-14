@@ -12,7 +12,7 @@
     $thumbnail_id = get_post_thumbnail_id();
     $image_id     = $thumbnail_id ?? null;
     $categories   = get_the_terms($post_id, 'category');
-    $alt_text = get_post_meta($image_id, '_wp_attachment_image_alt', true) ?: $title;
+    $alt_text     = get_post_meta($image_id, '_wp_attachment_image_alt', true) ?: $title;
 
     if (is_wp_error($categories)) {
         $categories = [];
@@ -51,7 +51,7 @@
         <?php elseif ( defined( 'PLACEHOLDER_IMG_SRC' ) && PLACEHOLDER_IMG_SRC ) : ?>
             <div class="card__header">
                 <div class="card__image-wrapper">
-                    <img src="<?php echo esc_url( PLACEHOLDER_IMG_SRC ); ?>" alt="" class="card__image card__image--placeholder" loading="lazy">
+                    <img width="150" height="150" src="<?php echo esc_url( PLACEHOLDER_IMG_SRC ); ?>" alt="" class="card__image card__image--placeholder" loading="lazy">
                 </div>
             </div>
         <?php endif; ?>
@@ -95,14 +95,14 @@
             <svg class="icon icon-bookmark-empty">
                 <use xlink:href="#icon-bookmark-empty"></use>
             </svg>
-            <span class="visually-hidden"><?php echo esc_html__('Add to Bookmarks', 'borspirit'); ?></span>
+            <span class="visually-hidden"><?php echo esc_html__('Add to bookmarks', 'borspirit'); ?></span>
         </a>
     <?php else : ?>
         <?php
             $bookmark_ids  = get_field('user_bookmarks', 'user_'.$current_user_id) ?: [];
             $is_bookmarked = in_array( get_the_ID(), $bookmark_ids, true );
             $bookmark_icon = $is_bookmarked ? 'bookmark' : 'bookmark-empty';
-            $bookmark_text = $is_bookmarked ? __('Remove form bookmarks', 'borspirit') : __('Add to Bookmarks', 'borspirit');
+            $bookmark_text = $is_bookmarked ? __('Remove form bookmarks', 'borspirit') : __('Add to bookmarks', 'borspirit');
         ?>
         <a id="btn-bookmark" class="card__bookmark" href="#" data-post-id="<?php echo esc_attr($post_id); ?>" data-bookmarked="<?php echo esc_attr($is_bookmarked ? 'true' : 'false'); ?>">
             <svg class="icon icon-<?php echo esc_attr($bookmark_icon); ?>">

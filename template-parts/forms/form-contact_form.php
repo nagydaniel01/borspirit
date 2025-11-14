@@ -49,8 +49,8 @@
             <label class="form-check-label" for="<?php echo esc_attr($prefix); ?>privacy_policy">
                 <?php 
                     echo sprintf(
-                        esc_html__( 'I agree to the %s', 'borspirit' ), 
-                        '<a href="' . esc_url( get_privacy_policy_url() ) . '" target="_blank">' . esc_html__( 'Privacy Policy', 'borspirit' ) . '</a>'
+                        esc_html__( 'I have read and accept the %s', 'borspirit' ), 
+                        '<a href="' . esc_url( get_privacy_policy_url() ) . '" target="_blank">' . esc_html( get_the_title( PRIVACY_POLICY_PAGE_ID ) ) . '</a>'
                     ); 
                 ?>
                 <span class="required">*</span>

@@ -17,14 +17,23 @@
   position: absolute;
   top: 0.5rem;
   left: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
   padding-right: 2rem;
 
   .badge {
     @extend .badge, .bg-secondary;
     position: relative;
-    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: $badge-width;
+    height: $badge-height;
     font-weight: bold;
-    margin-right: 0.5rem;
-    margin-bottom: 0.25rem;
+    text-wrap: auto;
+    margin-right: .25rem;
+    margin-bottom: .25rem;
+    z-index: 1;
   }
 }
