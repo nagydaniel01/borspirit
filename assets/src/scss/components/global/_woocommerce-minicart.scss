@@ -85,14 +85,10 @@
   height: 100%;
 }
 
+.woocommerce-mini-cart__drs_fee,
 .woocommerce-mini-cart__total {
-  display: flex;
-  justify-content: space-between;
-  margin-top: auto;
-  margin-bottom: 0;
-  padding: 1rem;
-  border-top: 1px solid rgba($primary, 0.2);
-
+  padding: .5rem 1rem;
+  
   strong {
     font-weight: 400;
   }
@@ -100,6 +96,14 @@
   .amount {
     font-weight: 700;
   }
+}
+
+.woocommerce-mini-cart__total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+  margin-bottom: 0;
+  border-top: 1px solid rgba($primary, 0.2);
 }
 
 .woocommerce-mini-cart__buttons {

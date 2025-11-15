@@ -7,6 +7,11 @@
     define( 'TEMPLATE_PATH', get_template_directory() );
     define( 'TEMPLATE_DIR_URI', esc_url( get_template_directory_uri() ) );
 
+    // Asset Versioning
+    $style_path = TEMPLATE_PATH . '/assets/dist/css/styles.css';
+    $version    = file_exists( $style_path ) ? filemtime( $style_path ) : '1.0.0';
+    define( 'ASSETS_VERSION', $version );
+
     define( 'ASSETS_URI', TEMPLATE_DIR_URI . '/assets/img/' );
     define( 'ASSETS_URI_JS', TEMPLATE_DIR_URI . '/assets/src/js/' );
     define( 'ASSETS_URI_CSS', TEMPLATE_DIR_URI . '/assets/src/css/' );
@@ -16,11 +21,6 @@
     define( 'HOME_URL', esc_url( home_url() ) );
     define( 'SITE_URL', esc_url( site_url() ) );
     define( 'ADMIN_AJAX', esc_url( admin_url( 'admin-ajax.php' ) ) );
-
-    // Asset Versioning
-    $style_path = TEMPLATE_PATH . '/assets/dist/css/styles.css';
-    $version    = file_exists( $style_path ) ? filemtime( $style_path ) : '1.0.0';
-    define( 'ASSETS_VERSION', $version );
 
     // Page IDs
     define( 'HOME_PAGE_ID', get_option( 'page_on_front' ) );
@@ -48,7 +48,7 @@
         define( 'THANK_YOU_PAGE_ID', $page_thank_you[0]->ID );
     }
 
-    // ACF Fields (Logo, Placeholder)
+    // ACF Fields
     if ( function_exists( 'get_field' ) ) {
         $under_construction_mode = get_field( 'under_construction_mode', 'option' ) ?? false;
         $placeholder_img         = get_field( 'placeholder_img', 'option' ) ?? [];

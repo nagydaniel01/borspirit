@@ -484,7 +484,7 @@
                 }
             }
         }
-        add_action( 'woocommerce_widget_shopping_cart_total', 'display_drs_fee_in_mini_cart', 5 );
+        add_action( 'woocommerce_widget_shopping_cart_before_buttons', 'display_drs_fee_in_mini_cart', 5 );
     }
 
     // ============================================================
@@ -1237,7 +1237,7 @@
                         if ( ! is_numeric( $regular_price ) || $regular_price <= 0 ) {
                             continue;
                         }
-                        $club_price = $regular_price * 0.95;
+                        $club_price = $regular_price * 0.95; // -5%
                     }
 
                     $cart_item['data']->set_price( $club_price );
@@ -1248,6 +1248,75 @@
             }
         }
         add_action( 'woocommerce_before_calculate_totals', 'borspirit_apply_club_price_in_cart' );
+    }
+
+    if ( ! function_exists( 'borspirit_mini_cart_club_price_only' ) ) {
+        /**
+         * Mini cart: show ONLY club price (with label) if user is a club member.
+         *
+         * @param string   $price_html    Original price HTML.
+         * @param array    $cart_item     Cart item data.
+         * @param string   $cart_item_key Cart item key.
+         *
+         * @return string Modified price HTML or original.
+         */
+        function borspirit_mini_cart_club_price_only( $price_html, $cart_item, $cart_item_key ) {
+
+            try {
+
+                // User must be logged in
+                if ( ! is_user_logged_in() ) {
+                    return $price_html;
+                }
+
+                // Must be a club member
+                $user_id = get_current_user_id();
+                if ( ! borspirit_is_club_member( $user_id ) ) {
+                    return $price_html;
+                }
+
+                // Validate product
+                if ( empty( $cart_item['data'] ) || ! is_a( $cart_item['data'], 'WC_Product' ) ) {
+                    return $price_html;
+                }
+
+                $product = $cart_item['data'];
+
+                // Exclude subscription types
+                if ( $product->is_type( 'subscription' ) || $product->is_type( 'variable-subscription' ) ) {
+                    return $price_html;
+                }
+
+                // Exclude sale products
+                if ( $product->is_on_sale() ) {
+                    return $price_html;
+                }
+
+                // Manual or auto (-5%) club price
+                $manual_club_price = get_post_meta( $cart_item['product_id'], '_club_price', true );
+
+                if ( $manual_club_price !== '' && is_numeric( $manual_club_price ) ) {
+                    $club_price = floatval( $manual_club_price );
+                } else {
+                    $regular_price = floatval( $product->get_regular_price() );
+                    if ( $regular_price <= 0 ) {
+                        return $price_html;
+                    }
+                    $club_price = $regular_price * 0.95; // -5%
+                }
+
+                // Return label + club price
+                return '<span class="mini-price-club">'
+                    . '<span class="price-label">' . esc_html__( 'Club price', 'borspirit' ) . ':</span> '
+                    . '<ins>' . wc_price( $club_price ) . '</ins>'
+                    . '</span>';
+
+            } catch ( Exception $e ) {
+                error_log( 'Mini Cart Club Price Only Error: ' . $e->getMessage() );
+                return $price_html;
+            }
+        }
+        add_filter( 'woocommerce_cart_item_price', 'borspirit_mini_cart_club_price_only', 10, 3 );
     }
 
     if ( ! function_exists( 'borspirit_show_club_progress_message' ) ) {
