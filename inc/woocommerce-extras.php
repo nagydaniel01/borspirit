@@ -477,10 +477,10 @@
 
             foreach ( WC()->cart->get_fees() as $fee ) {
                 if ( $fee->name === __( 'DRS - mandatory redemption fee', 'borspirit' ) ) {
-                    echo '<p class="woocommerce-mini-cart__drs_fee">';
-                    echo '<strong>' . esc_html( $fee->name ) . ':</strong> ';
-                    echo wc_price( $fee->amount );
-                    echo '</p>';
+                    echo '<div class="woocommerce-mini-cart__drs_fee-wrapper">';
+                    echo '<p class="woocommerce-mini-cart__drs_fee"><strong>' . esc_html( $fee->name ) . ':</strong> ' . wc_price( $fee->amount ) . '</p>';
+                    echo '<p><small>' . esc_html__('Some of the products in your basket are subject to a redemption fee.', 'borspirit') . '</small></p>';
+                    echo '</div>';
                 }
             }
         }

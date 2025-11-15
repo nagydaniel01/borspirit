@@ -214,7 +214,6 @@
           @extend .card-img-top;
           aspect-ratio: 1 / 1;
           object-fit: contain;
-          object-position: center;
           transition: transform 0.3s ease;
         }
 
@@ -382,6 +381,7 @@
       img {
         width: 100%;
         aspect-ratio: 16 / 9;
+        object-fit: cover;
       }
     }
   }

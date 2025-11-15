@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BorSpirit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-15 20:27+0000\n"
+"POT-Creation-Date: 2025-11-15 12:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -82,7 +82,7 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1656 inc/woocommerce-extras.php:1735
+#: inc/woocommerce-extras.php:1579 inc/woocommerce-extras.php:1658
 #, php-format
 msgid "Add %s more to your cart to qualify for free shipping!"
 msgstr ""
@@ -179,12 +179,12 @@ msgstr ""
 msgid "Are you over %s years of age?"
 msgstr ""
 
-#: inc/woocommerce-delete-customer-account.php:23
+#: inc/woocommerce-delete-customer-account.php:25
 msgid ""
 "Are you sure you want to delete your account? This action cannot be undone."
 msgstr ""
 
-#: home.php:93
+#: home.php:68
 msgid "Authors"
 msgstr ""
 
@@ -242,7 +242,7 @@ msgstr ""
 msgid "Cart"
 msgstr ""
 
-#: single.php:186
+#: home.php:45 single.php:186
 msgid "Categories"
 msgstr ""
 
@@ -267,11 +267,10 @@ msgid "Closing soon 🕒"
 msgstr ""
 
 #: inc/woocommerce-extras.php:1139 inc/woocommerce-extras.php:1160
-#: inc/woocommerce-extras.php:1315
 msgid "Club price"
 msgstr ""
 
-#: under-construction.php:6 under-construction.php:61
+#: under-construction.php:6 under-construction.php:60
 msgid "Coming soon"
 msgstr ""
 
@@ -324,9 +323,9 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: inc/woocommerce-delete-customer-account.php:18
-#: inc/woocommerce-delete-customer-account.php:24
-#: inc/woocommerce-delete-customer-account.php:95
+#: inc/woocommerce-delete-customer-account.php:17
+#: inc/woocommerce-delete-customer-account.php:26
+#: inc/woocommerce-delete-customer-account.php:96
 msgid "Delete account"
 msgstr ""
 
@@ -338,7 +337,7 @@ msgstr ""
 msgid "Discount Badge"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1865
+#: inc/woocommerce-extras.php:1788
 msgid "Do you want to subscribe to our newsletter?"
 msgstr ""
 
@@ -495,11 +494,11 @@ msgstr ""
 msgid "Feedback:"
 msgstr ""
 
-#: sidebar-shop.php:31 sidebar-shop.php:39 inc/log-search-queries.php:213
+#: inc/log-search-queries.php:213
 msgid "Filter"
 msgstr ""
 
-#: home.php:94
+#: home.php:46 home.php:69
 #, php-format
 msgid "Filter by %s"
 msgstr ""
@@ -1000,7 +999,7 @@ msgstr ""
 msgid "Please assign a menu in Appearance → Menus."
 msgstr ""
 
-#: inc/woocommerce-extras.php:1835
+#: inc/woocommerce-extras.php:1758
 msgid "Please check this box if you want to proceed."
 msgstr ""
 
@@ -1070,7 +1069,7 @@ msgstr ""
 msgid "Product Bookmarks"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1409
+#: inc/woocommerce-extras.php:1332
 msgid "Product subtitle"
 msgstr ""
 
@@ -1189,7 +1188,7 @@ msgstr ""
 msgid "Search FAQs"
 msgstr ""
 
-#: home.php:36
+#: home.php:35
 #, php-format
 msgid "Search for %s"
 msgstr ""
@@ -1257,10 +1256,6 @@ msgstr ""
 msgid "Show more"
 msgstr ""
 
-#: inc/woocommerce-extras.php:482
-msgid "Some of the products in your basket are subject to a redemption fee."
-msgstr ""
-
 #: template-parts/queries/query-post-type.php:331
 msgid "Sorry, no posts matched your criteria."
 msgstr ""
@@ -1270,7 +1265,7 @@ msgid ""
 "Sorry, we couldn’t find your message details or the session has expired."
 msgstr ""
 
-#: inc/woocommerce-extras.php:1374
+#: inc/woocommerce-extras.php:1297
 #, php-format
 msgid "Spend %s more to become a Club Member and unlock exclusive prices!"
 msgstr ""
@@ -1313,7 +1308,7 @@ msgstr ""
 msgid "Subscription form is temporarily unavailable. Please try again later."
 msgstr ""
 
-#: inc/woocommerce-extras.php:1491 inc/woocommerce-extras.php:1528
+#: inc/woocommerce-extras.php:1414 inc/woocommerce-extras.php:1451
 msgid "Subtitle"
 msgstr ""
 
@@ -1571,7 +1566,7 @@ msgid ""
 "Please try again with different keywords."
 msgstr ""
 
-#: under-construction.php:62
+#: under-construction.php:61
 msgid "We are working hard on launching our new website. Stay tuned!"
 msgstr ""
 
@@ -1591,7 +1586,7 @@ msgstr ""
 msgid "Winery"
 msgstr ""
 
-#: inc/woocommerce-delete-customer-account.php:20
+#: inc/woocommerce-delete-customer-account.php:21
 msgid ""
 "Would you like to delete your account? Then your purchase data and lists of "
 "favorite wines will also be lost."
@@ -1659,11 +1654,11 @@ msgstr ""
 msgid "You must be logged in."
 msgstr ""
 
-#: inc/woocommerce-extras.php:1829
+#: inc/woocommerce-extras.php:1752
 msgid "You must confirm you are over %d before placing the order."
 msgstr ""
 
-#: inc/woocommerce-delete-customer-account.php:79
+#: inc/woocommerce-delete-customer-account.php:80
 msgid "Your account has been successfully deleted."
 msgstr ""
 
@@ -1701,8 +1696,4 @@ msgstr ""
 
 #: inc/class-mailchimp.php:43
 msgid "Your subscription has been updated successfully."
-msgstr ""
-
-#: home.php:77
-msgid "Összes"
 msgstr ""

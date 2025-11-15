@@ -29,53 +29,77 @@
         <div class="container">
             <header class="section__header">
                 <?php if ( function_exists('rank_math_the_breadcrumbs') ) rank_math_the_breadcrumbs(); ?>
-
-                <div class="section__title-wrapper">
-                    <h1 class="section__title"><?php echo esc_html($page_title); ?></h1>
-                    <input type="text" name="filter-search" id="filter-search" class="form-control filter filter--search js-filter-search" placeholder="<?php echo esc_attr(sprintf(__('Search for %s', 'borspirit'), strtolower($post_type_obj->labels->name))); ?>" >
-                </div>
-
+                
+                <h1 class="section__title"><?php echo esc_html($page_title); ?></h1>
+                
                 <div class="section__toolbar">
-                    <div class="row mt-3"> <!-- Bootstrap row wrapper -->
-                        <?php if (!empty($categories) && is_array($categories)) : ?>
-                            <div class="col-md-4 mb-3">
-                                <fieldset id="filter-categories">
-                                    <legend>
-                                        <?php 
-                                            $filter_label = __('Categories', 'borspirit');
-                                            echo esc_html(sprintf(__('Filter by %s', 'borspirit'), strtolower($filter_label)));
-                                        ?>
-                                    </legend>
-    
+                    <input type="text" name="filter-search" id="filter-search" class="form-control filter filter--search js-filter-search" placeholder="<?php echo esc_attr(sprintf(__('Search for %s', 'borspirit'), strtolower($post_type_obj->labels->name))); ?>" >
+
+                    <?php //if (!empty($categories) && is_array($categories)) : ?>
+                        <!--
+                        <div class="col-md-4 mb-3">
+                            <fieldset id="filter-categories">
+                                <legend>
                                     <?php 
-                                        $selected_categories = (array) get_query_var('category_filter');
+                                        /*
+                                        $filter_label = __('Categories', 'borspirit');
+                                        echo esc_html(sprintf(__('Filter by %s', 'borspirit'), strtolower($filter_label)));
+                                        */
                                     ?>
-    
-                                    <?php foreach ($categories as $category) : ?>
-                                        <div class="form-check">
-                                            <input type="checkbox" name="category[]" value="<?php echo esc_attr($category->slug); ?>" id="category-<?php echo esc_attr($category->slug); ?>" class="form-check-input filter js-filter js-filter-default" data-filter="category" <?php checked(in_array($category->slug, $selected_categories, true)); ?>>
-                                            <label class="form-check-label" for="category-<?php echo esc_attr($category->slug); ?>">
-                                                <?php echo esc_html($category->name); ?>
-                                            </label>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </fieldset>
-                            </div>
-                        <?php endif; ?>
-    
-                        <?php if (!empty($authors) && count($authors) > 1) : ?>
-                            <div class="col-md-4 mb-3">
-                                <?php $filter_label = __('Authors', 'borspirit'); ?>
-                                <select name="author[]" multiple="multiple" id="filter-author" class="form-select filter js-filter js-filter-default" data-filter="author" data-placeholder="<?php echo esc_attr(sprintf(__('Filter by %s', 'borspirit'), strtolower($filter_label))); ?>">
-                                    <?php foreach ($authors as $key => $author) : ?>
-                                        <option value="<?php echo esc_attr($author->ID); ?>" <?php selected(get_query_var('author_filter'), $author->ID); ?>>
-                                            <?php echo esc_html($author->display_name); ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        <?php endif; ?>
-                    </div> <!-- end row -->
+                                </legend>
+
+                                <?php 
+                                    //$selected_categories = (array) get_query_var('category_filter');
+                                ?>
+
+                                <?php //foreach ($categories as $category) : ?>
+                                    <div class="form-check">
+                                        <input type="checkbox" name="category[]" value="<?php //echo esc_attr($category->slug); ?>" id="category-<?php //echo esc_attr($category->slug); ?>" class="form-check-input filter js-filter js-filter-default" data-filter="category" <?php //checked(in_array($category->slug, $selected_categories, true)); ?>>
+                                        <label class="form-check-label" for="category-<?php //echo esc_attr($category->slug); ?>">
+                                            <?php //echo esc_html($category->name); ?>
+                                        </label>
+                                    </div>
+                                <?php //endforeach; ?>
+                            </fieldset>
+                        </div>
+                        -->
+                    <?php //endif; ?>
+
+                    <?php if (!empty($categories) && is_array($categories)) : ?>
+                        <?php 
+                            $selected_categories = (array) get_query_var('category_filter');
+                            $filter_key = 'category'; // same as data-filter
+                        ?>
+
+                        <ul class="filter filter--list">
+                            <!-- "All" item -->
+                            <li class="js-filter all <?php echo empty($selected_categories) ? 'active' : ''; ?>" data-filter="<?php echo esc_attr($filter_key); ?>">
+                                <?php _e('Összes', 'borspirit'); ?>
+                            </li>
+                            <?php foreach ($categories as $category) : ?>
+                                <?php 
+                                    $is_active = in_array($category->slug, $selected_categories, true) ? 'active' : '';
+                                ?>
+
+                                <li class="js-filter <?php echo esc_attr($is_active); ?>" data-filter="<?php echo esc_attr($filter_key); ?>" data-value="<?php echo esc_attr($category->slug); ?>">
+                                    <?php echo esc_html($category->name); ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+
+                    <?php if (!empty($authors) && count($authors) > 1) : ?>
+                        <div class="col-md-4 mb-3">
+                            <?php $filter_label = __('Authors', 'borspirit'); ?>
+                            <select name="author[]" multiple="multiple" id="filter-author" class="form-select filter js-filter js-filter-default" data-filter="author" data-placeholder="<?php echo esc_attr(sprintf(__('Filter by %s', 'borspirit'), strtolower($filter_label))); ?>">
+                                <?php foreach ($authors as $key => $author) : ?>
+                                    <option value="<?php echo esc_attr($author->ID); ?>" <?php selected(get_query_var('author_filter'), $author->ID); ?>>
+                                        <?php echo esc_html($author->display_name); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </header>
             

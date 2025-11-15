@@ -1,13 +1,44 @@
 .filter {
-    .filter__list {
+    &.filter--list {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
         list-style: none;
-        padding: 0;
-    }
+        gap: 0.5rem 1rem;
+    
+        li {
+            font-size: 1.125rem;
+            cursor: pointer;
 
-    .filter__link {
-        outline: none;
-        border: none;
-        padding: 0;
-        background: transparent;
+            &.active {
+                color: $primary;
+                font-weight: 700;
+                text-decoration: underline;
+            }
+        }
+    }
+  
+    &.filter--search {
+        padding-right: 2.5rem;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23debf67" viewBox="0 0 20 20"><path d="m19.8 18.8-3.1-3.1C18.1 14 19 11.9 19 9.5 19.1 4.3 14.8 0 9.5 0S0 4.3 0 9.5 4.3 19 9.5 19s4.6-.9 6.2-2.3l3.1 3.1c.1.1.3.2.5.2s.4 0 .5-.2c.3-.3.3-.7 0-1ZM9.5 17.7C5 17.7 1.4 14 1.4 9.6S5 1.4 9.5 1.4s8.1 3.7 8.1 8.1-3.7 8.1-8.1 8.1Z"/></svg>');
+        background-position: center right 0.75rem;
+        background-size: 20px auto;
+        background-repeat: no-repeat;
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    .filter {
+        &.filter--list {
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 0.5rem 2rem;
+        }
+
+        &.filter--search {
+            flex: 0 0 calc(33.33334% - ($grid-gutter-width / 1.5));
+            width: calc(33.33334% - ($grid-gutter-width / 1.5));
+        }
     }
 }
