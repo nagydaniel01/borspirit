@@ -219,6 +219,11 @@ $nav-tabs-link-active-bg: $primary;
 $nav-pills-link-active-color: $nav-tabs-link-active-color;
 $nav-pills-link-active-bg: $nav-tabs-link-active-bg;
 
+// Navbar
+$navbar-toggler-padding-y:          .5rem;
+$navbar-toggler-padding-x:          1rem;
+$navbar-toggler-font-size:          $font-size-base;
+
 // Modal
 $modal-content-border-width: 0;
 $modal-backdrop-bg: $primary-light;
@@ -235,7 +240,6 @@ $modal-content-box-shadow-sm-up: none;
 $offcanvas-bg-color: $white;
 $offcanvas-backdrop-bg: $modal-backdrop-bg;
 $offcanvas-backdrop-opacity: $modal-backdrop-opacity;
-
 
 // Close
 $btn-close-width: 1.5rem;

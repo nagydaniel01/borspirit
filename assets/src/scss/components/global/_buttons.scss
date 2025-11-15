@@ -76,16 +76,22 @@
 a.wp-block-button__link {
   @extend .btn;
 
+  // Default primary button
   &:not(.alt):not(.wc-forward):not(.view):not(.cancel) {
     @extend .btn-primary;
   }
 
+  // Outline buttons
   &.alt,
   &.wc-forward,
   &.view,
   &.cancel {
     @extend .btn-outline-primary;
 
+    // Override text color for alt/outline buttons if needed
+    color: $secondary !important;
+
+    // Checkout button inside outline
     &.checkout {
       @extend .btn-primary;
     }

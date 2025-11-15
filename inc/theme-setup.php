@@ -257,6 +257,9 @@
         add_filter( 'upload_mimes', 'theme_mime_types' );
     }
 
+    // Flush rewrite rules on theme activation to register the endpoint
+    add_action( 'after_switch_theme', 'flush_rewrite_rules' );
+
     if ( ! function_exists( 'add_all_settings_menu' ) ) {
         /**
          * Adds a link to "All Settings" in the WordPress admin menu (for administrators only).

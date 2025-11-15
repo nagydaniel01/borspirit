@@ -79,6 +79,12 @@
   }
 }
 
+.woocommerce-mini-cart__wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .woocommerce-mini-cart__total {
   display: flex;
   justify-content: space-between;

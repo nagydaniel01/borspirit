@@ -1,7 +1,7 @@
 <?php if ( class_exists( 'WooCommerce' ) ) : ?>
-    <div class="offcanvas offcanvas-end" id="minicartCanvas" tabindex="-1" aria-labelledby="minicartCanvasLabel">
+    <div class="offcanvas offcanvas-end" id="offcanvasMiniCart" tabindex="-1" aria-labelledby="offcanvasMiniCartLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="minicartCanvasLabel">
+            <h5 class="offcanvas-title" id="offcanvasMiniCartLabel">
                 <?php echo esc_html__( 'Your cart', 'borspirit' ); ?>
                 <?php if ( WC()->cart->get_cart_contents_count() > 0 ) : ?>
                     <span>&dash;</span>

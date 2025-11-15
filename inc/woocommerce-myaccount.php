@@ -174,17 +174,18 @@
                 global $wp_query;
 
                 $titles = array(
-                    'dashboard'          => __( 'Dashboard', 'woocommerce' ),
-                    'orders'             => __( 'Orders', 'woocommerce' ),
-                    'downloads'          => __( 'Downloads', 'woocommerce' ),
-                    'edit-address'       => __( 'Addresses', 'woocommerce' ),
-                    'edit-account'       => __( 'Account details', 'woocommerce' ),
-                    'customer-logout'    => __( 'Logout', 'woocommerce' ),
-                    'subscriptions'      => __( 'My Subscription', 'woocommerce-subscriptions' ),
-                    'view-subscription'  => __( 'Subscription Details', 'woocommerce-subscriptions' ),
-                    'points-and-rewards' => __( 'Pontok', 'borspirit' ),
-                    'product-bookmarks'  => __( 'Product Bookmarks', 'borspirit' ),
-                    'post-bookmarks'     => __( 'Post Bookmarks', 'borspirit' ),
+                    'dashboard'            => __( 'Dashboard', 'woocommerce' ),
+                    'orders'               => __( 'Orders', 'woocommerce' ),
+                    'downloads'            => __( 'Downloads', 'woocommerce' ),
+                    'edit-address'         => __( 'Addresses', 'woocommerce' ),
+                    'edit-account'         => __( 'Account details', 'woocommerce' ),
+                    'customer-logout'      => __( 'Logout', 'woocommerce' ),
+                    'subscriptions'        => __( 'My Subscription', 'woocommerce-subscriptions' ),
+                    'view-subscription'    => __( 'Subscription Details', 'woocommerce-subscriptions' ),
+                    'points-and-rewards'   => __( 'Pontok', 'borspirit' ),
+                    'product-bookmarks'    => __( 'Product Bookmarks', 'borspirit' ),
+                    'post-bookmarks'       => __( 'Post Bookmarks', 'borspirit' ),
+                    'previously-purchased' => __( 'Previously Purchased', 'borspirit' ),
                 );
 
                 foreach ( $titles as $endpoint => $endpoint_title ) {

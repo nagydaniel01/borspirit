@@ -64,6 +64,11 @@
           background-image: url('./../../src/svg/bookmark.svg');
         }
 
+        /* Previously Purchased */
+        &.woocommerce-MyAccount-navigation-link--previously-purchased a:before {
+          background-image: url('./../../src/svg/bag-shopping.svg');
+        }
+
         /* Orders */
         &.woocommerce-MyAccount-navigation-link--orders a:before {
           background-image: url('./../../src/svg/box.svg');

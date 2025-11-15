@@ -101,18 +101,19 @@ table {
     @extend .table-striped;
     @extend .table-bordered;
     @extend .table-hover;
+
+    .button {
+      margin-left: .5rem;
+
+      &:first-child {
+        margin: 0;
+      }
+    }
   }
 
-  &.woocommerce-orders-table {
-    .woocommerce-orders-table__cell-order-actions {
-      .button {
-        @extend .btn-sm;
-        margin-left: .5rem;
-
-        &:first-child {
-          margin: 0;
-        }
-      }
+  &.woocommerce-MyAccount-orders {
+    .button {
+      @extend .btn-sm;
     }
   }
 }

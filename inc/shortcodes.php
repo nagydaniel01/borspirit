@@ -280,6 +280,64 @@
         add_shortcode( 'site_email', 'site_email_shortcode' );
     }
 
+    if ( ! function_exists( 'wp_google_map_shortcode' ) ) {
+        /**
+         * Generates an embeddable Google Map iframe via shortcode.
+         *
+         * Shortcode: [google_map location="Location" zoom="13" width="800" height="300"]
+         *
+         * @param array $atts Shortcode attributes.
+         * @return string HTML iframe or error message.
+         */
+        function wp_google_map_shortcode( $atts ) {
+            // Set default attributes
+            $atts = shortcode_atts(
+                array(
+                    'location' => 'Borspirit, Budapest',
+                    'zoom'     => 13,
+                    'width'    => '800',
+                    'height'   => '300',
+                ),
+                $atts,
+                'google_map'
+            );
+
+            // Validate and sanitize attributes
+            $location = trim( $atts['location'] );
+            $zoom     = intval( $atts['zoom'] );
+            $width    = esc_attr( $atts['width'] );
+            $height   = esc_attr( $atts['height'] );
+
+            // Error handling
+            if ( empty( $location ) ) {
+                return '<p style="color:red;">Error: No location provided for the map.</p>';
+            }
+
+            if ( $zoom < 0 || $zoom > 21 ) {
+                $zoom = 13; // default zoom if invalid
+            }
+
+            if ( empty( $width ) ) {
+                $width = '800';
+            }
+
+            if ( empty( $height ) ) {
+                $height = '300';
+            }
+
+            // Encode location for URL
+            $location_encoded = urlencode( $location );
+
+            // Build and escape the Google Maps URL
+            $map_url = esc_url( "https://www.google.com/maps?q={$location_encoded}&z={$zoom}&output=embed" );
+
+            // Return the iframe HTML
+            return "<iframe width='{$width}' height='{$height}' loading='lazy' allowfullscreen referrerpolicy='no-referrer-when-downgrade' src='{$map_url}'></iframe>";
+        }
+        add_shortcode( 'google_map', 'wp_google_map_shortcode' );
+    }
+
+
     if ( ! function_exists( 'render_opening_hours_table' ) ) {
         /**
          * Render Opening Hours Table

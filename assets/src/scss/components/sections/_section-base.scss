@@ -210,6 +210,24 @@
         }
     }
 
+    .section__navigation {
+        .navbar-toggler {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 1rem;
+            border: none;
+            background-color: rgba($secondary, 1);
+            color: rgba($white, 1);
+
+            .icon {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+        }
+    }
+
     .toc-list {
         list-style: none;
     }
@@ -227,6 +245,12 @@
     .section {
         padding-top: 4rem;
         padding-bottom: 4rem;
+    }
+
+    .section__navigation {
+        .navbar-toggler {
+            display: none !important;
+        }
     }
 
     .section__bookmark {

@@ -23,6 +23,11 @@
   pointer-events: none;
 }
 
+.woocommerce .wc_payment_methods {
+  list-style-type: none;
+  padding: 0;
+}
+
 // Pagination
 .woocommerce-pagination {
   a.page-numbers,
@@ -179,7 +184,7 @@
     .woocommerce-loop-product {
       position: relative;
       background-color: rgba($white, 1);
-      border-radius: 0.5rem;
+      border-radius: $border-radius;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
 
       &:hover {
@@ -211,10 +216,6 @@
           object-fit: contain;
           object-position: center;
           transition: transform 0.3s ease;
-        }
-
-        &:hover img {
-          //transform: scale(1.05);
         }
 
         /*

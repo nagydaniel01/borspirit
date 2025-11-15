@@ -900,6 +900,14 @@
                     $text = __( 'View products', 'borspirit' );
                     break;
 
+                case $product->is_type( 'subscription' ):
+                    $text = get_option( 'woocommerce_subscriptions_add_to_cart_button_text', __( 'Subscribe now', 'borspirit' ) );
+                    break;
+
+                case $product->is_type( 'variable-subscription' ):
+                    $text = get_option( 'woocommerce_subscriptions_add_to_cart_button_text', __( 'Select subscription', 'borspirit' ) );
+                    break;
+
                 default:
                     $text = __( 'Buy now', 'borspirit' );
                     break;
@@ -1717,60 +1725,168 @@
      * Saves the value in HPOS orders and displays it in the admin order page.
      */
 
-    /**
-     * Register the 18+ age confirmation checkbox field.
-     */
     if ( ! function_exists( 'my_plugin_register_age_confirmation_field' ) ) {
         /**
-         * Registers a custom checkout field for age confirmation.
+         * Register the 18+ age confirmation checkout field.
          */
         function my_plugin_register_age_confirmation_field() {
+
+            // Only proceed if WooCommerce provides the function.
             if ( ! function_exists( 'woocommerce_register_additional_checkout_field' ) ) {
+                wc_get_logger()->debug(
+                    'Age confirmation field not registered — missing woocommerce_register_additional_checkout_field()',
+                    array( 'source' => 'my-plugin-age-confirm' )
+                );
                 return;
             }
 
-            woocommerce_register_additional_checkout_field( array(
-                'id'            => 'my_plugin/age_confirmation',
-                'label'         => sprintf(
-                    __( 'I confirm I am %d years or older', 'borspirit' ),
-                    get_option( 'ag_min_age', 18 )
-                ),
-                'location'      => 'order',
-                'type'          => 'checkbox',
-                'required'      => true,
-                'error_message' => sprintf(
-                    __( 'You must confirm you are %d+ to place the order.', 'borspirit' ),
-                    get_option( 'ag_min_age', 18 )
-                ),
-            ) );
+            $min_age = absint( get_option( 'ag_min_age', 18 ) );
+            if ( $min_age <= 0 ) {
+                $min_age = 18;
+            }
+
+            try {
+                woocommerce_register_additional_checkout_field( array(
+                    'id'            => 'my_plugin/age_confirmation',
+                    'label'         => sprintf(
+                        esc_html__( 'You must confirm you are over %d before placing the order.', 'borspirit' ),
+                        $min_age
+                    ),
+                    'location'      => 'order',
+                    'type'          => 'checkbox',
+                    'required'      => true,
+                    'error_message' => esc_html__( 'Please check this box if you want to proceed.', 'borspirit' )
+                ) );
+            } catch ( Exception $e ) {
+                wc_get_logger()->error(
+                    'Failed to register age confirmation field: ' . $e->getMessage(),
+                    array( 'source' => 'my-plugin-age-confirm' )
+                );
+            }
         }
         add_action( 'woocommerce_init', 'my_plugin_register_age_confirmation_field' );
     }
 
-    if ( ! function_exists( 'my_plugin_save_age_confirmation' ) ) {
+    if ( ! function_exists( 'my_plugin_register_marketing_optin_field' ) ) {
         /**
-         * Save the age confirmation field in HPOS orders.
-         *
-         * @param WC_Order $order The order object.
-         * @param array    $data  Posted checkout data.
+         * Register the marketing newsletter opt-in checkout field.
          */
-        function my_plugin_save_age_confirmation( $order, $data ) {
-            if ( ! empty( $_POST['my_plugin/age_confirmation'] ) ) {
-                $order->update_meta_data( '_age_confirmation', sanitize_text_field( $_POST['my_plugin/age_confirmation'] ) );
+        function my_plugin_register_marketing_optin_field() {
+
+            // Ensure WooCommerce provides the function.
+            if ( ! function_exists( 'woocommerce_register_additional_checkout_field' ) ) {
+                wc_get_logger()->debug(
+                    'Marketing opt-in field not registered — missing woocommerce_register_additional_checkout_field()',
+                    array( 'source' => 'my-plugin-marketing-optin' )
+                );
+                return;
+            }
+
+            try {
+                woocommerce_register_additional_checkout_field( array(
+                    'id'       => 'my_plugin/marketing_opt_in',
+                    'label'    => esc_html__( 'Do you want to subscribe to our newsletter?', 'borspirit' ),
+                    'location' => 'contact',
+                    'type'     => 'checkbox',
+                    'required' => false,
+                ) );
+            } catch ( Exception $e ) {
+                wc_get_logger()->error(
+                    'Failed to register marketing opt-in field: ' . $e->getMessage(),
+                    array( 'source' => 'my-plugin-marketing-optin' )
+                );
             }
         }
-        add_action( 'woocommerce_checkout_create_order', 'my_plugin_save_age_confirmation', 10, 2 );
+        add_action( 'woocommerce_init', 'my_plugin_register_marketing_optin_field' );
     }
 
-    if ( ! function_exists( 'my_plugin_display_age_confirmation_admin' ) ) {
-        /**
-         * Display the age confirmation field value in the admin order page.
-         *
-         * @param WC_Order $order The order object.
-         */
-        function my_plugin_display_age_confirmation_admin( $order ) {
-            $age_confirm = $order->get_meta( '_age_confirmation' );
-            echo '<p><strong>' . __( 'Adult Confirm', 'borspirit' ) . ':</strong> ' . ( $age_confirm ? 'Yes' : 'No' ) . '</p>';
+    if ( ! function_exists( 'my_plugin_handle_newsletter_subscription' ) ) {
+        function my_plugin_handle_newsletter_subscription( $order_id ) {
+
+            // Validate order ID
+            if ( empty( $order_id ) || ! is_numeric( $order_id ) ) {
+                wc_get_logger()->warning(
+                    'Invalid order ID passed to newsletter subscription handler.',
+                    [ 'source' => 'my-plugin-marketing-optin' ]
+                );
+                return;
+            }
+
+            // Retrieve order object
+            $order = wc_get_order( $order_id );
+            if ( ! $order ) {
+                wc_get_logger()->error(
+                    'Order not found for newsletter subscription handler.',
+                    [ 'source' => 'my-plugin-marketing-optin', 'order_id' => $order_id ]
+                );
+                return;
+            }
+
+            // Check if the customer opted in
+            $opt_in = $order->get_meta( '_wc_other/my_plugin/marketing_opt_in' );
+
+            if ( empty( $opt_in ) ) {
+                return; // Customer did not check the box
+            }
+
+            // Get customer data
+            $email      = $order->get_billing_email();
+            $first_name = $order->get_billing_first_name();
+            $last_name  = $order->get_billing_last_name();
+
+            if ( empty( $email ) ) {
+                wc_get_logger()->warning(
+                    'Newsletter subscription skipped — missing customer email.',
+                    [ 'source' => 'my-plugin-marketing-optin' ]
+                );
+                return;
+            }
+
+            // Mailchimp credentials
+            $api_key     = get_field( 'mailchimp_api_key', 'option' ) ?: MAILCHIMP_API_KEY;
+            $audience_id = get_field( 'mailchimp_audience_id', 'option' ) ?: MAILCHIMP_AUDIENCE_ID;
+
+            if ( empty( $api_key ) || empty( $audience_id ) ) {
+                wc_get_logger()->error(
+                    'Mailchimp configuration missing — cannot subscribe user.',
+                    [ 'source' => 'my-plugin-marketing-optin' ]
+                );
+                return;
+            }
+
+            try {
+                // Ensure class exists
+                if ( ! class_exists( 'MailchimpService' ) ) {
+                    wc_get_logger()->error(
+                        'MailchimpService class not found — subscription aborted.',
+                        [ 'source' => 'my-plugin-marketing-optin' ]
+                    );
+                    return;
+                }
+
+                $mailchimp = new MailchimpService( $api_key, $audience_id );
+
+                $mailchimp->subscribe(
+                    $email,
+                    $first_name,
+                    $last_name,
+                    [ 'webshop' ],
+                    'subscribed'
+                );
+
+                wc_get_logger()->info(
+                    'User subscribed to Mailchimp successfully.',
+                    [ 'source' => 'my-plugin-marketing-optin', 'email' => $email ]
+                );
+
+            } catch ( Exception $e ) {
+
+                wc_get_logger()->error(
+                    'Mailchimp subscription failed: ' . $e->getMessage(),
+                    [ 'source' => 'my-plugin-marketing-optin', 'email' => $email ]
+                );
+            }
         }
-        add_action( 'woocommerce_admin_order_data_after_billing_address', 'my_plugin_display_age_confirmation_admin' );
+
+        add_action( 'woocommerce_thankyou', 'my_plugin_handle_newsletter_subscription', 20, 1 );
     }

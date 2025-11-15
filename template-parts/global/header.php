@@ -40,7 +40,7 @@
                     <?php endif; ?>
 
                     <!-- Mobile Cart Trigger -->
-                    <button class="header-actions__item btn position-relative ms-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#minicartCanvas" aria-controls="minicartCanvas">
+                    <button class="header-actions__item btn position-relative ms-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMiniCart" aria-controls="offcanvasMiniCart">
                         <svg class="icon icon-bag-shopping"><use xlink:href="#icon-bag-shopping"></use></svg>
                         <span class="visually-hidden"><?php echo esc_html__( 'Cart', 'borspirit' ); ?></span>
                         <div class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-white">
@@ -105,7 +105,7 @@
                             <?php endif; ?>
 
                             <!-- Cart Trigger -->
-                            <button class="header-actions__item btn position-relative ms-lg-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#minicartCanvas" aria-controls="minicartCanvas">
+                            <button class="header-actions__item btn position-relative ms-lg-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMiniCart" aria-controls="offcanvasMiniCart">
                                 <svg class="icon icon-bag-shopping"><use xlink:href="#icon-bag-shopping"></use></svg>
                                 <span class="visually-hidden"><?php echo esc_html__( 'Cart', 'borspirit' ); ?></span>
                                 <div class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-white">

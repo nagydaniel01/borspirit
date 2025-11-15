@@ -31,7 +31,7 @@
                 <div class="section__content row">
                     <?php if (!empty($contact)) : ?>
                         <div class="<?php echo esc_attr($contact_col_class); ?>">
-                            <?php echo wp_kses_post($contact); ?>
+                            <?php echo $contact; ?>
                         </div>
                     <?php endif; ?>
 
