@@ -1261,9 +1261,7 @@
          * @return string Modified price HTML or original.
          */
         function borspirit_mini_cart_club_price_only( $price_html, $cart_item, $cart_item_key ) {
-
             try {
-
                 // User must be logged in
                 if ( ! is_user_logged_in() ) {
                     return $price_html;
@@ -1305,11 +1303,21 @@
                     $club_price = $regular_price * 0.95; // -5%
                 }
 
-                // Return label + club price
-                return '<span class="mini-price-club">'
-                    . '<span class="price-label">' . esc_html__( 'Club price', 'borspirit' ) . ':</span> '
-                    . '<ins>' . wc_price( $club_price ) . '</ins>'
-                    . '</span>';
+                // Build HTML output
+                /*
+                $regular_html = '<span class="mini-price-regular">';
+                $regular_html .= '<span class="price-label">' . esc_html__( 'Shelf price', 'borspirit' ) . ':</span> ';
+                $regular_html .= '<del aria-hidden="true">' . wc_price( $product->get_regular_price() ) . '</del>';
+                $regular_html .= '</span>';
+                */
+
+                $club_html  = '<span class="mini-price-club">';
+                $club_html .= '<span class="price-label">' . esc_html__( 'Club price', 'borspirit' ) . ':</span> ';
+                $club_html .= '<ins aria-hidden="true">' . wc_price( $club_price ) . '</ins>';
+                $club_html .= '</span>';
+
+                //return $regular_html . '<br>' . $club_html;
+                return $club_html;
 
             } catch ( Exception $e ) {
                 error_log( 'Mini Cart Club Price Only Error: ' . $e->getMessage() );
