@@ -28,6 +28,7 @@ $order              = get_field('order') ?: $ordering['order'];
 $on_sale            = get_field('on_sale') ?: false;
 $product_cats       = get_field('product_cat');
 $product_tags       = get_field('product_tag');
+$include_ids        = get_field('include');
 
 // Base query
 $args = [
@@ -54,6 +55,11 @@ if ( $product_cats ) {
 // Filter by tags
 if ( $product_tags ) {
     $args['tag'] = array_map(fn($tag) => $tag->slug, $product_tags);
+}
+
+// Filter by specific product IDs
+if ( $include_ids && is_array( $include_ids ) ) {
+    $args['include'] = array_map('intval', $include_ids);
 }
 
 /*

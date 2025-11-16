@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BorSpirit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-16 10:14+0000\n"
+"POT-Creation-Date: 2025-11-15 20:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -82,9 +82,9 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1660 inc/woocommerce-extras.php:1740
+#: inc/woocommerce-extras.php:1656 inc/woocommerce-extras.php:1735
 #, php-format
-msgid "Add %1$s more to your cart to qualify for free shipping! %2$s"
+msgid "Add %s more to your cart to qualify for free shipping!"
 msgstr ""
 
 #: inc/register-taxonomies.php:21
@@ -266,8 +266,8 @@ msgstr ""
 msgid "Closing soon 🕒"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1143 inc/woocommerce-extras.php:1164
-#: inc/woocommerce-extras.php:1319
+#: inc/woocommerce-extras.php:1139 inc/woocommerce-extras.php:1160
+#: inc/woocommerce-extras.php:1315
 msgid "Club price"
 msgstr ""
 
@@ -338,7 +338,7 @@ msgstr ""
 msgid "Discount Badge"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1871
+#: inc/woocommerce-extras.php:1865
 msgid "Do you want to subscribe to our newsletter?"
 msgstr ""
 
@@ -946,7 +946,7 @@ msgstr ""
 msgid "Opinion:"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1166
+#: inc/woocommerce-extras.php:1162
 msgid ""
 "Optional: special manual club price. Leave empty to use 5% club discount."
 msgstr ""
@@ -1000,7 +1000,7 @@ msgstr ""
 msgid "Please assign a menu in Appearance → Menus."
 msgstr ""
 
-#: inc/woocommerce-extras.php:1841
+#: inc/woocommerce-extras.php:1835
 msgid "Please check this box if you want to proceed."
 msgstr ""
 
@@ -1070,7 +1070,7 @@ msgstr ""
 msgid "Product Bookmarks"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1413
+#: inc/woocommerce-extras.php:1409
 msgid "Product subtitle"
 msgstr ""
 
@@ -1172,7 +1172,7 @@ msgstr ""
 msgid "Save changes"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1117
+#: inc/woocommerce-extras.php:1114
 msgid "Savings"
 msgstr ""
 
@@ -1270,7 +1270,7 @@ msgid ""
 "Sorry, we couldn’t find your message details or the session has expired."
 msgstr ""
 
-#: inc/woocommerce-extras.php:1378
+#: inc/woocommerce-extras.php:1374
 #, php-format
 msgid "Spend %s more to become a Club Member and unlock exclusive prices!"
 msgstr ""
@@ -1313,7 +1313,7 @@ msgstr ""
 msgid "Subscription form is temporarily unavailable. Please try again later."
 msgstr ""
 
-#: inc/woocommerce-extras.php:1495 inc/woocommerce-extras.php:1532
+#: inc/woocommerce-extras.php:1491 inc/woocommerce-extras.php:1528
 msgid "Subtitle"
 msgstr ""
 
@@ -1659,7 +1659,7 @@ msgstr ""
 msgid "You must be logged in."
 msgstr ""
 
-#: inc/woocommerce-extras.php:1835
+#: inc/woocommerce-extras.php:1829
 msgid "You must confirm you are over %d before placing the order."
 msgstr ""
 

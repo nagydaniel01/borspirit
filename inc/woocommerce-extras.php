@@ -1110,10 +1110,14 @@
                         $amount_saved = $regular - $sale;
                         //$percent_saved = round( ( $amount_saved / $regular ) * 100 );
 
-                        $save_html  = '<span class="price__discount">';
-                        $save_html .= '<span class="price-label">' . esc_html__( 'Savings', 'borspirit' ) . ':</span> ';
-                        $save_html .= wc_price( $amount_saved );
-                        $save_html .= '</span>';
+                        $save_html = '';
+                        
+                        if ( is_product() ) {
+                            $save_html  = '<span class="price__discount">';
+                            $save_html .= '<span class="price-label">' . esc_html__( 'Savings', 'borspirit' ) . ':</span> ';
+                            $save_html .= wc_price( $amount_saved );
+                            $save_html .= '</span>';
+                        }
 
                         return '<span class="price__regular">' . $price . '</span>' . $save_html;
                     }
@@ -1636,7 +1640,7 @@
             $minimum_amount = 0;
             foreach ( $methods as $method ) {
                 if ( $method->id === 'free_shipping' && $method->enabled === 'yes' ) {
-                    $minimum_amount = $method->min_amount ?? 0;
+                    $minimum_amount = (float) ( $method->min_amount ?? 0 );
                     break;
                 }
             }
@@ -1650,11 +1654,12 @@
                 return;
             }
 
-            $remaining_amount = $minimum_amount - $current_amount;
+            $remaining_amount = max( 0, $minimum_amount - $current_amount );
 
             $message = sprintf(
-                __( 'Add %s more to your cart to qualify for free shipping!', 'borspirit' ),
-                wc_price( $remaining_amount )
+                __( 'Add %1$s more to your cart to qualify for free shipping! %2$s', 'borspirit' ),
+                wc_price( $remaining_amount ),
+                '<a href="' . wc_get_page_permalink( 'shop' ) . '" class="button wc-forward">' . get_the_title(SHOP_PAGE_ID) . '</a>'
             );
 
             echo '<div class="woocommerce-notices-wrapper"><div class="woocommerce-message free-shipping-notice" role="alert">' . $message . '</div></div>';
@@ -1723,17 +1728,18 @@
                 ? (float) WC()->cart->get_subtotal() + (float) WC()->cart->get_subtotal_tax()
                 : (float) WC()->cart->get_subtotal();
 
-            $remaining = max( 0, $minimum_amount - $current_amount );
+            $remaining_amount = max( 0, $minimum_amount - $current_amount );
 
-            $remaining_html = wc_price( $remaining );
+            $remaining_html = wc_price( $remaining_amount );
 
             $notice_html = '';
-            if ( $remaining > 0 ) {
+            if ( $remaining_amount > 0 ) {
                 $notice_html = sprintf(
                     '<div class="woocommerce-message free-shipping-notice" role="alert">%s</div>',
                     sprintf(
-                        __( 'Add %s more to your cart to qualify for free shipping!', 'borspirit' ),
-                        $remaining_html
+                        __( 'Add %1$s more to your cart to qualify for free shipping! %2$s', 'borspirit' ),
+                        wc_price( $remaining_amount ),
+                        '<a href="' . wc_get_page_permalink( 'shop' ) . '" class="button wc-forward">' . get_the_title(SHOP_PAGE_ID) . '</a>'
                     )
                 );
             }
