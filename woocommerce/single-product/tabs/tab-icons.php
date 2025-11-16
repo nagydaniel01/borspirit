@@ -4,17 +4,6 @@ defined( 'ABSPATH' ) || exit;
 
 global $product;
 
-$units_sold           = (int) $product->get_total_sales();
-$product_sold_message = sprintf(
-    _n(
-        '%s person has already tried it – get yours now!',
-        '%s people have already tried it – get yours now!',
-        $units_sold,
-        'borspirit'
-    ),
-    number_format_i18n( $units_sold )
-);
-
 // --- Get selected icons from ACF checkbox field ---
 $selected_icons = get_field( 'product_icons', $product->get_id() ) ?: [];
 
@@ -31,6 +20,22 @@ $icon_items = array_filter( $icon_items, function ($item) use ($selected_icons) 
     // Only keep items if the sanitized text is in selected icons
     return $image_id !== '' && $text !== '' && in_array( sanitize_title($text), $selected_icons );
 });
+
+// --- Units sold message ---
+$units_sold_message = '';
+
+if ( in_array( 'units_sold_message', $selected_icons, true ) ) {
+    $units_sold           = (int) $product->get_total_sales();
+    $units_sold_message = sprintf(
+        _n(
+            '%s person has already tried it – get yours now!',
+            '%s people have already tried it – get yours now!',
+            $units_sold,
+            'borspirit'
+        ),
+        number_format_i18n( $units_sold )
+    );
+}
 
 // --- Free shipping message ---
 $free_shipping_limit_message = '';
@@ -154,13 +159,13 @@ if ( in_array('estimated_delivery_message', $selected_icons) ) {
 ?>
 
 <div class="section__content">
-    <?php if ( ! empty( $icon_items ) || $units_sold > 0 || ! empty( $free_shipping_limit_message ) || ! empty( $estimated_delivery_message ) ) : ?>
+    <?php if ( ! empty( $icon_items ) || ! empty( $units_sold_message ) || ! empty( $free_shipping_limit_message ) || ! empty( $estimated_delivery_message ) ) : ?>
         <div class="section__list">
 
-            <?php if ( $units_sold > 0 ) : // Only display if at least one unit has been sold ?>
+            <?php if ( ! empty( $units_sold_message ) && $units_sold > 0 ) : // Only display if at least one unit has been sold ?>
                 <div class="section__listitem">
                     <svg class="section__icon icon icon-wine-bottle"><use xlink:href="#icon-wine-bottle"></use></svg>
-                    <span class="section__text"><?php echo esc_html( $product_sold_message ); ?></span>
+                    <span class="section__text"><?php echo esc_html( $units_sold_message ); ?></span>
                 </div>
             <?php endif; ?>
 

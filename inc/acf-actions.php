@@ -124,8 +124,8 @@
 
             return $choices;
         }
+        add_filter( 'acf/location/rule_types', 'acf_add_wc_prod_attr_rule_type' );
     }
-    add_filter( 'acf/location/rule_types', 'acf_add_wc_prod_attr_rule_type' );
 
     if ( ! function_exists( 'acf_add_wc_prod_attr_rule_values' ) ) {
         /**
@@ -154,8 +154,8 @@
 
             return $choices;
         }
+        add_filter( 'acf/location/rule_values/wc_prod_attr', 'acf_add_wc_prod_attr_rule_values' );
     }
-    add_filter( 'acf/location/rule_values/wc_prod_attr', 'acf_add_wc_prod_attr_rule_values' );
 
     if ( ! function_exists( 'acf_match_wc_prod_attr_rule' ) ) {
         /**
@@ -181,8 +181,8 @@
 
             return (bool) $match;
         }
+        add_filter( 'acf/location/rule_match/wc_prod_attr', 'acf_match_wc_prod_attr_rule', 10, 3 );
     }
-    add_filter( 'acf/location/rule_match/wc_prod_attr', 'acf_match_wc_prod_attr_rule', 10, 3 );
 
     if ( ! function_exists( 'add_post_to_relationship_field' ) ) {
         /**
@@ -300,7 +300,6 @@
         add_filter( 'acf/load_field/name=product_food_pairing_tips', 'acf_load_food_pairing_tip_checkboxes' );
     }
 
-
     if ( ! function_exists( 'acf_load_icon_checkboxes' ) ) {
         /**
          * Populate ACF 'product_page_icons' and 'product_icons' checkbox fields with
@@ -315,6 +314,7 @@
             $field['choices'] = array();
 
             // Add fixed/static choices
+            $field['choices']['units_sold_message'] = __( 'Units Sold', 'borspirit' );
             $field['choices']['free_shipping_limit_message'] = __( 'Free Shipping Limit', 'borspirit' );
             $field['choices']['estimated_delivery_message'] = __( 'Estimated Delivery', 'borspirit' );
 

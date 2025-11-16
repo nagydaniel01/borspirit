@@ -288,7 +288,7 @@
     // 5. UNIT PRICE AND DRS FEE
     // ============================================================
 
-    if (!function_exists('calculate_unit_price_per_liter')) {
+    if ( ! function_exists( 'calculate_unit_price_per_liter' ) ) {
         /**
          * Calculate the unit price in Ft per liter from price and volume.
          *
@@ -535,63 +535,7 @@
     }
 
     // ============================================================
-    // 7. RECENTLY VIEWED PRODUCTS
-    // ============================================================
-
-    if ( ! function_exists( 'custom_recently_viewed_products' ) ) {
-        /**
-         * Display recently viewed WooCommerce products on the single product page.
-         *
-         * Fetches the IDs of recently viewed products and outputs them in a WooCommerce product loop,
-         * excluding the current product being viewed.
-         *
-         * Hooked to: woocommerce_after_single_product_summary
-         *
-         * @return void
-         */
-        function custom_recently_viewed_products() {
-            global $post;
-
-            $recently_viewed_ids = get_recently_viewed();
-
-            // Remove current product ID
-            $recently_viewed_ids = array_diff( $recently_viewed_ids, [ $post->ID ] );
-
-            if ( empty( $recently_viewed_ids ) ) {
-                return;
-            }
-
-            $recently_viewed_query = new WP_Query([
-                'post_type'      => 'product',
-                'post_status'    => 'publish',
-                'posts_per_page' => 4,
-                'post__in'       => $recently_viewed_ids,
-                'orderby'        => 'post__in',
-            ]);
-
-            if ( $recently_viewed_query->have_posts() ) {
-                echo '<div class="section section--recently-viewed-products"><div class="container">';
-                echo '<h2>' . __( 'Recently viewed products', 'borspirit' ) . '</h2>';
-                
-                woocommerce_product_loop_start();
-
-                while ( $recently_viewed_query->have_posts() ) {
-                    $recently_viewed_query->the_post();
-                    wc_get_template_part( 'content', 'product' );
-                }
-
-                woocommerce_product_loop_end();
-
-                echo '</div></div>';
-            }
-
-            wp_reset_postdata();
-        }
-        add_action( 'woocommerce_after_single_product_summary', 'custom_recently_viewed_products', 30 );
-    }
-
-    // ============================================================
-    // 8. PRODUCT TABS
+    // 7. PRODUCT TABS
     // ============================================================
 
     if ( ! function_exists( 'rename_description_tab' ) ) {
@@ -796,7 +740,7 @@
     }
 
     // ============================================================
-    // 9. RELATED, UPSELLS
+    // 8. RELATED, UPSELLS
     // ============================================================
 
     if ( ! function_exists( 'rename_related_products_heading' ) ) {
@@ -870,143 +814,63 @@
     }
 
     // ============================================================
-    // 10. SHOP LOOP MODIFICATIONS
+    // 9. RECENTLY VIEWED PRODUCTS
     // ============================================================
 
-    if ( ! function_exists( 'custom_add_to_cart_text_type' ) ) {
+    if ( ! function_exists( 'custom_recently_viewed_products' ) ) {
         /**
-         * Modify the WooCommerce "Add to cart" text by product type.
+         * Display recently viewed WooCommerce products on the single product page.
          *
-         * @param string $text Default button text.
-         * @return string Modified button text.
-         */
-        function custom_add_to_cart_text_type( $text ) {
-            global $product;
-
-            if ( ! $product || ! is_a( $product, 'WC_Product' ) ) {
-                return $text;
-            }
-
-            switch ( true ) {
-                case $product->is_type( 'simple' ):
-                    $text = __( 'Add to cart', 'borspirit' );
-                    break;
-
-                case $product->is_type( 'variable' ):
-                    $text = __( 'Select options', 'borspirit' );
-                    break;
-
-                case $product->is_type( 'grouped' ):
-                    $text = __( 'View products', 'borspirit' );
-                    break;
-
-                case $product->is_type( 'subscription' ):
-                    $text = get_option( 'woocommerce_subscriptions_add_to_cart_button_text', __( 'Subscribe now', 'borspirit' ) );
-                    break;
-
-                case $product->is_type( 'variable-subscription' ):
-                    $text = get_option( 'woocommerce_subscriptions_add_to_cart_button_text', __( 'Select subscription', 'borspirit' ) );
-                    break;
-
-                default:
-                    $text = __( 'Buy now', 'borspirit' );
-                    break;
-            }
-
-            return $text;
-        }
-        add_filter( 'woocommerce_product_single_add_to_cart_text', 'custom_add_to_cart_text_type' );
-        add_filter( 'woocommerce_product_add_to_cart_text', 'custom_add_to_cart_text_type' );
-    }
-
-    if ( ! function_exists( 'show_product_stock_in_loop' ) ) {
-        /**
-         * Display product stock status in the WooCommerce product loop.
+         * Fetches the IDs of recently viewed products and outputs them in a WooCommerce product loop,
+         * excluding the current product being viewed.
          *
-         * Uses WooCommerce's public get_availability() method.
+         * Hooked to: woocommerce_after_single_product_summary
          *
          * @return void
          */
-        function show_product_stock_in_loop() {
-            global $product;
+        function custom_recently_viewed_products() {
+            global $post;
 
-            if ( ! $product ) {
+            $recently_viewed_ids = get_recently_viewed();
+
+            // Remove current product ID
+            $recently_viewed_ids = array_diff( $recently_viewed_ids, [ $post->ID ] );
+
+            if ( empty( $recently_viewed_ids ) ) {
                 return;
             }
 
-            // Get availability array (includes text + CSS class)
-            $availability = $product->get_availability();
+            $recently_viewed_query = new WP_Query([
+                'post_type'      => 'product',
+                'post_status'    => 'publish',
+                'posts_per_page' => 4,
+                'post__in'       => $recently_viewed_ids,
+                'orderby'        => 'post__in',
+            ]);
 
-            if ( ! empty( $availability['availability'] ) ) {
-                echo '<p class="product-stock">' . esc_html( $availability['availability'] ) . '</p>';
+            if ( $recently_viewed_query->have_posts() ) {
+                echo '<div class="section section--recently-viewed-products"><div class="container">';
+                echo '<h2>' . __( 'Recently viewed products', 'borspirit' ) . '</h2>';
+                
+                woocommerce_product_loop_start();
+
+                while ( $recently_viewed_query->have_posts() ) {
+                    $recently_viewed_query->the_post();
+                    wc_get_template_part( 'content', 'product' );
+                }
+
+                woocommerce_product_loop_end();
+
+                echo '</div></div>';
             }
+
+            wp_reset_postdata();
         }
-        //add_action( 'woocommerce_after_shop_loop_item_title', 'show_product_stock_in_loop', 20 );
-    }
-
-    if ( ! function_exists( 'show_product_attributes_in_loop' ) ) {
-        /**
-         * Display specific product attributes in the WooCommerce product loop.
-         *
-         * This function loops through a predefined list of attribute slugs (without the 'pa_' prefix)
-         * and outputs their values under the product title in the shop/archive loop.
-         * Only attributes marked as "Visible on product page" will be displayed.
-         *
-         * @return void
-         */
-        function show_product_attributes_in_loop() {
-            global $product;
-
-            if ( ! $product ) {
-                return;
-            }
-
-            // Attributes to show (slugs without 'pa_' prefix for taxonomy attributes)
-            $attributes_to_show = array( 'meret' ); // Add more slugs as needed
-
-            $product_attributes = $product->get_attributes();
-
-            echo '<div class="woocommerce-loop-product__attributes">';
-
-            foreach ( $attributes_to_show as $slug ) {
-
-                // Attempt with 'pa_' prefix first (for taxonomy attributes)
-                $taxonomy_slug = 'pa_' . $slug;
-
-                if ( isset( $product_attributes[ $taxonomy_slug ] ) ) {
-                    $attribute = $product_attributes[ $taxonomy_slug ];
-                } elseif ( isset( $product_attributes[ $slug ] ) ) { 
-                    $attribute = $product_attributes[ $slug ]; // fallback to custom attribute
-                } else {
-                    continue; // attribute not found
-                }
-
-                // Only show if attribute is visible on the product page
-                if ( ! $attribute->get_visible() ) {
-                    continue;
-                }
-
-                $name = wc_attribute_label( $attribute->get_name() );
-
-                // Get attribute values
-                if ( $attribute->is_taxonomy() ) {
-                    $values = wc_get_product_terms( $product->get_id(), $attribute->get_name(), array( 'fields' => 'names' ) );
-                    $values = implode( ', ', $values );
-                } else {
-                    $values = $attribute->get_options();
-                    $values = implode( ', ', $values );
-                }
-
-                echo '<p class="product-attribute"><strong>' . esc_html( $name ) . ':</strong> ' . esc_html( $values ) . '</p>';
-            }
-
-            echo '</div>';
-        }
-        //add_action( 'woocommerce_after_shop_loop_item_title', 'show_product_attributes_in_loop', 25 );
+        add_action( 'woocommerce_after_single_product_summary', 'custom_recently_viewed_products', 30 );
     }
 
     // ============================================================
-    // 11. PRICE MODIFICATIONS
+    // 10. PRICE MODIFICATIONS
     // ============================================================
 
     if ( ! function_exists( 'borspirit_is_club_member' ) ) {
@@ -1391,6 +1255,146 @@
         add_action( 'woocommerce_single_product_summary', 'borspirit_show_club_progress_message', 25 );
     }
 
+    // ============================================================
+    // 11. SHOP LOOP MODIFICATIONS
+    // ============================================================
+
+    if ( ! function_exists( 'custom_add_to_cart_text_type' ) ) {
+        /**
+         * Modify the WooCommerce "Add to cart" text by product type.
+         *
+         * @param string $text Default button text.
+         * @return string Modified button text.
+         */
+        function custom_add_to_cart_text_type( $text ) {
+            global $product;
+
+            if ( ! $product || ! is_a( $product, 'WC_Product' ) ) {
+                return $text;
+            }
+
+            switch ( true ) {
+                case $product->is_type( 'simple' ):
+                    $text = __( 'Add to cart', 'borspirit' );
+                    break;
+
+                case $product->is_type( 'variable' ):
+                    $text = __( 'Select options', 'borspirit' );
+                    break;
+
+                case $product->is_type( 'grouped' ):
+                    $text = __( 'View products', 'borspirit' );
+                    break;
+
+                case $product->is_type( 'subscription' ):
+                    $text = get_option( 'woocommerce_subscriptions_add_to_cart_button_text', __( 'Subscribe now', 'borspirit' ) );
+                    break;
+
+                case $product->is_type( 'variable-subscription' ):
+                    $text = get_option( 'woocommerce_subscriptions_add_to_cart_button_text', __( 'Select subscription', 'borspirit' ) );
+                    break;
+
+                default:
+                    $text = __( 'Buy now', 'borspirit' );
+                    break;
+            }
+
+            return $text;
+        }
+        add_filter( 'woocommerce_product_single_add_to_cart_text', 'custom_add_to_cart_text_type' );
+        add_filter( 'woocommerce_product_add_to_cart_text', 'custom_add_to_cart_text_type' );
+    }
+
+    if ( ! function_exists( 'show_product_stock_in_loop' ) ) {
+        /**
+         * Display product stock status in the WooCommerce product loop.
+         *
+         * Uses WooCommerce's public get_availability() method.
+         *
+         * @return void
+         */
+        function show_product_stock_in_loop() {
+            global $product;
+
+            if ( ! $product ) {
+                return;
+            }
+
+            // Get availability array (includes text + CSS class)
+            $availability = $product->get_availability();
+
+            if ( ! empty( $availability['availability'] ) ) {
+                echo '<p class="product-stock">' . esc_html( $availability['availability'] ) . '</p>';
+            }
+        }
+        //add_action( 'woocommerce_after_shop_loop_item_title', 'show_product_stock_in_loop', 20 );
+    }
+
+    if ( ! function_exists( 'show_product_attributes_in_loop' ) ) {
+        /**
+         * Display specific product attributes in the WooCommerce product loop.
+         *
+         * This function loops through a predefined list of attribute slugs (without the 'pa_' prefix)
+         * and outputs their values under the product title in the shop/archive loop.
+         * Only attributes marked as "Visible on product page" will be displayed.
+         *
+         * @return void
+         */
+        function show_product_attributes_in_loop() {
+            global $product;
+
+            if ( ! $product ) {
+                return;
+            }
+
+            // Attributes to show (slugs without 'pa_' prefix for taxonomy attributes)
+            $attributes_to_show = array( 'meret' ); // Add more slugs as needed
+
+            $product_attributes = $product->get_attributes();
+
+            echo '<div class="woocommerce-loop-product__attributes">';
+
+            foreach ( $attributes_to_show as $slug ) {
+
+                // Attempt with 'pa_' prefix first (for taxonomy attributes)
+                $taxonomy_slug = 'pa_' . $slug;
+
+                if ( isset( $product_attributes[ $taxonomy_slug ] ) ) {
+                    $attribute = $product_attributes[ $taxonomy_slug ];
+                } elseif ( isset( $product_attributes[ $slug ] ) ) { 
+                    $attribute = $product_attributes[ $slug ]; // fallback to custom attribute
+                } else {
+                    continue; // attribute not found
+                }
+
+                // Only show if attribute is visible on the product page
+                if ( ! $attribute->get_visible() ) {
+                    continue;
+                }
+
+                $name = wc_attribute_label( $attribute->get_name() );
+
+                // Get attribute values
+                if ( $attribute->is_taxonomy() ) {
+                    $values = wc_get_product_terms( $product->get_id(), $attribute->get_name(), array( 'fields' => 'names' ) );
+                    $values = implode( ', ', $values );
+                } else {
+                    $values = $attribute->get_options();
+                    $values = implode( ', ', $values );
+                }
+
+                echo '<p class="product-attribute"><strong>' . esc_html( $name ) . ':</strong> ' . esc_html( $values ) . '</p>';
+            }
+
+            echo '</div>';
+        }
+        //add_action( 'woocommerce_after_shop_loop_item_title', 'show_product_attributes_in_loop', 25 );
+    }
+
+    // ============================================================
+    // 12. PRODUCT TITLE
+    // ============================================================
+
     // Add Subtitle input under product title
     if ( ! function_exists( 'add_product_subtitle_input' ) ) {
         /**
@@ -1597,11 +1601,10 @@
     }
 
     // ============================================================
-    // 12. SHIPPING
+    // 13. SHIPPING
     // ============================================================
 
     if ( ! function_exists( 'show_free_shipping_notice' ) ) {
-
         /**
          * Display a notice showing how much more a customer needs to spend 
          * to qualify for free shipping.
@@ -1798,7 +1801,7 @@
     }
 
     // ============================================================
-    // 13. AGE CONFIRMATION
+    // 14. AGE CONFIRMATION
     // ============================================================
 
     /**
@@ -1849,6 +1852,10 @@
         }
         add_action( 'woocommerce_init', 'my_plugin_register_age_confirmation_field' );
     }
+
+    // ============================================================
+    // 15. MARKETING NEWSLETTER OPT-IN
+    // ============================================================
 
     if ( ! function_exists( 'my_plugin_register_marketing_optin_field' ) ) {
         /**
