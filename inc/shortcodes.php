@@ -228,6 +228,36 @@
         add_shortcode( 'woocommerce_settings', 'woocommerce_general_settings_shortcode' );
     }
 
+    if ( ! function_exists( 'store_address_shortcode' ) ) {
+        /**
+         * Shortcode to display the full WooCommerce store address.
+         *
+         * This shortcode combines the store postcode, city, address, and
+         * address line 2 (if available) into a single, formatted string.
+         *
+         * Usage: [store_address]
+         *
+         * @return string The formatted store address.
+         */
+        function store_address_shortcode() {
+            // Get WooCommerce store address parts
+            $store_address    = get_option( 'woocommerce_store_address' );
+            $store_address_2  = get_option( 'woocommerce_store_address_2' );
+            $store_city       = get_option( 'woocommerce_store_city' );
+            $store_postcode   = get_option( 'woocommerce_store_postcode' );
+            $store_country    = get_option( 'woocommerce_default_country' );
+
+            // Build full address
+            $full_address = $store_postcode . ' ' . $store_city . ', ' . $store_address;
+            if ( ! empty( $store_address_2 ) ) {
+                $full_address .= ', ' . $store_address_2;
+            }
+
+            return esc_html( $full_address );
+        }
+        add_shortcode( 'store_address', 'store_address_shortcode' );
+    }
+
     if ( ! function_exists( 'site_phone_shortcode' ) ) {
         /**
          * Shortcode: [site_phone]
@@ -239,19 +269,19 @@
         function site_phone_shortcode() {
             if ( should_abort_shortcode() ) return '';
 
-            $phone = get_field( 'site_phone', 'option' );
+            $phone_raw = get_field( 'site_phone', 'option' );
 
-            if ( empty( $phone ) || ! is_string( $phone ) ) {
+            if ( empty( $phone_raw ) || ! is_string( $phone_raw ) ) {
                 return '';
             }
 
-            $phone_link = preg_replace( '/[^0-9\+]/', '', $phone );
+            $phone_link = preg_replace( '/[^0-9\+]/', '', $phone_raw );
 
             if ( empty( $phone_link ) ) {
                 return '';
             }
 
-            return sprintf( '<a href="tel:%s">%s</a>', esc_attr( $phone_link ), esc_html( $phone ) );
+            return sprintf( '<a href="tel:%s">%s</a>', esc_attr( $phone_link ), esc_html( $phone_raw ) );
         }
         add_shortcode( 'site_phone', 'site_phone_shortcode' );
     }
@@ -267,15 +297,20 @@
         function site_email_shortcode() {
             if ( should_abort_shortcode() ) return '';
 
-            $email = get_field( 'site_email', 'option' );
+            $email_raw = get_field( 'site_email', 'option' );
 
-            if ( empty( $email ) || ! is_string( $email ) || ! is_email( $email ) ) {
+            if ( empty( $email_raw ) || ! is_string( $email_raw ) || ! is_email( $email_raw ) ) {
                 return '';
             }
 
-            $email_sanitized = antispambot( sanitize_email( $email ) );
+            // sanitize once
+            $email = sanitize_email( $email_raw );
 
-            return sprintf( '<a href="mailto:%s">%s</a>', esc_attr( $email_sanitized ), esc_html( $email_sanitized ) );
+            // obfuscate separately for text and for mailto:
+            $email_obfuscated = antispambot( $email, 1 );
+            $email_text = antispambot( $email );
+
+            return '<a href="' . esc_url( 'mailto:' . $email_obfuscated ) . '">' . esc_html( $email_text ) . '</a>';
         }
         add_shortcode( 'site_email', 'site_email_shortcode' );
     }

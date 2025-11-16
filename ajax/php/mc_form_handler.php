@@ -50,15 +50,47 @@
                     parse_str($_POST['form_data'], $form);
                 }
 
+                // Get reCAPTCHA token
+                $recaptcha_token = isset($form['recaptcha_token']) ? sanitize_text_field($form['recaptcha_token']) : '';
+
+                if (empty($recaptcha_token)) {
+                    wp_send_json_error(['message' => __('reCAPTCHA verification failed (missing token).', 'borspirit')], 400);
+                }
+
+                // Send verification request to Google
+                $response = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', [
+                    'body' => [
+                        'secret'   => RECAPTCHA_SECRET_KEY,
+                        'response' => $recaptcha_token,
+                    ],
+                    'timeout' => 10
+                ]);
+
+                if (is_wp_error($response)) {
+                    wp_send_json_error(['message' => __('Unable to verify reCAPTCHA (request failed).', 'borspirit')], 400);
+                }
+
+                // Decode Google API response
+                $recaptcha = json_decode(wp_remote_retrieve_body($response), true);
+
+                // Log score for debugging
+                //error_log('reCAPTCHA score: ' . ($recaptcha['score'] ?? 'null'));
+
+                // If reCAPTCHA fails OR score too low → possible bot
+                if ( empty($recaptcha['success']) || ($recaptcha['score'] ?? 0) < 0.3 ) {
+                    wp_send_json_error([
+                        'message' => __('Suspicious activity detected. reCAPTCHA failed.', 'borspirit')
+                    ], 403);
+                }
+
                 // Nonce verification for security
-                if ( ! isset($form['subscribe_form_nonce']) ||
-                    ! wp_verify_nonce($form['subscribe_form_nonce'], 'subscribe_form_action') ) {
+                if ( ! isset($form['subscribe_form_nonce']) || ! wp_verify_nonce($form['subscribe_form_nonce'], 'subscribe_form_action') ) {
                     wp_send_json_error([
                         'message' => __('Invalid security token.', 'borspirit')
                     ], 403);
                 }
 
-                // Sanitize form fields
+                // Extract and sanitize form fields
                 $user_id = get_current_user_id();
                 $name    = isset($form['mc_name']) ? sanitize_text_field($form['mc_name']) : '';
                 $email   = isset($form['mc_email']) ? sanitize_email($form['mc_email']) : '';

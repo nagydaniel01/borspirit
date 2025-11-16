@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BorSpirit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-16 10:14+0000\n"
+"POT-Creation-Date: 2025-11-16 14:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -38,7 +38,7 @@ msgid_plural "%s minutes reading"
 msgstr[0] ""
 msgstr[1] ""
 
-#: woocommerce/single-product/tabs/tab-icons.php:9
+#: woocommerce/single-product/tabs/tab-icons.php:30
 #, php-format
 msgid "%s person has already tried it – get yours now!"
 msgid_plural "%s people have already tried it – get yours now!"
@@ -74,7 +74,7 @@ msgstr ""
 msgid "A network error occurred. Please try again."
 msgstr ""
 
-#: inc/shortcodes.php:438
+#: inc/shortcodes.php:469
 msgid "ACF plugin is not active."
 msgstr ""
 
@@ -82,7 +82,7 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1660 inc/woocommerce-extras.php:1740
+#: inc/woocommerce-extras.php:1663 inc/woocommerce-extras.php:1743
 #, php-format
 msgid "Add %1$s more to your cart to qualify for free shipping! %2$s"
 msgstr ""
@@ -117,7 +117,7 @@ msgstr ""
 msgid "Add to bookmarks"
 msgstr ""
 
-#: inc/woocommerce-extras.php:892
+#: inc/woocommerce-extras.php:1278
 msgid "Add to cart"
 msgstr ""
 
@@ -193,11 +193,11 @@ msgstr ""
 msgid "Awaiting Pickup"
 msgstr ""
 
-#: inc/woocommerce-badge.php:209
+#: inc/woocommerce-badge.php:171
 msgid "Award Winner"
 msgstr ""
 
-#: inc/woocommerce-badge.php:333
+#: inc/woocommerce-badge.php:353
 msgid "Award Winner Badge"
 msgstr ""
 
@@ -222,11 +222,11 @@ msgstr ""
 msgid "Back to top"
 msgstr ""
 
-#: inc/woocommerce-badge.php:138
+#: inc/woocommerce-badge.php:190
 msgid "Best Seller"
 msgstr ""
 
-#: inc/woocommerce-badge.php:330
+#: inc/woocommerce-badge.php:354
 msgid "Best Seller Badge"
 msgstr ""
 
@@ -234,7 +234,7 @@ msgstr ""
 msgid "BorSpirit"
 msgstr ""
 
-#: inc/woocommerce-extras.php:912
+#: inc/woocommerce-extras.php:1298
 msgid "Buy now"
 msgstr ""
 
@@ -258,16 +258,16 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: inc/utils.php:827
+#: inc/utils.php:825
 msgid "Closed 🔴"
 msgstr ""
 
-#: inc/utils.php:825
+#: inc/utils.php:823
 msgid "Closing soon 🕒"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1143 inc/woocommerce-extras.php:1164
-#: inc/woocommerce-extras.php:1319
+#: inc/woocommerce-extras.php:1007 inc/woocommerce-extras.php:1028
+#: inc/woocommerce-extras.php:1183
 msgid "Club price"
 msgstr ""
 
@@ -295,6 +295,10 @@ msgid_plural "%1$s thoughts on \"%2$s\""
 msgstr[0] ""
 msgstr[1] ""
 
+#: template-parts/global/footer.php:31
+msgid "Contact us"
+msgstr ""
+
 #: inc/age-gate.php:70
 msgid "Cookie Expiration (days)"
 msgstr ""
@@ -312,7 +316,7 @@ msgstr ""
 msgid "Custom WordPress Theme."
 msgstr ""
 
-#: inc/woocommerce-extras.php:829
+#: inc/woocommerce-extras.php:773
 msgid "Customers also bought…"
 msgstr ""
 
@@ -334,11 +338,11 @@ msgstr ""
 msgid "Delete Logs"
 msgstr ""
 
-#: inc/woocommerce-badge.php:332
+#: inc/woocommerce-badge.php:352
 msgid "Discount Badge"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1871
+#: inc/woocommerce-extras.php:1878
 msgid "Do you want to subscribe to our newsletter?"
 msgstr ""
 
@@ -491,7 +495,7 @@ msgstr ""
 msgid "Featured Image"
 msgstr ""
 
-#: inc/shortcodes.php:613
+#: inc/shortcodes.php:644
 msgid "Feedback:"
 msgstr ""
 
@@ -545,7 +549,7 @@ msgstr ""
 msgid "Form not found"
 msgstr ""
 
-#: woocommerce/single-product/tabs/tab-icons.php:150
+#: woocommerce/single-product/tabs/tab-icons.php:155
 #, php-format
 msgid "Free in-store pickup as early as %1$s"
 msgstr ""
@@ -554,16 +558,16 @@ msgstr ""
 msgid "Free Shipping Limit"
 msgstr ""
 
-#: woocommerce/single-product/tabs/tab-icons.php:83
+#: woocommerce/single-product/tabs/tab-icons.php:88
 #, php-format
 msgid "Free shipping on orders over %1$s"
 msgstr ""
 
-#: inc/register-post-types.php:20 inc/woocommerce-extras.php:732
+#: inc/register-post-types.php:20 inc/woocommerce-extras.php:676
 msgid "Frequently Asked Questions"
 msgstr ""
 
-#: inc/utils.php:694
+#: inc/utils.php:692
 msgid "Friday"
 msgstr ""
 
@@ -573,6 +577,10 @@ msgstr ""
 
 #: inc/age-gate.php:61
 msgid "General Settings"
+msgstr ""
+
+#: template-parts/global/footer.php:111
+msgid "Go to store"
 msgstr ""
 
 #: template-parts/forms/form-poll_form.php:37
@@ -660,7 +668,7 @@ msgstr ""
 msgid "I have read and accept the %s"
 msgstr ""
 
-#: inc/woocommerce-extras.php:643
+#: inc/woocommerce-extras.php:587
 msgid "Icons"
 msgstr ""
 
@@ -725,15 +733,15 @@ msgstr ""
 msgid "Learn more"
 msgstr ""
 
-#: inc/woocommerce-extras.php:608
+#: inc/woocommerce-extras.php:552
 msgid "Learn more about the product!"
 msgstr ""
 
-#: inc/woocommerce-badge.php:157
+#: inc/woocommerce-badge.php:209
 msgid "Limited Stock"
 msgstr ""
 
-#: inc/woocommerce-badge.php:331
+#: inc/woocommerce-badge.php:355
 msgid "Limited Stock Badge"
 msgstr ""
 
@@ -801,11 +809,11 @@ msgstr ""
 msgid "Modal title"
 msgstr ""
 
-#: inc/utils.php:690
+#: inc/utils.php:688
 msgid "Monday"
 msgstr ""
 
-#: inc/woocommerce-extras.php:622
+#: inc/woocommerce-extras.php:566
 msgid "More product details"
 msgstr ""
 
@@ -823,11 +831,11 @@ msgstr ""
 msgid "Navigation"
 msgstr ""
 
-#: inc/woocommerce-badge.php:119
+#: inc/woocommerce-badge.php:232
 msgid "New Arrival"
 msgstr ""
 
-#: inc/woocommerce-badge.php:329
+#: inc/woocommerce-badge.php:356
 msgid "New Arrival Badge"
 msgstr ""
 
@@ -839,8 +847,12 @@ msgstr ""
 msgid "New FAQ"
 msgstr ""
 
-#: inc/woocommerce-badge.php:285 inc/woocommerce-badge.php:334
-msgid "New vintage"
+#: inc/woocommerce-badge.php:259
+msgid "New Vintage"
+msgstr ""
+
+#: inc/woocommerce-badge.php:357
+msgid "New Vintage Badge"
 msgstr ""
 
 #: comments.php:47
@@ -891,7 +903,7 @@ msgstr ""
 msgid "No FAQs found."
 msgstr ""
 
-#: inc/shortcodes.php:563
+#: inc/shortcodes.php:594
 msgid "No feedback yet."
 msgstr ""
 
@@ -901,11 +913,11 @@ msgstr ""
 msgid "No form data received."
 msgstr ""
 
-#: woocommerce/single-product/tabs/tab-icons.php:197
+#: woocommerce/single-product/tabs/tab-icons.php:202
 msgid "No icon items found."
 msgstr ""
 
-#: inc/shortcodes.php:444
+#: inc/shortcodes.php:475
 msgid "No opening hours specified."
 msgstr ""
 
@@ -942,16 +954,20 @@ msgstr ""
 msgid "Open menu"
 msgstr ""
 
-#: inc/shortcodes.php:610
+#: template-parts/global/footer.php:121
+msgid "Opening hours"
+msgstr ""
+
+#: inc/shortcodes.php:641
 msgid "Opinion:"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1166
+#: inc/woocommerce-extras.php:1030
 msgid ""
 "Optional: special manual club price. Leave empty to use 5% club discount."
 msgstr ""
 
-#: inc/woocommerce-badge.php:304
+#: inc/woocommerce-badge.php:327
 msgid "Organic"
 msgstr ""
 
@@ -1000,7 +1016,7 @@ msgstr ""
 msgid "Please assign a menu in Appearance → Menus."
 msgstr ""
 
-#: inc/woocommerce-extras.php:1841
+#: inc/woocommerce-extras.php:1844
 msgid "Please check this box if you want to proceed."
 msgstr ""
 
@@ -1070,7 +1086,7 @@ msgstr ""
 msgid "Product Bookmarks"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1413
+#: inc/woocommerce-extras.php:1417
 msgid "Product subtitle"
 msgstr ""
 
@@ -1103,7 +1119,7 @@ msgstr ""
 msgid "Read more about %1$s"
 msgstr ""
 
-#: inc/woocommerce-extras.php:574
+#: inc/woocommerce-extras.php:853
 msgid "Recently viewed products"
 msgstr ""
 
@@ -1140,7 +1156,7 @@ msgstr ""
 msgid "Registration form not found."
 msgstr ""
 
-#: inc/woocommerce-extras.php:775 inc/woocommerce-extras.php:861
+#: inc/woocommerce-extras.php:719 inc/woocommerce-extras.php:805
 msgid "Related posts"
 msgstr ""
 
@@ -1160,11 +1176,11 @@ msgstr ""
 msgid "Remove from bookmarks"
 msgstr ""
 
-#: inc/woocommerce-badge.php:328
+#: inc/woocommerce-badge.php:351
 msgid "Sale Badge"
 msgstr ""
 
-#: inc/utils.php:695
+#: inc/utils.php:693
 msgid "Saturday"
 msgstr ""
 
@@ -1172,7 +1188,7 @@ msgstr ""
 msgid "Save changes"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1117
+#: inc/woocommerce-extras.php:981
 msgid "Savings"
 msgstr ""
 
@@ -1212,11 +1228,11 @@ msgstr ""
 msgid "Section #%d is incorrectly formatted and cannot be displayed."
 msgstr ""
 
-#: inc/woocommerce-extras.php:896
+#: inc/woocommerce-extras.php:1282
 msgid "Select options"
 msgstr ""
 
-#: inc/woocommerce-extras.php:908
+#: inc/woocommerce-extras.php:1294
 msgid "Select subscription"
 msgstr ""
 
@@ -1244,7 +1260,7 @@ msgstr ""
 msgid "Set featured image"
 msgstr ""
 
-#: inc/woocommerce-extras.php:1068
+#: inc/woocommerce-extras.php:932
 msgid "Shelf price"
 msgstr ""
 
@@ -1270,7 +1286,7 @@ msgid ""
 "Sorry, we couldn’t find your message details or the session has expired."
 msgstr ""
 
-#: inc/woocommerce-extras.php:1378
+#: inc/woocommerce-extras.php:1242
 #, php-format
 msgid "Spend %s more to become a Club Member and unlock exclusive prices!"
 msgstr ""
@@ -1288,7 +1304,7 @@ msgid "Submit feedback"
 msgstr ""
 
 #. %s = feedback date
-#: inc/shortcodes.php:618
+#: inc/shortcodes.php:649
 #, php-format
 msgid "Submitted on %s"
 msgstr ""
@@ -1301,7 +1317,7 @@ msgstr ""
 msgid "Subscribe"
 msgstr ""
 
-#: inc/woocommerce-extras.php:904
+#: inc/woocommerce-extras.php:1290
 msgid "Subscribe now"
 msgstr ""
 
@@ -1313,7 +1329,7 @@ msgstr ""
 msgid "Subscription form is temporarily unavailable. Please try again later."
 msgstr ""
 
-#: inc/woocommerce-extras.php:1495 inc/woocommerce-extras.php:1532
+#: inc/woocommerce-extras.php:1499 inc/woocommerce-extras.php:1536
 msgid "Subtitle"
 msgstr ""
 
@@ -1326,7 +1342,7 @@ msgstr ""
 msgid "Successfully registered!"
 msgstr ""
 
-#: inc/utils.php:696
+#: inc/utils.php:694
 msgid "Sunday"
 msgstr ""
 
@@ -1452,7 +1468,7 @@ msgstr ""
 msgid "There was an error while sending your message."
 msgstr ""
 
-#: inc/utils.php:693
+#: inc/utils.php:691
 msgid "Thursday"
 msgstr ""
 
@@ -1468,7 +1484,7 @@ msgstr ""
 msgid "Try using the navigation menu or go back to the homepage."
 msgstr ""
 
-#: inc/utils.php:691
+#: inc/utils.php:689
 msgid "Tuesday"
 msgstr ""
 
@@ -1486,6 +1502,10 @@ msgstr ""
 #: inc/woocommerce-extras.php:346
 #, php-format
 msgid "Unit price: %s / liter"
+msgstr ""
+
+#: inc/acf-actions.php:317
+msgid "Units Sold"
 msgstr ""
 
 #: template-parts/sections/section-media.php:49
@@ -1535,7 +1555,7 @@ msgstr ""
 msgid "View FAQs"
 msgstr ""
 
-#: inc/woocommerce-extras.php:900
+#: inc/woocommerce-extras.php:1286
 msgid "View products"
 msgstr ""
 
@@ -1547,13 +1567,13 @@ msgstr ""
 msgid "WC Product Attribute"
 msgstr ""
 
-#: inc/woocommerce-extras.php:813
+#: inc/woocommerce-extras.php:757
 msgid "We also recommend…"
 msgstr ""
 
 #: inc/age-gate.php:16 inc/age-gate.php:99
 #: template-parts/dialogs/modal-age_gate.php:17
-#: template-parts/global/footer.php:163
+#: template-parts/global/footer.php:211
 #, php-format
 msgid ""
 "We are committed advocates and supporters of responsible, civilized drinking."
@@ -1561,7 +1581,7 @@ msgid ""
 "persons under the age of %s and cannot serve them."
 msgstr ""
 
-#: inc/utils.php:823
+#: inc/utils.php:821
 msgid "We are open! 🟢"
 msgstr ""
 
@@ -1575,7 +1595,7 @@ msgstr ""
 msgid "We are working hard on launching our new website. Stay tuned!"
 msgstr ""
 
-#: inc/utils.php:692
+#: inc/utils.php:690
 msgid "Wednesday"
 msgstr ""
 
@@ -1583,11 +1603,11 @@ msgstr ""
 msgid "We’ve received your message. Here’s a summary of what you submitted:"
 msgstr ""
 
-#: inc/woocommerce-badge.php:335
-msgid "Wine of the month"
+#: inc/woocommerce-badge.php:358
+msgid "Wine of the month Badge"
 msgstr ""
 
-#: inc/woocommerce-extras.php:684
+#: inc/woocommerce-extras.php:628
 msgid "Winery"
 msgstr ""
 
@@ -1659,7 +1679,7 @@ msgstr ""
 msgid "You must be logged in."
 msgstr ""
 
-#: inc/woocommerce-extras.php:1835
+#: inc/woocommerce-extras.php:1838
 msgid "You must confirm you are over %d before placing the order."
 msgstr ""
 

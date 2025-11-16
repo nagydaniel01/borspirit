@@ -17,7 +17,7 @@ import './navigation-home';
 
 import './filter';
 //import './product-filter';
-//import './fancybox-init';
+import './fancybox-init';
 import './slick-init';
 import './select2-init';
 import './tourguide-init';

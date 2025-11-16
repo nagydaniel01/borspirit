@@ -1,11 +1,22 @@
 <?php
     $site_name         = get_field('site_name', 'option') ?: get_bloginfo('name');
     $site_logo         = get_field('site_logo', 'option');
+    $site_phone        = get_field('site_phone', 'option');
+    $site_email        = get_field('site_email', 'option');
     $social            = get_field('social_items', 'option');
     $copyright         = get_field('copyright', 'option');
     $site_payment_logo = get_field('site_payment_logo', 'option');
 
     $locations         = get_nav_menu_locations();
+
+    if (!empty($site_phone)) {
+        $phone_link = preg_replace( '/[^0-9\+]/', '', $site_phone ); 
+    }
+
+    if (!empty($site_email)) {
+        $email             = antispambot( sanitize_email( $site_email ) );
+        $email_obfuscated  = antispambot( sanitize_email( $site_email ), 1 );
+    }
 ?>
 
 <footer class="footer<?php echo is_product() ? ' footer--single-product' : ''; ?>">
@@ -17,6 +28,7 @@
             <div class="row">
                 <div class="col-md-6 col-xl">
                     <div class="footer__block">
+                        <h3 class="footer__title visually-hidden"><?php echo esc_html__('Contact us', 'borspirit'); ?></h3>
                         <?php if ($site_logo) : ?>
                             <div class="logo logo--footer">
                                 <a href="<?php echo esc_url( trailingslashit( home_url() ) ); ?>" class="logo__link">
@@ -38,7 +50,7 @@
                                     'tiktok'       => 'TikTok'
                                 ];
                             ?>
-                            <nav class="footer__nav nav nav--footer nav--social">
+                            <nav class="footer__nav nav nav--footer">
                                 <ul class="nav__list">
                                     <?php foreach ($social as $key => $row) : ?>
                                         <?php
@@ -60,7 +72,7 @@
                                                     <?php else : ?>
                                                         <svg class="icon icon-<?php echo esc_attr($base); ?>"><use xlink:href="#icon-<?php echo esc_attr($base); ?>"></use></svg>
                                                     <?php endif; ?>
-                                                    <span><?php echo esc_html($social_name); ?></span>
+                                                    <?php echo esc_html($social_name); ?>
                                                 </a>
                                             </li>
                                         <?php endif; ?>
@@ -69,10 +81,46 @@
                             </nav>
                         <?php endif; ?>
 
-                        <?php echo wpautop( do_shortcode( '[site_phone]' ) ); ?>
-                        <?php echo wpautop( do_shortcode( '[site_email]' ) ); ?>
-                        <?php echo wpautop( do_shortcode( '[woocommerce_settings setting="store_postcode"] [woocommerce_settings setting="store_city"], [woocommerce_settings setting="store_address"]' ) ); ?>
-                        <?php echo do_shortcode( '[opening_hours]' ); ?>
+                        <?php if (!empty($site_phone) && !empty($site_email)) : ?>
+                            <div class="footer__nav nav nav--footer">
+                                <ul class="nav__list">
+
+                                    <?php if ($site_phone) : ?>
+                                        <li class="nav__item">
+                                            <a href="<?php echo esc_attr( 'tel:' . $phone_link ); ?>" class="nav__link">
+                                                <svg class="icon icon-circle-phone"><use xlink:href="#icon-circle-phone"></use></svg>
+                                                <?php echo esc_html($site_phone); ?>
+                                            </a>
+                                        </li>
+                                    <?php endif; ?>
+
+                                    <?php if ($site_email) : ?>
+                                        <li class="nav__item">
+                                            <a href="<?php echo esc_url( 'mailto:' . $email_obfuscated ); ?>" class="nav__link">
+                                                <svg class="icon icon-circle-envelope"><use xlink:href="#icon-circle-envelope"></use></svg>
+                                                <?php echo esc_html($email); ?>
+                                            </a>
+                                        </li>
+                                    <?php endif; ?>
+
+                                    <li class="nav__item">
+                                        <a href="<?php echo get_location_link(do_shortcode('[store_address]'), 'route', false); ?>" target="_blank" class="nav__link">
+                                            <svg class="icon icon-circle-location-arrow"><use xlink:href="#icon-circle-location-arrow"></use></svg>
+                                            <span>
+                                                <?php echo do_shortcode('[store_address]'); ?><br>
+                                                <small><?php echo esc_html__('Go to store', 'borspirit'); ?></small>
+                                            </span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        <?php endif; ?>
+
+                        <div class="footer__opening-hours">
+                            <h4><?php echo esc_html__('Opening hours', 'borspirit'); ?></h4>
+                            <?php echo do_shortcode( '[opening_hours]' ); ?>
+                        </div>
                     </div>
                 </div>
         

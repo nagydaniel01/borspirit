@@ -37,9 +37,41 @@
                     parse_str($_POST['form_data'], $form);
                 }
 
+                // Get reCAPTCHA token
+                $recaptcha_token = isset($form['recaptcha_token']) ? sanitize_text_field($form['recaptcha_token']) : '';
+
+                if (empty($recaptcha_token)) {
+                    wp_send_json_error(['message' => __('reCAPTCHA verification failed (missing token).', 'borspirit')], 400);
+                }
+
+                // Send verification request to Google
+                $response = wp_remote_post('https://www.google.com/recaptcha/api/siteverify', [
+                    'body' => [
+                        'secret'   => RECAPTCHA_SECRET_KEY,
+                        'response' => $recaptcha_token,
+                    ],
+                    'timeout' => 10
+                ]);
+
+                if (is_wp_error($response)) {
+                    wp_send_json_error(['message' => __('Unable to verify reCAPTCHA (request failed).', 'borspirit')], 400);
+                }
+
+                // Decode Google API response
+                $recaptcha = json_decode(wp_remote_retrieve_body($response), true);
+
+                // Log score for debugging
+                //error_log('reCAPTCHA score: ' . ($recaptcha['score'] ?? 'null'));
+
+                // If reCAPTCHA fails OR score too low → possible bot
+                if ( empty($recaptcha['success']) || ($recaptcha['score'] ?? 0) < 0.3 ) {
+                    wp_send_json_error([
+                        'message' => __('Suspicious activity detected. reCAPTCHA failed.', 'borspirit')
+                    ], 403);
+                }
+
                 // Nonce verification for security
-                if ( ! isset($form['contact_form_nonce']) ||
-                    ! wp_verify_nonce($form['contact_form_nonce'], 'contact_form_action') ) {
+                if ( ! isset($form['contact_form_nonce']) || ! wp_verify_nonce($form['contact_form_nonce'], 'contact_form_action') ) {
                     wp_send_json_error([
                         'message' => __('Invalid security token.', 'borspirit')
                     ], 403);
@@ -82,21 +114,21 @@
                     ], 500);
                 }
 
-                // Prepare email headers
+                // Email headers
                 $headers = [
                     'From: ' . get_bloginfo('name') . ' <' . $admin_email . '>',
                     'Reply-To: ' . $name . ' <' . $email . '>',
                     'Content-Type: text/html; charset=UTF-8'
                 ];
 
-                // Prepare email subject with site name
+                // Email subject formatted with site name
                 $mail_subject = sprintf(
                     __('[%s] New message: %s', 'borspirit'),
                     get_bloginfo('name'),
                     $subject
                 );
 
-                // Format message lines into HTML paragraphs
+                // Convert message lines into HTML paragraphs
                 $message_lines = array_filter(preg_split("/\r\n|\n|\r/", $message), function($line) {
                     return trim($line) !== '';
                 });
@@ -105,7 +137,7 @@
                     return wpautop( esc_html($line) );
                 }, $message_lines));
 
-                // Prepare email message
+                // Build final email body
                 $mail_message = sprintf(
                     '<strong>Name:</strong> %s<br/>
                     <strong>Email:</strong> %s<br/>
@@ -122,7 +154,6 @@
                 // Send the email
                 $sent = wp_mail($admin_email, $mail_subject, $mail_message, $headers);
 
-                // Handle email sending errors
                 if ( ! $sent ) {
                     wp_send_json_error([
                         'message' => __('Message could not be sent. Please try again later.', 'borspirit')

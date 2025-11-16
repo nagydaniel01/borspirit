@@ -82,6 +82,7 @@
                 wp_localize_script( 'event_registration_form_ajax_script', 'event_registration_form_ajax_object', array(
                     'ajax_url'             => admin_url( 'admin-ajax.php' ),
                     'user_id'              => get_current_user_id(),
+                    'recaptcha_site_key'   => RECAPTCHA_SITE_KEY,
                     'msg_privacy_required' => __( 'You must agree to the privacy policy.', 'borspirit' ),
                     'msg_sending'          => __( 'Registering…', 'borspirit' ),
                     'msg_success'          => __( 'Successfully registered!', 'borspirit' ),
@@ -110,6 +111,7 @@
                 wp_localize_script( 'contact_form_ajax_script', 'contact_form_ajax_object', array(
                     'ajax_url'             => admin_url( 'admin-ajax.php' ),
                     'user_id'              => get_current_user_id(),
+                    'recaptcha_site_key'   => RECAPTCHA_SITE_KEY,
                     'msg_privacy_required' => __( 'You must agree to the privacy policy.', 'borspirit' ),
                     'msg_sending'          => __( 'Sending…', 'borspirit' ),
                     'msg_success'          => __( 'Message sent successfully!', 'borspirit' ),
@@ -138,6 +140,7 @@
                 wp_localize_script( 'mc_form_ajax_script', 'mc_form_ajax_object', array(
                     'ajax_url'             => admin_url( 'admin-ajax.php' ),
                     'user_id'              => get_current_user_id(),
+                    'recaptcha_site_key'   => RECAPTCHA_SITE_KEY,
                     'msg_privacy_required' => __( 'You must agree to the privacy policy.', 'borspirit' ),
                     'msg_sending'          => __( 'Subscribing…', 'borspirit' ),
                     'msg_success'          => __( 'You have been subscribed successfully!', 'borspirit' ),

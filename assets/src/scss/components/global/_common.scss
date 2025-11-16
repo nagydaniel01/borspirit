@@ -356,6 +356,10 @@ b, strong {
   background: linear-gradient(to bottom, transparent 0, transparent 75%, $primary 75%, $primary 75%);
 }
 
+a {
+  text-underline-offset: .25rem;
+}
+
 blockquote {
   margin: 2rem 0;
   padding-left: 1.5rem;

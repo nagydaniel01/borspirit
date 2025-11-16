@@ -84,6 +84,10 @@
         define( 'MY_ACCOUNT_PAGE_ID', wc_get_page_id( 'myaccount' ) );
     }
 
+    // Google reCAPTCHA
+    define( 'RECAPTCHA_SITE_KEY', '6LcOnQ4sAAAAAF_Mcnr5Adg4xtHC4sP46nC8LKjn' );
+    define( 'RECAPTCHA_SECRET_KEY', '6LcOnQ4sAAAAAEvEqeGkNE6b9X4rWxGMVhdR6CNU' );
+
     // Mailchimp
     if ( class_exists( 'MailchimpService' ) ) {
         define( 'MAILCHIMP_API_KEY', 'ae0da8ad3bcffc67ee33226e942bc534-us3' ); // For 'daniel.nagy0125@gmail.com' account

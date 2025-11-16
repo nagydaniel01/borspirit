@@ -54,18 +54,18 @@
     margin-top: 1rem;
   }
 
-  .nav {
-    .nav__list {
-      a {
+  .footer__opening-hours {
+    margin-top: 2rem;
+    
+    h4 {
+      color: $white;
+    }
+
+    .opening-hours {
+      th, td {
+        padding: 0;
         color: $white;
       }
-    }
-  }
-
-  .opening-hours {
-    th, td {
-      padding: 0;
-      color: $white;
     }
   }
 }

@@ -18,11 +18,18 @@
     line-height: 1.8;
     font-weight: 400;
     text-decoration: none;
+    color: $white;
 
     .icon {
       width: 1.5rem;
       height: 1.5rem;
       color: $white;
+    }
+
+    small {
+      text-decoration: underline;
+      text-underline-offset: .25rem;
+      color: $primary;
     }
   }
 }

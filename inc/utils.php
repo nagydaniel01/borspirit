@@ -576,57 +576,55 @@
         }
     }
 
-    if ( ! function_exists( 'get_map_link' ) ) {
+    if ( ! function_exists( 'get_location_link' ) ) {
         /**
-         * Generates a map link based on the user's device:
-         * - Google Maps for desktop
-         * - Waze for mobile devices
-         *
-         * @param string $address The address to be mapped.
-         * @return string HTML anchor tag with the appropriate map link.
-         */
-        function get_map_link($address) {
-            $encodedAddress = urlencode($address);
-            $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
-
-            // Basic mobile detection via User-Agent
-            $isMobile = preg_match('/(android|iphone|ipad|ipod|mobile)/i', $userAgent);
-
-            if ($isMobile) {
-                // Waze for mobile users
-                $wazeLink = "https://waze.com/ul?q={$encodedAddress}";
-                return "<a href=\"{$wazeLink}\" target=\"_blank\" rel=\"noopener noreferrer\">{$address}</a>";
-            } else {
-                // Google Maps for desktop users
-                $googleMapsLink = "https://www.google.com/maps/search/?api=1&query={$encodedAddress}";
-                return "<a href=\"{$googleMapsLink}\" target=\"_blank\" rel=\"noopener noreferrer\">{$address}</a>";
-            }
-        }
-    }
-
-    if ( ! function_exists( 'get_route_link' ) ) {
-        /**
-         * Generates a route link using the user's current location as the start.
+         * Generates a map or route link based on the user's device:
          * - Google Maps for desktop
          * - Waze for mobile
          *
-         * @param string $destination The destination address.
-         * @return string HTML anchor tag with the route link.
+         * @param string $address The address or destination.
+         * @param string $type 'map' for map link, 'route' for route link. Default is 'map'.
+         * @param bool $returnTag If true, return an HTML anchor tag. If false, return only the URL. Default is true.
+         * @return string URL or HTML anchor tag.
+         *
+         * @example
+         * // Returns a full anchor tag to Google Maps (desktop) or Waze (mobile) for a location
+         * echo get_location_link("1600 Amphitheatre Parkway, Mountain View, CA");
+         *
+         * @example
+         * // Returns just the URL for a location
+         * echo get_location_link("1600 Amphitheatre Parkway, Mountain View, CA", 'map', false);
+         *
+         * @example
+         * // Returns a full anchor tag for a route
+         * echo get_location_link("Times Square, New York, NY", 'route');
+         *
+         * @example
+         * // Returns just the URL for a route
+         * echo get_location_link("Times Square, New York, NY", 'route', false);
          */
-        function get_route_link($destination) {
-            $encodedDest = urlencode($destination);
+        function get_location_link($address, $type = 'map', $returnTag = true) {
+            $encodedAddress = urlencode($address);
             $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
             $isMobile = preg_match('/(android|iphone|ipad|ipod|mobile)/i', $userAgent);
 
             if ($isMobile) {
-                // Waze route from current location to destination
-                $wazeLink = "https://waze.com/ul?q={$encodedDest}&navigate=yes";
-                return "<a href=\"{$wazeLink}\" target=\"_blank\" rel=\"noopener noreferrer\">{$destination}</a>";
+                // Mobile device -> Waze
+                if ($type === 'route') {
+                    $url = "https://waze.com/ul?q={$encodedAddress}&navigate=yes";
+                } else {
+                    $url = "https://waze.com/ul?q={$encodedAddress}";
+                }
             } else {
-                // Google Maps route from current location to destination
-                $googleLink = "https://www.google.com/maps/dir/?api=1&destination={$encodedDest}&travelmode=driving";
-                return "<a href=\"{$googleLink}\" target=\"_blank\" rel=\"noopener noreferrer\">{$destination}</a>";
+                // Desktop -> Google Maps
+                if ($type === 'route') {
+                    $url = "https://www.google.com/maps/dir/?api=1&destination={$encodedAddress}&travelmode=driving";
+                } else {
+                    $url = "https://www.google.com/maps/search/?api=1&query={$encodedAddress}";
+                }
             }
+
+            return $returnTag ? "<a href=\"{$url}\" target=\"_blank\" rel=\"noopener noreferrer\">{$address}</a>" : $url;
         }
     }
     

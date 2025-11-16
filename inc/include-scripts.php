@@ -64,3 +64,17 @@
         }
         add_action( 'wp_enqueue_scripts', 'theme_scripts', 100 );
     }
+
+    if ( ! function_exists( 'recaptcha_scripts' ) ) {
+        /**
+         * Enqueue Google reCAPTCHA v3 script.
+         *
+         * @return void
+         */
+        function recaptcha_scripts() {
+            $recaptcha_site_key = '6LcOnQ4sAAAAAF_Mcnr5Adg4xtHC4sP46nC8LKjn';
+    
+            wp_enqueue_script( 'google-recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . esc_attr( $recaptcha_site_key ), [], null, true );
+        }
+        add_action( 'wp_enqueue_scripts', 'recaptcha_scripts' );
+    }
