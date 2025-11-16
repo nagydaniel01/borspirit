@@ -64,8 +64,15 @@
 
                         complete: function() {
                             // Optional cleanup
-                            // Example: console.log('Mailchimp AJAX completed');
+                            // Example: console.log('AJAX request completed');
                             $submitBtn.prop('disabled', false).removeClass('disabled');
+
+                            // Wait 3 seconds, then fade out the response over 1 second
+                            setTimeout(function() {
+                                $('#mc_response').fadeOut(1000, function() {
+                                    $(this).html('').show(); // Clear content and reset display
+                                });
+                            }, 3000);
                         }
                     });
 

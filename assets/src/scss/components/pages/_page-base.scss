@@ -12,6 +12,13 @@
     font-weight: 800;
     line-height: 1.2;
   }
+
+  .page__content {
+    .thank-you-details {
+      list-style: none;
+      padding: 0;
+    }
+  }
 }
 
 @include media-breakpoint-up(lg) {

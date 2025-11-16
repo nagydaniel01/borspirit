@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BorSpirit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-16 14:46+0000\n"
+"POT-Creation-Date: 2025-11-16 18:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -55,18 +55,18 @@ msgstr ""
 msgid "[%1$s] Your order #%2$s is ready for pickup"
 msgstr ""
 
-#: ajax/php/contact_form_handler.php:94
+#: ajax/php/contact_form_handler.php:126
 #, php-format
 msgid "[%s] New message: %s"
 msgstr ""
 
-#: ajax/php/event_registration_form_handler.php:120
+#: ajax/php/event_registration_form_handler.php:152
 #, php-format
 msgid "[Event ID: %d] %s (%s)"
 msgstr ""
 
-#: inc/register-ajax.php:90 inc/register-ajax.php:118 inc/register-ajax.php:146
-#: inc/register-ajax.php:174
+#: inc/register-ajax.php:91 inc/register-ajax.php:120 inc/register-ajax.php:149
+#: inc/register-ajax.php:177
 msgid "A network error occurred."
 msgstr ""
 
@@ -74,7 +74,7 @@ msgstr ""
 msgid "A network error occurred. Please try again."
 msgstr ""
 
-#: inc/shortcodes.php:469
+#: inc/shortcodes.php:473
 msgid "ACF plugin is not active."
 msgstr ""
 
@@ -121,8 +121,8 @@ msgstr ""
 msgid "Add to cart"
 msgstr ""
 
-#: ajax/php/contact_form_handler.php:81
-#: ajax/php/event_registration_form_handler.php:151
+#: ajax/php/contact_form_handler.php:113
+#: ajax/php/event_registration_form_handler.php:183
 msgid "Admin email is not configured properly."
 msgstr ""
 
@@ -153,9 +153,9 @@ msgstr ""
 msgid "All FAQs"
 msgstr ""
 
-#: ajax/php/contact_form_handler.php:59
-#: ajax/php/event_registration_form_handler.php:67
-#: ajax/php/mc_form_handler.php:69
+#: ajax/php/contact_form_handler.php:91
+#: ajax/php/event_registration_form_handler.php:99
+#: ajax/php/mc_form_handler.php:101
 msgid "All required fields must be filled out."
 msgstr ""
 
@@ -164,8 +164,8 @@ msgstr ""
 msgid "All statuses"
 msgstr ""
 
-#: inc/register-ajax.php:89 inc/register-ajax.php:117 inc/register-ajax.php:145
-#: inc/register-ajax.php:173
+#: inc/register-ajax.php:90 inc/register-ajax.php:119 inc/register-ajax.php:148
+#: inc/register-ajax.php:176
 msgid "An unexpected error occurred."
 msgstr ""
 
@@ -213,9 +213,8 @@ msgstr ""
 msgid "Awards list navigation"
 msgstr ""
 
-#: 404.php:41 templates/page-thank-you.php:54
-#, php-format
-msgid "Back to %s"
+#: 404.php:44 templates/page-thank-you.php:57
+msgid "Back to previous page"
 msgstr ""
 
 #: footer.php:32
@@ -397,7 +396,7 @@ msgstr ""
 msgid "Edit FAQ"
 msgstr ""
 
-#: templates/page-thank-you.php:31
+#: templates/page-thank-you.php:33
 msgid "Email:"
 msgstr ""
 
@@ -495,7 +494,7 @@ msgstr ""
 msgid "Featured Image"
 msgstr ""
 
-#: inc/shortcodes.php:644
+#: inc/shortcodes.php:648
 msgid "Feedback:"
 msgstr ""
 
@@ -625,7 +624,7 @@ msgid ""
 "password</a> immediately."
 msgstr ""
 
-#: ajax/php/event_registration_form_handler.php:167
+#: ajax/php/event_registration_form_handler.php:199
 #, php-format
 msgid ""
 "Hi %s,\n"
@@ -680,13 +679,13 @@ msgstr ""
 msgid "Insert into FAQ"
 msgstr ""
 
-#: ajax/php/contact_form_handler.php:66
-#: ajax/php/event_registration_form_handler.php:74
-#: ajax/php/mc_form_handler.php:74
+#: ajax/php/contact_form_handler.php:98
+#: ajax/php/event_registration_form_handler.php:106
+#: ajax/php/mc_form_handler.php:106
 msgid "Invalid email format."
 msgstr ""
 
-#: ajax/php/event_registration_form_handler.php:81
+#: ajax/php/event_registration_form_handler.php:113
 msgid "Invalid event ID."
 msgstr ""
 
@@ -704,9 +703,9 @@ msgstr ""
 msgid "Invalid request method."
 msgstr ""
 
-#: ajax/php/contact_form_handler.php:44
-#: ajax/php/event_registration_form_handler.php:44
-#: ajax/php/mc_form_handler.php:57
+#: ajax/php/contact_form_handler.php:76
+#: ajax/php/event_registration_form_handler.php:76
+#: ajax/php/mc_form_handler.php:89
 msgid "Invalid security token."
 msgstr ""
 
@@ -768,7 +767,7 @@ msgid ""
 "%s</code> in the theme options."
 msgstr ""
 
-#: ajax/php/mc_form_handler.php:88
+#: ajax/php/mc_form_handler.php:120
 msgid "Mailchimp request failed. Please try again later."
 msgstr ""
 
@@ -776,16 +775,16 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-#: ajax/php/contact_form_handler.php:128
-#: ajax/php/event_registration_form_handler.php:179
+#: ajax/php/contact_form_handler.php:159
+#: ajax/php/event_registration_form_handler.php:210
 msgid "Message could not be sent. Please try again later."
 msgstr ""
 
-#: inc/register-ajax.php:115
+#: inc/register-ajax.php:117
 msgid "Message sent successfully!"
 msgstr ""
 
-#: templates/page-thank-you.php:45
+#: templates/page-thank-you.php:47
 msgid "Message:"
 msgstr ""
 
@@ -823,7 +822,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: templates/page-thank-you.php:27
+#: templates/page-thank-you.php:29
 msgid "Name:"
 msgstr ""
 
@@ -903,7 +902,7 @@ msgstr ""
 msgid "No FAQs found."
 msgstr ""
 
-#: inc/shortcodes.php:594
+#: inc/shortcodes.php:598
 msgid "No feedback yet."
 msgstr ""
 
@@ -917,7 +916,7 @@ msgstr ""
 msgid "No icon items found."
 msgstr ""
 
-#: inc/shortcodes.php:475
+#: inc/shortcodes.php:479
 msgid "No opening hours specified."
 msgstr ""
 
@@ -958,7 +957,7 @@ msgstr ""
 msgid "Opening hours"
 msgstr ""
 
-#: inc/shortcodes.php:641
+#: inc/shortcodes.php:645
 msgid "Opinion:"
 msgstr ""
 
@@ -1008,7 +1007,7 @@ msgstr ""
 msgid "Phone"
 msgstr ""
 
-#: templates/page-thank-you.php:36
+#: templates/page-thank-you.php:38
 msgid "Phone:"
 msgstr ""
 
@@ -1077,7 +1076,7 @@ msgstr ""
 msgid "Privacy Policy Template"
 msgstr ""
 
-#: inc/register-ajax.php:170
+#: inc/register-ajax.php:173
 msgid "Processing…"
 msgstr ""
 
@@ -1119,6 +1118,12 @@ msgstr ""
 msgid "Read more about %1$s"
 msgstr ""
 
+#: ajax/php/contact_form_handler.php:44
+#: ajax/php/event_registration_form_handler.php:44
+#: ajax/php/mc_form_handler.php:57
+msgid "reCAPTCHA verification failed (missing token)."
+msgstr ""
+
 #: inc/woocommerce-extras.php:853
 msgid "Recently viewed products"
 msgstr ""
@@ -1131,19 +1136,19 @@ msgstr ""
 msgid "Register"
 msgstr ""
 
-#: inc/register-ajax.php:86
+#: inc/register-ajax.php:87
 msgid "Registering…"
 msgstr ""
 
-#: ajax/php/event_registration_form_handler.php:163
+#: ajax/php/event_registration_form_handler.php:195
 msgid "Registration Confirmation for #%d"
 msgstr ""
 
-#: ajax/php/event_registration_form_handler.php:143
+#: ajax/php/event_registration_form_handler.php:175
 msgid "Registration failed, please try again."
 msgstr ""
 
-#: ajax/php/event_registration_form_handler.php:137
+#: ajax/php/event_registration_form_handler.php:169
 #, php-format
 msgid "Registration failed: %s"
 msgstr ""
@@ -1248,7 +1253,7 @@ msgstr ""
 msgid "Send message"
 msgstr ""
 
-#: inc/register-ajax.php:114
+#: inc/register-ajax.php:116
 msgid "Sending…"
 msgstr ""
 
@@ -1281,7 +1286,7 @@ msgstr ""
 msgid "Sorry, no posts matched your criteria."
 msgstr ""
 
-#: templates/page-thank-you.php:51
+#: templates/page-thank-you.php:53
 msgid ""
 "Sorry, we couldn’t find your message details or the session has expired."
 msgstr ""
@@ -1295,7 +1300,7 @@ msgstr ""
 msgid "Subject"
 msgstr ""
 
-#: templates/page-thank-you.php:41
+#: templates/page-thank-you.php:43
 msgid "Subject:"
 msgstr ""
 
@@ -1304,7 +1309,7 @@ msgid "Submit feedback"
 msgstr ""
 
 #. %s = feedback date
-#: inc/shortcodes.php:649
+#: inc/shortcodes.php:653
 #, php-format
 msgid "Submitted on %s"
 msgstr ""
@@ -1321,7 +1326,7 @@ msgstr ""
 msgid "Subscribe now"
 msgstr ""
 
-#: inc/register-ajax.php:142
+#: inc/register-ajax.php:145
 msgid "Subscribing…"
 msgstr ""
 
@@ -1338,7 +1343,7 @@ msgstr ""
 msgid "Successfully changed the status of %s order(s) to Awaiting Pickup."
 msgstr ""
 
-#: inc/register-ajax.php:87 ajax/php/event_registration_form_handler.php:185
+#: inc/register-ajax.php:88 ajax/php/event_registration_form_handler.php:216
 msgid "Successfully registered!"
 msgstr ""
 
@@ -1348,6 +1353,12 @@ msgstr ""
 
 #: template-parts/forms/form-poll_form.php:36
 msgid "Superb"
+msgstr ""
+
+#: ajax/php/contact_form_handler.php:69
+#: ajax/php/event_registration_form_handler.php:69
+#: ajax/php/mc_form_handler.php:82
+msgid "Suspicious activity detected. reCAPTCHA failed."
 msgstr ""
 
 #: inc/wordpress-admin-actions.php:808
@@ -1396,7 +1407,7 @@ msgstr ""
 msgid "Thank You Template"
 msgstr ""
 
-#: templates/page-thank-you.php:19
+#: templates/page-thank-you.php:21
 msgid "Thank You!"
 msgstr ""
 
@@ -1424,7 +1435,7 @@ msgstr ""
 msgid "The post saved successfully."
 msgstr ""
 
-#: inc/register-ajax.php:171
+#: inc/register-ajax.php:174
 msgid "The recommendation is complete!"
 msgstr ""
 
@@ -1452,19 +1463,19 @@ msgstr ""
 msgid "There was an error sending your feedback."
 msgstr ""
 
-#: inc/register-ajax.php:88
+#: inc/register-ajax.php:89
 msgid "There was an error while processing your registration."
 msgstr ""
 
-#: inc/register-ajax.php:172
+#: inc/register-ajax.php:175
 msgid "There was an error while processing your request."
 msgstr ""
 
-#: inc/register-ajax.php:144
+#: inc/register-ajax.php:147
 msgid "There was an error while processing your subscription."
 msgstr ""
 
-#: inc/register-ajax.php:116
+#: inc/register-ajax.php:118
 msgid "There was an error while sending your message."
 msgstr ""
 
@@ -1488,13 +1499,19 @@ msgstr ""
 msgid "Tuesday"
 msgstr ""
 
+#: ajax/php/contact_form_handler.php:57
+#: ajax/php/event_registration_form_handler.php:57
+#: ajax/php/mc_form_handler.php:70
+msgid "Unable to verify reCAPTCHA (request failed)."
+msgstr ""
+
 #: inc/log-search-queries.php:292
 msgid "Unauthorized user"
 msgstr ""
 
-#: ajax/php/comment_form_handler.php:82 ajax/php/contact_form_handler.php:153
-#: ajax/php/event_registration_form_handler.php:193
-#: ajax/php/mc_form_handler.php:108
+#: ajax/php/comment_form_handler.php:82 ajax/php/contact_form_handler.php:184
+#: ajax/php/event_registration_form_handler.php:224
+#: ajax/php/mc_form_handler.php:140
 #, php-format
 msgid "Unexpected error: %s"
 msgstr ""
@@ -1539,7 +1556,7 @@ msgstr ""
 msgid "Use as featured image"
 msgstr ""
 
-#: ajax/php/mc_form_handler.php:94
+#: ajax/php/mc_form_handler.php:126
 msgid "User could not be subscribed. Please try again later."
 msgstr ""
 
@@ -1599,7 +1616,7 @@ msgstr ""
 msgid "Wednesday"
 msgstr ""
 
-#: templates/page-thank-you.php:23
+#: templates/page-thank-you.php:25
 msgid "We’ve received your message. Here’s a summary of what you submitted:"
 msgstr ""
 
@@ -1629,7 +1646,7 @@ msgstr ""
 msgid "You are already logged in."
 msgstr ""
 
-#: ajax/php/event_registration_form_handler.php:111
+#: ajax/php/event_registration_form_handler.php:143
 msgid "You are already registered for this event."
 msgstr ""
 
@@ -1642,7 +1659,7 @@ msgstr ""
 msgid "You can include %s to dynamically show the minimum age."
 msgstr ""
 
-#: inc/register-ajax.php:143
+#: inc/register-ajax.php:146
 msgid "You have been subscribed successfully!"
 msgstr ""
 
@@ -1664,10 +1681,10 @@ msgstr ""
 msgid "You may also like…"
 msgstr ""
 
-#: inc/register-ajax.php:85 inc/register-ajax.php:113 inc/register-ajax.php:141
-#: ajax/php/contact_form_handler.php:73
-#: ajax/php/event_registration_form_handler.php:88
-#: ajax/php/mc_form_handler.php:79
+#: inc/register-ajax.php:86 inc/register-ajax.php:115 inc/register-ajax.php:144
+#: ajax/php/contact_form_handler.php:105
+#: ajax/php/event_registration_form_handler.php:120
+#: ajax/php/mc_form_handler.php:111
 msgid "You must agree to the privacy policy."
 msgstr ""
 
@@ -1711,7 +1728,7 @@ msgstr ""
 msgid "Your feedback"
 msgstr ""
 
-#: ajax/php/contact_form_handler.php:145
+#: ajax/php/contact_form_handler.php:176
 msgid "Your message has been sent successfully!"
 msgstr ""
 

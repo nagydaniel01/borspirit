@@ -10,6 +10,8 @@
     // Get the message_id from query string (?message_id=...)
     $message_id = isset($_GET['message_id']) ? sanitize_text_field($_GET['message_id']) : '';
     $data = $message_id ? get_transient($message_id) : false;
+
+    $back_url = wp_get_referer() ?: home_url();
 ?>
 
 <main class="page page--default">
@@ -51,7 +53,9 @@
                     <?php echo wpautop( esc_html__('Sorry, we couldn’t find your message details or the session has expired.', 'borspirit') ); ?>
                 <?php endif; ?>
 
-                <a href="<?php echo esc_url( trailingslashit( home_url() ) ); ?>" class="btn btn-outline-primary btn-lg page__button"><?php echo sprintf( esc_html__( 'Back to %s', 'borspirit' ), get_the_title( get_option('page_on_front') ) ); ?></a>
+                <a href="<?php echo esc_url( trailingslashit( $back_url ) ); ?>" class="btn btn-outline-primary btn-lg page__button">
+                    <?php echo esc_html__( 'Back to previous page', 'borspirit' ); ?>
+                </a>
             </div>
         </div>
     </section>

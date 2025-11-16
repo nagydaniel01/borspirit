@@ -75,9 +75,16 @@
                         },
 
                         complete: function() {
-                            // Optional: remove loading spinner or do other cleanup
+                            // Optional cleanup
                             // Example: console.log('AJAX request completed');
                             $submitBtn.prop('disabled', false).removeClass('disabled');
+
+                            // Wait 3 seconds, then fade out the response over 1 second
+                            setTimeout(function() {
+                                $('#reg_response').fadeOut(1000, function() {
+                                    $(this).html('').show(); // Clear content and reset display
+                                });
+                            }, 3000);
                         }
                     });
 
