@@ -8,6 +8,10 @@
     $last_name    = $current_user->last_name ?? '';
     $display_name = $current_user->display_name ?? '';
     $user_name    = $display_name ? $display_name : $first_name;
+
+     // Check if registration is enabled on My Account page
+    $registration_enabled = 'yes' === get_option( 'woocommerce_enable_myaccount_registration' );
+    $modal_toggle_text = $registration_enabled ? esc_html__( 'Login / Register', 'woocommerce' ) : esc_html__( 'Login', 'woocommerce' );
 ?>
 
 <header class="header">
@@ -35,7 +39,7 @@
                     <?php else : ?>
                         <button type="button" class="header-actions__item btn ms-3" data-bs-toggle="modal" data-bs-target="#login_formModal">
                             <svg class="icon icon-user"><use xlink:href="#icon-user"></use></svg>
-                            <span class="visually-hidden"><?php echo esc_html__( 'Login / Register', 'borspirit' ); ?></span>
+                            <span class="visually-hidden"><?php echo esc_html( $modal_toggle_text ); ?></span>
                         </button>
                     <?php endif; ?>
 
@@ -51,7 +55,7 @@
 
                 <!-- Navbar Toggler -->
                 <button class="header-actions__item btn ms-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#mainMenu" aria-controls="mainMenu">
-                    <svg class="icon icon-menu"><use xlink:href="#icon-menu"></use></svg>
+                    <svg class="icon icon-bars"><use xlink:href="#icon-bars"></use></svg>
                     <span class="visually-hidden"><?php echo esc_html__( 'Open menu', 'borspirit' ); ?></span>
                 </button>
             </div>
@@ -100,7 +104,7 @@
                             <?php else : ?>
                                 <button type="button" class="header-actions__item btn ms-lg-4" data-bs-toggle="modal" data-bs-target="#login_formModal">
                                     <svg class="icon icon-user"><use xlink:href="#icon-user"></use></svg>
-                                    <span class="visually-hidden"><?php echo esc_html__( 'Login / Register', 'borspirit' ); ?></span>
+                                    <span class="visually-hidden"><?php echo esc_html( $modal_toggle_text ); ?></span>
                                 </button>
                             <?php endif; ?>
 

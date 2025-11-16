@@ -214,6 +214,10 @@
          * @return array Modified array of My Account menu items.
          */
         function conditionally_remove_downloads_tab( $items ) {
+            if ( is_admin() ) {
+                return $items;
+            }
+
             $user_id = get_current_user_id();
 
             if ( $user_id ) {

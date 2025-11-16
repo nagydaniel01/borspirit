@@ -29,42 +29,86 @@
     // Remove WooCommerce sidebar
     //remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
 
-    // Remove WooCommerce sidebar on single product pages
-    function remove_woocommerce_sidebar_single_product() {
-        if ( is_product() ) {
-            remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
+    if ( ! function_exists( 'custom_remove_woocommerce_sidebar' ) ) {
+        /**
+         * Remove WooCommerce sidebar on:
+         * - Single product pages
+         * - Empty product category pages
+         * - Empty product tag pages
+         */
+        function custom_remove_woocommerce_sidebar() {
+            // 1. Remove sidebar on single product pages
+            if ( is_product() ) {
+                remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
+                return; // no need to continue
+            }
+
+            // 2. Handle product categories & product tags
+            if ( is_product_category() || is_product_tag() ) {
+
+                $term = get_queried_object();
+
+                // Safety check
+                if ( $term && isset( $term->term_id ) && isset( $term->taxonomy ) ) {
+
+                    // Query to check if this term has products
+                    $args = array(
+                        'post_type'      => 'product',
+                        'posts_per_page' => 1,
+                        'tax_query'      => array(
+                            array(
+                                'taxonomy'         => $term->taxonomy,
+                                'field'            => 'term_id',
+                                'terms'            => $term->term_id,
+                                'include_children' => false,
+                            ),
+                        ),
+                    );
+
+                    $query = new WP_Query( $args );
+
+                    // If no products → remove sidebar
+                    if ( ! $query->have_posts() ) {
+                        remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
+                    }
+
+                    wp_reset_postdata();
+                }
+            }
         }
+        add_action( 'template_redirect', 'custom_remove_woocommerce_sidebar' );
     }
-    add_action( 'template_redirect', 'remove_woocommerce_sidebar_single_product' );
 
     // ============================================================
     // 5. BREADCRUMBS
     // ============================================================
 
-    if ( ! function_exists( 'custom_wrap_woocommerce_breadcrumbs' ) ) {
+    if ( ! function_exists( 'custom_breadcrumb_wrapper_start' ) ) {
         /**
          * Output the opening wrapper for WooCommerce breadcrumbs
          *
          * @return void
          */
         function custom_breadcrumb_wrapper_start() {
-            if (is_shop() || is_product_category( ) ) {
+            if (is_shop() || is_product_category() ) {
                 //echo '<div class="woocommerce-breadcrumb-wrapper">';
-            } elseif (is_singular('product' ) ) {
+            } elseif (is_singular('product') ) {
                 echo '<div class="woocommerce-breadcrumb-wrapper"><div class="container">';
             }
         }
         add_action( 'woocommerce_before_main_content', 'custom_breadcrumb_wrapper_start', 15 );
+    }
 
+    if ( ! function_exists( 'custom_breadcrumb_wrapper_end' ) ) {
         /**
          * Output the closing wrapper for WooCommerce breadcrumbs
          *
          * @return void
          */
         function custom_breadcrumb_wrapper_end() {
-            if (is_shop() || is_product_category( ) ) {
+            if (is_shop() || is_product_category() ) {
                 //echo '</div>';
-            } elseif (is_singular('product' ) ) {
+            } elseif (is_singular('product') ) {
                 echo '</div></div>';
             }
         }
