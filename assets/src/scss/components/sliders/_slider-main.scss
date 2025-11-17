@@ -71,14 +71,14 @@
     .slider__caption-inner {
         display: flex;
         flex-direction: column;
-        row-gap: .875rem;
+        row-gap: .625rem;
     }
 
     .slider__title {
         font-size: 1.5rem;
         font-weight: 900;
         line-height: 1.75rem;
-        margin-bottom: 1.25rem;
+        margin: 0;
         color: $white;
     }
 
@@ -93,6 +93,7 @@
 
     .slider__button {
         width: fit-content;
+        margin-top: 1.25rem;
     }
 
     .slick-slide > div {
@@ -136,8 +137,8 @@
         }
 
         .slider__title {
-            font-size: 3.5rem;
-            line-height: 4.625rem;
+            font-size: 3.125rem;
+            line-height: 4.063rem;
         }
 
         .slider__subtitle {
@@ -145,7 +146,7 @@
         }
 
         .slider__description {
-            font-size: 1.25rem;
+            font-size: 1.125rem;
         }
     }
 }

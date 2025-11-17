@@ -70,27 +70,36 @@
                 <div class="offcanvas-body">
                     <?php
                         if ( class_exists( 'WooCommerce' ) ) {
-                            // WooCommerce product search form
                             get_product_search_form();
                         } else {
-                            // Default WordPress search form
                             get_search_form();
                         }
                     ?>
 
-                    <?php if ( has_nav_menu( 'primary_menu' ) ) : ?>
-                        <?php
-                            wp_nav_menu( array(
-                                'theme_location' => 'primary_menu',
-                                'container'      => false,
-                                'menu_class'     => 'navbar-nav nav__list level0',
-                                'fallback_cb'    => false,
-                                'walker'         => new Custom_Mega_Menu_Walker(),
-                            ) );
-                        ?>
-                    <?php else : ?>
-                        <p class="no-menu-assigned"><?php echo esc_html__( 'Please assign a menu in Appearance → Menus.', 'borspirit' ); ?></p>
-                    <?php endif; ?>
+                    <?php
+                        if ( has_nav_menu( 'primary_menu' ) ) {
+
+                            $walker = wp_is_mobile() && class_exists( 'Custom_Mobile_Nav_Walker' )
+                                ? new Custom_Mobile_Nav_Walker()
+                                : ( class_exists( 'Custom_Mega_Menu_Walker' ) ? new Custom_Mega_Menu_Walker() : false );
+
+                            if ( $walker ) {
+                                wp_nav_menu( array(
+                                    'theme_location' => 'primary_menu',
+                                    'container'      => false,
+                                    'menu_class'     => 'navbar-nav nav__list level0',
+                                    'fallback_cb'    => false,
+                                    'depth'          => 4,
+                                    'walker'         => $walker,
+                                ) );
+                            } else {
+                                echo '<p class="no-menu-assigned">' . esc_html__( 'Please assign a menu in Appearance → Menus.', 'borspirit' ) . '</p>';
+                            }
+
+                        } else {
+                            echo '<p class="no-menu-assigned">' . esc_html__( 'Please assign a menu in Appearance → Menus.', 'borspirit' ) . '</p>';
+                        }
+                    ?>
 
                     <!-- Desktop header actions -->
                     <div class="header-actions d-none d-lg-flex ms-lg-auto">

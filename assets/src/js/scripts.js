@@ -33,3 +33,4 @@ import './youtube-player';
 import './product-sticky';
 import './quantity';
 import './marquee';
+import './menu';

@@ -57,7 +57,7 @@ if ( ! class_exists( 'Custom_Nav_Walker' ) ) {
                 'href'         => ! empty( $item->url ) ? esc_url( $item->url ) : '',
                 'target'       => ! empty( $item->target ) ? esc_attr( $item->target ) : '',
                 'rel'          => ! empty( $item->xfn ) ? esc_attr( $item->xfn ) : '',
-                'aria-current' => $item->current ? 'page' : '',
+                'aria-current' => ! empty( $item->current ) ? 'page' : '',
                 'class'        => 'nav__link js-nav-link level' . $depth,
             ];
 
@@ -332,6 +332,124 @@ if ( ! class_exists( 'Custom_Mega_Menu_Walker' ) ) {
          * Compatibility: Builds a string of HTML attributes from an array.
          */
         protected function build_atts( $atts = array() ) {
+            $attribute_string = '';
+            foreach ( $atts as $attr => $value ) {
+                if ( false !== $value && '' !== $value && is_scalar( $value ) ) {
+                    $value             = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
+                    $attribute_string .= ' ' . $attr . '="' . $value . '"';
+                }
+            }
+            return $attribute_string;
+        }
+    }
+}
+
+if ( ! class_exists( 'Custom_Mobile_Nav_Walker' ) ) {
+    class Custom_Mobile_Nav_Walker extends Walker_Nav_Menu {
+
+        public function start_lvl( &$output, $depth = 0, $args = null ) {
+            $t = isset( $args->item_spacing ) && 'discard' === $args->item_spacing ? '' : "\t";
+            $n = isset( $args->item_spacing ) && 'discard' === $args->item_spacing ? '' : "\n";
+            $indent = str_repeat( $t, $depth );
+
+            $classes = ['nav__list', 'level' . ( $depth + 1 ), 'dropdown-menu'];
+            $class_names = implode( ' ', apply_filters( 'nav_menu_submenu_css_class', $classes, $args, $depth ) );
+
+            $atts = [
+                'class' => esc_attr( $class_names ),
+            ];
+
+            $atts = apply_filters( 'nav_menu_submenu_attributes', $atts, $args, $depth );
+            $attributes = $this->build_atts( $atts );
+
+            $output .= "{$n}{$indent}<ul{$attributes}>{$n}";
+        }
+
+        public function start_el( &$output, $item, $depth = 0, $args = null, $current_object_id = 0 ) {
+            $t = isset( $args->item_spacing ) && 'discard' === $args->item_spacing ? '' : "\t";
+            $n = isset( $args->item_spacing ) && 'discard' === $args->item_spacing ? '' : "\n";
+            $indent = ( $depth ) ? str_repeat( $t, $depth ) : '';
+
+            // Classes for <li>
+            $classes = empty( $item->classes ) ? [] : (array) $item->classes;
+            $classes[] = 'nav__item';
+            $classes[] = 'nav-item';
+            $classes[] = 'level' . $depth;
+
+            // Detect if <li> has children
+            $has_children = ! empty( $args->walker->has_children );
+
+            if ( in_array( 'menu-item-has-children', $classes, true ) ) {
+                $classes[] = 'has-children';
+                if ($depth === 0) {
+                    $classes[] = 'dropdown';
+                } else {
+                    $classes[] = 'dropend';
+                }
+            }
+
+            $args = apply_filters( 'nav_menu_item_args', $args, $item, $depth );
+            $class_names = implode( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args, $depth ) );
+            $id = apply_filters( 'nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args, $depth );
+
+            $li_atts = [
+                'id'    => esc_attr( $id ),
+                'class' => esc_attr( $class_names ),
+            ];
+
+            $li_atts = apply_filters( 'nav_menu_item_attributes', $li_atts, $item, $args, $depth );
+            $li_attributes = $this->build_atts( $li_atts );
+
+            $output .= $indent . '<li' . $li_attributes . '>';
+
+            // Title
+            $title = apply_filters( 'the_title', $item->title, $item->ID );
+            $title = apply_filters( 'nav_menu_item_title', $title, $item, $args, $depth );
+
+            // --- Anchor classes ---
+            $a_classes = ['nav__link', 'js-nav-link', 'level' . $depth];
+            if ($depth === 0) {
+                $a_classes[] = 'nav-link';
+                if ($has_children) $a_classes[] = 'dropdown-toggle';
+            } else {
+                $a_classes[] = 'dropdown-item';
+                if ($has_children) $a_classes[] = 'dropdown-toggle';
+            }
+
+            // Build <a> attributes
+            $atts = [
+                'href'         => ! empty( $item->url ) ? esc_url( $item->url ) : '',
+                'target'       => ! empty( $item->target ) ? esc_attr( $item->target ) : '',
+                'rel'          => ! empty( $item->xfn ) ? esc_attr( $item->xfn ) : '',
+                'aria-current' => ! empty( $item->current ) ? 'page' : '',
+                'class'        => implode( ' ', $a_classes ),
+            ];
+
+            $atts = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args, $depth );
+            $attributes = $this->build_atts( $atts );
+
+            $item_output  = $args->before;
+            $item_output .= '<a' . $attributes . '>';
+            $item_output .= $args->link_before . esc_html( $title ) . $args->link_after;
+
+            // Add arrow icon if it has children
+            if ( in_array( 'menu-item-has-children', $item->classes, true ) ) {
+                $item_output .= '<span class="nav__arrow" aria-hidden="true"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
+            }
+
+            $item_output .= '</a>';
+            $item_output .= $args->after;
+
+            $output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
+        }
+
+        public function end_el( &$output, $data_object, $depth = 0, $args = null ) {
+            $t = isset( $args->item_spacing ) && 'discard' === $args->item_spacing ? '' : "\t";
+            $n = isset( $args->item_spacing ) && 'discard' === $args->item_spacing ? '' : "\n";
+            $output .= "</li>{$n}";
+        }
+
+        protected function build_atts( $atts = [] ) {
             $attribute_string = '';
             foreach ( $atts as $attr => $value ) {
                 if ( false !== $value && '' !== $value && is_scalar( $value ) ) {
