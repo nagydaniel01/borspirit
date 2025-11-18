@@ -2,7 +2,7 @@
     <?php 
         // Check if registration is enabled on My Account page
         $registration_enabled = 'yes' === get_option( 'woocommerce_enable_myaccount_registration' );
-        $modal_title = $registration_enabled ? esc_html__( 'Login / Register', 'woocommerce' ) : esc_html__( 'Login', 'woocommerce' );
+        $modal_title = $registration_enabled ? esc_html__( 'Login/Register', 'borspirit' ) : esc_html__( 'Login', 'borspirit' );
     ?>
     <div class="modal modal--alt fade" id="login_formModal" tabindex="-1" aria-labelledby="login_formModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -13,17 +13,17 @@
                         <ul class="nav nav-pills" id="wcLoginRegisterTabs" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab" aria-controls="login" aria-selected="true">
-                                    <?php echo esc_html__( 'Login', 'woocommerce' ); ?>
+                                    <?php echo esc_html__( 'Login', 'borspirit' ); ?>
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register" type="button" role="tab" aria-controls="register" aria-selected="false">
-                                    <?php echo esc_html__( 'Register', 'woocommerce' ); ?>
+                                    <?php echo esc_html__( 'Register', 'borspirit' ); ?>
                                 </button>
                             </li>
                         </ul>
                     <?php else : ?>
-                        <h5 class="modal-title" id="exampleModalLabel"><?php echo esc_html__( 'Login', 'woocommerce' ); ?></h5>
+                        <h5 class="modal-title" id="exampleModalLabel"><?php echo esc_html__( 'Login', 'borspirit' ); ?></h5>
                     <?php endif; ?>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<?php echo esc_attr('Close', 'borspirit'); ?>"></button>
                 </div>

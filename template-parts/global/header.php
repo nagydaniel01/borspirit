@@ -11,7 +11,7 @@
 
      // Check if registration is enabled on My Account page
     $registration_enabled = 'yes' === get_option( 'woocommerce_enable_myaccount_registration' );
-    $modal_toggle_text = $registration_enabled ? esc_html__( 'Login / Register', 'woocommerce' ) : esc_html__( 'Login', 'woocommerce' );
+    $modal_toggle_text = $registration_enabled ? esc_html__( 'Login/Register', 'borspirit' ) : esc_html__( 'Login', 'borspirit' );
 ?>
 
 <header class="header">
@@ -81,7 +81,7 @@
 
                             $walker = wp_is_mobile() && class_exists( 'Custom_Mobile_Nav_Walker' )
                                 ? new Custom_Mobile_Nav_Walker()
-                                : ( class_exists( 'Custom_Mega_Menu_Walker' ) ? new Custom_Mega_Menu_Walker() : false );
+                                : ( class_exists( 'Custom_Mega_Menu_Nav_Walker' ) ? new Custom_Mega_Menu_Nav_Walker() : false );
 
                             if ( $walker ) {
                                 wp_nav_menu( array(

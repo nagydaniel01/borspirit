@@ -8,10 +8,8 @@
             <div class="modal-body">
                 <?php
                     if ( class_exists( 'WooCommerce' ) ) {
-                        // WooCommerce product search form
                         get_product_search_form();
                     } else {
-                        // Default WordPress search form
                         get_search_form();
                     }
                 ?>

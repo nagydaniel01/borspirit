@@ -111,11 +111,6 @@
          * @return array Modified $args array with message wrapped in templates.
          */
         function wrap_wp_mail_with_php_templates( $args ) {
-            // Disable wrapping for WooCommerce emails
-            if (defined('WC_PLUGIN_FILE') && did_action('woocommerce_before_resend_order_emails') || doing_action('woocommerce_email')) {
-                return $args;
-            }
-
             // Define header and footer template paths
             $header_file = get_template_directory() . '/templates/emails/email-header.php';
             $footer_file = get_template_directory() . '/templates/emails/email-footer.php';
@@ -167,5 +162,5 @@
 
             return $args;
         }
-        add_filter( 'wp_mail', 'wrap_wp_mail_with_php_templates' );
+        //add_filter( 'wp_mail', 'wrap_wp_mail_with_php_templates' );
     }

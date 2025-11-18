@@ -975,6 +975,7 @@
                 "id": ""
             },
             "choices": {
+                "units_sold_message": "Units Sold",
                 "free_shipping_limit_message": "Free Shipping Limit",
                 "estimated_delivery_message": "Estimated Delivery",
                 "hazhoz-szallitas": "Házhoz szállítás"
@@ -1053,14 +1054,14 @@
                 "id": ""
             },
             "choices": {
-                "wc_wine_store_sale_flash": "Sale Badge",
-                "wc_wine_store_new_flash": "New Arrival Badge",
-                "wc_wine_store_bestseller_flash": "Best Seller Badge",
-                "wc_wine_store_limited_stock_flash": "Limited Stock Badge",
+                "wc_wine_store_custom_sale_flash": "Sale Badge",
                 "wc_wine_store_discount_flash": "Discount Badge",
                 "wc_wine_store_award_flash": "Award Winner Badge",
-                "wc_wine_store_new_vintage_flash": "Új évjárat",
-                "wc_wine_store_category_flash": "Wine of the month"
+                "wc_wine_store_bestseller_flash": "Best Seller Badge",
+                "wc_wine_store_limited_stock_flash": "Limited Stock Badge",
+                "wc_wine_store_new_flash": "New Arrival Badge",
+                "wc_wine_store_new_vintage_flash": "New Vintage Badge",
+                "wc_wine_store_category_flash": "Wine of the month Badge"
             },
             "default_value": [],
             "return_format": "value",
@@ -1335,6 +1336,190 @@
             },
             "return_format": "array",
             "allow_in_bindings": 0
+        },
+        {
+            "key": "field_691c34ab7edfe",
+            "label": "Fő modal",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_691c3d899694b",
+            "label": "Engedélyezés",
+            "name": "main_modal_active",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1
+        },
+        {
+            "key": "field_691c34c97edff",
+            "label": "Címsor",
+            "name": "main_modal_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_691c34cb7ee00",
+            "label": "Szöveg",
+            "name": "main_modal_body",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "allow_in_bindings": 0,
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 0,
+            "delay": 0
+        },
+        {
+            "key": "field_691c34e87ee01",
+            "label": "Gomb",
+            "name": "main_modal_button",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "allow_in_bindings": 0
+        },
+        {
+            "key": "field_691c36e4d63ec",
+            "label": "Háttér",
+            "name": "main_modal_background",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_691c2e6b9182c",
+            "label": "Regisztrációs modal",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_691c2e879182d",
+            "label": "Címsor",
+            "name": "register_modal_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_691c2eb69182e",
+            "label": "Szöveg",
+            "name": "register_modal_body",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "allow_in_bindings": 0,
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
         }
     ],
     "location": [
@@ -1356,5 +1541,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1763227313
+    "modified": 1763458491
 }

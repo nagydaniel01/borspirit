@@ -20,16 +20,16 @@
                 ?>
             </div>
             <div class="modal-footer">
-                <button type="button" id="age-yes" class="btn btn-success me-2">
-                    <?php echo esc_html( get_option( 'ag_modal_btn_yes', __( 'I am old enough', 'borspirit' ) ) ); ?>
-                </button>
-                <button type="button" id="age-no" class="btn btn-danger">
+                <button type="button" id="age-no" class="btn btn-danger me-2">
                     <?php
                         printf(
                             esc_html( get_option( 'ag_modal_btn_no', __( 'I am under %s', 'borspirit' ) ) ),
                             esc_html( get_option( 'ag_min_age', 18 ) )
                         );
                     ?>
+                </button>
+                <button type="button" id="age-yes" class="btn btn-success">
+                    <?php echo esc_html( get_option( 'ag_modal_btn_yes', __( 'I am old enough', 'borspirit' ) ) ); ?>
                 </button>
             </div>
         </div>

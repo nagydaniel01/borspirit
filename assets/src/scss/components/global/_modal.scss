@@ -30,4 +30,25 @@
             justify-content: center;
         }
     }
+
+    &.modal--has-background {
+        .modal-content {
+            aspect-ratio: 4 / 3;
+            background-size: cover;
+            background-position: center;
+            padding: 2.5rem;
+
+            & > * {
+                padding: 0;
+            }
+        }
+
+        .modal-body {
+            margin-bottom: 1.25rem;
+
+            & > * {
+                color: $white;
+            }
+        }
+    }
 }

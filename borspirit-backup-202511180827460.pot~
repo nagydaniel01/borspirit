@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BorSpirit\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-18 09:46+0000\n"
+"POT-Creation-Date: 2025-11-18 08:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -251,6 +251,10 @@ msgstr ""
 
 #: inc/register-taxonomies.php:27
 msgid "Choose from the most used awards"
+msgstr ""
+
+#: template-parts/dialogs/modal-demo.php:12
+msgid "Close"
 msgstr ""
 
 #: inc/utils.php:825
@@ -751,8 +755,11 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
+#: template-parts/dialogs/modal-register.php:14
+msgid "Login or Register"
+msgstr ""
+
 #: template-parts/dialogs/modal-login_form.php:5
-#: template-parts/dialogs/modal-register.php:24
 #: template-parts/global/header.php:14
 msgid "Login/Register"
 msgstr ""
@@ -797,12 +804,20 @@ msgstr ""
 msgid "Modal Content"
 msgstr ""
 
+#: template-parts/dialogs/modal-demo.php:9
+msgid "Modal content"
+msgstr ""
+
 #: inc/age-gate.php:83
 msgid "Modal Content Settings"
 msgstr ""
 
 #: inc/age-gate.php:86
 msgid "Modal Title"
+msgstr ""
+
+#: template-parts/dialogs/modal-demo.php:5
+msgid "Modal title"
 msgstr ""
 
 #: inc/utils.php:688
@@ -1187,6 +1202,10 @@ msgstr ""
 msgid "Saturday"
 msgstr ""
 
+#: template-parts/dialogs/modal-demo.php:13
+msgid "Save changes"
+msgstr ""
+
 #: inc/woocommerce-extras.php:981
 msgid "Savings"
 msgstr ""
@@ -1270,10 +1289,6 @@ msgstr ""
 #: inc/include-scripts.php:28
 #: woocommerce/single-product/tabs/description.php:36
 msgid "Show more"
-msgstr ""
-
-#: template-parts/dialogs/modal-main.php:43
-msgid "Skip"
 msgstr ""
 
 #: inc/woocommerce-extras.php:482
@@ -1574,7 +1589,7 @@ msgstr ""
 msgid "View products"
 msgstr ""
 
-#: template-parts/dialogs/modal-register.php:10
+#: template-parts/dialogs/modal-register.php:6
 msgid "Want to know more? Register now!"
 msgstr ""
 
@@ -1632,7 +1647,7 @@ msgid ""
 "favorite wines will also be lost."
 msgstr ""
 
-#: template-parts/dialogs/modal-register.php:18
+#: template-parts/dialogs/modal-register.php:10
 msgid "Would you like to save your favorites?"
 msgstr ""
 

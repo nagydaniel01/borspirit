@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<?php echo esc_attr('Close', 'borspirit'); ?>"></button>
             </div>
             <div class="modal-body">
-                <p>Modal content</p>
+                <p><?php echo esc_html__('Modal content', 'borspirit'); ?></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?php echo esc_html__('Close', 'borspirit'); ?></button>

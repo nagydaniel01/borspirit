@@ -34,3 +34,4 @@ import './product-sticky';
 import './quantity';
 import './marquee';
 import './menu';
+import './modal';

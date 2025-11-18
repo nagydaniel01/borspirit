@@ -98,12 +98,12 @@ if ( ! class_exists( 'Custom_Nav_Walker' ) ) {
     }
 }
 
-if ( ! class_exists( 'Custom_Mega_Menu_Walker' ) ) {
+if ( ! class_exists( 'Custom_Mega_Menu_Nav_Walker' ) ) {
     /**
      * Custom Mega Menu Walker
      * Handles both standard and mega menu rendering for WordPress navigation.
      */
-    class Custom_Mega_Menu_Walker extends Walker_Nav_Menu {
+    class Custom_Mega_Menu_Nav_Walker extends Walker_Nav_Menu {
 
         // Mega menu state flags
         private bool $mega_menu = false;
