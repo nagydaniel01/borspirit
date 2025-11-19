@@ -178,6 +178,34 @@
         };
         add_action( 'login_head', 'override_login_style', 999 );
     }
+
+    if ( ! function_exists( 'custom_woocommerce_login_redirect' ) ) {
+        /**
+         * Redirect WooCommerce users after login based on their role.
+         *
+         * Administrators are redirected to the WordPress dashboard (wp-admin),
+         * while other users are redirected to the WooCommerce "My Account" page.
+         *
+         * @param string   $redirect URL to redirect to.
+         * @param WP_User  $user     WP_User object of the logged-in user.
+         * @return string            URL to redirect the user after login.
+         */
+        function custom_woocommerce_login_redirect( $redirect, $user ) {
+            // Ensure the user object has roles
+            if ( isset( $user->roles ) && is_array( $user->roles ) ) {
+                // Check if the user is an administrator
+                if ( in_array( 'administrator', $user->roles, true ) ) {
+                    return admin_url(); // Redirect to WordPress dashboard
+                } else {
+                    return wc_get_page_permalink( 'myaccount' ); // Redirect to My Account page
+                }
+            }
+
+            return $redirect; // Default fallback
+        }
+
+        add_filter( 'woocommerce_login_redirect', 'custom_woocommerce_login_redirect', 10, 2 );
+    }
     
     // ============================================================
     // APPLY TAXONOMY FILTERS TO ADMIN QUERY

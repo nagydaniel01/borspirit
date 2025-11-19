@@ -314,5 +314,5 @@
         }
         add_filter( 'the_content', 'open_external_links_in_new_tab' );
         add_filter( 'acf/format_value/type=wysiwyg', 'open_external_links_in_new_tab' );
-        add_filter('acf/format_value/type=textarea', 'open_external_links_in_new_tab');
+        add_filter( 'acf/format_value/type=textarea', 'open_external_links_in_new_tab' );
     }
