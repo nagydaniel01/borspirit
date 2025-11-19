@@ -6,7 +6,150 @@
     }
 
     // ============================================================
-    // 1. WOOCOMMERCE IMAGE LINK AND SIZES
+    // 1. WOOCOMMERCE - BORSPIRIT SETTINGS PAGE
+    // ============================================================
+    
+    if ( ! function_exists( 'borspirit_add_settings_tab' ) ) {
+        /**
+         * Add Borspirit Settings tab to WooCommerce settings tabs.
+         */
+        function borspirit_add_settings_tab( $tabs ) {
+            $tabs['borspirit_settings'] = __( 'Borspirit Settings', 'borspirit' );
+            return $tabs;
+        }
+        add_filter( 'woocommerce_settings_tabs_array', 'borspirit_add_settings_tab', 50 );
+    }
+
+    if ( ! function_exists( 'borspirit_settings_tab_content' ) ) {
+        /**
+         * Render Borspirit Settings tab content with section-based subtabs.
+         */
+        function borspirit_settings_tab_content() {
+
+            // Use 'section' instead of 'subtab'
+            $current_section = isset( $_GET['section'] ) ? sanitize_text_field( $_GET['section'] ) : 'general';
+
+            // Subtab navigation using WooCommerce style
+            $general_class = $current_section === 'general' ? 'current' : '';
+            $display_class = $current_section === 'display' ? 'current' : '';
+
+            echo '<ul class="subsubsub">';
+            echo '<li><a href="' . admin_url( 'admin.php?page=wc-settings&tab=borspirit_settings&section=general' ) . '" class="' . $general_class . '">' . __( 'General Settings', 'borspirit' ) . '</a> | </li>';
+            echo '<li><a href="' . admin_url( 'admin.php?page=wc-settings&tab=borspirit_settings&section=display' ) . '" class="' . $display_class . '">' . __( 'Display Setting', 'borspirit' ) . '</a></li>';
+            echo '</ul>';
+
+            echo '<br class="clear">';
+
+            // Render fields based on section
+            if ( $current_section === 'display' ) {
+                woocommerce_admin_fields( borspirit_settings_display() );
+            } else {
+                woocommerce_admin_fields( borspirit_settings_general() );
+            }
+        }
+        add_action( 'woocommerce_settings_tabs_borspirit_settings', 'borspirit_settings_tab_content' );
+    }
+
+    /**
+     * Save Borspirit Settings tab options per section.
+     */
+    if ( ! function_exists( 'borspirit_update_settings' ) ) {
+        function borspirit_update_settings() {
+
+            $current_section = isset( $_GET['section'] ) ? sanitize_text_field( $_GET['section'] ) : 'general';
+
+            if ( $current_section === 'display' ) {
+                woocommerce_update_options( borspirit_settings_display() );
+            } else {
+                woocommerce_update_options( borspirit_settings_general() );
+            }
+        }
+        add_action( 'woocommerce_update_options_borspirit_settings', 'borspirit_update_settings' );
+    }
+
+    if ( ! function_exists( 'borspirit_settings_general' ) ) {
+        /**
+         * General Settings section fields.
+         *
+         * @return array Settings fields for General tab.
+         */
+        function borspirit_settings_general() {
+            return [
+                'section_title' => [
+                    'name' => __( 'General Settings', 'borspirit' ),
+                    'type' => 'title',
+                    'id'   => 'borspirit_general_section_title',
+                ],
+
+                'club_discount_amount' => [
+                    'name'              => __( 'Club Discount Amount', 'borspirit' ),
+                    'type'              => 'number',
+                    'id'                => 'borspirit_club_discount_amount',
+                    'desc'              => __( 'Enter the club discount amount.', 'borspirit' ),
+                    'placeholder'       => '5',
+                    'custom_attributes' => [
+                        'min'  => '0',
+                        'max'  => '100',
+                        'step' => '1',
+                    ],
+                ],
+
+                'section_end' => [
+                    'type' => 'sectionend',
+                    'id'   => 'borspirit_general_section_end',
+                ],
+            ];
+        }
+    }
+
+    if ( ! function_exists( 'borspirit_settings_display' ) ) {
+        /**
+         * Display Setting section fields.
+         *
+         * @return array Settings fields for Display Setting tab.
+         */
+        function borspirit_settings_display() {
+            return [
+                'section_title' => [
+                    'name' => __( 'Display Setting', 'borspirit' ),
+                    'type' => 'title',
+                    'id'   => 'borspirit_display_section_title',
+                ],
+
+                'regular_price_label' => [
+                    'name'        => __( 'Regular Price Label', 'borspirit' ),
+                    'type'        => 'text',
+                    'id'          => 'borspirit_regular_price_label',
+                    'desc'        => __( 'Enter the label for the regular price.', 'borspirit' ),
+                    'placeholder' => __( 'Regular Price', 'borspirit' ),
+                ],
+
+                'club_price_label' => [
+                    'name'        => __( 'Club Price Label', 'borspirit' ),
+                    'type'        => 'text',
+                    'id'          => 'borspirit_club_price_label',
+                    'desc'        => __( 'Enter the label for the club price.', 'borspirit' ),
+                    'placeholder' => __( 'Club Price', 'borspirit' ),
+                ],
+
+                'savings_label' => [
+                    'name'        => __( 'Savings Label', 'borspirit' ),
+                    'type'        => 'text',
+                    'id'          => 'borspirit_savings_label',
+                    'desc'        => __( 'Enter the label for the savings displayed on sale products.', 'borspirit' ),
+                    'placeholder' => __( 'You Save', 'borspirit' ),
+                ],
+
+                'section_end' => [
+                    'type' => 'sectionend',
+                    'id'   => 'borspirit_display_section_end',
+                ],
+            ];
+        }
+    }
+
+    // ============================================================
+    // 2. WOOCOMMERCE IMAGE LINK AND SIZES
     // ============================================================
 
     if ( ! function_exists( 'custom_woocommerce_image_sizes' ) ) {
@@ -119,7 +262,7 @@
     }
 
     // ============================================================
-    // 2. ADDRESS FORMATS
+    // 3. ADDRESS FORMATS
     // ============================================================
 
     if ( ! function_exists( 'custom_hu_address_format' ) ) {
@@ -139,7 +282,7 @@
     }
 
     // ============================================================
-    // 3. QUANTITY BUTTONS
+    // 4. QUANTITY BUTTONS
     // ============================================================
 
     if ( ! function_exists( 'quantity_plus_sign' ) ) {
@@ -211,7 +354,7 @@
     }
 
     // ============================================================
-    // 4. SINGLE PRODUCT ELEMENTS
+    // 5. SINGLE PRODUCT ELEMENTS
     // ============================================================
 
     if ( ! function_exists( 'woocommerce_template_single_rating' ) ) {
@@ -285,7 +428,7 @@
     }
 
     // ============================================================
-    // 5. UNIT PRICE AND DRS FEE
+    // 6. UNIT PRICE AND DRS FEE
     // ============================================================
 
     if ( ! function_exists( 'calculate_unit_price_per_liter' ) ) {
@@ -350,7 +493,7 @@
                 }
             }
         }
-        add_action('woocommerce_single_product_summary', 'display_unit_price_in_summary', 15);
+        add_action( 'woocommerce_single_product_summary', 'display_unit_price_in_summary', 10 );
     }
 
     if ( ! function_exists( 'display_drs_fee_in_summary' ) ) {
@@ -393,7 +536,7 @@
 
             // Translatable text (without HTML)
             $drs_price_text   = sprintf(
-                __( 'DRS - mandatory redemption fee: %s / item.', 'borspirit' ),
+                __( 'DRS - mandatory redemption fee: %s/item.', 'borspirit' ),
                 wc_price( $drs_price )
             );
 
@@ -420,7 +563,7 @@
             echo '</p>';
             echo '</div>';
         }
-        add_action( 'woocommerce_single_product_summary', 'display_drs_fee_in_summary', 16 );
+        add_action( 'woocommerce_single_product_summary', 'display_drs_fee_in_summary', 25 );
     }
 
     if ( ! function_exists( 'add_drs_fee_per_item_to_cart' ) ) {
@@ -470,16 +613,29 @@
 
     if ( ! function_exists( 'display_drs_fee_in_mini_cart' ) ) {
         /**
-         * Display DRS Fee in the WooCommerce mini cart.
+         * Display DRS Fee in the WooCommerce mini cart with a proper ACF link.
          */
         function display_drs_fee_in_mini_cart() {
-            WC()->cart->calculate_totals(); // Ensure fees are calculated
+            // Ensure fees are calculated
+            WC()->cart->calculate_totals();
+
+            // Get the DRS link from ACF options
+            $drs_link = get_field( 'drs_link', 'option' );
 
             foreach ( WC()->cart->get_fees() as $fee ) {
                 if ( $fee->name === __( 'DRS - mandatory redemption fee', 'borspirit' ) ) {
                     echo '<div class="woocommerce-mini-cart__drs_fee-wrapper">';
                     echo '<p class="woocommerce-mini-cart__drs_fee"><strong>' . esc_html( $fee->name ) . ':</strong> ' . wc_price( $fee->amount ) . '</p>';
-                    echo '<p><small>' . esc_html__('Some of the products in your basket are subject to a redemption fee.', 'borspirit') . '</small></p>';
+                    
+                    echo '<p><small>';
+                    echo esc_html__('Some of the products in your basket are subject to a redemption fee.', 'borspirit');
+                    if ( $drs_link && isset( $drs_link['url'], $drs_link['title'] ) ) {
+                        echo sprintf(
+                            ' <a href="' . esc_url( $drs_link['url'] ) . '" target="' . esc_attr( $drs_link['target'] ?: '_self' ) . '">' . esc_html__('Learn more', 'borspirit') . '</a>'
+                        );
+                    }
+                    echo '</small></p>';
+
                     echo '</div>';
                 }
             }
@@ -488,7 +644,7 @@
     }
 
     // ============================================================
-    // 6. PRODUCT AWARDS
+    // 7. PRODUCT AWARDS
     // ============================================================
 
     if ( ! function_exists( 'display_product_awards' ) ) {
@@ -531,11 +687,11 @@
                 echo '</div>';
             }
         }
-        add_action( 'woocommerce_single_product_summary', 'display_product_awards', 10 );
+        add_action( 'woocommerce_single_product_summary', 'display_product_awards', 9 );
     }
 
     // ============================================================
-    // 7. PRODUCT TABS
+    // 8. PRODUCT TABS
     // ============================================================
 
     if ( ! function_exists( 'rename_description_tab' ) ) {
@@ -740,7 +896,7 @@
     }
 
     // ============================================================
-    // 8. RELATED, UPSELLS
+    // 9. RELATED, UPSELLS
     // ============================================================
 
     if ( ! function_exists( 'rename_related_products_heading' ) ) {
@@ -814,7 +970,7 @@
     }
 
     // ============================================================
-    // 9. RECENTLY VIEWED PRODUCTS
+    // 10. RECENTLY VIEWED PRODUCTS
     // ============================================================
 
     if ( ! function_exists( 'custom_recently_viewed_products' ) ) {
@@ -870,7 +1026,7 @@
     }
 
     // ============================================================
-    // 10. PRICE MODIFICATIONS
+    // 11. PRICE MODIFICATIONS
     // ============================================================
 
     if ( ! function_exists( 'borspirit_is_club_member' ) ) {
@@ -929,7 +1085,8 @@
                     return $price;
                 }
 
-                $label = '<span class="price-label">' . esc_html__( 'Shelf price', 'borspirit' ) . ': </span>';
+                $regular_label = get_option( 'borspirit_regular_price_label', __( 'Shelf price', 'borspirit' ) );
+                $label = '<span class="price-label">' . esc_html( $regular_label ) . ': </span>';
                 return $label . '<span>' . $price . '</span>';
 
             } catch ( Exception $e ) {
@@ -942,7 +1099,7 @@
 
     if ( ! function_exists( 'borspirit_display_club_price' ) ) {
         /**
-         * Display club price for all visitors (manual value or automatic -5%).
+         * Display club price for all visitors (manual value or automatic discount).
          * Excludes sale products.
          *
          * @param string     $price   Original price HTML.
@@ -966,19 +1123,17 @@
                 $price_html = '<span class="price__regular">' . $price . '</span>';
 
                 if ( $product->is_on_sale() ) {
-
                     $regular = floatval( $product->get_regular_price() );
                     $sale    = floatval( $product->get_sale_price() );
 
                     if ( $regular > 0 && $sale > 0 ) {
                         $amount_saved = $regular - $sale;
-                        //$percent_saved = round( ( $amount_saved / $regular ) * 100 );
 
                         $save_html = '';
-                        
                         if ( is_product() ) {
+                            $savings_label = get_option( 'borspirit_savings_label', __( 'Savings', 'borspirit' ) );
                             $save_html  = '<span class="price__discount">';
-                            $save_html .= '<span class="price-label">' . esc_html__( 'Savings', 'borspirit' ) . ':</span> ';
+                            $save_html .= '<span class="price-label">' . esc_html( $savings_label ) . ':</span> ';
                             $save_html .= wc_price( $amount_saved );
                             $save_html .= '</span>';
                         }
@@ -989,23 +1144,27 @@
                     return $price; // fallback
                 }
 
+                // Get manual club price if set
                 $manual_club_price = get_post_meta( $product->get_id(), '_club_price', true );
 
                 if ( $manual_club_price !== '' && is_numeric( $manual_club_price ) ) {
                     $club_price = floatval( $manual_club_price );
                 } else {
+                    // Get discount from options (default 5%)
+                    $discount_percent = floatval( get_option( 'borspirit_club_discount_amount', 5 ) );
                     $regular_price = floatval( $product->get_regular_price() );
+                    
                     if ( ! is_numeric( $regular_price ) || $regular_price <= 0 ) {
                         return $price_html;
                     }
-                    $club_price = $regular_price * 0.95; // -5%
+
+                    $club_price = $regular_price * (1 - $discount_percent / 100);
                 }
 
                 $club_price_html = wc_price( $club_price );
+                $club_label      = get_option( 'borspirit_club_price_label', __( 'Club price', 'borspirit' ) );
 
-                $price_html .= '<span class="price__club"><span class="price-label">'
-                    . esc_html__( 'Club price', 'borspirit' )
-                    . ':</span> <ins>' . $club_price_html . '</ins></span>';
+                $price_html .= '<span class="price__club"><span class="price-label">' . esc_html( $club_label ) . ':</span> <ins>' . $club_price_html . '</ins></span>';
 
                 return $price_html;
 
@@ -1023,11 +1182,17 @@
          */
         function borspirit_add_club_price_field() {
             try {
+                // Get discount from options (default 5%)
+                $discount = floatval( get_option( 'borspirit_club_discount_amount', 5 ) );
+
                 woocommerce_wp_text_input([
                     'id'          => '_club_price',
                     'label'       => __( 'Club price', 'borspirit' ),
                     'desc_tip'    => true,
-                    'description' => __( 'Optional: special manual club price. Leave empty to use 5% club discount.', 'borspirit' ),
+                    'description' => sprintf(
+                        __( 'Optional: special manual club price. Leave empty to use %s% club discount.', 'borspirit' ),
+                        $discount
+                    ),
                     'type'        => 'text',
                     'data_type'   => 'price',
                 ]);
@@ -1096,6 +1261,7 @@
                         continue;
                     }
 
+                    // Get manual club price if set
                     $manual_club_price = get_post_meta( $cart_item['product_id'], '_club_price', true );
 
                     if ( $manual_club_price !== '' && is_numeric( $manual_club_price ) ) {
@@ -1105,7 +1271,10 @@
                         if ( ! is_numeric( $regular_price ) || $regular_price <= 0 ) {
                             continue;
                         }
-                        $club_price = $regular_price * 0.95; // -5%
+
+                        // Apply dynamic discount from options (default 5%)
+                        $discount_percent = floatval( get_option( 'borspirit_club_discount_amount', 5 ) );
+                        $club_price = $regular_price * (1 - $discount_percent / 100);
                     }
 
                     $cart_item['data']->set_price( $club_price );
@@ -1158,7 +1327,7 @@
                     return $price_html;
                 }
 
-                // Manual or auto (-5%) club price
+                // Manual or auto club price
                 $manual_club_price = get_post_meta( $cart_item['product_id'], '_club_price', true );
 
                 if ( $manual_club_price !== '' && is_numeric( $manual_club_price ) ) {
@@ -1168,7 +1337,10 @@
                     if ( $regular_price <= 0 ) {
                         return $price_html;
                     }
-                    $club_price = $regular_price * 0.95; // -5%
+
+                    // Use dynamic discount options (default 5%)
+                    $discount_percent = floatval( get_option( 'borspirit_club_discount_amount', 5 ) );
+                    $club_price = $regular_price * (1 - $discount_percent / 100);
                 }
 
                 // Build HTML output
@@ -1179,8 +1351,10 @@
                 $regular_html .= '</span>';
                 */
 
+                $club_label = get_option( 'borspirit_club_price_label', __( 'Club price', 'borspirit' ) );
+
                 $club_html  = '<span class="mini-price-club">';
-                $club_html .= '<span class="price-label">' . esc_html__( 'Club price', 'borspirit' ) . ':</span> ';
+                $club_html .= '<span class="price-label">' . esc_html( $club_label ) . ':</span> ';
                 $club_html .= '<ins aria-hidden="true">' . wc_price( $club_price ) . '</ins>';
                 $club_html .= '</span>';
 
@@ -1252,11 +1426,11 @@
                 error_log( 'Club Progress Message Error: ' . $e->getMessage() );
             }
         }
-        add_action( 'woocommerce_single_product_summary', 'borspirit_show_club_progress_message', 25 );
+        add_action( 'woocommerce_after_add_to_cart_form', 'borspirit_show_club_progress_message', 10 );
     }
 
     // ============================================================
-    // 11. SHOP LOOP MODIFICATIONS
+    // 12. SHOP LOOP MODIFICATIONS
     // ============================================================
 
     if ( ! function_exists( 'custom_add_to_cart_text_type' ) ) {
@@ -1392,7 +1566,7 @@
     }
 
     // ============================================================
-    // 12. PRODUCT TITLE
+    // 13. PRODUCT TITLE
     // ============================================================
 
     // Add Subtitle input under product title
@@ -1496,7 +1670,7 @@
             foreach ( $columns as $key => $value ) {
                 $new_columns[ $key ] = $value;
                 if ( 'name' === $key ) {
-                    $new_columns['product_subtitle'] = __( 'Subtitle', 'borspirit' );
+                    $new_columns['product_subtitle'] = __( 'Product subtitle', 'borspirit' );
                 }
             }
             return $new_columns;
@@ -1533,7 +1707,7 @@
                 <fieldset class="inline-edit-col-right">
                     <div class="inline-edit-col">
                         <label>
-                            <span class="title"><?php echo esc_html__( 'Subtitle', 'borspirit' ); ?></span>
+                            <span class="title"><?php echo esc_html__( 'Product subtitle', 'borspirit' ); ?></span>
                             <span class="input-text-wrap">
                                 <input type="text" name="product_subtitle" class="ptitle" value="">
                             </span>
@@ -1601,7 +1775,7 @@
     }
 
     // ============================================================
-    // 13. SHIPPING
+    // 14. SHIPPING
     // ============================================================
 
     if ( ! function_exists( 'show_free_shipping_notice' ) ) {
@@ -1801,7 +1975,7 @@
     }
 
     // ============================================================
-    // 14. AGE CONFIRMATION
+    // 15. AGE CONFIRMATION
     // ============================================================
 
     /**
@@ -1854,7 +2028,7 @@
     }
 
     // ============================================================
-    // 15. MARKETING NEWSLETTER OPT-IN
+    // 16. MARKETING NEWSLETTER OPT-IN
     // ============================================================
 
     if ( ! function_exists( 'my_plugin_register_marketing_optin_field' ) ) {

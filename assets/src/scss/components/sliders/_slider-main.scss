@@ -74,16 +74,22 @@
         row-gap: .625rem;
     }
 
+    .slider__title,
+    .slider__subtitle {
+        color: $white;
+    }
+
     .slider__title {
         font-size: 1.5rem;
         font-weight: 900;
         line-height: 1.75rem;
         margin: 0;
-        color: $white;
     }
 
     .slider__subtitle {
+        font-family: $font-family-base;
         font-size: 1.125rem;
+        line-height: 1.4;
         margin: 0;
     }
 
@@ -133,7 +139,7 @@
 @include media-breakpoint-up(lg) {
     .slider.slider--main {
         .slider__caption-inner {
-            max-width: 50%;
+            max-width: 65%;
         }
 
         .slider__title {

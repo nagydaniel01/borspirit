@@ -129,8 +129,19 @@ if ( in_array('estimated_delivery_message', $selected_icons) ) {
     $current_time = current_time('H');
     $current_day  = strtolower(current_time('l'));
 
-    $base_delivery_days = 2;
+    $base_delivery_days = 1; // default to next day
 
+    // Check product stock
+    global $product;
+    if ($product->managing_stock()) {
+        $stock_quantity = $product->get_stock_quantity();
+
+        if ($stock_quantity === 0) {
+            $base_delivery_days = 2; // out of stock
+        }
+    }
+
+    // Adjust for closing hours / weekend
     if ($opening_hours[$current_day]['open'] > 0) {
         if ($current_time >= $opening_hours[$current_day]['close']) {
             $base_delivery_days++;
@@ -176,7 +187,7 @@ if ( in_array('estimated_delivery_message', $selected_icons) ) {
                 </div>
             <?php endif; ?>
 
-            <?php if ( ! empty( $estimated_delivery_message ) ) : ?>
+            <?php if ( ! empty( $estimated_delivery_message ) && $product->is_in_stock() ) : ?>
                 <div class="section__listitem">
                     <svg class="section__icon icon icon-shop"><use xlink:href="#icon-shop"></use></svg>
                     <span class="section__text"><?php echo esc_html( $estimated_delivery_message ); ?></span>

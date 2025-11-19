@@ -68,6 +68,55 @@
             "preview_size": "medium"
         },
         {
+            "key": "field_691dad8262669",
+            "label": "Ikon",
+            "name": "site_favicon",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "svg",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_691dada264c92",
+            "label": "Fő szín",
+            "name": "site_theme_color",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "enable_opacity": 0,
+            "return_format": "string",
+            "allow_in_bindings": 0,
+            "show_custom_palette": 0,
+            "show_color_wheel": 1,
+            "custom_palette_source": "",
+            "palette_colors": ""
+        },
+        {
             "key": "field_6912145c25e87",
             "label": "Telefonszám",
             "name": "site_phone",
@@ -975,9 +1024,9 @@
                 "id": ""
             },
             "choices": {
-                "units_sold_message": "Units Sold",
-                "free_shipping_limit_message": "Free Shipping Limit",
-                "estimated_delivery_message": "Estimated Delivery",
+                "units_sold_message": "Eladott darabszám",
+                "free_shipping_limit_message": "Ingyenes szállítási limit",
+                "estimated_delivery_message": "Becsült szállítási idő",
                 "hazhoz-szallitas": "Házhoz szállítás"
             },
             "default_value": [],
@@ -1054,14 +1103,14 @@
                 "id": ""
             },
             "choices": {
-                "wc_wine_store_custom_sale_flash": "Sale Badge",
-                "wc_wine_store_discount_flash": "Discount Badge",
-                "wc_wine_store_award_flash": "Award Winner Badge",
-                "wc_wine_store_bestseller_flash": "Best Seller Badge",
-                "wc_wine_store_limited_stock_flash": "Limited Stock Badge",
-                "wc_wine_store_new_flash": "New Arrival Badge",
-                "wc_wine_store_new_vintage_flash": "New Vintage Badge",
-                "wc_wine_store_category_flash": "Wine of the month Badge"
+                "wc_wine_store_custom_sale_flash": "Akció jelvény",
+                "wc_wine_store_discount_flash": "Kedvezményes jelvény",
+                "wc_wine_store_award_flash": "Díjnyertes jelvény",
+                "wc_wine_store_bestseller_flash": "Legkelendőbb termék jelvény",
+                "wc_wine_store_limited_stock_flash": "Limitált jelvény",
+                "wc_wine_store_new_flash": "Most érkezett jelvény",
+                "wc_wine_store_new_vintage_flash": "Új évjárat jelvény",
+                "wc_wine_store_category_flash": "Hónap bora jelvény"
             },
             "default_value": [],
             "return_format": "value",
@@ -1541,5 +1590,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1763458491
+    "modified": 1763552711
 }

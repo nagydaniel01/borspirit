@@ -236,7 +236,7 @@
 
     if ( ! function_exists( 'wc_wine_store_new_vintage_flash' ) ) {
         /**
-         * Badge: Évjárat (new vintage).
+         * Badge: New Vintage.
          *
          * Shows badge if product's pa_evjarat equals the current year.
          *
@@ -318,6 +318,7 @@
          * @param WC_Product $product WooCommerce product.
          * @return void
          */
+        /*
         function wc_wine_store_organic_flash( $product ) {
             if ( ! $product instanceof WC_Product ) {
                 return;
@@ -327,6 +328,7 @@
                 echo '<span class="badge badge--organic">' . esc_html__( 'Organic', 'borspirit' ) . '</span>';
             }
         }
+        */
     }
 
     if ( ! function_exists( 'acf_load_product_badge_flashes' ) ) {

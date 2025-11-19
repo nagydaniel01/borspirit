@@ -1,6 +1,6 @@
 <?php
     defined( 'ABSPATH' ) || exit;
-    
+
     if ( ! function_exists( 'start_custom_session' ) ) {
         /**
          * Start a custom session if not already started.
@@ -10,8 +10,7 @@
                 session_start();
             }
         }
-
-        add_action( 'init', 'start_custom_session' );
+        add_action( 'init', 'start_custom_session', 1 );
     }
 
     if ( ! function_exists( 'add_recently_viewed' ) ) {
@@ -21,35 +20,39 @@
          * @param int $post_id The ID of the post to add to the recently viewed list.
          */
         function add_recently_viewed( $post_id ) {
-            if ( ! isset( $_SESSION['recently_viewed'] ) ) {
+            if ( ! isset( $_SESSION['recently_viewed'] ) || ! is_array( $_SESSION['recently_viewed'] ) ) {
                 $_SESSION['recently_viewed'] = [];
             }
 
+            // Add to the beginning of the array
             array_unshift( $_SESSION['recently_viewed'], $post_id );
             $_SESSION['recently_viewed'] = array_unique( $_SESSION['recently_viewed'] );
+
+            // Optional: limit the number of items stored (e.g., last 10 posts)
+            //$_SESSION['recently_viewed'] = array_slice( $_SESSION['recently_viewed'], 0, 10 );
+
+            // Immediately close the session to prevent blocking other requests
+            session_write_close();
         }
     }
 
     if ( ! function_exists( 'track_recently_viewed' ) ) {
         /**
          * Track the recently viewed post and store it in the session.
-         *
-         * @param int $post_id The ID of the post being tracked.
          */
-        function track_recently_viewed( $post_id ) {
+        function track_recently_viewed() {
             if ( ! is_single() ) {
                 return;
             }
 
-            if ( empty( $post_id ) ) {
-                global $post;
-                $post_id = $post->ID;
+            global $post;
+            if ( empty( $post->ID ) ) {
+                return;
             }
 
-            add_recently_viewed( $post_id );
+            add_recently_viewed( $post->ID );
         }
-
-        add_action( 'wp_head', 'track_recently_viewed' );
+        add_action( 'wp', 'track_recently_viewed' );
     }
 
     if ( ! function_exists( 'get_recently_viewed' ) ) {
@@ -59,7 +62,7 @@
          * @return array An array of post IDs of recently viewed posts.
          */
         function get_recently_viewed() {
-            if ( isset( $_SESSION['recently_viewed'] ) ) {
+            if ( isset( $_SESSION['recently_viewed'] ) && is_array( $_SESSION['recently_viewed'] ) ) {
                 return $_SESSION['recently_viewed'];
             }
 

@@ -74,7 +74,7 @@
                         <ul class="filter filter--list">
                             <!-- "All" item -->
                             <li class="js-filter all <?php echo empty($selected_categories) ? 'active' : ''; ?>" data-filter="<?php echo esc_attr($filter_key); ?>">
-                                <?php _e('Összes', 'borspirit'); ?>
+                                <?php _e('All', 'borspirit'); ?>
                             </li>
                             <?php foreach ($categories as $category) : ?>
                                 <?php 

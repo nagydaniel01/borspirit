@@ -40,7 +40,7 @@
 			);
 
 			$default_term = array(
-				'name'        => 'Other',
+				'name'        => __( 'Other', 'borspirit' ),
 				'slug'        => 'other',
 				'description' => '',
 			);

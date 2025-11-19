@@ -30,7 +30,7 @@
                             <?php echo esc_html($data['name']); ?>
                         </li>
                         <li>
-                            <strong><?php echo esc_html__('Email:', 'borspirit'); ?></strong>
+                            <strong><?php echo esc_html__('E-mail:', 'borspirit'); ?></strong>
                             <?php echo esc_html($data['email']); ?>
                         </li>
                         <?php if (!empty($data['phone'])) : ?>

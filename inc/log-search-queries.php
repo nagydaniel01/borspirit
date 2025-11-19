@@ -223,7 +223,7 @@
                 ],
                 admin_url( 'tools.php' )
             );
-            echo '<a href="' . esc_url( $export_url ) . '" class="button">' . esc_html__( 'Export CSV', 'borspirit' ) . '</a>';
+            echo '<a href="' . esc_url( $export_url ) . '" class="button">' . esc_html__( 'Export to CSV file', 'borspirit' ) . '</a>';
 
             // Delete Logs button
             $delete_url = add_query_arg(

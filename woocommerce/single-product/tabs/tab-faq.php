@@ -66,6 +66,6 @@ $faq_posts = array_filter( $faq_posts ?? [], function ($faq) {
             <?php endforeach; ?>
         </div>
     <?php else : ?>
-        <?php echo wpautop( __( 'No FAQs found.', 'borspirit' ) ); ?>
+        <?php echo wpautop( __( 'No FAQs found', 'borspirit' ) ); ?>
     <?php endif; ?>
 </div>

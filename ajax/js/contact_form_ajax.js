@@ -8,7 +8,7 @@
 
             // Check if privacy checkbox is checked
             if( !$('#cf_privacy_policy').is(':checked') ){
-                $('#cf_response').html('<div class="alert alert-danger">'+event_registration_form_ajax_object.msg_privacy_required+'</div>');
+                $('#cf_response').html('<div class="alert alert-danger">'+contact_form_ajax_object.msg_privacy_required+'</div>');
                 return; // stop submission
             }
 
@@ -53,7 +53,7 @@
 
                                         setTimeout(function(){
                                             window.location.href = response.data.redirect_url + queryString;
-                                        }, 500); // short delay so user sees the success message
+                                        }, 1000); // short delay so user sees the success message
                                     }
                                 } else {
                                     var message = response.data && response.data.message ? response.data.message : contact_form_ajax_object.msg_error_sending;

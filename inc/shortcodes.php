@@ -389,13 +389,13 @@
 
             // Day labels with translation support
             $days = [
-                'monday'    => __( 'Hétfő', $text_domain ),
-                'tuesday'   => __( 'Kedd', $text_domain ),
-                'wednesday' => __( 'Szerda', $text_domain ),
-                'thursday'  => __( 'Csütörtök', $text_domain ),
-                'friday'    => __( 'Péntek', $text_domain ),
-                'saturday'  => __( 'Szombat', $text_domain ),
-                'sunday'    => __( 'Vasárnap', $text_domain ),
+                'monday'    => __( 'Monday', $text_domain ),
+                'tuesday'   => __( 'Tuesday', $text_domain ),
+                'wednesday' => __( 'Wednesday', $text_domain ),
+                'thursday'  => __( 'Thursday', $text_domain ),
+                'friday'    => __( 'Friday', $text_domain ),
+                'saturday'  => __( 'Saturday', $text_domain ),
+                'sunday'    => __( 'Sunday', $text_domain ),
             ];
 
             ob_start();

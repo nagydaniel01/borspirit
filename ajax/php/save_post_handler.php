@@ -13,7 +13,7 @@
             // Security check: ensure post_id is provided
             if ( ! isset($_POST['post_id']) ) {
                 wp_send_json_error([
-                    'message' => __('Invalid request', 'borspirit')
+                    'message' => __('Invalid request.', 'borspirit')
                 ], 400);
             }
 

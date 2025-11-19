@@ -46,7 +46,7 @@ class MailchimpService
         }
 
         $response = $this->createMember($email, $firstName, $lastName, $tags);
-        return $this->handleResponse($response, __('You have been subscribed successfully.', 'borspirit'));
+        return $this->handleResponse($response, __('You have been subscribed successfully!', 'borspirit'));
     }
 
     /**

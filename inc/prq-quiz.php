@@ -117,7 +117,7 @@ class Product_Recommendation_Quiz {
             </div>
 
             <div class="d-flex justify-content-between mt-3">
-                <button id="bsp-prev" class="btn btn-outline-primary" style="display:none;"><?php echo esc_html__( 'Back', $td ); ?></button>
+                <button id="bsp-prev" class="btn btn-outline-primary" style="display:none;"><?php echo esc_html__( 'Previous', $td ); ?></button>
                 <button id="bsp-next" class="btn btn-primary"><?php echo esc_html__( 'Next', $td ); ?></button>
             </div>
 

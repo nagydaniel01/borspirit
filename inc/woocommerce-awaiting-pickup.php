@@ -159,7 +159,7 @@
                 $order->get_order_number()
             );
 
-            $heading = __( 'Your Order is Ready for Pickup!', 'borspirit' );
+            $heading = __( 'Your order is ready for pickup!', 'borspirit' );
 
             // Prepare email body content
             $message = sprintf(

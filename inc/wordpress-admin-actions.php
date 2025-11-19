@@ -281,7 +281,7 @@
 
                 if (!empty($authors)) {
                     echo '<select name="author" class="postform">';
-                    echo '<option value="">' . esc_html__('All author', 'borspirit') . '</option>';
+                    echo '<option value="">' . esc_html__('All authors', 'borspirit') . '</option>';
                     foreach ($authors as $author) {
                         printf(
                             '<option value="%1$s"%2$s>%3$s</option>',
@@ -919,4 +919,67 @@
             }
         }
         add_action( 'wp_login', 'email_user_on_admin_login', 10, 2 );
+    }
+
+    if ( ! function_exists( 'bulk_delete_action_scheduler_jobs' ) ) {
+        /**
+         * Adds bulk delete tools for Action Scheduler jobs to WooCommerce debug tools.
+         *
+         * Provides buttons to clean all pending, failed, or completed Action Scheduler actions.
+         *
+         * @param array $tools Existing WooCommerce debug tools.
+         * @return array Modified tools array including Action Scheduler cleanup tools.
+         */
+        function bulk_delete_action_scheduler_jobs( $tools ) {
+
+            // Define Action Scheduler statuses and tool names (translatable).
+            $statuses = [
+                'pending'   => __( 'Clean Pending Actions', 'borspirit' ),
+                'failed'    => __( 'Clean Failed Actions', 'borspirit' ),
+                'complete'  => __( 'Clean Completed Actions', 'borspirit' ),
+            ];
+
+            foreach ( $statuses as $status_key => $tool_name ) {
+
+                $tools[ "clean_{$status_key}_actions" ] = [
+                    'name'     => $tool_name,
+                    'button'   => __( 'Run', 'borspirit' ),
+                    'desc'     => sprintf(
+                        /* translators: %s = action status (pending, failed, complete) */
+                        __( 'Deletes all %s Action Scheduler actions.', 'borspirit' ),
+                        $status_key
+                    ),
+                    'callback' => function() use ( $status_key ) {
+                        global $wpdb;
+
+                        $table      = $wpdb->prefix . 'actionscheduler_actions';
+                        $batch_size = 10000;
+                        $deleted    = 0;
+
+                        do {
+                            $rows_deleted = $wpdb->query(
+                                $wpdb->prepare(
+                                    "DELETE FROM {$table} WHERE status = %s LIMIT %d",
+                                    $status_key,
+                                    $batch_size
+                                )
+                            );
+
+                            $deleted += $rows_deleted;
+
+                        } while ( $rows_deleted > 0 );
+
+                        return sprintf(
+                            /* translators: 1: number of actions deleted, 2: action status */
+                            __( 'Deleted %d %s actions.', 'borspirit' ),
+                            $deleted,
+                            $status_key
+                        );
+                    },
+                ];
+            }
+
+            return $tools;
+        }
+        add_filter( 'woocommerce_debug_tools', 'bulk_delete_action_scheduler_jobs' );
     }

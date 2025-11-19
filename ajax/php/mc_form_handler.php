@@ -123,7 +123,7 @@
 
                 if ( empty($subscribe['success']) ) {
                     wp_send_json_error([
-                        'message' => $subscribe['message'] ?? __('User could not be subscribed. Please try again later.', 'borspirit')
+                        'message' => $subscribe['message'] ?? __('You could not be subscribed. Please try again later.', 'borspirit')
                     ], 500);
                 }
 

@@ -8,12 +8,11 @@
     $flipbook           = $section['flipbook'] ?? [];
     $file_url           = $flipbook['url'] ?? '';
     $file_title         = $flipbook['title'] ?? '';
-
+    
     $aria_label = sprintf(
-        /* translators: %1$s is the file title, %2$s is the singular post type name */
-        __('Download "%1$s" %2$s', 'borspirit'),
-        $file_title,
-        __('ebook', 'borspirit')
+        /* translators: %s is the file title */
+        __('Download "%s" ebook', 'borspirit'),
+        $file_title
     );
 ?>
 

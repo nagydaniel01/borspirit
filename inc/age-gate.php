@@ -100,7 +100,7 @@
                                         )
                                     );
                                 ?></textarea>
-                                <p class="description"><?php esc_html_e( 'You can include %s to dynamically show the minimum age.', 'borspirit' ); ?></p>
+                                <p class="description"><?php esc_html_e( 'Use %s for the minimum age placeholder if needed.', 'borspirit' ); ?></p>
                             </td>
                         </tr>
                         <tr valign="top">

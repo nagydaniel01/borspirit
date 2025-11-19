@@ -23,9 +23,9 @@
                 // Localize script for use in JS
                 wp_localize_script( 'comment_form_ajax_script', 'comment_form_ajax_object', array(
                     'ajax_url'        => admin_url( 'admin-ajax.php' ),
-                    'loading_text'    => __( 'Loading...', 'borspirit' ),
+                    'loading_text'    => __( 'Loading…', 'borspirit' ),
                     'post_comment'    => __( 'Post Comment' ),
-                    'error_adding'    => __( 'Error while adding comment', 'borspirit' ),
+                    'error_adding'    => __( 'Error while adding comment.', 'borspirit' ),
                     'error_timeout'   => __( 'Error: Server doesn’t respond.', 'borspirit' )
                 ) );
             } else {
@@ -57,9 +57,9 @@
                     'msg_select_opinion' => __( 'Please select your opinion about the shop.', 'borspirit' ),
                     'msg_enter_feedback' => __( 'Please write your feedback.', 'borspirit' ),
                     'msg_sending'        => __( 'Submitting your feedback…', 'borspirit' ),
-                    'msg_success'        => __( 'Thank you! Your feedback has been sent.', 'borspirit' ),
-                    'msg_error'          => __( 'There was an error sending your feedback.', 'borspirit' ),
-                    'msg_network_error'  => __( 'A network error occurred. Please try again.', 'borspirit' ),
+                    'msg_success'        => __( 'Your feedback has been sent successfully!', 'borspirit' ),
+                    'msg_error'          => __( 'There was an error while sending your feedback.', 'borspirit' ),
+                    'msg_network_error'  => __( 'A network error occurred.', 'borspirit' ),
                 ) );
             } else {
                 error_log( 'Thank You feedback script not found: ' . $script_path );
@@ -85,7 +85,7 @@
                     'recaptcha_site_key'   => RECAPTCHA_SITE_KEY,
                     'msg_privacy_required' => __( 'You must agree to the privacy policy.', 'borspirit' ),
                     'msg_sending'          => __( 'Registering…', 'borspirit' ),
-                    'msg_success'          => __( 'Successfully registered!', 'borspirit' ),
+                    'msg_success'          => __( 'Your registration has been successful!', 'borspirit' ),
                     'msg_error_sending'    => __( 'There was an error while processing your registration.', 'borspirit' ),
                     'msg_unexpected'       => __( 'An unexpected error occurred.', 'borspirit' ),
                     'msg_network_error'    => __( 'A network error occurred.', 'borspirit' )
@@ -114,7 +114,7 @@
                     'recaptcha_site_key'   => RECAPTCHA_SITE_KEY,
                     'msg_privacy_required' => __( 'You must agree to the privacy policy.', 'borspirit' ),
                     'msg_sending'          => __( 'Sending…', 'borspirit' ),
-                    'msg_success'          => __( 'Message sent successfully!', 'borspirit' ),
+                    'msg_success'          => __( 'Your message has been sent successfully!', 'borspirit' ),
                     'msg_error_sending'    => __( 'There was an error while sending your message.', 'borspirit' ),
                     'msg_unexpected'       => __( 'An unexpected error occurred.', 'borspirit' ),
                     'msg_network_error'    => __( 'A network error occurred.', 'borspirit' )

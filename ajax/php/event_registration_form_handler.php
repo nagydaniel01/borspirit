@@ -172,7 +172,7 @@
 
                 if ( $registration_id === false ) {
                     wp_send_json_error([
-                        'message' => __('Registration failed, please try again.', 'borspirit')
+                        'message' => __('Registration failed. Please try again later.', 'borspirit')
                     ], 500);
                 }
 
@@ -192,7 +192,7 @@
                 ];
 
                 // Email subject formatted with site name
-                $subject = sprintf(__('Registration Confirmation for #%d', 'borspirit'), get_the_title($event_id));
+                $subject = sprintf(__('Registration confirmation for #%d', 'borspirit'), get_the_title($event_id));
 
                 // Build final email body
                 $message = sprintf(

@@ -1,7 +1,9 @@
 import $ from 'jquery';
 import * as ModalModule from 'bootstrap/js/src/modal';
 
-$(document).ready(function() {
+$(function () {
+    'use strict';
+    
     // Only show modal if age not verified
     if (!getCookie('age_verified')) {
         // Get modal element

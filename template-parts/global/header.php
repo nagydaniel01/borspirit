@@ -130,7 +130,7 @@
                         <!-- Search bar Trigger -->
                         <button class="header-actions__item btn ms-lg-4" data-bs-toggle="modal" data-bs-target="#searchModal">
                             <svg class="icon icon-magnifying-glass"><use xlink:href="#icon-magnifying-glass"></use></svg>
-                            <span class="visually-hidden"><?php echo esc_html__('Search', 'borspirit'); ?></span>
+                            <span class="visually-hidden"><?php echo esc_html__( 'Search', 'borspirit' ); ?></span>
                         </button>
                     </div>
                 </div>

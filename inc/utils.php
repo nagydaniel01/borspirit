@@ -665,6 +665,45 @@
         // $section_classes = build_section_classes($section, 'post_query');
     }
 
+    if ( ! function_exists( 'fix_borspirit_text' ) ) {
+        /**
+         * Convert ANY variation of "Borspirit" into "BorSpirit"
+         * Safe: Only processes strings, skips <a> links and email addresses
+         */
+        function fix_borspirit_text( $content ) {
+
+            if ( ! is_string( $content ) ) {
+                return $content;
+            }
+
+            $content = preg_replace_callback(
+                '/(<a[^>]*>.*?<\/a>)|([\w.+-]+@[\w.-]+\.[a-zA-Z]{2,})|(\bborspirit\b)/is',
+                function ( $matches ) {
+                    // If first capturing group matched, return it unchanged (it's a link)
+                    if ( ! empty( $matches[1] ) ) {
+                        return $matches[1];
+                    }
+                    // If second capturing group matched, return it unchanged (it's an email)
+                    if ( ! empty( $matches[2] ) ) {
+                        return $matches[2];
+                    }
+                    // Otherwise, replace the match with BorSpirit
+                    return 'BorSpirit';
+                },
+                $content
+            );
+
+            return $content;
+        }
+
+        add_filter( 'the_content', 'fix_borspirit_text', 20 );
+        add_filter( 'get_the_excerpt', 'fix_borspirit_text', 20 );
+        add_filter( 'term_description', 'fix_borspirit_text', 20 );
+        add_filter( 'widget_text', 'fix_borspirit_text', 20 );
+        add_filter( 'acf/format_value', 'fix_borspirit_text', 20 );
+        add_filter( 'acf/format_value/type=wysiwyg', 'fix_borspirit_text', 20 );
+    }
+
     if ( ! function_exists( 'get_opening_hours' ) ) {
         /**
          * Retrieve formatted opening hours.

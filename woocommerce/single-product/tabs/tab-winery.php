@@ -93,8 +93,8 @@ if ( $show_tab_title ) : ?>
                     <?php if ( ! is_wp_error( $term_link ) ) : ?>
                         <?php
                             $aria_label = sprintf(
-                                // translators: %1$s is the post title
-                                __('Read more about %1$s', 'borspirit'),
+                                // translators: %s is the post title
+                                __('Read more about %s', 'borspirit'),
                                 $title
                             );
                         ?>

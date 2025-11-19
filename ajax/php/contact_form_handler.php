@@ -123,7 +123,7 @@
 
                 // Email subject formatted with site name
                 $mail_subject = sprintf(
-                    __('[%s] New message: %s', 'borspirit'),
+                    __('[%1$s] New message: %2$s', 'borspirit'),
                     get_bloginfo('name'),
                     $subject
                 );

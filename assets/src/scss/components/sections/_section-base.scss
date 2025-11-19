@@ -115,6 +115,7 @@
 
     .section__image {
         width: 100%;
+        object-fit: cover;
         border-radius: $border-radius-xl;
         box-shadow: 0 8px 20px 0 rgba(0, 0, 0, .15);
     }
@@ -160,6 +161,7 @@
         .icon {
             width: 1.5rem;
             height: 1.5rem;
+            color: $body-color;
         }
     }
 
