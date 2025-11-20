@@ -10,7 +10,7 @@
 
     $modal_background  = get_field('main_modal_background', 'option');
     $has_bg_class      = $modal_background ? ' modal--has-background' : '';
-    $background_style  = $modal_background ? ' style="background-image: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25)), url(' . esc_url($modal_background['url']) . '); background-size: cover; background-position: center;"' : '';
+    $background_style  = $modal_background ? ' style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(' . esc_url($modal_background['url']) . '); background-size: cover; background-position: center;"' : '';
 ?>
 
 <?php if ( $main_modal_active ) : ?>
@@ -29,7 +29,7 @@
                 <div class="modal-body">
                     <?php 
                         if ( $modal_body ) {
-                            echo wpautop( wp_kses_post( $modal_body ) );
+                            echo wp_kses_post( $modal_body );
                         }
                     ?>
                 </div>

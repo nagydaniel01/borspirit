@@ -66,7 +66,7 @@
                         <?php endif; ?>
 
                         <?php if ($file_description) : ?>
-                            <div class="card__lead"><?php echo wpautop( wp_kses_post($file_description) ); ?></div>
+                            <div class="card__lead"><?php echo wp_kses_post($file_description); ?></div>
                         <?php endif; ?>
 
                         <?php if ($file_type || $file_size) : ?>

@@ -216,6 +216,6 @@
         </div>
     </div>
     <div class="copyright">
-        <?php echo wpautop( wp_kses_post($copyright) ); ?>
+        <?php echo wpautop( esc_html($copyright) ); ?>
     </div>
 </footer>

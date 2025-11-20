@@ -165,7 +165,7 @@
 
                 body.login h1 a {
                     display: block;
-                    background-image: url('wp-content/themes/borspirit/assets/src/images/borspirit-logo-dark-ruby.svg');
+                    background-image: url('wp-content/themes/borspirit/assets/src/images/borspirit-logo.svg');
                     background-size: contain;
                     background-position: center center;
                     width: 150px;

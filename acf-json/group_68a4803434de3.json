@@ -3357,7 +3357,7 @@
                                 "id": ""
                             },
                             "choices": {
-                                "none": "None"
+                                "none": "Nincs"
                             },
                             "default_value": false,
                             "return_format": "value",
@@ -3732,5 +3732,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1762790633
+    "modified": 1763625957
 }

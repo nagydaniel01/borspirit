@@ -88,7 +88,7 @@ if ( $show_tab_title ) : ?>
                 <?php endif; ?>
                 <div class="<?php echo ( ! empty( $gallery ) && is_array( $gallery ) ) ? 'col-md-8' : 'col'; ?>">
                     <h3><?php echo esc_html( $title ); ?></h3>
-                    <?php echo wpautop( wp_kses_post( $description ) ); ?>
+                    <?php echo wp_kses_post( $description ); ?>
 
                     <?php if ( ! is_wp_error( $term_link ) ) : ?>
                         <?php

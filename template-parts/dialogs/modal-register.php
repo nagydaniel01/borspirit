@@ -13,7 +13,7 @@
                 <div class="modal-body">
                     <?php 
                         if ( $modal_body ) {
-                            echo wpautop( wp_kses_post( $modal_body ) );
+                            echo wp_kses_post( $modal_body );
                         } else {
                             echo wpautop( esc_html__('Would you like to save your favorites?', 'borspirit') );
                         }

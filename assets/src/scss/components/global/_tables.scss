@@ -14,8 +14,9 @@ table:not(.wc-block-cart-items),
 
   th, td {
     vertical-align: middle;
-    background-color: $white;
+    text-align: left;
     padding: .75rem 1rem;
+    background-color: $white;
     border: none;
 
     p {
@@ -88,6 +89,8 @@ table:not(.wc-block-cart-items),
   }
 
   &.opening-hours {
+    max-width: 20rem;
+
     th, td {
       background-color: transparent;
     }

@@ -28,15 +28,27 @@ if (!empty($section['selection_type']) && $section['selection_type'] === 'manual
         $query_args['include'] = array_map(fn($t) => $t->term_id, $section['category']);
     }
 
+    if (!empty($section['product_cat']) && is_array($section['product_cat'])) {
+        $query_args['include'] = array_map(fn($t) => $t->term_id, $section['product_cat']);
+    }
+
+    if (!empty($section['pa_boraszat']) && is_array($section['pa_boraszat'])) {
+        $query_args['include'] = array_map(fn($t) => $t->term_id, $section['pa_boraszat']);
+    }
+
+    if (!empty($section['pa_orszag']) && is_array($section['pa_orszag'])) {
+        $query_args['include'] = array_map(fn($t) => $t->term_id, $section['pa_orszag']);
+    }
+
+    if (!empty($section['pa_borvidek']) && is_array($section['pa_borvidek'])) {
+        $query_args['include'] = array_map(fn($t) => $t->term_id, $section['pa_borvidek']);
+    }
+
     /*
     if (!empty($section['event_cat']) && is_array($section['event_cat'])) {
         $query_args['include'] = array_map(fn($t) => $t->term_id, $section['event_cat']);
     }
     */
-
-    if (!empty($section['product_cat']) && is_array($section['product_cat'])) {
-        $query_args['include'] = array_map(fn($t) => $t->term_id, $section['product_cat']);
-    }
 }
 
 // Auto selection – parent/child terms
@@ -45,15 +57,15 @@ if (!empty($section['selection_type']) && $section['selection_type'] === 'auto')
         $query_args['parent'] = (int) $section['parent_category']->term_id;
     }
 
+    if ($query_args['taxonomy'] === 'product_cat' && !empty($section['parent_product_cat']) && is_object($section['parent_product_cat'])) {
+        $query_args['parent'] = (int) $section['parent_product_cat']->term_id;
+    }
+
     /*
     if ($query_args['taxonomy'] === 'event_cat' && !empty($section['parent_event_cat']) && is_object($section['parent_event_cat'])) {
         $query_args['parent'] = (int) $section['parent_event_cat']->term_id;
     }
     */
-
-    if ($query_args['taxonomy'] === 'product_cat' && !empty($section['parent_product_cat']) && is_object($section['parent_product_cat'])) {
-        $query_args['parent'] = (int) $section['parent_product_cat']->term_id;
-    }
 }
 
 /*

@@ -102,7 +102,7 @@
                                             <?php endif; ?>
 
                                             <?php if ($slide_subtitle) : ?>
-                                                <div class="slider__subtitle"><?php echo wpautop( wp_kses_post($slide_subtitle) ); ?></div>
+                                                <p class="slider__subtitle"><?php echo $slide_subtitle; ?></p>
                                             <?php endif; ?>
         
                                             <?php if ($slide_description) : ?>

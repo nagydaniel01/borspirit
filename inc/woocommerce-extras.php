@@ -1034,7 +1034,7 @@
          * Check if user is club member (spent 50 000+ HUF)
          *
          * @param int $user_id Optional user ID.
-         * @return bool True if user spent >= 50000 HUF.
+         * @return bool True if user spent >= 100000 HUF.
          */
         function borspirit_is_club_member( $user_id = 0 ) {
             try {
@@ -1050,7 +1050,7 @@
                     return false;
                 }
 
-                return $total_spent >= 50000;
+                return $total_spent >= 100000;
 
             } catch ( Exception $e ) {
                 error_log( 'Club Member Error: ' . $e->getMessage() );
@@ -1097,105 +1097,40 @@
         add_filter( 'woocommerce_get_price_html', 'borspirit_add_label_before_price', 10, 2 );
     }
 
-    if ( ! function_exists( 'borspirit_display_club_price' ) ) {
-        /**
-         * Display club price for all visitors (manual value or automatic discount).
-         * Excludes sale products.
-         *
-         * @param string     $price   Original price HTML.
-         * @param WC_Product $product WooCommerce product object.
-         * @return string Modified price output with club price.
-         */
-        function borspirit_display_club_price( $price, $product ) {
-            try {
-                if ( is_admin() ) {
-                    return $price;
-                }
-
-                if ( ! $product || ! is_a( $product, 'WC_Product' ) ) {
-                    return $price;
-                }
-                
-                if ( $product->is_type( 'subscription' ) || $product->is_type( 'variable-subscription' ) ) {
-                    return $price;
-                }
-
-                $price_html = '<span class="price__regular">' . $price . '</span>';
-
-                if ( $product->is_on_sale() ) {
-                    $regular = floatval( $product->get_regular_price() );
-                    $sale    = floatval( $product->get_sale_price() );
-
-                    if ( $regular > 0 && $sale > 0 ) {
-                        $amount_saved = $regular - $sale;
-
-                        $save_html = '';
-                        if ( is_product() ) {
-                            $savings_label = get_option( 'borspirit_savings_label', __( 'Savings', 'borspirit' ) );
-                            $save_html  = '<span class="price__discount">';
-                            $save_html .= '<span class="price-label">' . esc_html( $savings_label ) . ':</span> ';
-                            $save_html .= wc_price( $amount_saved );
-                            $save_html .= '</span>';
-                        }
-
-                        return '<span class="price__regular">' . $price . '</span>' . $save_html;
-                    }
-
-                    return $price; // fallback
-                }
-
-                // Get manual club price if set
-                $manual_club_price = get_post_meta( $product->get_id(), '_club_price', true );
-
-                if ( $manual_club_price !== '' && is_numeric( $manual_club_price ) ) {
-                    $club_price = floatval( $manual_club_price );
-                } else {
-                    // Get discount from options (default 5%)
-                    $discount_percent = floatval( get_option( 'borspirit_club_discount_amount', 5 ) );
-                    $regular_price = floatval( $product->get_regular_price() );
-                    
-                    if ( ! is_numeric( $regular_price ) || $regular_price <= 0 ) {
-                        return $price_html;
-                    }
-
-                    $club_price = $regular_price * (1 - $discount_percent / 100);
-                }
-
-                $club_price_html = wc_price( $club_price );
-                $club_label      = get_option( 'borspirit_club_price_label', __( 'Club price', 'borspirit' ) );
-
-                $price_html .= '<span class="price__club"><span class="price-label">' . esc_html( $club_label ) . ':</span> <ins>' . $club_price_html . '</ins></span>';
-
-                return $price_html;
-
-            } catch ( Exception $e ) {
-                error_log( 'Display Club Price Error: ' . $e->getMessage() );
-                return $price;
-            }
-        }
-        add_filter( 'woocommerce_get_price_html', 'borspirit_display_club_price', 20, 2 );
-    }
-
     if ( ! function_exists( 'borspirit_add_club_price_field' ) ) {
         /**
          * Adds backend custom field for manual club price.
          */
         function borspirit_add_club_price_field() {
             try {
-                // Get discount from options (default 5%)
+                // Get discount from options (default 5)
                 $discount = floatval( get_option( 'borspirit_club_discount_amount', 5 ) );
+
+                // Ensure discount is not empty or invalid
+                if ( $discount <= 0 ) {
+                    $discount = 5;
+                }
+
+                $description = sprintf(
+                    __( 'Optional: special manual club price. Leave empty to use %s%% club discount.', 'borspirit' ),
+                    $discount
+                );
+
+                // Get WooCommerce currency symbol
+                $currency_symbol = get_woocommerce_currency_symbol();
 
                 woocommerce_wp_text_input([
                     'id'          => '_club_price',
-                    'label'       => __( 'Club price', 'borspirit' ),
-                    'desc_tip'    => true,
-                    'description' => sprintf(
-                        __( 'Optional: special manual club price. Leave empty to use %s% club discount.', 'borspirit' ),
-                        $discount
+                    'label'       => sprintf(
+                        __( 'Club price (%s)', 'borspirit' ),
+                        $currency_symbol
                     ),
+                    'desc_tip'    => true,
+                    'description' => $description,
                     'type'        => 'text',
-                    'data_type'   => 'price',
+                    'data_type'   => 'price'
                 ]);
+
             } catch ( Exception $e ) {
                 error_log( 'Club Price Field Error: ' . $e->getMessage() );
             }
@@ -1231,6 +1166,101 @@
         add_action( 'woocommerce_process_product_meta', 'borspirit_save_club_price_field' );
     }
 
+    if ( ! function_exists( 'borspirit_display_club_price' ) ) {
+        /**
+         * Display club price for all visitors (manual value or automatic discount).
+         * Excludes sale products.
+         *
+         * @param string     $price   Original price HTML.
+         * @param WC_Product $product WooCommerce product object.
+         * @return string Modified price output with club price.
+         */
+        function borspirit_display_club_price( $price, $product ) {
+            try {
+                if ( is_admin() ) {
+                    return $price;
+                }
+
+                if ( ! $product || ! is_a( $product, 'WC_Product' ) ) {
+                    return $price;
+                }
+
+                // Exclude subscription products
+                if ( $product->is_type( 'subscription' ) || $product->is_type( 'variable-subscription' ) ) {
+                    return $price;
+                }
+
+                $price_html = '<span class="price__regular">' . $price . '</span>';
+
+                /** --------------------------------------
+                 * SALE PRICE HANDLING
+                 * -------------------------------------- */
+                if ( $product->is_on_sale() ) {
+                    $regular = floatval( $product->get_regular_price() );
+                    $sale    = floatval( $product->get_sale_price() );
+
+                    if ( $regular > 0 && $sale > 0 ) {
+                        $amount_saved = $regular - $sale;
+
+                        $save_html = '';
+                        if ( is_product() ) {
+                            $savings_label = get_option( 'borspirit_savings_label', __( 'Savings', 'borspirit' ) );
+                            $save_html  = '<span class="price__discount">';
+                            $save_html .= '<span class="price-label">' . esc_html( $savings_label ) . ':</span> ';
+                            $save_html .= wc_price( $amount_saved );
+                            $save_html .= '</span>';
+                        }
+
+                        return '<span class="price__regular">' . $price . '</span>' . $save_html;
+                    }
+
+                    return $price;
+                }
+
+                /** --------------------------------------
+                 * CLUB PRICE HANDLING
+                 * -------------------------------------- */
+
+                // Manual price
+                $manual_club_price = get_post_meta( $product->get_id(), '_club_price', true );
+                $manual_club_price = is_numeric( $manual_club_price ) ? floatval( $manual_club_price ) : 0;
+
+                // Discount percent
+                $discount_percent = floatval( get_option( 'borspirit_club_discount_amount', 5 ) );
+                $discount_percent = $discount_percent > 0 ? $discount_percent : 0;
+
+                // If neither manual price nor discount is valid -> DO NOT DISPLAY CLUB PRICE
+                if ( $manual_club_price <= 0 && $discount_percent <= 0 ) {
+                    return $price_html;
+                }
+
+                // Determine club price
+                if ( $manual_club_price > 0 ) {
+                    $club_price = $manual_club_price;
+                } else {
+                    $regular_price = floatval( $product->get_regular_price() );
+                    if ( $regular_price <= 0 ) {
+                        return $price_html;
+                    }
+                    $club_price = $regular_price * ( 1 - $discount_percent / 100 );
+                }
+
+                // Output HTML
+                $club_price_html = wc_price( $club_price );
+                $club_label      = get_option( 'borspirit_club_price_label', __( 'Club price', 'borspirit' ) );
+
+                $price_html .= '<span class="price__club"><span class="price-label">' . esc_html( $club_label ) . ':</span> <ins>' . $club_price_html . '</ins></span>';
+
+                return $price_html;
+
+            } catch ( Exception $e ) {
+                error_log( 'Display Club Price Error: ' . $e->getMessage() );
+                return $price;
+            }
+        }
+        add_filter( 'woocommerce_get_price_html', 'borspirit_display_club_price', 20, 2 );
+    }
+
     if ( ! function_exists( 'borspirit_apply_club_price_in_cart' ) ) {
         /**
          * Apply club price in cart for logged-in club members only.
@@ -1261,22 +1291,31 @@
                         continue;
                     }
 
-                    // Get manual club price if set
-                    $manual_club_price = get_post_meta( $cart_item['product_id'], '_club_price', true );
+                    // Manual price
+                    $manual_club_price = get_post_meta( $product->get_id(), '_club_price', true );
+                    $manual_club_price = is_numeric( $manual_club_price ) ? floatval( $manual_club_price ) : 0;
 
-                    if ( $manual_club_price !== '' && is_numeric( $manual_club_price ) ) {
-                        $club_price = floatval( $manual_club_price );
-                    } else {
-                        $regular_price = floatval( $product->get_regular_price() );
-                        if ( ! is_numeric( $regular_price ) || $regular_price <= 0 ) {
-                            continue;
-                        }
+                    // Discount percent
+                    $discount_percent = floatval( get_option( 'borspirit_club_discount_amount', 5 ) );
+                    $discount_percent = $discount_percent > 0 ? $discount_percent : 0;
 
-                        // Apply dynamic discount from options (default 5%)
-                        $discount_percent = floatval( get_option( 'borspirit_club_discount_amount', 5 ) );
-                        $club_price = $regular_price * (1 - $discount_percent / 100);
+                    // If neither manual nor discount is valid → no club price
+                    if ( $manual_club_price <= 0 && $discount_percent <= 0 ) {
+                        continue;
                     }
 
+                    // Determine club price
+                    if ( $manual_club_price > 0 ) {
+                        $club_price = $manual_club_price;
+                    } else {
+                        $regular_price = floatval( $product->get_regular_price() );
+                        if ( $regular_price <= 0 ) {
+                            continue;
+                        }
+                        $club_price = $regular_price * ( 1 - $discount_percent / 100 );
+                    }
+
+                    // Apply price
                     $cart_item['data']->set_price( $club_price );
                 }
 
@@ -1299,25 +1338,26 @@
          */
         function borspirit_mini_cart_club_price_only( $price_html, $cart_item, $cart_item_key ) {
             try {
-                // User must be logged in
+                // Must be logged in
                 if ( ! is_user_logged_in() ) {
                     return $price_html;
                 }
 
-                // Must be a club member
+                // Must be club member
                 $user_id = get_current_user_id();
                 if ( ! borspirit_is_club_member( $user_id ) ) {
                     return $price_html;
                 }
 
                 // Validate product
-                if ( empty( $cart_item['data'] ) || ! is_a( $cart_item['data'], 'WC_Product' ) ) {
+                if ( empty( $cart_item['data'] ) || ! $cart_item['data'] instanceof WC_Product ) {
                     return $price_html;
                 }
 
+                /** @var WC_Product $product */
                 $product = $cart_item['data'];
 
-                // Exclude subscription types
+                // Exclude subscription items
                 if ( $product->is_type( 'subscription' ) || $product->is_type( 'variable-subscription' ) ) {
                     return $price_html;
                 }
@@ -1327,38 +1367,52 @@
                     return $price_html;
                 }
 
-                // Manual or auto club price
-                $manual_club_price = get_post_meta( $cart_item['product_id'], '_club_price', true );
+                // --------------------------------------
+                // CLUB PRICE HANDLING (matches logic)
+                // --------------------------------------
 
-                if ( $manual_club_price !== '' && is_numeric( $manual_club_price ) ) {
-                    $club_price = floatval( $manual_club_price );
+                // Manual club price
+                $manual_club_price = get_post_meta( $product->get_id(), '_club_price', true );
+                $manual_club_price = is_numeric( $manual_club_price ) ? floatval( $manual_club_price ) : 0;
+
+                // Discount percent
+                $discount_percent = floatval( get_option( 'borspirit_club_discount_amount', 5 ) );
+                $discount_percent = $discount_percent > 0 ? $discount_percent : 0;
+
+                // If neither manual nor discount → do not show club price
+                if ( $manual_club_price <= 0 && $discount_percent <= 0 ) {
+                    return $price_html;
+                }
+
+                // Determine club price
+                if ( $manual_club_price > 0 ) {
+
+                    $club_price = $manual_club_price;
+
                 } else {
+
                     $regular_price = floatval( $product->get_regular_price() );
                     if ( $regular_price <= 0 ) {
                         return $price_html;
                     }
 
-                    // Use dynamic discount options (default 5%)
-                    $discount_percent = floatval( get_option( 'borspirit_club_discount_amount', 5 ) );
-                    $club_price = $regular_price * (1 - $discount_percent / 100);
+                    $club_price = $regular_price * ( 1 - $discount_percent / 100 );
                 }
 
-                // Build HTML output
-                /*
-                $regular_html = '<span class="mini-price-regular">';
-                $regular_html .= '<span class="price-label">' . esc_html__( 'Shelf price', 'borspirit' ) . ':</span> ';
-                $regular_html .= '<del aria-hidden="true">' . wc_price( $product->get_regular_price() ) . '</del>';
-                $regular_html .= '</span>';
-                */
+                // --------------------------------------
+                // MINI CART CLUB PRICE HTML
+                // --------------------------------------
 
-                $club_label = get_option( 'borspirit_club_price_label', __( 'Club price', 'borspirit' ) );
+                $club_label = get_option(
+                    'borspirit_club_price_label',
+                    __( 'Club price', 'borspirit' )
+                );
 
                 $club_html  = '<span class="mini-price-club">';
                 $club_html .= '<span class="price-label">' . esc_html( $club_label ) . ':</span> ';
                 $club_html .= '<ins aria-hidden="true">' . wc_price( $club_price ) . '</ins>';
                 $club_html .= '</span>';
 
-                //return $regular_html . '<br>' . $club_html;
                 return $club_html;
 
             } catch ( Exception $e ) {
@@ -1391,7 +1445,7 @@
 
                 $user_id = get_current_user_id();
                 $total_spent = wc_get_customer_total_spent( $user_id );
-                $threshold   = 50000;
+                $threshold   = 100000;
 
                 if ( ! is_numeric( $total_spent ) ) {
                     return;
