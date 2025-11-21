@@ -707,51 +707,6 @@
                             "bidirectional_target": []
                         },
                         {
-                            "key": "field_68cbb4a3f935f",
-                            "label": "Vélemények",
-                            "name": "testimonial",
-                            "aria-label": "",
-                            "type": "relationship",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": [
-                                [
-                                    {
-                                        "field": "field_68af075014a38",
-                                        "operator": "==",
-                                        "value": "manual"
-                                    },
-                                    {
-                                        "field": "field_68af060f14a37",
-                                        "operator": "==",
-                                        "value": "testimonial"
-                                    }
-                                ]
-                            ],
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "post_type": [
-                                "testimonial"
-                            ],
-                            "post_status": [
-                                "publish"
-                            ],
-                            "taxonomy": "",
-                            "filters": [
-                                "search"
-                            ],
-                            "return_format": "object",
-                            "min": "",
-                            "max": "",
-                            "allow_in_bindings": 0,
-                            "elements": "",
-                            "bidirectional": 0,
-                            "bidirectional_target": []
-                        },
-                        {
                             "key": "field_68af077c14a39",
                             "label": "Automatikus kiválasztás",
                             "name": "",
@@ -1039,48 +994,6 @@
                             "save_options": 0
                         },
                         {
-                            "key": "field_68cd1a02f4cf6",
-                            "label": "Virtuális",
-                            "name": "virtual",
-                            "aria-label": "",
-                            "type": "true_false",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "message": "",
-                            "default_value": 0,
-                            "allow_in_bindings": 0,
-                            "ui_on_text": "",
-                            "ui_off_text": "",
-                            "ui": 1
-                        },
-                        {
-                            "key": "field_68cd1a22f4cf7",
-                            "label": "Digitális (letölthető)",
-                            "name": "downloadable",
-                            "aria-label": "",
-                            "type": "true_false",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "message": "",
-                            "default_value": 0,
-                            "allow_in_bindings": 0,
-                            "ui_on_text": "",
-                            "ui_off_text": "",
-                            "ui": 1
-                        },
-                        {
                             "key": "field_68cd0f406b6d4",
                             "label": "Rendezési elv",
                             "name": "orderby",
@@ -1165,6 +1078,48 @@
                             "key": "field_68de4e6320baa",
                             "label": "Akciós",
                             "name": "on_sale",
+                            "aria-label": "",
+                            "type": "true_false",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "message": "",
+                            "default_value": 0,
+                            "allow_in_bindings": 0,
+                            "ui_on_text": "",
+                            "ui_off_text": "",
+                            "ui": 1
+                        },
+                        {
+                            "key": "field_68cd1a02f4cf6",
+                            "label": "Virtuális",
+                            "name": "virtual",
+                            "aria-label": "",
+                            "type": "true_false",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "message": "",
+                            "default_value": 0,
+                            "allow_in_bindings": 0,
+                            "ui_on_text": "",
+                            "ui_off_text": "",
+                            "ui": 1
+                        },
+                        {
+                            "key": "field_68cd1a22f4cf7",
+                            "label": "Digitális (letölthető)",
+                            "name": "downloadable",
                             "aria-label": "",
                             "type": "true_false",
                             "instructions": "",
@@ -3732,5 +3687,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1763625957
+    "modified": 1763741401
 }

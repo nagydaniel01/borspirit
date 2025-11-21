@@ -23,12 +23,13 @@ $is_external = is_external_url($url, get_home_url());
 $query_args = [
     'return'       => 'objects',
     'status'       => 'publish',
+    'visibility'   => 'catalog',
     'type'         => $section['type'] ?? '',
-    'virtual'      => $section['virtual'] ?? null,
-    'downloadable' => $section['downloadable'] ?? null,
     'limit'        => (int) ($section['products_per_page'] ?? get_option('posts_per_page')),
     'orderby'      => $section['orderby'] ?? 'date',
     'order'        => strtoupper($section['order'] ?? 'DESC'),
+    'virtual'      => $section['virtual'] ?? null,
+    'downloadable' => $section['downloadable'] ?? null,
 ];
 
 // Manual selection
@@ -81,7 +82,7 @@ if (!empty($section['on_sale']) && $section['on_sale'] === true) {
     if (!empty($sale_products)) {
         $query_args['include'] = $sale_products;
     } else {
-        // If no sale products exist, prevent query from returning all
+        // No sale products, prevent returning all products
         $query_args['include'] = [0];
     }
 }

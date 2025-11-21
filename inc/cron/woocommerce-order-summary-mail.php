@@ -1,9 +1,24 @@
 <?php
+    // Ensure WordPress is loaded
+    if ( ! defined( 'ABSPATH' ) ) {
+        // Go 4 directories up to reach WordPress root
+        require_once dirname(__DIR__, 4) . '/wp-load.php';
+    }
+
+    // Make sure WooCommerce functions are available
+    if ( ! class_exists( 'WooCommerce' ) ) {
+        exit;
+    }
+
     if ( ! function_exists( 'wc_send_table_based_daily_order_summary_email' ) ) {
         /**
          * Sends a daily WooCommerce order summary email in a table format.
          */
         function wc_send_table_based_daily_order_summary_email() {
+            if ( ! function_exists('wc_get_orders') || ! class_exists('WC_Email') ) {
+                return; // WooCommerce not loaded
+            }
+
             $today  = date_i18n( 'Y-m-d' );
             $orders = wc_get_orders([
                 'date_created' => $today,
@@ -163,7 +178,10 @@
             $wc_email     = new WC_Email();
             $html_message = $wc_email->style_inline( $wrapped_message );
 
-            $to       = get_option( 'admin_email' );
+            $to = [
+                get_option( 'admin_email' ),
+                'nickelszgabor@borspirit.hu'
+            ];
             $subject  = sprintf( __( 'Daily WooCommerce Order Summary – %s', 'borspirit' ), $today );
             $headers  = [ 'Content-Type: text/html; charset=UTF-8' ];
 
@@ -171,20 +189,4 @@
         }
     }
 
-    if ( ! function_exists( 'wc_send_order_summary' ) ) {
-        /**
-         * Trigger function to manually test the WooCommerce summary email.
-         * Use ?wc_send_order_summary=1 in the URL.
-         */
-        function wc_send_order_summary() {
-            if ( isset( $_GET['wc_send_order_summary'] ) ) {
-                wc_send_table_based_daily_order_summary_email();
-                wp_die(
-                    esc_html__( 'WooCommerce summary e-mail sent (check your inbox).', 'borspirit' ),
-                    esc_html__( 'E-mail sent', 'borspirit' ),
-                    array( 'response' => 200 )
-                );
-            }
-        }
-        add_action( 'init', 'wc_send_order_summary' );
-    }
+    wc_send_table_based_daily_order_summary_email();

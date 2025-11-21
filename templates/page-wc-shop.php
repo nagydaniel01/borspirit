@@ -25,26 +25,41 @@ $product_type       = get_field('type') ?: 'simple';
 $products_per_page  = get_field('products_per_page') ?: $products_per_page;
 $orderby            = get_field('orderby') ?: $ordering['orderby'];
 $order              = get_field('order') ?: $ordering['order'];
+$include_ids        = get_field('include');
 $on_sale            = get_field('on_sale') ?: false;
 $product_cats       = get_field('product_cat');
 $product_tags       = get_field('product_tag');
-$include_ids        = get_field('include');
+$virtual            = get_field('virtual') ?: false;
+$downloadable       = get_field('downloadable') ?: false;
 
 // Base query
 $args = [
-    'type'       => $product_type,
-    'status'     => 'publish',
-    'limit'      => $products_per_page,
-    'page'       => $paged,
-    'orderby'    => $orderby,
-    'order'      => $order,
-    'return'     => 'ids',
-    'visibility' => 'catalog',
+    'return'       => 'ids',
+    'status'       => 'publish',
+    'visibility'   => 'catalog',
+    'type'         => $product_type,
+    'limit'        => $products_per_page,
+    'page'         => $paged,
+    'orderby'      => $orderby,
+    'order'        => $order,
+    'virtual'      => $virtual,
+    'downloadable' => $downloadable,
 ];
 
-// Filter by sale products
+// Filter by specific product IDs
+if ( $include_ids && is_array( $include_ids ) ) {
+    $args['include'] = array_map('intval', $include_ids);
+}
+
+// Handle Sale Products
 if ( $on_sale ) {
-    $args['on_sale'] = true;
+    $sale_products = wc_get_product_ids_on_sale();
+    if ( ! empty( $sale_products ) ) {
+        $args['include'] = isset( $args['include'] ) ? array_intersect( $args['include'], $sale_products ) : $sale_products;
+    } else {
+        // No sale products, prevent returning all products
+        $args['include'] = [0];
+    }
 }
 
 // Filter by categories
@@ -55,11 +70,6 @@ if ( $product_cats ) {
 // Filter by tags
 if ( $product_tags ) {
     $args['tag'] = array_map(fn($tag) => $tag->slug, $product_tags);
-}
-
-// Filter by specific product IDs
-if ( $include_ids && is_array( $include_ids ) ) {
-    $args['include'] = array_map('intval', $include_ids);
 }
 
 /*
@@ -120,15 +130,6 @@ wc_set_loop_prop( 'total_pages', $max_num_pages );
                     do_action( 'woocommerce_no_products_found' );
                 endif;
             ?>
-
-            <!--
-            <h1 data-tg-tour="Welcome to the homepage! This is the main heading.">Hello WordPress</h1>
-
-            <p data-tg-tour="Here’s some text. You can highlight any element.">
-                This paragraph is part of the tour.
-            </p>
-            <button id="start-tour">Start Tour</button>
-            -->
 
             <?php do_action( 'woocommerce_after_main_content' ); ?>
         </div>

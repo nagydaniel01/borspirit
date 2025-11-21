@@ -196,7 +196,7 @@
                 return array(
                     'width'  => 650,
                     'height' => 650,
-                    'crop'   => 1,
+                    'crop'   => 0,
                 );
             });
 
@@ -205,7 +205,7 @@
                 return array(
                     'width'  => 650,
                     'height' => 650,
-                    'crop'   => 1,
+                    'crop'   => 0,
                 );
             });
 
@@ -1104,7 +1104,7 @@
         function borspirit_add_club_price_field() {
             try {
                 // Get discount from options (default 5)
-                $discount = floatval( get_option( 'borspirit_club_discount_amount', 5 ) );
+                $discount = floatval( get_option( 'borspirit_club_discount_amount', 0 ) );
 
                 // Ensure discount is not empty or invalid
                 if ( $discount <= 0 ) {
@@ -1226,7 +1226,7 @@
                 $manual_club_price = is_numeric( $manual_club_price ) ? floatval( $manual_club_price ) : 0;
 
                 // Discount percent
-                $discount_percent = floatval( get_option( 'borspirit_club_discount_amount', 5 ) );
+                $discount_percent = floatval( get_option( 'borspirit_club_discount_amount', 0 ) );
                 $discount_percent = $discount_percent > 0 ? $discount_percent : 0;
 
                 // If neither manual price nor discount is valid -> DO NOT DISPLAY CLUB PRICE
@@ -1296,7 +1296,7 @@
                     $manual_club_price = is_numeric( $manual_club_price ) ? floatval( $manual_club_price ) : 0;
 
                     // Discount percent
-                    $discount_percent = floatval( get_option( 'borspirit_club_discount_amount', 5 ) );
+                    $discount_percent = floatval( get_option( 'borspirit_club_discount_amount', 0 ) );
                     $discount_percent = $discount_percent > 0 ? $discount_percent : 0;
 
                     // If neither manual nor discount is valid → no club price
@@ -1376,7 +1376,7 @@
                 $manual_club_price = is_numeric( $manual_club_price ) ? floatval( $manual_club_price ) : 0;
 
                 // Discount percent
-                $discount_percent = floatval( get_option( 'borspirit_club_discount_amount', 5 ) );
+                $discount_percent = floatval( get_option( 'borspirit_club_discount_amount', 0 ) );
                 $discount_percent = $discount_percent > 0 ? $discount_percent : 0;
 
                 // If neither manual nor discount → do not show club price
@@ -1426,20 +1426,38 @@
     if ( ! function_exists( 'borspirit_show_club_progress_message' ) ) {
         /**
          * Display a message showing how much more the user needs to spend
-         * to become a Club Member (threshold: 50 000 HUF).
-         *
-         * Appears on:
-         * - Single product page
-         * - Cart page
-         * - Checkout
-         *
-         * @return void
+         * to become a Club Member (threshold: 100 000 HUF), only if the product
+         * has a club price or a club discount.
          */
         function borspirit_show_club_progress_message() {
             try {
-
                 // Only logged-in users have spending history
                 if ( ! is_user_logged_in() ) {
+                    return;
+                }
+
+                global $product;
+
+                // Check if product exists
+                if ( ! $product instanceof WC_Product ) {
+                    return;
+                }
+
+                // Do not show for sale products
+                if ( $product->is_on_sale() ) {
+                    return;
+                }
+
+                // Check for manual club price
+                $manual_club_price = get_post_meta( $product->get_id(), '_club_price', true );
+                $manual_club_price = is_numeric( $manual_club_price ) ? floatval( $manual_club_price ) : 0;
+
+                // Check for club discount
+                $discount_percent = floatval( get_option( 'borspirit_club_discount_amount', 0 ) );
+                $discount_percent = $discount_percent > 0 ? $discount_percent : 0;
+
+                // If neither manual nor discount → do not show club progress message
+                if ( $manual_club_price <= 0 && $discount_percent <= 0 ) {
                     return;
                 }
 

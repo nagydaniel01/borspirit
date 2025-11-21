@@ -35,6 +35,7 @@ if (!empty($section['selection_type']) && $section['selection_type'] === 'manual
     if (!empty($section['post']) && $section['post_type'] === 'post') {
         $query_args['post__in'] = array_map(fn($p) => $p->ID, $section['post']);
     }
+
     /*
     if (!empty($section['event']) && $section['post_type'] === 'event') {
         $query_args['post__in'] = array_map(fn($e) => $e->ID, $section['event']);
@@ -51,6 +52,7 @@ if (!empty($section['selection_type']) && $section['selection_type'] === 'auto')
             'terms'    => array_map(fn($t) => $t->term_id, $section['category']),
         ];
     }
+    
     /*
     if (!empty($section['event_cat']) && $section['post_type'] === 'event') {
         $query_args['tax_query'][] = [

@@ -84,7 +84,7 @@
           img {
             height: 100%;
             margin: 0 auto;
-            object-fit: contain;
+            object-fit: cover;
           }
         }
 
@@ -115,6 +115,57 @@
             fill: $primary;
           }
         }
+
+        .product_image_thumbnail {
+          height: 100%;
+          background-repeat: no-repeat;
+          background-size: contain;
+          background-position: center;
+
+          img {
+            object-fit: contain;
+          }
+
+          &.product_image_thumbnail--style-01 {
+            background-image: url('./../images/blob-01.png')
+          }
+
+          &.product_image_thumbnail--style-02 {
+            background-image: url('./../images/blob-02.png')
+          }
+
+          &.product_image_thumbnail--style-03 {
+            background-image: url('./../images/blob-03.png')
+          }
+
+          &.product_image_thumbnail--style-04 {
+            background-image: url('./../images/blob-04.png')
+          }
+
+          &.product_image_thumbnail--style-05 {
+            background-image: url('./../images/blob-05.png')
+          }
+
+          &.product_image_thumbnail--style-06 {
+            background-image: url('./../images/blob-06.png')
+          }
+
+          &.product_image_thumbnail--style-07 {
+            background-image: url('./../images/blob-07.png')
+          }
+
+          &.product_image_thumbnail--style-08 {
+            background-image: url('./../images/blob-08.png')
+          }
+
+          &.product_image_thumbnail--style-09 {
+            background-image: url('./../images/blob-09.png')
+          }
+
+          &.product_image_thumbnail--style-10 {
+            background-image: url('./../images/blob-10.png')
+          }
+        }
       }
 
       .woocommerce-product-gallery__image {
@@ -129,53 +180,6 @@
           align-items: center;
           aspect-ratio: 1 / 1;
           //background-color: rgba($white, 1);
-        }
-      }
-
-      .product_image_thumbnail {
-        height: 100%;
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position: center;
-
-        &.product_image_thumbnail--style-01 {
-          background-image: url('./../images/blob-01.png')
-        }
-
-        &.product_image_thumbnail--style-02 {
-          background-image: url('./../images/blob-02.png')
-        }
-
-        &.product_image_thumbnail--style-03 {
-          background-image: url('./../images/blob-03.png')
-        }
-
-        &.product_image_thumbnail--style-04 {
-          background-image: url('./../images/blob-04.png')
-        }
-
-        &.product_image_thumbnail--style-05 {
-          background-image: url('./../images/blob-05.png')
-        }
-
-        &.product_image_thumbnail--style-06 {
-          background-image: url('./../images/blob-06.png')
-        }
-
-        &.product_image_thumbnail--style-07 {
-          background-image: url('./../images/blob-07.png')
-        }
-
-        &.product_image_thumbnail--style-08 {
-          background-image: url('./../images/blob-08.png')
-        }
-
-        &.product_image_thumbnail--style-09 {
-          background-image: url('./../images/blob-09.png')
-        }
-
-        &.product_image_thumbnail--style-10 {
-          background-image: url('./../images/blob-10.png')
         }
       }
     }

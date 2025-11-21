@@ -897,7 +897,9 @@
             // Only send email if user has at least one allowed role
             if ( array_intersect( $allowed_roles, (array) $user->roles ) ) {
 
-                $site_name = get_bloginfo( 'name' );
+                $site_name     = get_bloginfo( 'name' );
+                $greeting_name = $user->first_name ?: $user_login;
+                
                 $headers   = array( 'Content-Type: text/html; charset=UTF-8' );
                 $to        = $user->user_email;
                 $subject   = sprintf( __( 'You have logged into %s admin', 'borspirit' ), $site_name );
@@ -926,22 +928,31 @@
                     }
                 }
 
-                // Email content
-                $message = sprintf(
-                    __("Hi %1\$s,<br><br>You have successfully logged into the %2\$s admin area.<br><br>
-                    <strong>Time:</strong> %3\$s<br>
-                    <strong>IP Address:</strong> %4\$s<br>
-                    <strong>Location:</strong> %5\$s<br>
-                    <strong>Browser:</strong> %6\$s<br><br>
-                    If this wasn't you, please <a href='%7\$s'>change your password</a> immediately.", 'borspirit'),
-                    $user_login,
-                    esc_html( $site_name ),
-                    date_i18n( 'Y-m-d H:i:s' ),
-                    esc_html( $ip_address ),
-                    esc_html( $location ),
-                    esc_html( $browser ),
-                    esc_url( $reset_link ),
+                /* 1. Translated intro sentence (plain text only) */
+                $intro_text = sprintf(
+                    __("Hi %1\$s,\n\nYou have successfully logged into the %2\$s admin area.", "borspirit"),
+                    $greeting_name,
+                    esc_html( $site_name )
                 );
+
+                /* Convert newlines to <br> */
+                $message  = nl2br( $intro_text );
+                $message .= "<br><br>";
+
+                /* Non-translated details */
+                $message .= "<strong>Time:</strong> " . date_i18n( 'Y-m-d H:i:s' ) . "<br>";
+                $message .= "<strong>IP Address:</strong> " . esc_html( $ip_address ) . "<br>";
+                $message .= "<strong>Location:</strong> " . esc_html( $location ) . "<br>";
+                $message .= "<strong>Browser:</strong> " . esc_html( $browser ) . "<br><br>";
+
+                /* 2. Translated warning without HTML */
+                $warning_text = sprintf(
+                    __("If this wasn't you, please change your password immediately: %s", "borspirit"),
+                    esc_url( $reset_link )
+                );
+
+                /* Add HTML outside translation */
+                $message .= nl2br( $warning_text );
 
                 wp_mail( $to, $subject, $message, $headers );
             }

@@ -37,7 +37,7 @@
             $errorTypeDescription = $errorDescriptions[$errorType] ?? 'Unknown Error';
     
             // Only send the error to Discord if it's one of the specified types
-            if (!in_array($errorType, [E_ERROR, E_USER_ERROR, E_WARNING, E_PARSE, E_NOTICE])) {
+            if (!in_array($errorType, [E_ERROR, E_WARNING, E_PARSE, E_USER_ERROR, E_USER_WARNING])) {
                 return; // Exit early if not in array
             }
 

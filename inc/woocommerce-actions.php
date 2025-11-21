@@ -899,3 +899,25 @@
         add_filter( 'woocommerce_pagination_args', 'custom_woocommerce_pagination_icons' );
         add_filter( 'woocommerce_comment_pagination_args', 'custom_woocommerce_pagination_icons' );
     }
+
+    // ============================================================
+    // 14. DAILY ORDER SUMMARY EMAIL
+    // ============================================================
+
+    if ( ! function_exists( 'wc_send_order_summary' ) ) {
+        /**
+         * Trigger function to manually test the WooCommerce summary email.
+         * Use ?wc_send_order_summary=1 in the URL.
+         */
+        function wc_send_order_summary() {
+            if ( isset( $_GET['wc_send_order_summary'] ) ) {
+                wc_send_table_based_daily_order_summary_email();
+                wp_die(
+                    esc_html__( 'WooCommerce summary e-mail sent (check your inbox).', 'borspirit' ),
+                    esc_html__( 'E-mail sent', 'borspirit' ),
+                    array( 'response' => 200 )
+                );
+            }
+        }
+        add_action( 'init', 'wc_send_order_summary' );
+    }

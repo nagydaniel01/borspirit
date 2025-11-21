@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title><?php echo esc_html__( 'Coming soon', 'borspirit' ); ?></title>
         <link rel="icon" href="<?php echo esc_url( TEMPLATE_DIR_URI . '/assets/src/images/borspirit-logo-white.svg' ); ?>" type="image/svg+xml">
-        <link rel='stylesheet' id='borspirit-theme-css' href='https://borspirit.test/wp-content/themes/borspirit/assets/dist/css/styles.css?ver=<?php echo esc_attr( ASSETS_VERSION ); ?>' media='all' />
+        <link rel='stylesheet' id='borspirit-theme-css' href='<?php echo home_url("/wp-content/themes/borspirit/assets/dist/css/styles.css"); ?>?ver=<?php echo esc_attr( ASSETS_VERSION ); ?>' media='all' />
         <style>
             body {
                 margin: 0;
@@ -22,7 +22,6 @@
                 background-image: url('<?php echo TEMPLATE_DIR_URI . "/assets/src/images/login-background.jpg"; ?>');
                 background-size: cover;
                 background-position: center center;
-                height: 100vh;
                 font-family: "Roboto", sans-serif;
                 text-align: center;
                 color: #000;
@@ -42,8 +41,8 @@
                 color: #FFFFFF !important;
             }
             h1 {
-                font-size: 3rem;
-                margin-top: 0;
+                font-size: 2rem;
+                margin-top: 4rem;
                 margin-bottom: 1rem;
             }
             table {

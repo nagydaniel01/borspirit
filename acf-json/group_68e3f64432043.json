@@ -7,7 +7,7 @@
             "label": "Termék típus",
             "name": "type",
             "aria-label": "",
-            "type": "select",
+            "type": "checkbox",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -24,58 +24,14 @@
                 "subscription": "Egyszerű előfizetés",
                 "variable-subscription": "Variálható előfizetés"
             },
-            "default_value": "simple",
+            "default_value": [],
             "return_format": "value",
-            "multiple": 0,
-            "allow_null": 0,
+            "allow_custom": 0,
             "allow_in_bindings": 0,
-            "ui": 0,
-            "ajax": 0,
-            "placeholder": "",
-            "create_options": 0,
-            "save_options": 0
-        },
-        {
-            "key": "field_68e3f6c7c4932",
-            "label": "Virtuális",
-            "name": "virtual",
-            "aria-label": "",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 0,
-            "allow_in_bindings": 0,
-            "ui_on_text": "",
-            "ui_off_text": "",
-            "ui": 1
-        },
-        {
-            "key": "field_68e3f6cac4933",
-            "label": "Digitális (letölthető)",
-            "name": "downloadable",
-            "aria-label": "",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 0,
-            "allow_in_bindings": 0,
-            "ui_on_text": "",
-            "ui_off_text": "",
-            "ui": 1
+            "layout": "vertical",
+            "toggle": 0,
+            "save_custom": 0,
+            "custom_choice_button_text": "Add new choice"
         },
         {
             "key": "field_68e3f6cdc4934",
@@ -162,6 +118,48 @@
             "key": "field_68e3f6dac4937",
             "label": "Akciós",
             "name": "on_sale",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1
+        },
+        {
+            "key": "field_68e3f6c7c4932",
+            "label": "Virtuális",
+            "name": "virtual",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1
+        },
+        {
+            "key": "field_68e3f6cac4933",
+            "label": "Digitális (letölthető)",
+            "name": "downloadable",
             "aria-label": "",
             "type": "true_false",
             "instructions": "",
@@ -289,5 +287,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1763286300
+    "modified": 1763741398
 }

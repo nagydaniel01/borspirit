@@ -20,7 +20,7 @@ import './filter';
 import './fancybox-init';
 import './slick-init';
 import './select2-init';
-import './tourguide-init';
+//import './tourguide-init';
 import './imagetosvg';
 import './validate-form';
 import './age-gate'; 

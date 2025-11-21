@@ -16,27 +16,7 @@
             $phpmailer->Password   = '4be51df465bc15';
         }
         // Uncomment to activate Mailtrap config
-        add_action( 'phpmailer_init', 'mailtrap' );
-    }
-
-    if ( ! function_exists( 'rd_mailtrap' ) ) {
-        /**
-         * Configure PHPMailer to use an alternative Mailtrap SMTP account for local email testing.
-         *
-         * @param PHPMailer $phpmailer The PHPMailer instance to configure.
-         * 
-         * @return void
-         */
-        function rd_mailtrap( $phpmailer ) {
-            $phpmailer->isSMTP();
-            $phpmailer->Host       = 'sandbox.smtp.mailtrap.io';
-            $phpmailer->SMTPAuth   = true;
-            $phpmailer->Port       = 2525;
-            $phpmailer->Username   = 'e259dd697fd18f';
-            $phpmailer->Password   = '67e22e4ddb9475';
-        }
-        // Uncomment to activate Mailtrap config
-        //add_action( 'phpmailer_init', 'rd_mailtrap' );
+        //add_action( 'phpmailer_init', 'mailtrap' );
     }
 
     if ( ! function_exists( 'cpanel_mail' ) ) {
@@ -51,17 +31,16 @@
             $phpmailer->isSMTP();
 
             // Replace these values with your cPanel email account info
-            $phpmailer->Host       = 'mail.yourdomain.com'; // Usually mail.yourdomain.com
+            $phpmailer->Host       = 'mail.borspirit.hu'; // Usually mail.yourdomain.com
             $phpmailer->SMTPAuth   = true;
             $phpmailer->Port       = 465;                   // Use 465 for SSL, 587 for TLS
             $phpmailer->SMTPSecure = 'ssl';                 // 'ssl' or 'tls'
-            $phpmailer->Username   = 'you@yourdomain.com';  // Your cPanel email address
-            $phpmailer->Password   = 'your-email-password'; // Your email password
-            $phpmailer->From       = 'you@yourdomain.com';  // Optional: set From address
-            $phpmailer->FromName   = 'Your Name';           // Optional: set From name
+            $phpmailer->Username   = 'hello@borspirit.hu';  // Your cPanel email address
+            $phpmailer->Password   = 'Timike1986@.';        // Your email password
+            $phpmailer->From       = 'hello@borspirit.hu';  // Optional: set From address
+            $phpmailer->FromName   = 'BorSpirit';           // Optional: set From name
         }
-
-        //add_action( 'phpmailer_init', 'cpanel_mail' );
+        add_action( 'phpmailer_init', 'cpanel_mail' );
     }
 
     if ( ! function_exists( 'log_mailer_errors' ) ) {
