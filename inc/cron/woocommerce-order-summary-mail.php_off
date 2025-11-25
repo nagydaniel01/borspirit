@@ -2,7 +2,7 @@
     // Ensure WordPress is loaded
     if ( ! defined( 'ABSPATH' ) ) {
         // Go 4 directories up to reach WordPress root
-        require_once dirname(__DIR__, 4) . '/wp-load.php';
+        require_once dirname(__DIR__, 5) . '/wp-load.php';
     }
 
     // Make sure WooCommerce functions are available

@@ -19,7 +19,7 @@
     }
 ?>
 
-<footer class="footer<?php echo is_product() ? ' footer--single-product' : ''; ?>">
+<footer class="footer<?php echo class_exists( 'WooCommerce' ) && is_product() ? ' footer--single-product' : ''; ?>">
     <div class="footer__top">
         <?php get_template_part('template-parts/forms/form', 'subscribe_form'); ?>
     </div>
@@ -57,7 +57,7 @@
                                             $social_image  = $row['social_image'] ?? '';
                                             $social_url    = $row['social_link']['url'] ?? '';
                                             $social_title  = $row['social_link']['title'] ?? '';
-                                            $social_target = isset($row['social_link']['target']) && $row['social_link']['target'] !== '' ? $row['social_link']['target'] : '_self';
+                                            $social_target = $row['social_link']['target'] ?: '_self';
                                             $host          = parse_url($social_url, PHP_URL_HOST);
                                             $parts         = explode('.', $host);
                                             $base          = ($parts[0] === 'www') ? $parts[1] : $parts[0];

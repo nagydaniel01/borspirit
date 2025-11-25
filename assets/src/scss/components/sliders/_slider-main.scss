@@ -102,6 +102,24 @@
         margin-top: 1.25rem;
     }
 
+    .slider__controls {
+        width: 90%;
+        left: 50%;
+        transform: translate(-50%);
+
+        .slick-arrow.slick-prev {
+            left: 0;
+        }
+
+        .slick-arrow.slick-next {
+            right: 0;
+        }
+
+        .icon {
+            color: $white;
+        }
+    }
+
     .slick-slide > div {
         display: flex;
     }

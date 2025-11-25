@@ -171,7 +171,64 @@
         }
         add_action( 'woocommerce_before_shop_loop', 'custom_woocommerce_catalog_ordering_wrapper_end', 35 );
     }
-    
+
+    if ( ! function_exists( 'custom_output_child_categories_after_sorting' ) ) {
+        /**
+         * Echo child categories for current WooCommerce category
+         * using card-term-{taxonomy}.php template handling
+         */
+        function custom_output_child_categories_after_sorting() {
+
+            if ( ! is_product_category() ) {
+                return;
+            }
+
+            // Get current category
+            $current_cat = get_queried_object();
+            if ( ! $current_cat ) {
+                return;
+            }
+
+            // Get child categories
+            $child_terms = get_terms( array(
+                'taxonomy'   => 'product_cat',
+                'parent'     => $current_cat->term_id,
+                'hide_empty' => false,
+            ) );
+
+            if ( empty( $child_terms ) ) {
+                return;
+            }
+
+            ?>
+            <div class="slider slider--term-query">
+                <div class="slider__list">
+                    <?php foreach ( $child_terms as $term ) : ?>
+                        <div class="slider__item">
+                            <?php
+                                $template_args = [
+                                    'taxonomy' => esc_attr( $term->taxonomy ),
+                                    'term'     => $term,
+                                ];
+
+                                $template_slug = 'template-parts/cards/card-term-' . $template_args['taxonomy'] . '.php';
+
+                                if ( locate_template( $template_slug ) ) {
+                                    get_template_part( 'template-parts/cards/card-term', $template_args['taxonomy'], $template_args );
+                                } else {
+                                    get_template_part( 'template-parts/cards/card-term', 'default', $template_args );
+                                }
+                            ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <div class="slider__controls"></div>
+            </div>
+            <?php
+        }
+        //add_action( 'woocommerce_before_shop_loop', 'custom_output_child_categories_after_sorting', 40 );
+    }
+
     // ============================================================
     // Layout Wrappers
     // ============================================================

@@ -37,6 +37,10 @@
 
     if ( ! function_exists( 'enqueue_poll_form_ajax_scripts' ) ) {
         function enqueue_poll_form_ajax_scripts() {
+            if ( ! class_exists( 'WooCommerce' ) ) {
+                return;
+            }
+
             // Only load on WooCommerce Thank You (order received) page.
             if ( ! is_wc_endpoint_url( 'order-received' ) ) {
                 return;

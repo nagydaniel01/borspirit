@@ -6,7 +6,7 @@
     $modal_button      = get_field('main_modal_button', 'option') ?: [];
     $button_url        = esc_url($modal_button['url'] ?? '');
     $button_title      = esc_html($modal_button['title'] ?? '');
-    $button_target     = esc_attr($modal_button['target'] ?: '_self');
+    $button_target     = esc_attr($modal_button['target'] ?? '_self');
 
     $modal_background  = get_field('main_modal_background', 'option');
     $has_bg_class      = $modal_background ? ' modal--has-background' : '';

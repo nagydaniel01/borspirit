@@ -144,7 +144,7 @@
                 __( 'Search Logs', 'borspirit' ),
                 __( 'Search Logs', 'borspirit' ),
                 'manage_options',
-                'borspirit',
+                'search-logs',
                 'display_search_logs'
             );
         }

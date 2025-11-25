@@ -108,6 +108,28 @@
         add_action( 'admin_bar_menu', 'acf_add_theme_settings_admin_bar_menu', 999 );
     }
 
+    if ( ! function_exists( 'my_acf_show_admin' ) ) {
+        /**
+         * Determine whether the ACF admin menu should be visible.
+         *
+         * Only visible for the main admin user (ID 1).
+         *
+         * @param bool $show Current visibility state.
+         * @return bool Modified visibility state.
+         */
+        function my_acf_show_admin( $show ) {
+            $current_user = wp_get_current_user();
+    
+            if ( $current_user->ID === 1 ) {
+                return true;
+            }
+    
+            return false;
+        }
+    
+        add_filter( 'acf/settings/show_admin', 'my_acf_show_admin' );
+    }
+
     if ( ! function_exists( 'acf_add_wc_prod_attr_rule_type' ) ) {
         /**
          * Add a custom rule type to ACF location rules.

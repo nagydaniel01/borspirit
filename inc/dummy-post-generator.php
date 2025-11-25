@@ -11,11 +11,11 @@
          */
         function dpg_register_menu() {
             add_management_page(
-                __('Dummy Post Generator', 'dummy-post-generator'), // Page title
-                __('Dummy Post Generator', 'dummy-post-generator'), // Menu title
-                'manage_options',                                   // Capability
-                'dummy-post-generator',                             // Slug
-                'dpg_admin_page'                                    // Callback function
+                __('Dummy Post Generator', 'borspirit'), // Page title
+                __('Dummy Post Generator', 'borspirit'), // Menu title
+                'manage_options',                        // Capability
+                'dummy-post-generator',                  // Slug
+                'dpg_admin_page'                         // Callback function
             );
         }
         add_action('admin_menu', 'dpg_register_menu');
@@ -30,15 +30,15 @@
         function dpg_admin_page() {
             ?>
             <div class="wrap">
-                <h1><?php echo esc_html__('Dummy Post Generator', 'dummy-post-generator'); ?></h1>
+                <h1><?php echo esc_html__('Dummy Post Generator', 'borspirit'); ?></h1>
 
                 <!-- Section: Generate Dummy Posts -->
                 <form method="post">
                     <?php wp_nonce_field('dpg_generate_nonce', 'dpg_generate_nonce_field'); ?>
-                    <h2><?php echo esc_html__('Generate Dummy Posts', 'dummy-post-generator'); ?></h2>
+                    <h2><?php echo esc_html__('Generate Dummy Posts', 'borspirit'); ?></h2>
                     <table class="form-table">
                         <tr>
-                            <th scope="row"><label for="dpg_post_type"><?php echo esc_html__('Select Post Type', 'dummy-post-generator'); ?></label></th>
+                            <th scope="row"><label for="dpg_post_type"><?php echo esc_html__('Select Post Type', 'borspirit'); ?></label></th>
                             <td>
                                 <select name="dpg_post_type" id="dpg_post_type" class="regular-text">
                                     <?php
@@ -51,52 +51,52 @@
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row"><label for="dpg_number"><?php echo esc_html__('Number of Posts', 'dummy-post-generator'); ?></label></th>
+                            <th scope="row"><label for="dpg_number"><?php echo esc_html__('Number of Posts', 'borspirit'); ?></label></th>
                             <td>
                                 <input type="number" name="dpg_number" id="dpg_number" class="regular-text" value="5" min="1" max="100">
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row"><label for="dpg_post_image_width"><?php echo esc_html__('Featured Image Width (px)', 'dummy-post-generator'); ?></label></th>
+                            <th scope="row"><label for="dpg_post_image_width"><?php echo esc_html__('Featured Image Width (px)', 'borspirit'); ?></label></th>
                             <td>
                                 <input type="number" name="dpg_post_image_width" id="dpg_post_image_width" class="regular-text" value="1280" min="300" max="3840">
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row"><label for="dpg_post_image_height"><?php echo esc_html__('Featured Image Height (px)', 'dummy-post-generator'); ?></label></th>
+                            <th scope="row"><label for="dpg_post_image_height"><?php echo esc_html__('Featured Image Height (px)', 'borspirit'); ?></label></th>
                             <td>
                                 <input type="number" name="dpg_post_image_height" id="dpg_post_image_height" class="regular-text" value="720" min="300" max="2160">
                             </td>
                         </tr>
                     </table>
-                    <?php submit_button(__('Generate Dummy Posts', 'dummy-post-generator')); ?>
+                    <?php submit_button(__('Generate Dummy Posts', 'borspirit')); ?>
                 </form>
 
                 <!-- Section: Upload Dummy Images -->
                 <form method="post">
                     <?php wp_nonce_field('dpg_images_nonce', 'dpg_images_nonce_field'); ?>
-                    <h2><?php echo esc_html__('Upload Dummy Images', 'dummy-post-generator'); ?></h2>
+                    <h2><?php echo esc_html__('Upload Dummy Images', 'borspirit'); ?></h2>
                     <table class="form-table">
                         <tr>
-                            <th scope="row"><label for="dpg_image_count"><?php echo esc_html__('Number of Images', 'dummy-post-generator'); ?></label></th>
+                            <th scope="row"><label for="dpg_image_count"><?php echo esc_html__('Number of Images', 'borspirit'); ?></label></th>
                             <td>
                                 <input type="number" name="dpg_image_count" id="dpg_image_count" class="regular-text" value="5" min="1" max="100">
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row"><label for="dpg_image_width"><?php echo esc_html__('Image Width (px)', 'dummy-post-generator'); ?></label></th>
+                            <th scope="row"><label for="dpg_image_width"><?php echo esc_html__('Image Width (px)', 'borspirit'); ?></label></th>
                             <td>
                                 <input type="number" name="dpg_image_width" id="dpg_image_width" class="regular-text" value="1280" min="300" max="3840">
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row"><label for="dpg_image_height"><?php echo esc_html__('Image Height (px)', 'dummy-post-generator'); ?></label></th>
+                            <th scope="row"><label for="dpg_image_height"><?php echo esc_html__('Image Height (px)', 'borspirit'); ?></label></th>
                             <td>
                                 <input type="number" name="dpg_image_height" id="dpg_image_height" class="regular-text" value="720" min="300" max="2160">
                             </td>
                         </tr>
                     </table>
-                    <?php submit_button(__('Upload Dummy Images', 'dummy-post-generator')); ?>
+                    <?php submit_button(__('Upload Dummy Images', 'borspirit')); ?>
                 </form>
             </div>
             <?php
@@ -104,7 +104,7 @@
             // Handle post generation form
             if (isset($_POST['dpg_number'], $_POST['dpg_post_type'])) {
                 if (!isset($_POST['dpg_generate_nonce_field']) || !wp_verify_nonce($_POST['dpg_generate_nonce_field'], 'dpg_generate_nonce')) {
-                    wp_die(__('Security check failed.', 'dummy-post-generator'));
+                    wp_die(__('Security check failed.', 'borspirit'));
                 }
 
                 $count     = intval($_POST['dpg_number']);
@@ -121,7 +121,7 @@
                     _n('%1$s dummy %2$s created successfully with unique titles, content, and images!',
                     '%1$s dummy %2$s created successfully with unique titles, content, and images!',
                     $count,
-                    'dummy-post-generator'),
+                    'borspirit'),
                     $count,
                     $singular_name
                 )));
@@ -130,7 +130,7 @@
             // Handle image upload form
             if (isset($_POST['dpg_image_count'], $_POST['dpg_image_width'], $_POST['dpg_image_height'])) {
                 if (!isset($_POST['dpg_images_nonce_field']) || !wp_verify_nonce($_POST['dpg_images_nonce_field'], 'dpg_images_nonce')) {
-                    wp_die(__('Security check failed.', 'dummy-post-generator'));
+                    wp_die(__('Security check failed.', 'borspirit'));
                 }
 
                 $count  = intval($_POST['dpg_image_count']);
@@ -143,7 +143,7 @@
                     _n('%1$s dummy image uploaded successfully!',
                     '%1$s dummy images uploaded successfully!',
                     $uploaded,
-                    'dummy-post-generator'),
+                    'borspirit'),
                     $uploaded
                 )));
             }

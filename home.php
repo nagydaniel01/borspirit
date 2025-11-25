@@ -3,6 +3,7 @@
 <?php
     global $wp_query;
     
+    $post_type      = 'post';
     $show_on_front  = get_option('show_on_front');
     $page_title     = get_the_title();
 

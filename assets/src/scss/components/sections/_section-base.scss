@@ -29,6 +29,10 @@
     &.section--color-primary {
         background-color: rgba($primary, 1);
 
+        .slider__list::after {
+            background: linear-gradient(to right, rgba($primary, 0) 0%, rgba($primary, 1) 100%) !important;
+        }
+
         .section__title {
             color: rgba($white, 1);
         }
@@ -38,7 +42,7 @@
         background-color: rgba($primary, 0.05);
 
         .slider__list::after {
-            background: linear-gradient(to right, rgba($primary, 0) 0%, rgba($primary, 0.05) 100%) !important;
+            background: linear-gradient(to right, rgba($primary, 0) 0%, #FDFCF7 100%) !important;
         }
     }
 
@@ -46,12 +50,16 @@
         background-color: rgba($primary, 0.25);
 
         .slider__list::after {
-            background: linear-gradient(to right, rgba($primary, 0) 0%, rgba($primary, 0.25) 100%) !important;
+            background: linear-gradient(to right, rgba($primary, 0) 0%, #F7EFD9 100%) !important;
         }
     }
 
     &.section--color-secondary {
         background-color: rgba($secondary, 1);
+
+        .slider__list::after {
+            background: linear-gradient(to right, rgba($secondary, 0) 0%, rgba($secondary, 1) 100%) !important;
+        }
 
         .section__title {
             color: rgba($primary-dark, 1);
@@ -61,24 +69,24 @@
     &.section--color-secondary-05 {
         background-color: rgba($secondary, 0.05);
 
-        .section__title {
-            color: rgba($primary-dark, 1);
+        .slider__list::after {
+            background: linear-gradient(to right, rgba($secondary, 0) 0%, #F4F4F4 100%) !important;
         }
 
-        .slider__list::after {
-            background: linear-gradient(to right, rgba($secondary, 0) 0%, rgba($secondary, 0.05) 100%) !important;
+        .section__title {
+            color: rgba($primary-dark, 1);
         }
     }
 
     &.section--color-secondary-25 {
         background-color: rgba($secondary, 0.25);
 
-        .section__title {
-            color: rgba($primary-dark, 1);
+        .slider__list::after {
+            background: linear-gradient(to right, rgba($secondary, 0) 0%, #C7C7C7 100%) !important;
         }
 
-        .slider__list::after {
-            background: linear-gradient(to right, rgba($secondary, 0) 0%, rgba($secondary, 0.25) 100%) !important;
+        .section__title {
+            color: rgba($primary-dark, 1);
         }
     }
 

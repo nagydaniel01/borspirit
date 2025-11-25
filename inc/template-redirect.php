@@ -9,6 +9,10 @@
          * @return void
          */
         function borspirit_register_attribute_rewrites() {
+            if ( ! class_exists( 'WooCommerce' ) ) {
+                return;
+            }
+
             $attributes = wc_get_attribute_taxonomies();
 
             if ( empty( $attributes ) ) {
@@ -57,6 +61,10 @@
 
             $custom_attr = get_query_var('borspirit_product_attribute');
             if ( ! $custom_attr ) {
+                return;
+            }
+
+            if ( ! class_exists( 'WooCommerce' ) ) {
                 return;
             }
 
