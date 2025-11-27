@@ -39,27 +39,9 @@
         }
     }
 
-    // Environment Constants
+    // Define Environment Constants
     if ( ! defined( 'WP_ENV' ) ) {
         define( 'WP_ENV', detect_environment() );
-    }
-
-    switch ( WP_ENV ) {
-        case 'production':
-            define( 'SCRIPT_DEBUG', false );
-            define( 'SHOW_ERRORS', false );
-            break;
-
-        case 'staging':
-            define( 'SCRIPT_DEBUG', true );
-            define( 'SHOW_ERRORS', true );
-            break;
-
-        case 'development':
-        default:
-            define( 'SCRIPT_DEBUG', true );
-            define( 'SHOW_ERRORS', true );
-            break;
     }
 
     // Define Theme Constants
