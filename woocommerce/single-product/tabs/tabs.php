@@ -22,6 +22,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $product;
 
 /**
+ * Check if ANY pa_boraszat term has BOTH name AND description
+ */
+$has_valid_boraszat_term = false;
+
+if ( $product instanceof WC_Product ) {
+    $terms = wp_get_post_terms( $product->get_id(), 'pa_boraszat' );
+
+    if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
+        foreach ( $terms as $term ) {
+            if ( ! empty( $term->name ) && ! empty( $term->description ) ) {
+                $has_valid_boraszat_term = true;
+                break;
+            }
+        }
+    }
+}
+
+/**
  * Get product sections (same as tabs but without navigation).
  */
 $product_tabs = apply_filters( 'woocommerce_product_tabs', array() );
@@ -29,6 +47,14 @@ $product_tabs = apply_filters( 'woocommerce_product_tabs', array() );
 if ( ! empty( $product_tabs ) ) : ?>
 
 	<?php foreach ( $product_tabs as $key => $product_tab ) : ?>
+
+		<?php
+			// Skip ONLY the winary section if no valid terms exist
+			if ( $key === 'winery' && ! $has_valid_boraszat_term ) {
+				continue;
+			}
+        ?>
+
 		<div class="section section--product--<?php echo esc_attr( $key ); ?> wc-section" id="<?php echo esc_attr( $key ); ?>">
 			<div class="container">
 				<?php

@@ -52,7 +52,7 @@
 ?>
 
 <?php if (!empty($oembed)) : ?>
-    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--oembed section--<?php echo esc_attr($oembed_type); ?> <?php echo esc_attr($section_classes); ?>">
+    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--oembed section--<?php echo esc_attr($oembed_type); ?><?php echo esc_attr($section_classes); ?>">
         <div class="container">
             <?php if (($section_title && $section_hide_title !== true) || $section_lead) : ?>
                 <div class="section__header">

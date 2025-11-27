@@ -18,7 +18,7 @@
 ?>
 
 <?php if (!empty($media)) : ?>
-    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--media <?php echo esc_attr($section_classes); ?>">
+    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--media<?php echo esc_attr($section_classes); ?>">
         <div class="container">
             <div class="section__inner">
                 <?php if (($section_title && !$section_hide_title) || $section_lead) : ?>

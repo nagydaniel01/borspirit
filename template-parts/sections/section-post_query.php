@@ -90,7 +90,7 @@ $post_query = new WP_Query($query_args);
 ?>
 
 <?php if ($post_query->have_posts()) : ?>
-    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--post_query <?php echo esc_attr($section_classes); ?><?php echo ($slider != false) ? ' section--slider' : ''; ?>">
+    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--post_query<?php echo esc_attr($section_classes); ?><?php echo ($slider != false) ? ' section--slider' : ''; ?>">
         <div class="container">
             <?php if (($section_title && $section_hide_title !== true) || $section_lead) : ?>
                 <div class="section__header">

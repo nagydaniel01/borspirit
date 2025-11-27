@@ -42,11 +42,11 @@
 
     $extra_classes = '';
     if ($taxonomy) {
-        $extra_classes = 'card--'.$taxonomy;
+        $extra_classes = ' card--'.$taxonomy;
     }
 ?>
 
-<article class="card card--term <?php echo esc_attr($extra_classes); ?>">
+<article class="card card--term<?php echo esc_attr($extra_classes); ?>">
     <a href="<?php echo esc_url($term_link); ?>" class="card__link">
         <?php if ($image_id) : ?>
             <div class="card__header">

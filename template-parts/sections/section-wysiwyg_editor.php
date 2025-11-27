@@ -18,12 +18,10 @@
     if ($wysiwyg_editor_layout) {
         $extra_classes .= ' section--' . $wysiwyg_editor_layout;
     }
-
-    $extra_classes = trim($extra_classes);
 ?>
 
 <?php if (!empty($wysiwyg_editor_items)) : ?>
-    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--wysiwyg_editor <?php echo esc_attr($section_classes); ?><?php echo esc_attr($extra_classes); ?>">
+    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--wysiwyg_editor<?php echo esc_attr($section_classes); ?><?php echo esc_attr($extra_classes); ?>">
         <div class="container">
             <?php if (($section_title && $section_hide_title !== true) || $section_lead) : ?>
                 <div class="section__header">

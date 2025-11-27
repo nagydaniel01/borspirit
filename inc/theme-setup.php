@@ -353,8 +353,8 @@
          */
         function add_environment_pill() {
             // Check if environment constant exists
-            if ( defined('WP_ENVIRONMENT_TYPE') ) {
-                $env = strtolower( trim( WP_ENVIRONMENT_TYPE ) );
+            if ( defined('WP_ENV') ) {
+                $env = strtolower( trim( WP_ENV ) );
 
                 // Skip display for production
                 if ( $env === 'production' ) {

@@ -19,7 +19,7 @@
 ?>
 
 <?php if (!empty($orders)) : ?>
-    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--customer_reviews <?php echo esc_attr($section_classes); ?>">
+    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--customer_reviews<?php echo esc_attr($section_classes); ?>">
         <div class="container">
             <?php if (($section_title && $section_hide_title !== true) || $section_lead) : ?>
                 <div class="section__header">

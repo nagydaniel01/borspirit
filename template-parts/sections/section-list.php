@@ -19,7 +19,7 @@
 ?>
 
 <?php if (!empty($list_items)) : ?>
-    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--list <?php echo esc_attr($section_classes); ?>">
+    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--list<?php echo esc_attr($section_classes); ?>">
         <div class="container">
             <?php if (($section_title && $section_hide_title !== true) || $section_lead) : ?>
                 <div class="section__header">

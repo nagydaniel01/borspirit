@@ -18,7 +18,7 @@
 
     $extra_classes = '';
     if ($post_type) {
-        $extra_classes = 'card--'.$post_type;
+        $extra_classes = ' card--'.$post_type;
 
         /*
         // Get singular name of post type for ARIA label
@@ -38,7 +38,7 @@
     }
 ?>
 
-<article class="card card--related <?php echo esc_attr($extra_classes); ?>">
+<article class="card card--related<?php echo esc_attr($extra_classes); ?>">
     <a href="<?php the_permalink(); ?>" class="card__link">
         <?php if ($image_id) : ?>
             <div class="card__header">

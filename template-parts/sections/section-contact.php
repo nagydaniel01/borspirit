@@ -14,7 +14,7 @@
 ?>
 
 <?php if (!empty($contact) || !empty($form_id)) : ?>
-    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--contact <?php echo esc_attr($section_classes); ?>">
+    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--contact<?php echo esc_attr($section_classes); ?>">
         <div class="container">
             <div class="section__inner">
                 <?php if (($section_title && $section_hide_title !== true) || $section_lead) : ?>

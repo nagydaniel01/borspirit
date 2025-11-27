@@ -22,7 +22,7 @@
 ?>
 
 <?php if (!empty($card_items)) : ?>
-    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--card <?php echo esc_attr($section_classes); ?><?php echo ($slider != false) ? ' section--slider' : ''; ?>">
+    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--card<?php echo esc_attr($section_classes); ?><?php echo ($slider != false) ? ' section--slider' : ''; ?>">
         <div class="container">
             <?php if (($section_title && $section_hide_title !== true) || $section_lead) : ?>
                 <div class="section__header">
@@ -62,7 +62,7 @@
                 <?php else : ?>
                     <div class="row">
                         <?php foreach ($card_items as $key => $item) : ?>
-                            <div class="col-lg-6 col-xl-4">
+                            <div class="col-lg-6 col-xl-4 mb-3">
                                 <?php
                                     if ($template) {
                                         $template_args = [

@@ -1,13 +1,74 @@
 <?php
     defined( 'ABSPATH' ) || exit;
 
-    // Theme Constants
+    if ( ! function_exists( 'detect_environment' ) ) {
+        /**
+         * Detects the current environment based on the domain/host.
+         *
+         * Rules:
+         *  - *.hu         → 'production'
+         *  - staging.*.hu → 'staging'
+         *  - *.test       → 'development'
+         *  - fallback     → 'development'
+         *
+         * @return string One of 'production', 'staging', or 'development'
+         */
+        function detect_environment() {
+            $host = $_SERVER['HTTP_HOST'] ?? '';
+
+            // Normalize host (lowercase, remove port)
+            $host = strtolower( preg_replace( '/:.*/', '', $host ) );
+
+            // PRODUCTION: all *.hu except staging.*.hu
+            if ( str_ends_with( $host, '.hu' ) ) {
+                return 'production';
+            }
+
+            // STAGING: staging.domain.hu or staging.anything.hu
+            if ( preg_match( '/^staging\..+\.hu$/', $host ) ) {
+                return 'staging';
+            }
+
+            // DEVELOPMENT: *.test domains
+            if ( str_ends_with( $host, '.test' ) ) {
+                return 'development';
+            }
+
+            // Fallback
+            return 'development';
+        }
+    }
+
+    // Environment Constants
+    if ( ! defined( 'WP_ENV' ) ) {
+        define( 'WP_ENV', detect_environment() );
+    }
+
+    switch ( WP_ENV ) {
+        case 'production':
+            define( 'SCRIPT_DEBUG', false );
+            define( 'SHOW_ERRORS', false );
+            break;
+
+        case 'staging':
+            define( 'SCRIPT_DEBUG', true );
+            define( 'SHOW_ERRORS', true );
+            break;
+
+        case 'development':
+        default:
+            define( 'SCRIPT_DEBUG', true );
+            define( 'SHOW_ERRORS', true );
+            break;
+    }
+
+    // Define Theme Constants
     define( 'THEME_NAME', get_bloginfo( 'name' ) );
 
     define( 'TEMPLATE_PATH', get_template_directory() );
     define( 'TEMPLATE_DIR_URI', esc_url( get_template_directory_uri() ) );
 
-    // Asset Versioning
+    // Define Asset Versioning
     $style_path = TEMPLATE_PATH . '/assets/dist/css/styles.css';
     $version    = file_exists( $style_path ) ? filemtime( $style_path ) : '1.0.0';
     define( 'ASSETS_VERSION', $version );
@@ -22,13 +83,13 @@
     define( 'SITE_URL', esc_url( site_url() ) );
     define( 'ADMIN_AJAX', esc_url( admin_url( 'admin-ajax.php' ) ) );
 
-    // Page IDs
+    // Define Page IDs Constants
     define( 'HOME_PAGE_ID', get_option( 'page_on_front' ) );
     define( 'BLOG_PAGE_ID', get_option( 'page_for_posts' ) );
     define( 'PRIVACY_POLICY_PAGE_ID', get_option( 'wp_page_for_privacy_policy' ) );
     define( 'TERMS_PAGE_ID', get_option( 'wp_page_for_terms' ) );
 
-    // 404 Page
+    // Define 404 Page Constants
     $page_404 = get_pages( array(
         'meta_key'   => '_wp_page_template',
         'meta_value' => '404.php',
@@ -38,7 +99,7 @@
         define( 'ERROR_404_PAGE_ID', $page_404[0]->ID );
     }
 
-    // Custom "Thank you" Page
+    // Define Custom "Thank you" Page Constants
     $page_thank_you = get_pages( array(
         'meta_key'   => '_wp_page_template',
         'meta_value' => 'templates/page-thank-you.php',
@@ -48,7 +109,7 @@
         define( 'THANK_YOU_PAGE_ID', $page_thank_you[0]->ID );
     }
 
-    // ACF Fields
+    // Define ACF Fields Constants
     if ( function_exists( 'get_field' ) ) {
         $under_construction_mode = get_field( 'under_construction_mode', 'option' ) ?? false;
         $placeholder_img         = get_field( 'placeholder_img', 'option' ) ?? [];
@@ -76,7 +137,7 @@
         }
     }
 
-    // WooCommerce Page IDs
+    // Define WooCommerce Page IDs Constants
     if ( class_exists( 'WooCommerce' ) ) {
         define( 'SHOP_PAGE_ID', wc_get_page_id( 'shop' ) );
         define( 'CART_PAGE_ID', wc_get_page_id( 'cart' ) );
@@ -84,11 +145,11 @@
         define( 'MY_ACCOUNT_PAGE_ID', wc_get_page_id( 'myaccount' ) );
     }
 
-    // Google reCAPTCHA
+    // Define Google reCAPTCHA Constants
     define( 'RECAPTCHA_SITE_KEY', '6LcOnQ4sAAAAAF_Mcnr5Adg4xtHC4sP46nC8LKjn' );
     define( 'RECAPTCHA_SECRET_KEY', '6LcOnQ4sAAAAAEvEqeGkNE6b9X4rWxGMVhdR6CNU' );
 
-    // Mailchimp
+    // Define Mailchimp Constants
     if ( class_exists( 'MailchimpService' ) ) {
         define( 'MAILCHIMP_API_KEY', 'ae0da8ad3bcffc67ee33226e942bc534-us3' ); // For 'daniel.nagy0125@gmail.com' account
         define( 'MAILCHIMP_AUDIENCE_ID', '409e8ec6a8' );                       // For 'daniel.nagy0125@gmail.com' account

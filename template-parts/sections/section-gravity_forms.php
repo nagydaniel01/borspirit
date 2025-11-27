@@ -9,7 +9,7 @@
 ?>
 
 <?php if (!empty($form_id)) : ?>
-    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--gravity_forms <?php echo esc_attr($section_classes); ?>">
+    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--gravity_forms<?php echo esc_attr($section_classes); ?>">
         <div class="container">
             <?php if (($section_title && $section_hide_title !== true) || $section_lead) : ?>
                 <div class="section__header">

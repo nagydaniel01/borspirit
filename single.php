@@ -54,18 +54,6 @@
                 $taxonomy = 'product_cat';
                 break;
 
-            case 'service':
-                $taxonomy = 'service_cat';
-                break;
-
-            case 'knowledge_base':
-                $taxonomy = 'knowledge_base_cat';
-                break;
-
-            case 'event':
-                $taxonomy = 'event_cat';
-                break;
-
             default:
                 $taxonomy = 'category';
                 break;
