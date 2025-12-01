@@ -4,6 +4,15 @@ Minden lényeges változás ebben a fájlban kerül dokumentálásra, a [Keep a 
 
 ---
 
+## [1.2.1] – 2025-10-20
+### Added
+- PHPDoc stílusú kommentek hozzáadva a `wc_szamlazz_xml` filterhez
+
+### Changed
+- A Számlázz.hu XML generálás módosítása: a `rendelesSzam` mező alapértelmezetten üres értéket kap
+
+---
+
 ## [1.2.0] – 2025-10-10
 ### Added
 - Új **AJAX rendszer** bevezetése (`ajax/php/`, `ajax/js/`)
