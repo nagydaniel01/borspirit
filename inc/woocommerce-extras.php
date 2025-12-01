@@ -1678,6 +1678,7 @@
             if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
                 return;
             }
+
             if ( wp_is_post_autosave( $post_id ) || wp_is_post_revision( $post_id ) ) {
                 return;
             }
@@ -1816,6 +1817,7 @@
          */
         function quick_edit_subtitle_js() {
             global $current_screen;
+
             if ( $current_screen->post_type !== 'product' ) {
                 return;
             }
@@ -2046,8 +2048,94 @@
         add_action( 'wp_enqueue_scripts', 'enqueue_free_shipping_notice_script' );
     }
 
+    if ( ! function_exists( 'hide_flat_rate_when_free_available' ) ) {
+        /**
+         * Hide Flat Rate shipping when Free Shipping is available in WooCommerce.
+         *
+         * This function checks if free shipping exists for the cart. 
+         * If so, it removes all flat rate shipping options from the available rates.
+         *
+         * @param array $rates Array of shipping rates available for the package.
+         * @return array Filtered shipping rates.
+         */
+        function hide_flat_rate_when_free_available( $rates ) {
+
+            $free_shipping_exists = false;
+
+            // Check if free shipping is available
+            foreach ( $rates as $rate ) {
+                if ( $rate->method_id === 'free_shipping' ) {
+                    $free_shipping_exists = true;
+                    break;
+                }
+            }
+
+            // Remove flat rate if free shipping exists
+            if ( $free_shipping_exists ) {
+                foreach ( $rates as $rate_id => $rate ) {
+                    if ( $rate->method_id === 'flat_rate' ) {
+                        unset( $rates[ $rate_id ] );
+                    }
+                }
+            }
+
+            return $rates;
+        }
+        add_filter( 'woocommerce_package_rates', 'hide_flat_rate_when_free_available', 100 );
+    }
+
     // ============================================================
-    // 15. AGE CONFIRMATION
+    // 15. CHECKOUT FIELDS MODIFICATIONS
+    // ============================================================
+
+    if ( ! function_exists( 'my_customize_country_locale' ) ) {
+        /**
+         * Modify WooCommerce country locale:
+         * - Force the "state" field to be required and visible.
+         * - Change the order of address fields.
+         *
+         * @param array $locale Country locale settings.
+         * @return array Modified locale settings.
+         */
+        function my_customize_country_locale( $locale ) {
+            foreach ( $locale as $country_code => $fields ) {
+
+                // Ensure state is required + visible
+                $locale[ $country_code ]['state'] = [
+                    'required' => true,
+                    'hidden'   => false,
+                    'priority' => 45, // Add priority to change order
+                ];
+
+                /**
+                 * Change the order of fields by controlling priority.
+                 * Lower number = earlier in the form.
+                 * Adjust these values as needed.
+                 */
+                if ( isset( $locale[ $country_code ]['postcode'] ) ) {
+                    $locale[ $country_code ]['postcode']['priority'] = 50;
+                }
+
+                if ( isset( $locale[ $country_code ]['city'] ) ) {
+                    $locale[ $country_code ]['city']['priority'] = 60;
+                }
+
+                if ( isset( $locale[ $country_code ]['address_1'] ) ) {
+                    $locale[ $country_code ]['address_1']['priority'] = 70;
+                }
+
+                if ( isset( $locale[ $country_code ]['address_2'] ) ) {
+                    $locale[ $country_code ]['address_2']['priority'] = 80;
+                }
+            }
+
+            return $locale;
+        }
+        add_filter( 'woocommerce_get_country_locale', 'my_customize_country_locale' );
+    }
+
+    // ============================================================
+    // 16. AGE CONFIRMATION
     // ============================================================
 
     /**
@@ -2100,7 +2188,7 @@
     }
 
     // ============================================================
-    // 16. MARKETING NEWSLETTER OPT-IN
+    // 17. MARKETING NEWSLETTER OPT-IN
     // ============================================================
 
     if ( ! function_exists( 'my_plugin_register_marketing_optin_field' ) ) {
@@ -2137,6 +2225,17 @@
     }
 
     if ( ! function_exists( 'my_plugin_handle_newsletter_subscription' ) ) {
+        /**
+         * Handle newsletter subscription after WooCommerce checkout.
+         *
+         * Triggered on the `woocommerce_thankyou` hook. Validates the order,
+         * checks whether the customer opted into marketing, and if so, attempts
+         * to subscribe them to Mailchimp using the configured API credentials.
+         *
+         * @param int $order_id WooCommerce order ID.
+         *
+         * @return void
+         */
         function my_plugin_handle_newsletter_subscription( $order_id ) {
 
             // Validate order ID
@@ -2223,6 +2322,5 @@
                 );
             }
         }
-
         add_action( 'woocommerce_thankyou', 'my_plugin_handle_newsletter_subscription', 20, 1 );
     }

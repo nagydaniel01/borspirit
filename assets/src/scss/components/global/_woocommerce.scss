@@ -211,6 +211,9 @@
   .product {
     .woocommerce-loop-product {
       position: relative;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
       background-color: rgba($white, 1);
       border-radius: $border-radius;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -371,6 +374,7 @@
       // Add to cart button
       .woocommerce-loop-product__add-to-cart-wrapper {
         padding: 0.5rem 1rem 1rem;
+        margin-top: auto;
 
         .button {
           @extend .btn-sm, .w-100;
