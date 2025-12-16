@@ -1,9 +1,9 @@
-<?php if ( ! is_user_logged_in() ) : ?>
+<?php if ( class_exists( 'WooCommerce' ) && ! is_user_logged_in() ) : ?>
     <?php 
         $modal_title = get_field('register_modal_title', 'option');
         $modal_body  = get_field('register_modal_body', 'option');
     ?>
-    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">

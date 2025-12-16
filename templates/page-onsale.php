@@ -1,4 +1,8 @@
-<?php /* Template Name: On Sale Page */ ?>
+<?php 
+/**
+ * Template Name: On Sale Page
+ */
+?>
 
 <?php
 if ( ! defined( 'ABSPATH' ) ) {

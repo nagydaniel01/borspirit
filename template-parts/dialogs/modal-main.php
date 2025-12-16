@@ -14,12 +14,12 @@
 ?>
 
 <?php if ( $main_modal_active ) : ?>
-    <div class="modal<?php echo esc_attr( $has_bg_class ); ?> fade" id="mainModal" tabindex="-1" aria-labelledby="mainModalLabel" aria-hidden="true">
+    <div class="modal<?php echo esc_attr( $has_bg_class ); ?> fade" id="mainModal" tabindex="-1" aria-labelledby="mainModalLabel" aria-hidden="true" role="dialog" aria-label="<?php echo esc_attr( $modal_title ?: __('Informations', 'borspirit') ); ?>">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content"<?php echo $background_style; ?>>
                 <div class="modal-header">
                     <?php if ( $modal_title ) : ?>
-                        <h5 class="modal-title" id="mainModalLabel"><?php echo esc_html( $modal_title ); ?></h5>
+                        <h5 class="modal-title" id="mainModalLabel"><?php echo esc_html( $modal_title ?: '' ); ?></h5>
                     <?php endif; ?>
 
                     <?php if ( empty( $button_url ) ) : ?>

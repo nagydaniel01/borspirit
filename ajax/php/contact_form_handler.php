@@ -107,7 +107,7 @@
                 }
 
                 // Get admin email and validate
-                $admin_email = get_option('admin_email');
+                $admin_email = get_field( 'site_email', 'option' );
                 if ( ! $admin_email || ! is_email($admin_email) ) {
                     wp_send_json_error([
                         'message' => __('Admin email is not configured properly.', 'borspirit')
@@ -152,7 +152,15 @@
                 );
 
                 // Send the email
-                $sent = wp_mail($admin_email, $mail_subject, $mail_message, $headers);
+                $sent = wp_mail(
+                    [
+                        get_field( 'site_email', 'option' ), 
+                        'hello@borspirit.hu'
+                    ], 
+                    $mail_subject, 
+                    $mail_message, 
+                    $headers
+                );
 
                 if ( ! $sent ) {
                     wp_send_json_error([

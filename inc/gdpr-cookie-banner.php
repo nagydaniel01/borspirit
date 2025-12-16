@@ -24,12 +24,13 @@
                 <div class="cookie-content mb-2 mb-md-0">
                     <p>
                         <?php
-                        /* translators: Message about cookie usage */
-                        echo esc_html__( '🍪 We use cookies to improve your experience. You can accept or decline optional cookies. Read our ', 'borspirit' );
+                        /* translators: Message about cookie usage with a link to the Privacy Policy */
+                        printf(
+                            /* translators: %s is a link to the Privacy Policy */
+                            esc_html__( '🍪 We use cookies to improve your experience. You can accept or decline optional cookies. Read our %s.', 'borspirit' ),
+                            '<a href="' . esc_url( get_privacy_policy_url() ) . '" target="_blank">' . esc_html__( 'Privacy Policy', 'borspirit' ) . '</a>'
+                        );
                         ?>
-                        <a href="<?php echo esc_url( get_privacy_policy_url() ); ?>" target="_blank">
-                            <?php echo esc_html__( 'Privacy Policy', 'borspirit' ); ?>
-                        </a>.
                     </p>
                 </div>
                 <div class="cookie-buttons d-flex gap-2">

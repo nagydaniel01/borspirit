@@ -228,7 +228,10 @@ if ( ! function_exists( 'borspirit_send_daily_orders_summary_email' ) ) {
 
             // Send email with date in subject
             wp_mail(
-                get_option('admin_email'),
+                [
+                    get_field( 'site_email', 'option' ),
+                    'hello@borspirit.hu'
+                ],
                 sprintf( esc_html__('Daily %s Orders Report – %s', 'borspirit'), esc_html($site_name), $report_date ),
                 $message,
                 ['Content-Type: text/html; charset=UTF-8']

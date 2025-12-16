@@ -4,7 +4,7 @@
         $registration_enabled = 'yes' === get_option( 'woocommerce_enable_myaccount_registration' );
         $modal_title = $registration_enabled ? esc_html__( 'Login/Register', 'borspirit' ) : esc_html__( 'Login', 'borspirit' );
     ?>
-    <div class="modal modal--alt fade" id="login_formModal" tabindex="-1" aria-labelledby="login_formModalLabel" aria-hidden="true">
+    <div class="modal modal--alt fade" id="login_formModal" tabindex="-1" aria-labelledby="login_formModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">

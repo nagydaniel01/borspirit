@@ -76,5 +76,45 @@
     
             wp_enqueue_script( 'google-recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . esc_attr( $recaptcha_site_key ), [], null, true );
         }
-        add_action( 'wp_enqueue_scripts', 'recaptcha_scripts' );
+        add_action( 'wp_enqueue_scripts', 'recaptcha_scripts', 110 );
+    }
+
+    if ( ! function_exists( 'fb_meta_pixel_script' ) ) {
+        /**
+         * Add Meta Pixel tracking code via wp_enqueue_scripts.
+         *
+         * This function registers a dummy script handle and attaches
+         * the Meta Pixel initialization code as inline JavaScript.
+         * It also outputs the <noscript> tracking image fallback.
+         *
+         * @return void
+         */
+        function fb_meta_pixel_script() {
+
+            // Register an empty script to attach inline JavaScript to
+            wp_register_script( 'meta-pixel', false );
+            wp_enqueue_script( 'meta-pixel' );
+
+            // Meta Pixel inline JavaScript
+            $pixel_script = "
+                !function(f,b,e,v,n,t,s){
+                    if(f.fbq)return;n=f.fbq=function(){
+                        n.callMethod ? n.callMethod.apply(n,arguments) : n.queue.push(arguments)
+                    };
+                    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                    n.queue=[];t=b.createElement(e);t.async=!0;
+                    t.src=v;s=b.getElementsByTagName(e)[0];
+                    s.parentNode.insertBefore(t,s)
+                }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+                fbq('init', '1178515017580965');
+                fbq('track', 'PageView');
+            ";
+
+            wp_add_inline_script( 'meta-pixel', $pixel_script );
+
+            // Add the noscript pixel
+            echo '<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1178515017580965&ev=PageView&noscript=1" /></noscript>';
+        }
+        add_action( 'wp_enqueue_scripts', 'fb_meta_pixel_script', 120 );
     }

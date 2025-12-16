@@ -1,4 +1,4 @@
-<div class="modal modal--age-gate fade" id="ageGateModal" tabindex="-1" aria-labelledby="ageGateModalLabel" aria-hidden="true">
+<div class="modal modal--age-gate fade" id="ageGateModal" tabindex="-1" aria-labelledby="ageGateModalLabel" aria-hidden="true" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">

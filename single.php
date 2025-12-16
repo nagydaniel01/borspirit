@@ -17,22 +17,59 @@
         
         $estimated_reading_time = get_estimated_reading_time( get_the_content() );
 
+        // Get related faqs linked to this post
+        $post_faq = get_field('post_faqs', get_the_ID()) ?: [];
+
+        // Normalize FAQ items
+        $post_faq = array_values(array_filter(array_map(function ($item) {
+
+            // Case 1: FAQ is a WP_Post (relationship field)
+            if ($item instanceof WP_Post) {
+                return [
+                    'question' => get_the_title($item),
+                    'answer'   => apply_filters('the_content', $item->post_content),
+                ];
+            }
+
+            // Case 2: FAQ is a post ID
+            if (is_numeric($item)) {
+                $post = get_post($item);
+                if ($post) {
+                    return [
+                        'question' => get_the_title($post),
+                        'answer'   => apply_filters('the_content', $post->post_content),
+                    ];
+                }
+            }
+
+            // Case 3: FAQ is already an array (ACF repeater)
+            if (is_array($item) && ! empty($item['question']) && ! empty($item['answer'])) {
+                return [
+                    'question' => $item['question'],
+                    'answer'   => $item['answer'],
+                ];
+            }
+
+            return null;
+
+        }, $post_faq)));
+
         // Get related products linked to this post
         $products = get_field('post_related_products', get_the_ID()) ?: [];
 
         // Normalize into WC_Product objects
         $products = array_map(function($item) {
-            // If it's a Post object, convert to product ID
+            // Case 1: If it's a Post object, convert to product ID
             if ($item instanceof WP_Post) {
                 $item = $item->ID;
             }
 
-            // If numeric ID, try to get WC product
+            // Case 2: If numeric ID, try to get WC product
             if (is_numeric($item)) {
                 return wc_get_product($item);
             }
 
-            // If somehow already a WC_Product, return it
+            // Case 3: If somehow already a WC_Product, return it
             if ($item instanceof WC_Product) {
                 return $item;
             }
@@ -205,7 +242,87 @@
                         </span>
                     <?php endif; ?>
 
-                    <?php if ( !empty($products) ) : ?>
+                    <?php if ( ! empty( $post_faq ) ) : ?>
+                        <?php
+                            $section_slug        = 'faq';
+                            $extra_classes       = ' accordion--alt';
+                            $accordion_behavior  = 'standard'; // standard | collapsed | always_open
+                        ?>
+                        <div class="accordion<?php echo esc_attr( $extra_classes ); ?>" id="accordion-<?php echo esc_attr( $section_slug ); ?>">
+                            <?php foreach ( $post_faq as $index => $faq ) : 
+                                $is_first    = ( $index === 0 );
+                                $item_id     = $section_slug . '_' . $index;
+                                $title       = $faq['question'] ?? '';
+                                $description = $faq['answer'] ?? '';
+
+                                if ( ! $title || ! $description ) {
+                                    continue;
+                                }
+
+                                // Defaults
+                                $collapse_classes = 'accordion-collapse collapse';
+                                $show_class       = '';
+                                $aria_expanded    = 'false';
+                                $collapse_attrs   = '';
+
+                                switch ($accordion_behavior) {
+                                    case 'standard':
+                                        if ($is_first) {
+                                            $show_class    = ' show';
+                                            $aria_expanded = 'true';
+                                        }
+                                        $collapse_attrs = ' data-bs-parent="#accordion-' . esc_attr($section_slug) . '"';
+                                        break;
+
+                                    case 'collapsed':
+                                        // All start collapsed, one open at a time
+                                        $collapse_attrs = ' data-bs-parent="#accordion-' . esc_attr($section_slug) . '"';
+                                        break;
+
+                                    case 'always_open':
+                                        if ($is_first) {
+                                            $show_class    = ' show';
+                                            $aria_expanded = 'true';
+                                        }
+                                        // No parent attribute allows multiple open
+                                        break;
+                                }
+
+                                $button_attrs = sprintf(
+                                    'data-bs-toggle="collapse" data-bs-target="#collapse-%1$s" aria-expanded="%2$s" aria-controls="collapse-%1$s"',
+                                    esc_attr( $item_id ),
+                                    esc_attr( $aria_expanded )
+                                );
+                            ?>
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading-<?php echo esc_attr( $item_id ); ?>">
+                                    <button
+                                        class="accordion-button <?php echo ( $aria_expanded === 'false' ? 'collapsed' : '' ); ?>"
+                                        type="button"
+                                        <?php echo $button_attrs; ?>
+                                    >
+                                        <?php echo esc_html( $title ); ?>
+                                    </button>
+                                </h2>
+
+                                <div
+                                    id="collapse-<?php echo esc_attr( $item_id ); ?>"
+                                    class="<?php echo esc_attr( $collapse_classes . $show_class ); ?>"
+                                    aria-labelledby="heading-<?php echo esc_attr( $item_id ); ?>"
+                                    <?php echo $collapse_attrs; ?>
+                                >
+                                    <div class="accordion-body">
+                                        <?php echo wp_kses_post( $description ); ?>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if ( ! empty( $products ) ) : ?>
                         <div class="section__related-products">
                             <h2 class="section__title"><?php echo esc_html__('Related products', 'borspirit'); ?></h2>
 

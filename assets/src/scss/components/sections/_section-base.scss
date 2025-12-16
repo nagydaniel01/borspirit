@@ -103,8 +103,6 @@
     }
 
     .container--narrow {
-        max-width: 65rem;
-
         .section__content {
             max-width: 40rem;
             margin: 0 auto;
@@ -240,13 +238,6 @@
 
     .toc-list {
         list-style: none;
-    }
-
-    .accordion-body ol {
-        padding-left: 1rem;
-    }
-
-    .accordion-body > ol {
         padding-left: 0;
     }
 }

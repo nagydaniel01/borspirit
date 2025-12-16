@@ -39,20 +39,31 @@
                     $wysiwyg_editor = $item['wysiwyg_editor'] ?? '';
                     $image          = $item['wysiwyg_editor_image'] ?? '';
                     $image_id       = $image['ID'] ?? '';
-                    $alt_text       = get_post_meta($image_id, '_wp_attachment_image_alt', true) ?? '';
+                    $alt_text       = $image_id ? get_post_meta($image_id, '_wp_attachment_image_alt', true) : '';
+                    $link           = $item['wysiwyg_editor_link'] ?? '';
+                    $url            = !empty($link['url']) ? esc_url($link['url']) : '';
+                    $title          = !empty($link['title']) ? esc_html($link['title']) : '';
+                    $target         = !empty($link['target']) ? esc_attr($link['target']) : '_self';
+                    $rel            = ($target === '_blank') ? 'noopener noreferrer' : '';
                 ?>
-                
+
                 <div class="row">
-                    <div class="<?php echo ($image) ? 'col-md-6' : 'col'; ?>">
+                    <div class="<?php echo $image ? 'col-md-6' : 'col'; ?>">
                         <?php echo wp_kses_post($wysiwyg_editor); ?>
+
+                        <?php if (!empty($link)) : ?>
+                            <a href="<?php echo $url; ?>" target="<?php echo $target; ?>" class="btn btn-outline-primary" <?php if ($rel) echo 'rel="' . esc_attr($rel) . '"'; ?>>
+                                <?php echo $title; ?>
+                            </a>
+                        <?php endif; ?>
                     </div>
 
-                    <?php if (!empty($image)) : ?>
-                    <div class="col-md-6">
-                        <div class="section__image-wrapper">
-                            <?php echo wp_get_attachment_image($image_id, 'full', false, ['class' => 'section__image', 'alt' => esc_attr($alt_text), 'loading' => 'lazy']); ?>
+                    <?php if (!empty($image_id)) : ?>
+                        <div class="col-md-6">
+                            <div class="section__image-wrapper">
+                                <?php echo wp_get_attachment_image( $image_id, 'full', false, ['class' => 'section__image', 'alt' => esc_attr($alt_text), 'loading' => 'lazy'] ); ?>
+                            </div>
                         </div>
-                    </div>
                     <?php endif; ?>
                 </div>
 

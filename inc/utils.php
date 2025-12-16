@@ -660,7 +660,7 @@
                 $classes .= ' section--color-' . $bg_color;
             }
 
-            return trim($classes);
+            return $classes;
         }
         // $section_classes = build_section_classes($section, 'post_query');
     }

@@ -1,11 +1,11 @@
         <?php get_template_part('template-parts/global/footer', ''); ?>
 
         <?php
-            $dialog_template_dir     = get_template_directory().'/template-parts/dialogs/';
-            $sidebar_template_dir = get_template_directory().'/template-parts/sidebars/';
+            $dialog_template_dir  = get_template_directory() . '/template-parts/dialogs';
+            $sidebar_template_dir = get_template_directory() . '/template-parts/sidebars';
 
             if (is_dir($dialog_template_dir)) {
-                $dialog_files = scandir($dialog_template_dir);
+                $dialog_files = glob($dialog_template_dir . '/modal-*.php');
         
                 foreach ($dialog_files as $key => $file) {
                     if (pathinfo($file, PATHINFO_EXTENSION) === 'php') {
@@ -16,7 +16,7 @@
             }
 
             if (is_dir($sidebar_template_dir)) {
-                $sidebar_files = scandir($sidebar_template_dir);
+                $sidebar_files = glob($sidebar_template_dir . '/*.php');
         
                 foreach ($sidebar_files as $key => $file) {
                     if (pathinfo($file, PATHINFO_EXTENSION) === 'php') {

@@ -951,6 +951,7 @@
         function custom_woocommerce_pagination_icons($args) {
             $args['prev_text'] = '<svg class="icon icon-chevron-left"><use xlink:href="#icon-chevron-left"></use></svg>';
             $args['next_text'] = '<svg class="icon icon-chevron-right"><use xlink:href="#icon-chevron-right"></use></svg>';
+            
             return $args;
         }
         add_filter( 'woocommerce_pagination_args', 'custom_woocommerce_pagination_icons' );

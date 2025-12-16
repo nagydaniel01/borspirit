@@ -343,6 +343,8 @@
             $width    = esc_attr( $atts['width'] );
             $height   = esc_attr( $atts['height'] );
 
+            $location_name = 'Borspirit';
+
             // Error handling
             if ( empty( $location ) ) {
                 return '<p style="color:red;">Error: No location provided for the map.</p>';
@@ -363,11 +365,16 @@
             // Encode location for URL
             $location_encoded = urlencode( $location );
 
+            $title = sprintf(
+                esc_attr__( 'Location map for %s', 'borspirit' ),
+                $location_name
+            );
+
             // Build and escape the Google Maps URL
             $map_url = esc_url( "https://www.google.com/maps?q={$location_encoded}&z={$zoom}&output=embed" );
 
             // Return the iframe HTML
-            return "<iframe width='{$width}' height='{$height}' loading='lazy' allowfullscreen referrerpolicy='no-referrer-when-downgrade' src='{$map_url}'></iframe>";
+            return "<iframe width='{$width}' height='{$height}' loading='lazy' allowfullscreen referrerpolicy='no-referrer-when-downgrade' src='{$map_url}' title='{$title}'></iframe>";
         }
         add_shortcode( 'google_map', 'wp_google_map_shortcode' );
     }

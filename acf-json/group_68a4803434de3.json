@@ -173,6 +173,24 @@
                                     "allow_in_bindings": 0,
                                     "preview_size": "medium",
                                     "parent_repeater": "field_68cd2ee325b95"
+                                },
+                                {
+                                    "key": "field_693ff1eec11e8",
+                                    "label": "Hivatkozás",
+                                    "name": "wysiwyg_editor_link",
+                                    "aria-label": "",
+                                    "type": "link",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "return_format": "array",
+                                    "allow_in_bindings": 0,
+                                    "parent_repeater": "field_68cd2ee325b95"
                                 }
                             ]
                         }
@@ -3687,5 +3705,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1763741401
+    "modified": 1765798415
 }

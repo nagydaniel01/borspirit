@@ -31,6 +31,12 @@ body {
   }
 }
 
+.container {
+  &.container--narrow {
+    max-width: 65rem;
+  }
+}
+
 /* ------------------------- */
 /* Utilities & Helpers       */
 /* ------------------------- */
