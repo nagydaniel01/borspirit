@@ -4,6 +4,12 @@ Minden lényeges változás ebben a fájlban kerül dokumentálásra, a [Keep a 
 
 ---
 
+## [1.2.2] – 2025-12-16
+### Added
+- `post_faq` támogatás a single template-ben
+- Bootstrap alapú FAQ accordion megjelenítés
+- Többféle accordion viselkedés támogatása (`standard`, `collapsed`, `always_open`)
+
 ## [1.2.1] – 2025-10-20
 ### Added
 - PHPDoc stílusú kommentek hozzáadva a `wc_szamlazz_xml` filterhez
