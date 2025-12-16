@@ -2,6 +2,13 @@
 
 Minden lényeges változás ebben a fájlban kerül dokumentálásra, a [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) és a [Semantic Versioning](https://semver.org/) elvei szerint.
 
+## [1.2.3] – 2025-12-16
+### Changed
+- „Units sold” üzenet a termékoldalakon (`$units_sold_message`), többes/singuláris szám támogatással
+- „Free shipping” üzenet a termékoldalakon (`$free_shipping_limit_message`), az aktuális vásárló szállítási országát figyelembe véve
+- Automatikus fallback geolokáció, ha a vásárló országa nincs megadva
+- Csak engedélyezett szállítási módok figyelembe vétele
+
 ---
 
 ## [1.2.2] – 2025-12-16
@@ -9,6 +16,8 @@ Minden lényeges változás ebben a fájlban kerül dokumentálásra, a [Keep a 
 - `post_faq` támogatás a single template-ben
 - Bootstrap alapú FAQ accordion megjelenítés
 - Többféle accordion viselkedés támogatása (`standard`, `collapsed`, `always_open`)
+
+---
 
 ## [1.2.1] – 2025-10-20
 ### Added

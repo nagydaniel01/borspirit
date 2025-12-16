@@ -24,72 +24,69 @@ $icon_items = array_filter( $icon_items, function ($item) use ($selected_icons) 
 // --- Units sold message ---
 $units_sold_message = '';
 
-if ( in_array( 'units_sold_message', $selected_icons, true ) ) {
-    $units_sold           = (int) $product->get_total_sales();
-    $units_sold_message = sprintf(
-        _n(
-            '%s person has already tried it – get yours now!',
-            '%s people have already tried it – get yours now!',
-            $units_sold,
-            'borspirit'
-        ),
-        number_format_i18n( $units_sold )
-    );
+if ( in_array( 'units_sold_message', $selected_icons, true ) && isset( $product ) ) {
+    
+    $units_sold = (int) $product->get_total_sales();
+    
+    if ( $units_sold > 0 ) {
+        $units_sold_message = sprintf(
+            _n(
+                '%s person has already tried it – get yours now!',
+                '%s people have already tried it – get yours now!',
+                $units_sold,
+                'borspirit'
+            ),
+            number_format_i18n( $units_sold )
+        );
+    }
 }
 
 // --- Free shipping message ---
 $free_shipping_limit_message = '';
 
-if ( in_array( 'free_shipping_limit_message', $selected_icons, true ) ) {
-    // Only run on frontend
-    if ( ! is_admin() && ! wp_doing_ajax() && function_exists( 'WC' ) ) {
+if ( in_array( 'free_shipping_limit_message', $selected_icons, true ) && ! is_admin() && ! wp_doing_ajax() && function_exists( 'WC' ) ) {
 
-        $customer_country = '';
-        $wc = WC();
+    $wc = WC();
 
-        // Ensure customer session is ready
-        if ( isset( $wc->customer ) && is_object( $wc->customer ) ) {
-            $customer_country = $wc->customer->get_shipping_country();
-        }
+    // Get customer shipping details
+    $customer_country  = $wc->customer->get_shipping_country() ?: '';
+    $customer_state    = $wc->customer->get_shipping_state() ?: '';
+    $customer_postcode = $wc->customer->get_shipping_postcode() ?: '';
+    $customer_city     = $wc->customer->get_shipping_city() ?: '';
 
-        // Fallback to geolocation if country not set
-        if ( empty( $customer_country ) && class_exists( 'WC_Geolocation' ) ) {
-            $geo = WC_Geolocation::geolocate_ip();
-            $customer_country = $geo['country'] ?? '';
-        }
+    // Fallback to geolocation if country not set
+    if ( empty( $customer_country ) && class_exists( 'WC_Geolocation' ) ) {
+        $geo = WC_Geolocation::geolocate_ip();
+        $customer_country  = $geo['country'] ?? '';
+        $customer_city     = $geo['city'] ?? '';
+    }
 
-        // If we have a valid country, continue
-        if ( ! empty( $customer_country ) && class_exists( 'WC_Shipping_Zones' ) ) {
+    if ( ! empty( $customer_country ) && class_exists( 'WC_Shipping_Zones' ) ) {
 
-            $package = [
-                'destination' => [
-                    'country'  => $customer_country,
-                    'state'    => '',
-                    'postcode' => '',
-                    'city'     => '',
-                    'address'  => '',
-                ],
-            ];
+        $package = [
+            'destination' => [
+                'country'  => $customer_country,
+                'state'    => $customer_state,
+                'postcode' => $customer_postcode,
+                'city'     => $customer_city,
+                'address'  => '',
+            ],
+        ];
 
-            $zone    = WC_Shipping_Zones::get_zone_matching_package( $package );
-            $methods = $zone->get_shipping_methods();
+        // Get the matching shipping zone
+        $zone    = WC_Shipping_Zones::get_zone_matching_package( $package );
+        $methods = $zone->get_shipping_methods( true ); // Only enabled methods
 
-            foreach ( $methods as $method ) {
-                if ( ! is_object( $method ) ) {
-                    continue;
-                }
+        foreach ( $methods as $method ) {
+            if ( is_object( $method ) && $method->id === 'free_shipping' ) {
+                $min_amount = $method->get_option( 'min_amount' );
 
-                if ( $method->id === 'free_shipping' && $method->enabled === 'yes' ) {
-                    // Use get_option() for compatibility with newer WooCommerce versions
-                    $min_amount = $method->get_option( 'min_amount' );
-
-                    if ( is_numeric( $min_amount ) && $min_amount > 0 ) {
-                        $free_shipping_limit_message = sprintf(
-                            __( 'Free shipping on orders over %1$s', 'borspirit' ),
-                            wc_price( $min_amount )
-                        );
-                        break; // Stop after finding the first valid method
-                    }
+                if ( is_numeric( $min_amount ) && $min_amount > 0 ) {
+                    $free_shipping_limit_message = sprintf(
+                        __( 'Free shipping on orders over %1$s', 'borspirit' ),
+                        wc_price( $min_amount )
+                    );
+                    break; // Stop after the first valid free shipping method
                 }
             }
         }
@@ -173,7 +170,7 @@ if ( in_array('estimated_delivery_message', $selected_icons) ) {
     <?php if ( ! empty( $icon_items ) || ! empty( $units_sold_message ) || ! empty( $free_shipping_limit_message ) || ! empty( $estimated_delivery_message ) ) : ?>
         <div class="section__list">
 
-            <?php if ( ! empty( $units_sold_message ) && $units_sold > 0 ) : // Only display if at least one unit has been sold ?>
+            <?php if ( ! empty( $units_sold_message ) ) : // Only display if at least one unit has been sold ?>
                 <div class="section__listitem">
                     <svg class="section__icon icon icon-wine-bottle"><use xlink:href="#icon-wine-bottle"></use></svg>
                     <span class="section__text"><?php echo esc_html( $units_sold_message ); ?></span>
