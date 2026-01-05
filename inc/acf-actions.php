@@ -60,16 +60,17 @@
 
                 // Main options page
                 acf_add_options_page( array(
-                    'page_title'    => 'Sablon beállítások',
-                    'menu_title'    => 'Sablon beállítások',
-                    'menu_slug'     => 'theme-settings',
-                    'parent_slug'   => 'themes.php',
-                    'capability'    => 'edit_posts',
-                    'redirect'      => false,
+                    'page_title'  => 'Sablon beállítások',
+                    'menu_title'  => 'Sablon beállítások',
+                    'menu_slug'   => 'theme-settings',
+                    'parent_slug' => 'themes.php',
+                    'capability'  => 'manage_options',
+                    'redirect'    => false,
                 ) );
             }
         }
-        add_action( 'acf/init', 'acf_register_options_pages' );
+        //add_action( 'acf/init', 'acf_register_options_pages' );
+        add_action( 'init', 'acf_register_options_pages' );
     }
 
     if ( ! function_exists( 'acf_add_theme_settings_admin_bar_menu' ) ) {

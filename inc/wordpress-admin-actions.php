@@ -284,6 +284,75 @@
     }
 
     // ============================================================
+    // APPLY ON SALE FILTER TO ADMIN QUERY
+    // ============================================================
+
+    if ( ! function_exists( 'add_sale_status_filter_dropdown' ) ) {
+        /**
+         * Adds a sale status filter dropdown to the admin product list.
+         *
+         * @return void
+         */
+        function add_sale_status_filter_dropdown() {
+            global $typenow;
+
+            // Only show on WooCommerce product list
+            if ( 'product' !== $typenow ) {
+                return;
+            }
+
+            $selected = isset( $_GET['sale_status'] ) ? sanitize_text_field( $_GET['sale_status'] ) : '';
+
+            echo '<select name="sale_status" class="postform">';
+            echo '<option value="">' . esc_html__( 'All products', 'borspirit' ) . '</option>';
+            echo '<option value="on_sale"' . selected( $selected, 'on_sale', false ) . '>' . esc_html__( 'On sale', 'borspirit' ) . '</option>';
+            echo '<option value="not_on_sale"' . selected( $selected, 'not_on_sale', false ) . '>' . esc_html__( 'Not on sale', 'borspirit' ) . '</option>';
+            echo '</select>';
+        }
+        add_action( 'restrict_manage_posts', 'add_sale_status_filter_dropdown' );
+    }
+
+    if ( ! function_exists( 'filter_products_by_sale_status' ) ) {
+        /**
+         * Filters WooCommerce products by sale status in admin.
+         *
+         * @param WP_Query $query
+         * @return void
+         */
+        function filter_products_by_sale_status( $query ) {
+            global $pagenow;
+
+            // Safety checks
+            if (
+                ! is_admin() ||
+                'edit.php' !== $pagenow ||
+                ! isset( $query->query_vars['post_type'] ) ||
+                'product' !== $query->query_vars['post_type'] ||
+                empty( $_GET['sale_status'] )
+            ) {
+                return;
+            }
+
+            $sale_status = sanitize_text_field( $_GET['sale_status'] );
+            $on_sale_ids = wc_get_product_ids_on_sale();
+
+            // Prevent empty array issues
+            if ( empty( $on_sale_ids ) ) {
+                $on_sale_ids = array( 0 );
+            }
+
+            if ( 'on_sale' === $sale_status ) {
+                $query->set( 'post__in', $on_sale_ids );
+            }
+
+            if ( 'not_on_sale' === $sale_status ) {
+                $query->set( 'post__not_in', $on_sale_ids );
+            }
+        }
+        add_action( 'pre_get_posts', 'filter_products_by_sale_status' );
+    }
+
+    // ============================================================
     // APPLY AUTHOR FILTER TO ADMIN QUERY
     // ============================================================
 

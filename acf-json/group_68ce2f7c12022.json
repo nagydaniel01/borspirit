@@ -760,6 +760,48 @@
             "preview_size": "medium"
         },
         {
+            "key": "field_6943f4eb252cd",
+            "label": "Google Tag Manager ID",
+            "name": "gtm_id",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6943f4c7252cc",
+            "label": "Meta Pixel ID",
+            "name": "fb_pixel_id",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_691209bd045d4",
             "label": "Közösségi média",
             "name": "",
@@ -1629,5 +1671,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1763627634
+    "modified": 1766061354
 }

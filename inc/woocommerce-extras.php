@@ -1112,7 +1112,7 @@
                 }
 
                 $description = sprintf(
-                    __( 'Optional: special manual club price. Leave empty to use %s%% club discount.', 'borspirit' ),
+                    __( 'Optional: special manual club price. Leave empty to use %d%% club discount.', 'borspirit' ),
                     $discount
                 );
 
