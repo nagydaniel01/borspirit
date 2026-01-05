@@ -2,6 +2,12 @@
 
 Minden lényeges változás ebben a fájlban kerül dokumentálásra, a [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) és a [Semantic Versioning](https://semver.org/) elvei szerint.
 
+## [1.2.4] – 2026-01-05
+### Changed
+- On Sale Page template javítása, időzítések szűrése
+
+---
+
 ## [1.2.3] – 2025-12-16
 ### Changed
 - „Units sold” üzenet a termékoldalakon (`$units_sold_message`), többes/singuláris szám támogatással
