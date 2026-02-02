@@ -90,18 +90,6 @@
         }
     }
 
-    &.section--right {
-        .row {
-            flex-direction: row-reverse;
-        }
-    }
-
-    &.section--alternately {
-        .row:nth-child(even) {
-            flex-direction: row-reverse;
-        }
-    }
-
     .container--narrow {
         .section__content {
             max-width: 40rem;
@@ -246,6 +234,20 @@
     .section {
         padding-top: 4rem;
         padding-bottom: 4rem;
+
+        &.section--right {
+            .row {
+                flex-direction: row-reverse !important;
+            }
+        }
+
+        &.section--alternately {
+            .row {
+                &:nth-child(even) {
+                    flex-direction: row-reverse !important;
+                }
+            }
+        }
     }
 
     .section__navigation {

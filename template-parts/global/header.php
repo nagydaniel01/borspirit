@@ -1,6 +1,47 @@
 <?php
-    $site_name = get_field('site_name', 'option') ?: get_bloginfo('name');
-    $site_logo = get_field('site_logo', 'option');
+    $site_name = get_bloginfo('name') ?: get_field('site_name', 'option') ?: '';
+
+    $custom_logo_id = get_theme_mod('custom_logo') ?? null;
+    $acf_logo       = get_field('site_logo', 'option') ?? null;
+    $site_logo      = null;
+
+    switch ( true ) {
+        case ! empty( $acf_logo ):
+            switch ( true ) {
+                // ACF returns ID
+                case is_numeric( $acf_logo ):
+                    $image_data = wp_get_attachment_image_src( (int)$acf_logo, 'full' );
+                    $site_logo = [
+                        'ID'     => (int)$acf_logo,
+                        'url'    => $image_data[0] ?? '',
+                        'width'  => $image_data[1] ?? '',
+                        'height' => $image_data[2] ?? '',
+                        'alt'    => get_post_meta( $acf_logo, '_wp_attachment_image_alt', true ) ?: $site_name,
+                    ];
+                    break;
+
+                // ACF returns array
+                case is_array( $acf_logo ):
+                    $site_logo = $acf_logo;
+                    break;
+            }
+            break;
+
+        case ! empty( $custom_logo_id ):
+            $image_data = wp_get_attachment_image_src( $custom_logo_id, 'full' );
+            $site_logo = [
+                'ID'     => $custom_logo_id,
+                'url'    => $image_data[0] ?? '',
+                'width'  => $image_data[1] ?? '',
+                'height' => $image_data[2] ?? '',
+                'alt'    => get_post_meta( $custom_logo_id, '_wp_attachment_image_alt', true ) ?: $site_name,
+            ];
+            break;
+
+        default:
+            $site_logo = null;
+            break;
+    }
 
     $current_user = wp_get_current_user() ?? null;
     $avatar       = get_avatar( $current_user->ID, 32 );
@@ -9,7 +50,7 @@
     $display_name = $current_user->display_name ?? '';
     $user_name    = $display_name ? $display_name : $first_name;
 
-     // Check if registration is enabled on My Account page
+    // Check if registration is enabled on My Account page
     $registration_enabled = 'yes' === get_option( 'woocommerce_enable_myaccount_registration' );
     $modal_toggle_text = $registration_enabled ? esc_html__( 'Login/Register', 'borspirit' ) : esc_html__( 'Login', 'borspirit' );
 ?>

@@ -1,40 +1,53 @@
 <?php
-if ( ! function_exists( 'borspirit_schedule_daily_orders_summary' ) ) {
-    /**
-     * Schedule the daily WooCommerce orders summary via Action Scheduler.
-     */
-    function borspirit_schedule_daily_orders_summary() {
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
+    
+    if ( ! function_exists( 'borspirit_schedule_daily_orders_summary' ) ) {
+        /**
+         * Schedule daily email exactly at 17:00 UTC
+         */
+        function borspirit_schedule_daily_orders_summary() {
 
-        // Ensure Action Scheduler is available
-        if ( ! class_exists( 'ActionScheduler' ) ) {
-            return;
-        }
+            if ( ! class_exists( 'ActionScheduler' ) ) {
+                return;
+            }
 
-        // Prevent duplicate scheduling
-        if ( ! as_next_scheduled_action( 'borspirit_send_daily_orders_summary' ) ) {
+            // Prevent duplicates
+            if ( as_next_scheduled_action( 'borspirit_send_daily_orders_summary', [], 'borspirit' ) ) {
+                return;
+            }
 
-            //$first_run = strtotime( 'tomorrow 18:00' );
+            $utc = new DateTimeZone( 'UTC' );
+            $now = new DateTime( 'now', $utc );
 
-            // Use WordPress local timezone
-            $tz = wp_timezone();
-            $dt = new DateTime( 'tomorrow 18:00', $tz );
-            $first_run = $dt->getTimestamp();
+            // Next 17:00 UTC (today or tomorrow)
+            $run = new DateTime( 'today 17:00', $utc );
+            $run->setTime( 17, 0, 0 );
+
+            if ( $now >= $run ) {
+                $run->modify( '+1 day' );
+            }
 
             as_schedule_recurring_action(
-                $first_run,                           // First run
-                DAY_IN_SECONDS,                       // Repeat every 24 hours
-                'borspirit_send_daily_orders_summary' // Action hook
+                $run->getTimestamp(),        // ALWAYS 17:00:00
+                DAY_IN_SECONDS,              // 86400
+                'borspirit_send_daily_orders_summary',
+                [],
+                'borspirit'
             );
         }
+        add_action( 'after_switch_theme', 'borspirit_schedule_daily_orders_summary' );
     }
-    add_action( 'init', 'borspirit_schedule_daily_orders_summary' );
-}
 
-if ( ! function_exists( 'borspirit_send_daily_orders_summary_email' ) ) {
+    if ( ! function_exists( 'borspirit_send_daily_orders_summary_email' ) ) {
         /**
          * Send HTML detailed daily WooCommerce orders summary.
          */
         function borspirit_send_daily_orders_summary_email() {
+            if ( ! class_exists( 'WooCommerce' ) ) {
+                return;
+            }
 
             /*
             $today_start = strtotime('today midnight');
@@ -238,4 +251,166 @@ if ( ! function_exists( 'borspirit_send_daily_orders_summary_email' ) ) {
             );
         }
         add_action('borspirit_send_daily_orders_summary', 'borspirit_send_daily_orders_summary_email');
+    }
+
+    if ( ! function_exists( 'borspirit_render_daily_orders_widget' ) ) {
+        /**
+         * Registers the "Daily Orders Summary" dashboard widget in WordPress.
+         *
+         * This widget displays daily WooCommerce order totals, product quantities,
+         * and provides a button to send the daily report email manually.
+         */
+        function borspirit_register_daily_orders_widget() {
+            if ( ! class_exists( 'WooCommerce' ) ) {
+                return;
+            }
+
+            wp_add_dashboard_widget(
+                'borspirit_daily_orders_widget',
+                __( 'Daily Orders Summary', 'borspirit' ),
+                'borspirit_render_daily_orders_widget'
+            );
+        }
+        add_action( 'wp_dashboard_setup', 'borspirit_register_daily_orders_widget' );
+    }
+
+    if ( ! function_exists( 'borspirit_render_daily_orders_widget' ) ) {
+        /**
+         * Renders the content of the "Daily Orders Summary" dashboard widget.
+         *
+         * Displays:
+         * - Total orders, revenue, tax, and shipping for the reporting window.
+         * - Aggregated list of products sold with total quantities.
+         * - A manual "Send daily report now" button.
+         *
+         * Reporting window: yesterday 18:00 → today 18:00 (local WordPress timezone).
+         *
+         * Permissions:
+         * - Only users with `manage_woocommerce` capability can view the widget.
+         *
+         * Security:
+         * - Nonce verification is used for the manual send button.
+         * - Checks if required functions exist before running.
+         */
+        function borspirit_render_daily_orders_widget() {
+            if ( ! current_user_can( 'manage_woocommerce' ) ) {
+                echo '<p>' . esc_html__( 'You do not have permission to view this data.', 'borspirit' ) . '</p>';
+                return;
+            }
+
+            // Manual send (only if function exists)
+            if (
+                isset( $_POST['borspirit_send_daily_report'] ) &&
+                function_exists( 'borspirit_send_daily_orders_summary_email' ) &&
+                check_admin_referer( 'borspirit_send_daily_report_action' )
+            ) {
+                borspirit_send_daily_orders_summary_email();
+                echo '<div class="notice notice-success inline"><p>' .
+                    esc_html__( 'Daily report email sent.', 'borspirit' ) .
+                    '</p></div>';
+            }
+
+            if ( ! function_exists( 'wc_get_orders' ) ) {
+                echo '<p>' . esc_html__( 'WooCommerce is not available.', 'borspirit' ) . '</p>';
+                return;
+            }
+
+            // Reporting window: yesterday 18:00 → today 18:00 (LOCAL)
+            $timezone = wp_timezone();
+            $start_dt = new DateTime( 'yesterday 18:00', $timezone );
+            $end_dt   = new DateTime( 'today 18:00', $timezone );
+
+            $orders = wc_get_orders([
+                'limit'        => -1,
+                'date_created' => $start_dt->getTimestamp() . '...' . $end_dt->getTimestamp(),
+                'status'       => [ 'wc-processing', 'wc-completed', 'wc-on-hold', 'wc-pending' ],
+            ]);
+
+            // Totals
+            $totals = [
+                'orders'   => 0,
+                'revenue'  => 0,
+                'tax'      => 0,
+                'shipping' => 0,
+            ];
+
+            // Product aggregation
+            $products = []; // product_name => qty
+
+            foreach ( $orders as $order ) {
+
+                $totals['orders']++;
+                $totals['revenue']  += $order->get_total();
+                $totals['tax']      += $order->get_total_tax();
+                $totals['shipping'] += $order->get_shipping_total();
+
+                foreach ( $order->get_items() as $item ) {
+                    $name = $item->get_name();
+                    $qty  = (int) $item->get_quantity();
+
+                    if ( ! isset( $products[ $name ] ) ) {
+                        $products[ $name ] = 0;
+                    }
+
+                    $products[ $name ] += $qty;
+                }
+            }
+
+            // ======================
+            // Totals table
+            // ======================
+            echo '<table class="widefat striped"><tbody>';
+            echo '<tr><td><strong>' . esc_html__( 'Total orders', 'borspirit' ) . '</strong></td><td>' . esc_html( $totals['orders'] ) . '</td></tr>';
+            echo '<tr><td><strong>' . esc_html__( 'Total revenue', 'borspirit' ) . '</strong></td><td>' . wc_price( $totals['revenue'] ) . '</td></tr>';
+            echo '<tr><td><strong>' . esc_html__( 'Total tax', 'borspirit' ) . '</strong></td><td>' . wc_price( $totals['tax'] ) . '</td></tr>';
+            echo '<tr><td><strong>' . esc_html__( 'Total shipping', 'borspirit' ) . '</strong></td><td>' . wc_price( $totals['shipping'] ) . '</td></tr>';
+            echo '</tbody></table>';
+
+            // ======================
+            // Products table
+            // ======================
+            echo '<h4 style="margin-top:16px">' . esc_html__( 'Items sold', 'borspirit' ) . '</h4>';
+
+            if ( empty( $products ) ) {
+
+                echo '<p style="color:#666">' . esc_html__( 'No items sold in this period.', 'borspirit' ) . '</p>';
+
+            } else {
+
+                echo '<table class="widefat striped"><tbody>';
+                echo '<tr><th>' . esc_html__( 'Product', 'borspirit' ) . '</th><th>' . esc_html__( 'Quantity', 'borspirit' ) . '</th></tr>';
+
+                foreach ( $products as $product_name => $qty ) {
+                    echo '<tr>';
+                    echo '<td><strong>' . esc_html( $product_name ) . '</strong></td>';
+                    echo '<td>' . esc_html( $qty ) . '</td>';
+                    echo '</tr>';
+                }
+
+                echo '</tbody></table>';
+            }
+
+            // Footer
+            echo '<p style="margin-top:12px;font-size:12px;color:#666">';
+            echo sprintf(
+                esc_html__( 'Reporting window: %1$s → %2$s (%3$s)', 'borspirit' ),
+                esc_html( $start_dt->format( 'Y-m-d H:i' ) ),
+                esc_html( $end_dt->format( 'Y-m-d H:i' ) ),
+                esc_html( wp_timezone_string() )
+            );
+            echo '</p>';
+
+            // Button
+            if ( function_exists( 'borspirit_send_daily_orders_summary_email' ) ) {
+                echo '<form method="post" style="margin-top:12px">';
+                wp_nonce_field( 'borspirit_send_daily_report_action' );
+                submit_button(
+                    __( 'Send daily report now', 'borspirit' ),
+                    'primary',
+                    'borspirit_send_daily_report',
+                    false
+                );
+                echo '</form>';
+            }
+        }
     }

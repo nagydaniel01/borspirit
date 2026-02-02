@@ -9,5 +9,11 @@ document.querySelectorAll('.section.section--gallery .section__content a:has(img
     }
 });
 
-// Bind Fancybox to both selectors
-Fancybox.bind("[data-fancybox], .section.section--gallery .section__content a:has(img), .section--single-post .section__content a:has(img)");
+// Bind Fancybox with Hungarian localization
+Fancybox.bind("[data-fancybox], .section.section--gallery .section__content a:has(img), .section--single-post .section__content a:has(img)", {
+    l10n: {
+        NEXT: localize.translations.gallery.NEXT,
+        PREV: localize.translations.gallery.PREV,
+        CLOSE: localize.translations.gallery.CLOSE,
+    }
+} );

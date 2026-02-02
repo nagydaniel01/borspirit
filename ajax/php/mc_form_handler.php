@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
+    
     if ( ! function_exists('mc_form_handler') ) {
         /**
          * Handles AJAX submissions for the Mailchimp subscription form.

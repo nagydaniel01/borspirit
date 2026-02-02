@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
+    
     if ( ! function_exists( 'send_discord_channel' ) ) {
         /**
          * Sends a message to a specified Discord channel via webhook.

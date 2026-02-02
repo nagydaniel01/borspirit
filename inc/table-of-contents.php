@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
+    
     if ( ! function_exists( 'mdr_shortcode_table_of_contents' ) ) {
         /**
          * Shortcode handler for [table_of_contents].

@@ -1,5 +1,7 @@
 <?php
-    defined( 'ABSPATH' ) || exit;
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
 	
 	if ( ! function_exists( 'register_award_taxonomy' ) ) {
 		/**
@@ -9,7 +11,6 @@
 		 * It is non-hierarchical and has a default term.
 		 */
 		function register_award_taxonomy() {
-
 			$labels = array(
 				'name'                       => _x( 'Awards', 'Taxonomy General Name', 'borspirit' ),
 				'singular_name'              => _x( 'Award', 'Taxonomy Singular Name', 'borspirit' ),
@@ -57,9 +58,7 @@
 				//'default_term'      => $default_term,
 			);
 
-			// Attach to 'product' post type
 			register_taxonomy( 'award', array( 'product' ), $args );
 		}
-
 		add_action( 'init', 'register_award_taxonomy', 0 );
 	}

@@ -16,7 +16,7 @@
     );
 ?>
 
-<?php if (shortcode_exists('real3dflipbook') && !empty($file_url)) : ?>
+<?php if (!empty($file_url) && shortcode_exists('real3dflipbook')) : ?>
     <section id="<?php echo esc_attr($section_slug); ?>" class="section section--flipbook<?php echo esc_attr($section_classes); ?>">
         <div class="container">
             <?php if (($section_title && $section_hide_title !== true) || $section_lead) : ?>

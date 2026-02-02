@@ -1,16 +1,33 @@
 <?php
-    $under_construction_mode_body = get_field('under_construction_mode_body', 'option');
-    $social                       = get_field('social_items', 'option');
+    $site_name = get_field('site_name', 'option') ?? get_bloginfo('name');
+    $site_logo = get_field('site_logo', 'option') ?? '';
+    $logo_id  = is_array($site_logo) ? $site_logo['ID'] : $site_logo;
+    $logo_alt = is_array($site_logo) && !empty($site_logo['alt']) ? $site_logo['alt'] : $site_name;
+
+    $under_construction_mode_body = get_field('under_construction_mode_body', 'option') ?? '';
+    $social                       = get_field('social_items', 'option') ?: [];
+
+    // Stop execution if the under construction body is empty
+    if (empty($under_construction_mode_body)) {
+        wp_die(
+            '<h1>' . esc_html__( 'Under Construction', 'borspirit' ) . '</h1>' .
+            '<p>' . esc_html__( 'Our website is currently under construction. Please check back soon!', 'borspirit' ) . '</p>',
+            esc_html__( 'Under Construction', 'borspirit' ),
+            [
+                'response'  => 200
+            ]
+        );
+    }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title><?php echo esc_html__( 'Coming soon', 'borspirit' ); ?></title>
-        <link rel="icon" href="<?php echo esc_url( TEMPLATE_DIR_URI . '/assets/src/images/borspirit-logo-white.svg' ); ?>" type="image/svg+xml">
-        <link rel='stylesheet' id='borspirit-theme-css' href='<?php echo home_url("/wp-content/themes/borspirit/assets/dist/css/styles.css"); ?>?ver=<?php echo esc_attr( ASSETS_VERSION ); ?>' media='all' />
+        <link rel="icon" href="<?php echo esc_url( get_template_directory_uri() . '/assets/src/images/borspirit-logo-white.svg' ); ?>" type="image/svg+xml" />
+        <link rel="stylesheet" id="style-css" href="<?php echo esc_url( get_template_directory_uri() . '/assets/dist/css/styles.css' ); ?>?ver=<?php echo esc_attr( ASSETS_VERSION ); ?>" media="all" />
         <style>
             body {
                 margin: 0;
@@ -79,15 +96,21 @@
         <main class="page page--default page--under-construction">
             <section class="section section--default">
                 <div class="container">
-                    <div class="logo">
-                        <img src="<?php echo esc_url( TEMPLATE_DIR_URI . '/assets/src/images/borspirit-logo-white.svg' ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
-                    </div>
+                    <?php if (!empty($logo_id)) : ?>
+                        <div class="logo">
+                            <?php echo wp_get_attachment_image( $logo_id, 'full', false, ['class' => '', 'alt'   => esc_attr($logo_alt)] ); ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <h1><?php echo esc_html($site_name); ?></h1>
+                    <?php echo wp_kses_post($under_construction_mode_body); ?>
+
                     <?php if (!empty($social) && is_array($social)) : ?>
                         <?php
                             $custom_names = [
-                                'linkedin'     => 'LinkedIn',
-                                'youtube'      => 'YouTube',
-                                'tiktok'       => 'TikTok'
+                                'linkedin' => 'LinkedIn',
+                                'youtube'  => 'YouTube',
+                                'tiktok'   => 'TikTok'
                             ];
                         ?>
                         <nav class="footer__nav nav nav--footer">
@@ -108,7 +131,7 @@
                                         <li class="nav__item">
                                             <a href="<?php echo esc_url($social_url); ?>" target="<?php echo esc_attr($social_target); ?>" class="nav__link">
                                                 <?php if (!empty($social_image)) : ?>
-                                                    <?php echo wp_get_attachment_image( $social_image['ID'], [24, 24], false, ['class' => 'icon ', 'alt'   => esc_attr($social_name)] ); ?>
+                                                    <?php echo wp_get_attachment_image( $social_image['ID'], [24, 24], false, ['class' => 'icon ', 'alt' => esc_attr($social_name)] ); ?>
                                                 <?php else : ?>
                                                     <svg class="icon icon-<?php echo esc_attr($base); ?>"><use xlink:href="#icon-<?php echo esc_attr($base); ?>"></use></svg>
                                                 <?php endif; ?>
@@ -120,7 +143,6 @@
                             </ul>
                         </nav>
                     <?php endif; ?>
-                    <?php echo wp_kses_post($under_construction_mode_body); ?>
                 </div>
             </section>
         </main>

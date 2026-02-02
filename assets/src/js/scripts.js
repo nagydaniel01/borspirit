@@ -30,6 +30,7 @@ import './back-to-top';
 import './toast';
 import './text-collapse';
 import './youtube-player';
+import './woocommerce';
 import './product-sticky';
 import './quantity';
 import './marquee';

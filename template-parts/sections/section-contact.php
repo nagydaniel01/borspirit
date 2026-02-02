@@ -28,7 +28,7 @@
                     </div>
                 <?php endif; ?>
                 
-                <div class="section__content row">
+                <div class="section__content row flex-lg-row flex-column-reverse">
                     <?php if (!empty($contact)) : ?>
                         <div class="<?php echo esc_attr($contact_col_class); ?>">
                             <?php echo $contact; ?>

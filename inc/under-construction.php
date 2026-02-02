@@ -1,5 +1,7 @@
 <?php
-    defined( 'ABSPATH' ) || exit;
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
     
     if ( ! function_exists( 'show_under_construction_page' ) ) {
         /**

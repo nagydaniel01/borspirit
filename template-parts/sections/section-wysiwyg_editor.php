@@ -47,13 +47,13 @@
                     $rel            = ($target === '_blank') ? 'noopener noreferrer' : '';
                 ?>
 
-                <div class="row">
+                <div class="row flex-lg-row flex-column-reverse">
                     <div class="<?php echo $image ? 'col-md-6' : 'col'; ?>">
                         <?php echo wp_kses_post($wysiwyg_editor); ?>
 
-                        <?php if (!empty($link)) : ?>
-                            <a href="<?php echo $url; ?>" target="<?php echo $target; ?>" class="btn btn-outline-primary" <?php if ($rel) echo 'rel="' . esc_attr($rel) . '"'; ?>>
-                                <?php echo $title; ?>
+                        <?php if (!empty($url)) : ?>
+                            <a href="<?php echo esc_url($url); ?>" target="<?php echo esc_attr($target); ?>" class="btn btn-outline-primary" <?php if ($rel) echo 'rel="' . esc_attr($rel) . '"'; ?>>
+                                <?php echo esc_html($title); ?>
                             </a>
                         <?php endif; ?>
                     </div>

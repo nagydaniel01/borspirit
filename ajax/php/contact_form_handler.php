@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
+
     if ( ! function_exists('contact_form_handler') ) {
         /**
          * Handles AJAX submissions for the contact form.
@@ -84,6 +88,11 @@
                 $subject = isset($form['cf_subject']) ? sanitize_text_field($form['cf_subject']) : '';
                 $message = isset($form['cf_message']) ? sanitize_textarea_field($form['cf_message']) : '';
                 $privacy = isset($form['cf_privacy_policy']) ? sanitize_text_field($form['cf_privacy_policy']) : '';
+                $referer = isset($form['_wp_http_referer']) ? esc_url_raw($form['_wp_http_referer']) : '';
+
+                if ( $referer && strpos($referer, 'http') !== 0 ) {
+                    $referer = home_url($referer);
+                }
 
                 // Validate required fields
                 if ( empty($name) || empty($email) || empty($subject) || empty($message) ) {
@@ -138,17 +147,21 @@
                 }, $message_lines));
 
                 // Build final email body
+                $referer_html = !empty($referer) ? '<strong>Form submitted from:</strong> <a href="' . esc_url($referer) . '" target="_blank" rel="noopener">' . esc_html($referer) . '</a><br/>' : '';
+
                 $mail_message = sprintf(
                     '<strong>Name:</strong> %s<br/>
                     <strong>Email:</strong> %s<br/>
                     <strong>Phone:</strong> %s<br/>
                     <strong>Subject:</strong> %s<br/>
+                    %s
                     %s',
                     esc_html($name),
                     esc_html($email),
                     esc_html($phone),
                     esc_html($subject),
-                    $formatted_message
+                    $formatted_message,
+                    $referer_html
                 );
 
                 // Send the email
@@ -177,6 +190,7 @@
                     'phone'   => $phone,
                     'subject' => $subject,
                     'message' => $message,
+                    'referer' => $referer
                 ], 15 * MINUTE_IN_SECONDS ); // expires after 15 mins
                 
                 // Success response

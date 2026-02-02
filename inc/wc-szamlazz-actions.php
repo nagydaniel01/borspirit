@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
+    
     /**
      * Filter the WC Számlázz XML data before it is sent.
      *

@@ -1,5 +1,7 @@
 <?php
-    defined( 'ABSPATH' ) || exit;
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
     
     if ( ! function_exists( 'register_faq_post_type' ) ) {
         /**

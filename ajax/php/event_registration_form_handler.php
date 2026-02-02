@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
+    
     if ( ! function_exists('event_registration_form_handler') ) {
         /**
          * Handles AJAX submissions for the event registration form.

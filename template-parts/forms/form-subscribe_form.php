@@ -32,14 +32,14 @@
                         <label class="form-label visually-hidden" for="<?php echo esc_attr($prefix); ?>name">
                             <?php echo esc_html__( 'Name', 'borspirit' ); ?> <span class="required">*</span>
                         </label>
-                        <input type="text" class="form-control" id="<?php echo esc_attr($prefix); ?>name" name="<?php echo esc_attr($prefix); ?>name" value="" placeholder="<?php echo esc_attr__( 'Enter your name', 'borspirit' ); ?>" required aria-required="true">
+                        <input type="text" class="form-control" id="<?php echo esc_attr($prefix); ?>name" name="<?php echo esc_attr($prefix); ?>name" value="" placeholder="<?php echo esc_attr_x( 'Enter your name', 'placeholder', 'borspirit' ); ?>" required aria-required="true">
                     </div>
                 
                     <div class="col-md-6 mb-3">
                         <label class="form-label visually-hidden" for="<?php echo esc_attr($prefix); ?>email">
                             <?php echo esc_html__( 'E-mail', 'borspirit' ); ?> <span class="required">*</span>
                         </label>
-                        <input type="email" class="form-control" id="<?php echo esc_attr($prefix); ?>email" name="<?php echo esc_attr($prefix); ?>email" value="" placeholder="<?php echo esc_attr__( 'Enter your email address', 'borspirit' ); ?>" required aria-required="true">
+                        <input type="email" class="form-control" id="<?php echo esc_attr($prefix); ?>email" name="<?php echo esc_attr($prefix); ?>email" value="" placeholder="<?php echo esc_attr_x( 'Enter your email address', 'placeholder', 'borspirit' ); ?>" required aria-required="true">
                     </div>
                 </div>
 

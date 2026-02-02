@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
+    
     if ( ! function_exists( 'create_search_log_table' ) ) {
         /**
          * Create database table to store search queries.

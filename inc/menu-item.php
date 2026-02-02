@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
+    
     /**
      * Add "Enable Mega Menu" checkbox to WordPress menu items in admin.
      */

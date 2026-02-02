@@ -1,5 +1,7 @@
 <?php
-    defined( 'ABSPATH' ) || exit;
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
     
     $ajax_dir = get_template_directory() . '/ajax/php';
 

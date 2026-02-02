@@ -19,7 +19,9 @@
     font-weight: 400;
     text-decoration: none;
     color: $white;
+    padding: 0;
 
+    &.nav__current,
     &:hover,
     &:focus {
       color: $primary;

@@ -1,4 +1,8 @@
 <?php
+    if ( ! class_exists( 'WooCommerce' ) ) {
+        return;
+    }
+    
     $section_classes = build_section_classes($section, 'customer_reviews');
 
     $section_title      = $section['customer_reviews_section_title'] ?? '';

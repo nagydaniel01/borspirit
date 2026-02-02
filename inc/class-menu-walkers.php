@@ -1,13 +1,34 @@
 <?php
-if ( ! class_exists( 'Custom_Nav_Walker' ) ) {
-    class Custom_Nav_Walker extends Walker_Nav_Menu {
+if ( ! class_exists( 'Custom_Bootstrap_Nav_Walker' ) ) {
+    class Custom_Bootstrap_Nav_Walker extends Walker_Nav_Menu {
+
+        private $last_top_level_id = null;
+
+        /**
+         * Detect last top-level item before rendering starts
+         */
+        public function walk( $elements, $max_depth, ...$args ) {
+
+            // Find all top-level items
+            $top_level_items = array_filter( $elements, function( $el ) {
+                return (int) $el->menu_item_parent === 0;
+            });
+
+            // Get last one
+            if ( ! empty( $top_level_items ) ) {
+                $last = end( $top_level_items );
+                $this->last_top_level_id = $last->ID;
+            }
+
+            return parent::walk( $elements, $max_depth, ...$args );
+        }
 
         public function start_lvl( &$output, $depth = 0, $args = null ) {
             $t = isset( $args->item_spacing ) && 'discard' === $args->item_spacing ? '' : "\t";
             $n = isset( $args->item_spacing ) && 'discard' === $args->item_spacing ? '' : "\n";
             $indent = str_repeat( $t, $depth );
 
-            $classes = ['nav__list', 'level' . ( $depth + 1 )];
+            $classes = ['nav__list', 'level' . ( $depth + 1 ), 'dropdown-menu'];
             $class_names = implode( ' ', apply_filters( 'nav_menu_submenu_css_class', $classes, $args, $depth ) );
 
             $atts = [
@@ -25,14 +46,27 @@ if ( ! class_exists( 'Custom_Nav_Walker' ) ) {
             $n = isset( $args->item_spacing ) && 'discard' === $args->item_spacing ? '' : "\n";
             $indent = ( $depth ) ? str_repeat( $t, $depth ) : '';
 
-            // Classes
+            // Classes for <li>
             $classes = empty( $item->classes ) ? [] : (array) $item->classes;
             $classes[] = 'nav__item';
+            $classes[] = 'nav-item';
             $classes[] = 'level' . $depth;
 
-            // Detect has-children (core sets 'menu-item-has-children', but we ensure ours too)
+            // Detect if <li> has children
+            $has_children = ! empty( $args->walker->has_children );
+
             if ( in_array( 'menu-item-has-children', $classes, true ) ) {
                 $classes[] = 'has-children';
+                if ($depth === 0) {
+                    $classes[] = 'dropdown';
+                } else {
+                    $classes[] = 'dropend';
+                }
+            }
+
+            // Detect if <li> is the last item in current depth
+            if ( $depth === 0 && $item->ID === $this->last_top_level_id ) {
+                $classes[] = 'nav__item--last';
             }
 
             $args = apply_filters( 'nav_menu_item_args', $args, $item, $depth );
@@ -49,16 +83,27 @@ if ( ! class_exists( 'Custom_Nav_Walker' ) ) {
 
             $output .= $indent . '<li' . $li_attributes . '>';
 
-            // Title and link
+            // Title
             $title = apply_filters( 'the_title', $item->title, $item->ID );
             $title = apply_filters( 'nav_menu_item_title', $title, $item, $args, $depth );
 
+            // --- Anchor classes ---
+            $a_classes = ['nav__link', 'js-nav-link', 'level' . $depth];
+            if ($depth === 0) {
+                $a_classes[] = 'nav-link';
+                if ($has_children) $a_classes[] = 'dropdown-toggle';
+            } else {
+                $a_classes[] = 'dropdown-item';
+                if ($has_children) $a_classes[] = 'dropdown-toggle';
+            }
+
+            // Build <a> attributes
             $atts = [
                 'href'         => ! empty( $item->url ) ? esc_url( $item->url ) : '',
                 'target'       => ! empty( $item->target ) ? esc_attr( $item->target ) : '',
                 'rel'          => ! empty( $item->xfn ) ? esc_attr( $item->xfn ) : '',
                 'aria-current' => ! empty( $item->current ) ? 'page' : '',
-                'class'        => 'nav__link js-nav-link level' . $depth,
+                'class'        => implode( ' ', $a_classes ),
             ];
 
             $atts = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args, $depth );
@@ -242,6 +287,11 @@ if ( ! class_exists( 'Custom_Mega_Menu_Nav_Walker' ) ) {
                 'class' => 'nav__link js-nav-link level' . $depth,
                 //'title' => $item->title,
             ];
+
+            // Add 'nav__current' class if this is the current menu item
+            if ( ! empty( $item->current ) || ! empty( $item->current_item_ancestor ) ) {
+                $atts['class'] .= ' nav__current';
+            }
 
             // Mega menu tab handling (depth 1)
             if ($this->mega_menu && $depth === 1) {

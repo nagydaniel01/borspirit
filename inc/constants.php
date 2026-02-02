@@ -1,5 +1,7 @@
 <?php
-    defined( 'ABSPATH' ) || exit;
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
 
     if ( ! function_exists( 'detect_environment' ) ) {
         /**
@@ -117,8 +119,8 @@
         'meta_value' => '404.php',
     ) );
 
-    if ( ! empty( $page_404 ) && ! defined( 'ERROR_404_PAGE_ID' ) ) {
-        define( 'ERROR_404_PAGE_ID', $page_404[0]->ID );
+    if ( ! defined( 'ERROR_404_PAGE_ID' ) ) {
+        define( 'ERROR_404_PAGE_ID', ! empty( $page_404 ) ? $page_404[0]->ID : 0 );
     }
 
     // Define Custom "Thank you" Page Constants
@@ -127,8 +129,8 @@
         'meta_value' => 'templates/page-thank-you.php',
     ) );
 
-    if ( ! empty( $page_thank_you ) && ! defined( 'THANK_YOU_PAGE_ID' ) ) {
-        define( 'THANK_YOU_PAGE_ID', $page_thank_you[0]->ID );
+    if ( ! defined( 'THANK_YOU_PAGE_ID' ) ) {
+        define( 'THANK_YOU_PAGE_ID', ! empty( $page_thank_you ) ? $page_thank_you[0]->ID : 0 );
     }
 
     // Define ACF Fields Constants

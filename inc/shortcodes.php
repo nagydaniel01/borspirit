@@ -1,5 +1,7 @@
 <?php
-    defined( 'ABSPATH' ) || exit;
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
 
     if ( ! function_exists( 'should_abort_shortcode' ) ) {
         /**
@@ -31,6 +33,7 @@
          */
         function custom_wc_registration_form_shortcode() {
             if ( should_abort_shortcode() ) return '';
+            if ( ! class_exists( 'WooCommerce' ) ) return '';
 
             if ( is_user_logged_in() ) {
                 return wpautop( esc_html__( 'You are already registered.', 'borspirit' ) );
@@ -88,6 +91,7 @@
          */
         function custom_wc_login_form_shortcode() {
             if ( should_abort_shortcode() ) return '';
+            if ( ! class_exists( 'WooCommerce' ) ) return '';
 
             if ( is_user_logged_in() ) {
                 return wpautop( esc_html__( 'You are already logged in.', 'borspirit' ) );
@@ -117,6 +121,10 @@
          * @return void
          */
         function custom_wc_redirect_logged_in_users() {
+            if ( ! class_exists( 'WooCommerce' ) ) {
+                return;
+            }
+
             if ( ! is_user_logged_in() || ! is_page() ) {
                 return;
             }
@@ -192,6 +200,7 @@
          */
         function woocommerce_general_settings_shortcode( $atts ) {
             if ( should_abort_shortcode() ) return '';
+            if ( ! class_exists( 'WooCommerce' ) ) return '';
 
             // Parse shortcode attributes
             $atts = shortcode_atts(
@@ -228,34 +237,43 @@
         add_shortcode( 'woocommerce_settings', 'woocommerce_general_settings_shortcode' );
     }
 
-    if ( ! function_exists( 'store_address_shortcode' ) ) {
+    if ( ! function_exists( 'site_address_shortcode' ) ) {
         /**
-         * Shortcode to display the full WooCommerce store address.
+         * Shortcode to display the full address.
          *
-         * This shortcode combines the store postcode, city, address, and
+         * This shortcode combines the postcode, city, address, and
          * address line 2 (if available) into a single, formatted string.
          *
-         * Usage: [store_address]
+         * Usage: [site_address]
          *
-         * @return string The formatted store address.
+         * @return string The formatted address.
          */
-        function store_address_shortcode() {
-            // Get WooCommerce store address parts
-            $store_address    = get_option( 'woocommerce_store_address' );
-            $store_address_2  = get_option( 'woocommerce_store_address_2' );
-            $store_city       = get_option( 'woocommerce_store_city' );
-            $store_postcode   = get_option( 'woocommerce_store_postcode' );
-            $store_country    = get_option( 'woocommerce_default_country' );
+        function site_address_shortcode() {
+            // Use ACF first
+            $site_address   = get_field( 'site_address', 'option' ) ?? '';
+            $site_address_2 = get_field( 'site_address_2', 'option' ) ?? '';
+            $site_city      = get_field( 'site_city', 'option' ) ?? '';
+            $site_postcode  = get_field( 'site_postcode', 'option' ) ?? '';
+            $site_country   = get_field( 'site_country', 'option' ) ?? '';
+
+            // If WooCommerce is active, fallback to its options if ACF is empty
+            if ( class_exists( 'WooCommerce' ) ) {
+                $site_address   = $site_address   ?: get_option( 'woocommerce_store_address' );
+                $site_address_2 = $site_address_2 ?: get_option( 'woocommerce_store_address_2' );
+                $site_city      = $site_city      ?: get_option( 'woocommerce_store_city' );
+                $site_postcode  = $site_postcode  ?: get_option( 'woocommerce_store_postcode' );
+                $site_country   = $site_country   ?: get_option( 'woocommerce_default_country' );
+            }
 
             // Build full address
-            $full_address = $store_postcode . ' ' . $store_city . ', ' . $store_address;
-            if ( ! empty( $store_address_2 ) ) {
-                $full_address .= ', ' . $store_address_2;
+            $full_address = trim( $site_postcode . ' ' . $site_city . ', ' . $site_address );
+            if ( ! empty( $site_address_2 ) ) {
+                $full_address .= ', ' . $site_address_2;
             }
 
             return esc_html( $full_address );
         }
-        add_shortcode( 'store_address', 'store_address_shortcode' );
+        add_shortcode( 'site_address', 'site_address_shortcode' );
     }
 
     if ( ! function_exists( 'site_phone_shortcode' ) ) {
@@ -281,7 +299,7 @@
                 return '';
             }
 
-            return sprintf( '<a href="tel:%s">%s</a>', esc_attr( $phone_link ), esc_html( $phone_raw ) );
+            return '<a href="'. esc_attr( 'tel:' . $phone_link ) .'">' . esc_html( $phone_raw ) . '</a>';
         }
         add_shortcode( 'site_phone', 'site_phone_shortcode' );
     }
@@ -328,7 +346,7 @@
             // Set default attributes
             $atts = shortcode_atts(
                 array(
-                    'location' => 'Borspirit, Budapest',
+                    'location' => '',
                     'zoom'     => 13,
                     'width'    => '800',
                     'height'   => '300',
@@ -342,8 +360,6 @@
             $zoom     = intval( $atts['zoom'] );
             $width    = esc_attr( $atts['width'] );
             $height   = esc_attr( $atts['height'] );
-
-            $location_name = 'Borspirit';
 
             // Error handling
             if ( empty( $location ) ) {
@@ -365,20 +381,14 @@
             // Encode location for URL
             $location_encoded = urlencode( $location );
 
-            $title = sprintf(
-                esc_attr__( 'Location map for %s', 'borspirit' ),
-                $location_name
-            );
-
             // Build and escape the Google Maps URL
             $map_url = esc_url( "https://www.google.com/maps?q={$location_encoded}&z={$zoom}&output=embed" );
 
             // Return the iframe HTML
-            return "<iframe width='{$width}' height='{$height}' loading='lazy' allowfullscreen referrerpolicy='no-referrer-when-downgrade' src='{$map_url}' title='{$title}'></iframe>";
+            return "<iframe width='{$width}' height='{$height}' loading='lazy' allowfullscreen referrerpolicy='no-referrer-when-downgrade' src='{$map_url}' title='{$location}'></iframe>";
         }
         add_shortcode( 'google_map', 'wp_google_map_shortcode' );
     }
-
 
     if ( ! function_exists( 'render_opening_hours_table' ) ) {
         /**
@@ -591,6 +601,9 @@
          * @return string HTML output of feedback list.
          */
         function show_thankyou_feedbacks() {
+            if ( ! class_exists( 'WooCommerce' ) ) {
+                return '';
+            }
 
             // Query all orders that have the _thankyou_feedback meta key
             $orders = wc_get_orders( array(

@@ -308,6 +308,7 @@
         transition: $transition-base;
       }
 
+      &.nav__current::before,
       &:hover::before {
         width: 100%;
       }

@@ -11,14 +11,14 @@
         <label class="form-label" for="<?php echo esc_attr($prefix); ?>name">
             <?php echo esc_html__( 'Name', 'borspirit' ); ?> <span class="required">*</span>
         </label>
-        <input type="text" class="form-control" id="<?php echo esc_attr($prefix); ?>name" name="<?php echo esc_attr($prefix); ?>name" value="<?php echo esc_attr( $current_user->display_name ); ?>" placeholder="<?php echo esc_attr__( 'Enter your full name', 'borspirit' ); ?>" required aria-required="true">
+        <input type="text" class="form-control" id="<?php echo esc_attr($prefix); ?>name" name="<?php echo esc_attr($prefix); ?>name" value="<?php echo esc_attr( $current_user->display_name ); ?>" placeholder="<?php echo esc_attr_x( 'Enter your full name', 'placeholder', 'borspirit' ); ?>" required aria-required="true">
     </div>
 
     <div class="mb-3">
         <label class="form-label" for="<?php echo esc_attr($prefix); ?>email">
             <?php echo esc_html__( 'E-mail', 'borspirit' ); ?> <span class="required">*</span>
         </label>
-        <input type="email" class="form-control" id="<?php echo esc_attr($prefix); ?>email" name="<?php echo esc_attr($prefix); ?>email" value="<?php echo esc_attr( $current_user->user_email ); ?>" placeholder="<?php echo esc_attr__( 'Enter your email address', 'borspirit' ); ?>" required aria-required="true">
+        <input type="email" class="form-control" id="<?php echo esc_attr($prefix); ?>email" name="<?php echo esc_attr($prefix); ?>email" value="<?php echo esc_attr( $current_user->user_email ); ?>" placeholder="<?php echo esc_attr_x( 'Enter your email address', 'placeholder', 'borspirit' ); ?>" required aria-required="true">
     </div>
     
     <fieldset class="mb-3">

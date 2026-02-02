@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
+    
     if ( ! function_exists( 'poll_feedback_form_handler' ) ) {
         /**
          * AJAX handler to process feedback submission.

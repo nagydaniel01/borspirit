@@ -56,7 +56,7 @@
         <label class="form-label" for="<?php echo esc_attr( $prefix ); ?>feedback_text">
             <?php echo esc_html__( 'Your feedback', 'borspirit' ); ?>
         </label>
-        <textarea class="form-control" id="<?php echo esc_attr( $prefix ); ?>feedback_text" name="feedback_text" rows="4" placeholder="<?php echo esc_attr__( 'Tell us more…', 'borspirit' ); ?>"></textarea>
+        <textarea class="form-control" id="<?php echo esc_attr( $prefix ); ?>feedback_text" name="feedback_text" rows="4" placeholder="<?php echo esc_attr_x( 'Tell us more…', 'placeholder', 'borspirit' ); ?>"></textarea>
     </div>
 
     <div class="form__actions">

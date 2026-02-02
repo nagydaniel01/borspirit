@@ -1,5 +1,7 @@
 <?php
-    defined( 'ABSPATH' ) || exit;
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
     
     /**
      * WooCommerce Customizations
@@ -791,7 +793,8 @@
          */
         function custom_woocommerce_single_product_sections() {
             try {
-                $page_id = get_the_ID();
+                $sections = [];
+                $page_id  = get_the_ID();
 
                 if ( empty($page_id) || !is_numeric($page_id) ) {
                     throw new Exception( __('The page ID is missing or invalid.', 'borspirit') );

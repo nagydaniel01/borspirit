@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
+    
     if ( ! function_exists('update_bookmark_list_handler') ) {
         /**
          * Handles AJAX requests to update the user's bookmarked posts list.

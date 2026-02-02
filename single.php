@@ -87,12 +87,16 @@
 
         // Define taxonomy dynamically based on post type
         switch ( $post_type ) {
+            case 'post':
+                $taxonomy = 'category';
+                break;
+                
             case 'product':
                 $taxonomy = 'product_cat';
                 break;
 
             default:
-                $taxonomy = 'category';
+                $taxonomy = '';
                 break;
         }
     ?>

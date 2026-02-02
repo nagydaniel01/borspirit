@@ -9,7 +9,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-    exit;
+    exit; // Exit if accessed directly
 }
 
 if ( ! class_exists( 'Product_Recommendation_Quiz' ) ) :

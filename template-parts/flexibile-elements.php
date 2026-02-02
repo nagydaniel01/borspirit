@@ -1,5 +1,7 @@
 <?php
     try {
+        $sections = [];
+        
         // Use get_the_ID() as fallback if no page ID is passed
         $page_id = isset($args['page_id']) && is_numeric($args['page_id']) ? (int) $args['page_id'] : get_the_ID();
 

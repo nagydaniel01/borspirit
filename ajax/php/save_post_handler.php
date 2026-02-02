@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
+    
     if ( ! function_exists('save_post_handler') ) {
         /**
          * Handles AJAX requests to save or remove a post from user bookmarks.

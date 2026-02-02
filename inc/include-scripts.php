@@ -1,5 +1,7 @@
 <?php
-    defined( 'ABSPATH' ) || exit;
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
     
     if ( ! function_exists( 'theme_scripts' ) ) {
         /**
@@ -27,6 +29,13 @@
                 'translations' => array(
                     'read_more' => __( 'Show more', 'borspirit' ),
                     'read_less' => __( 'Show less', 'borspirit' ),
+
+                    // Localize Fancybox translations
+                    'gallery' => array(
+                        'NEXT'  => __( 'Következő kép a galériában', 'borspirit' ),
+                        'PREV'  => __( 'Előző kép a galériában', 'borspirit' ),
+                        'CLOSE' => __( 'Bezárás', 'borspirit' ),
+                    ),
                 ),
             ) );
 
@@ -72,7 +81,7 @@
          * @return void
          */
         function recaptcha_scripts() {
-            $recaptcha_site_key = '6LcOnQ4sAAAAAF_Mcnr5Adg4xtHC4sP46nC8LKjn';
+            $recaptcha_site_key = RECAPTCHA_SITE_KEY;
     
             wp_enqueue_script( 'google-recaptcha', 'https://www.google.com/recaptcha/api.js?render=' . esc_attr( $recaptcha_site_key ), [], null, true );
         }

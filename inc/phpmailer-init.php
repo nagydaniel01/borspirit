@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
+    
     if ( ! function_exists( 'mailtrap' ) ) {
         /**
          * Configure PHPMailer to use Mailtrap SMTP for local email testing.

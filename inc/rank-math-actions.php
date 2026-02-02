@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
+    
     if ( ! function_exists( 'my_noindex_woocommerce_system_pages' ) ) {
         /**
          * Modify Rank Math robots meta for WooCommerce technical/system pages.

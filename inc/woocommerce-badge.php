@@ -1,5 +1,7 @@
 <?php
-    defined( 'ABSPATH' ) || exit;
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
 
     if ( ! class_exists( 'WooCommerce' ) ) {
         return;
@@ -282,7 +284,34 @@
                 foreach ( $terms as $term ) {
                     // Only show badge if the category matches
                     if ( $term->slug === $target_category_slug ) {
-                        echo '<span class="badge badge--'.$target_category_slug.'">' . esc_html( $term->name ) . '</span>';
+                        echo '<span class="badge badge--' . esc_attr( $target_category_slug ) . '">' . esc_html( $term->name ) . '</span>';
+                    }
+                }
+            }
+        }
+    }
+
+    if ( ! function_exists( 'wc_wine_store_tag_flash' ) ) {
+        /**
+         * Badge: Specific Product Tag.
+         *
+         * @param WC_Product $product WooCommerce product.
+         * @param string $target_category_slug Slug of the tag to display badge for.
+         * @return void
+         */
+        function wc_wine_store_tag_flash( $product, $target_category_slug ) {
+            if ( ! $product instanceof WC_Product ) {
+                return;
+            }
+
+            // Get product tags
+            $terms = get_the_terms( $product->get_id(), 'product_tag' );
+
+            if ( $terms && ! is_wp_error( $terms ) ) {
+                foreach ( $terms as $term ) {
+                    // Only show badge if the tag matches
+                    if ( $term->slug === $target_category_slug ) {
+                        echo '<span class="badge badge--' . esc_attr( $target_category_slug ) . '">' . esc_html( $term->name ) . '</span>';
                     }
                 }
             }

@@ -1,4 +1,10 @@
 <?php
+if ( ! class_exists( 'WooCommerce' ) ) {
+    return;
+}
+
+$GLOBALS['product_query_section'] = true;
+
 // Get the current number of product columns from the WooCommerce settings
 $columns = wc_get_loop_prop( 'columns' );
 if ( ! $columns ) {
@@ -181,3 +187,6 @@ $products      = $product_query->get_products();
         </div>
     </section>
 <?php endif; ?>
+
+<?php
+unset($GLOBALS['product_query_section']);

@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
+
     if ( ! function_exists( 'log_failed_orders_wc_status' ) ) {
         /**
          * Logs failed WooCommerce orders to a custom log file.

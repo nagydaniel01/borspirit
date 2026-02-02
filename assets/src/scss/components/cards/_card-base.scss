@@ -7,6 +7,12 @@
 	box-shadow: 8px 16px 20px -8px rgba(0, 0, 0, .15);
 	overflow: hidden;
 
+	&:not(:has([class*="card--"])) {
+		.card__lead {
+			-webkit-line-clamp: inherit;
+		}
+	}
+
 	&.card--term {
 		.card__image {
 			aspect-ratio: 3 / 1;
@@ -54,9 +60,9 @@
 
 	.card__content {
 		display: flex;
-		flex: 1 0 auto;
+		flex: 1 1 auto;
 		flex-direction: column;
-		justify-content: flex-end;
+		justify-content: flex-start;
 		padding: 1.25rem;
 	}
 

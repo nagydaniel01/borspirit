@@ -45,7 +45,7 @@
     <section class="section section--archive section--archive-search">
         <div class="section__header">
             <div class="container">
-                <h1 class="section__title fs-2"><?php printf( esc_html__('Search for: %s', 'borspirit'), '<span>' . $search_query . '</span>' ); ?></h1>
+                <h1 class="section__title fs-2"><?php printf( esc_html__('Search results: %s', 'borspirit'), '<span>' . $search_query . '</span>' ); ?></h1>
             </div>
         </div>
 
@@ -174,7 +174,7 @@
                 <?php endif; ?>
             <?php else : ?>
                 <div class="container">
-                    <p class="text-center"><?php echo esc_html__('We are sorry, but we did not find any results based on your search criteria. Please try again with different keywords.', 'borspirit'); ?></p>
+                    <p><?php echo esc_html__('We are sorry, but we did not find any results based on your search criteria. Please try again with different keywords.', 'borspirit'); ?></p>
                 </div>
             <?php endif; ?>
         </div>

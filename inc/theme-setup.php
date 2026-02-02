@@ -1,5 +1,7 @@
 <?php
-    defined( 'ABSPATH' ) || exit;
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
 
     if ( ! function_exists( 'theme_setup' ) ) {
         /**
@@ -105,17 +107,16 @@
              */
             // WooCommerce in general.
             add_theme_support( 'woocommerce' );
-            //add_theme_support( 'wc-product-gallery-zoom' );
-            //add_theme_support( 'wc-product-gallery-lightbox' );
-            //add_theme_support( 'wc-product-gallery-slider' ); 
+
+            // Enabling WooCommerce product gallery features (are off by default since WC 3.0.0).
+            if ( class_exists( 'WooCommerce' ) ) {
+                //add_theme_support( 'wc-product-gallery-zoom' );       // zoom
+                //add_theme_support( 'wc-product-gallery-lightbox' );   // lightbox
+                //add_theme_support( 'wc-product-gallery-slider' );     // swipe
+            }
 
             // Add support for LearnDash features
             add_theme_support( 'learndash' );
-
-            // Enabling WooCommerce product gallery features (are off by default since WC 3.0.0).
-            //add_theme_support( 'wc-product-gallery-zoom' );       // zoom
-            add_theme_support( 'wc-product-gallery-lightbox' );   // lightbox
-            //add_theme_support( 'wc-product-gallery-slider' );     // swipe
 
             // Restoring the classic Widgets Editor
             remove_theme_support( 'widgets-block-editor' );
@@ -161,14 +162,7 @@
             //remove_post_type_support( 'post', 'post-formats' );
             //remove_post_type_support( 'page', 'excerpt' );
 
-            register_taxonomy_for_object_type( 'post_tag', 'announcement' );
-            register_taxonomy_for_object_type( 'post_tag', 'event' );
-            register_taxonomy_for_object_type( 'post_tag', 'podcast' );
-            register_taxonomy_for_object_type( 'post_tag', 'press' );
-            register_taxonomy_for_object_type( 'post_tag', 'project' );
-            register_taxonomy_for_object_type( 'post_tag', 'publication' );
-            register_taxonomy_for_object_type( 'post_tag', 'research' );
-            register_taxonomy_for_object_type( 'post_tag', 'video' );
+            //register_taxonomy_for_object_type( 'post_tag', 'page' );
         }
         add_action( 'init', 'theme_init' );
     }

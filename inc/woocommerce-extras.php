@@ -1,5 +1,7 @@
 <?php
-    defined( 'ABSPATH' ) || exit;
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
 
     if ( ! class_exists( 'WooCommerce' ) ) {
         return;
@@ -11,10 +13,10 @@
     
     if ( ! function_exists( 'borspirit_add_settings_tab' ) ) {
         /**
-         * Add Borspirit Settings tab to WooCommerce settings tabs.
+         * Add Custom Settings tab to WooCommerce settings tabs.
          */
         function borspirit_add_settings_tab( $tabs ) {
-            $tabs['borspirit_settings'] = __( 'Borspirit Settings', 'borspirit' );
+            $tabs['borspirit_settings'] = __( 'Custom Settings', 'borspirit' );
             return $tabs;
         }
         add_filter( 'woocommerce_settings_tabs_array', 'borspirit_add_settings_tab', 50 );
@@ -22,7 +24,7 @@
 
     if ( ! function_exists( 'borspirit_settings_tab_content' ) ) {
         /**
-         * Render Borspirit Settings tab content with section-based subtabs.
+         * Render Custom Settings tab content with section-based subtabs.
          */
         function borspirit_settings_tab_content() {
 
@@ -51,7 +53,7 @@
     }
 
     /**
-     * Save Borspirit Settings tab options per section.
+     * Save Custom Settings tab options per section.
      */
     if ( ! function_exists( 'borspirit_update_settings' ) ) {
         function borspirit_update_settings() {
