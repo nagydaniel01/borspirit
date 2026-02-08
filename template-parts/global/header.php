@@ -120,8 +120,14 @@
                     <?php
                         if ( has_nav_menu( 'primary_menu' ) ) {
 
+                            /*
                             $walker = wp_is_mobile() && class_exists( 'Custom_Mobile_Nav_Walker' )
                                 ? new Custom_Mobile_Nav_Walker()
+                                : ( class_exists( 'Custom_Mega_Menu_Nav_Walker' ) ? new Custom_Mega_Menu_Nav_Walker() : false );
+                            */
+
+                            $walker = wp_is_mobile() && class_exists( 'Custom_Bootstrap_Nav_Walker' )
+                                ? new Custom_Bootstrap_Nav_Walker()
                                 : ( class_exists( 'Custom_Mega_Menu_Nav_Walker' ) ? new Custom_Mega_Menu_Nav_Walker() : false );
 
                             if ( $walker ) {

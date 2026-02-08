@@ -13,7 +13,7 @@
 
             // Ensure Polylang is active
             if ( ! function_exists( 'pll_the_languages' ) ) {
-                trigger_error( 'Polylang is not active or pll_the_languages() function is missing.', E_USER_WARNING );
+                //trigger_error( 'Polylang is not active or pll_the_languages() function is missing.', E_USER_WARNING );
                 return null;
             }
 

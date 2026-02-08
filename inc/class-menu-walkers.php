@@ -1,5 +1,6 @@
 <?php
 if ( ! class_exists( 'Custom_Bootstrap_Nav_Walker' ) ) {
+    
     class Custom_Bootstrap_Nav_Walker extends Walker_Nav_Menu {
 
         private $last_top_level_id = null;
@@ -106,12 +107,17 @@ if ( ! class_exists( 'Custom_Bootstrap_Nav_Walker' ) ) {
                 'class'        => implode( ' ', $a_classes ),
             ];
 
+            // Add 'nav__current' class if this is the current menu item
+            if ( ! empty( $item->current ) || ! empty( $item->current_item_ancestor ) ) {
+                $atts['class'] .= ' nav__current';
+            }
+
             $atts = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args, $depth );
             $attributes = $this->build_atts( $atts );
 
             $item_output  = $args->before;
             $item_output .= '<a' . $attributes . '>';
-            $item_output .= $args->link_before . esc_html( $title ) . $args->link_after;
+            $item_output .= $args->link_before . $title . $args->link_after;
 
             // Add arrow icon if it has children
             if ( in_array( 'menu-item-has-children', $item->classes, true ) ) {
@@ -140,7 +146,9 @@ if ( ! class_exists( 'Custom_Bootstrap_Nav_Walker' ) ) {
             }
             return $attribute_string;
         }
+
     }
+
 }
 
 if ( ! class_exists( 'Custom_Mega_Menu_Nav_Walker' ) ) {
@@ -395,6 +403,7 @@ if ( ! class_exists( 'Custom_Mega_Menu_Nav_Walker' ) ) {
 }
 
 if ( ! class_exists( 'Custom_Mobile_Nav_Walker' ) ) {
+
     class Custom_Mobile_Nav_Walker extends Walker_Nav_Menu {
 
         public function start_lvl( &$output, $depth = 0, $args = null ) {
@@ -509,5 +518,7 @@ if ( ! class_exists( 'Custom_Mobile_Nav_Walker' ) ) {
             }
             return $attribute_string;
         }
+
     }
+
 }

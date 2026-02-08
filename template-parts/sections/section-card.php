@@ -7,9 +7,7 @@
     $section_lead       = $section['card_section_lead'] ?? '';
 
     $slider             = $section['card_slider'] ?? '';
-
     $card_items         = $section['card_items'] ?: [];
-    $card_style         = $section['card_style'] ?? 'unordered';
 
     // Filter out empty items (title & description both empty)
     $card_items = array_filter($card_items, function ($item) {
@@ -60,9 +58,9 @@
                         <div class="slider__controls"></div>
                     </div>
                 <?php else : ?>
-                    <div class="row">
+                    <div class="row gy-4">
                         <?php foreach ($card_items as $key => $item) : ?>
-                            <div class="col-lg-6 col-xl-4 mb-3">
+                            <div class="col-lg-6 col-xl-4">
                                 <?php
                                     if ($template) {
                                         $template_args = [

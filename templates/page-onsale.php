@@ -26,7 +26,28 @@ $current_time = current_time( 'timestamp' );
 $valid_on_sale_ids = array_filter( $on_sale_ids, function( $product_id ) use ( $current_time ) {
     $product = wc_get_product( $product_id );
 
-    if ( ! $product || ! $product->is_type( 'simple' ) && ! $product->is_type( 'variable' ) ) {
+if ( ! $product ) {
+        return false;
+    }
+
+    // Exclude products with no price
+    if ( $product->is_type( 'simple' ) ) {
+        if ( $product->get_price() === '' ) {
+            return false;
+        }
+    }
+
+    if ( $product->is_type( 'variable' ) ) {
+        $variation_prices = $product->get_variation_prices( true );
+
+        // If no variation has a price, exclude product
+        if ( empty( $variation_prices['price'] ) ) {
+            return false;
+        }
+    }
+
+    // Only allow simple & variable products
+    if ( ! $product->is_type( 'simple' ) && ! $product->is_type( 'variable' ) ) {
         return false;
     }
 

@@ -7,7 +7,7 @@
         return;
     }
     
-    if ( ! function_exists( 'wc_wine_store_sale_flash' ) ) {
+    if ( ! function_exists( 'custom_woocommerce_sale_flash' ) ) {
         /**
          * Display custom badges (including sale).
          *
@@ -16,7 +16,7 @@
          * @param WC_Product $product Product instance.
          * @return string Custom HTML with all badges.
          */
-        function wc_wine_store_sale_flash( $html = '', $post = null, $product = null ) {
+        function custom_woocommerce_sale_flash( $html = '', $post = null, $product = null ) {
             global $product;
 
             if ( ! $product ) {
@@ -38,36 +38,40 @@
             */
 
             // Check each badge separately
-            if ( in_array( 'wc_wine_store_custom_sale_flash', $selected_flashes, true ) ) {
-                wc_wine_store_custom_sale_flash( $product );
+            if ( in_array( 'wc_custom_sale_flash', $selected_flashes, true ) ) {
+                wc_custom_sale_flash( $product );
             }
 
-            if ( in_array( 'wc_wine_store_new_flash', $selected_flashes, true ) ) {
-                wc_wine_store_new_flash( $product );
+            if ( in_array( 'wc_custom_discount_flash', $selected_flashes, true ) ) {
+                wc_custom_discount_flash( $product );
             }
 
-            if ( in_array( 'wc_wine_store_bestseller_flash', $selected_flashes, true ) ) {
-                wc_wine_store_bestseller_flash( $product );
+            if ( in_array( 'wc_custom_coming_soon_flash', $selected_flashes, true ) ) {
+                wc_custom_coming_soon_flash( $product );
             }
 
-            if ( in_array( 'wc_wine_store_limited_stock_flash', $selected_flashes, true ) ) {
-                wc_wine_store_limited_stock_flash( $product );
+            if ( in_array( 'wc_custom_new_flash', $selected_flashes, true ) ) {
+                wc_custom_new_flash( $product );
             }
 
-            if ( in_array( 'wc_wine_store_discount_flash', $selected_flashes, true ) ) {
-                wc_wine_store_discount_flash( $product );
+            if ( in_array( 'wc_custom_bestseller_flash', $selected_flashes, true ) ) {
+                wc_custom_bestseller_flash( $product );
             }
 
-            if ( in_array( 'wc_wine_store_award_flash', $selected_flashes, true ) ) {
-                wc_wine_store_award_flash( $product );
+            if ( in_array( 'wc_custom_limited_stock_flash', $selected_flashes, true ) ) {
+                wc_custom_limited_stock_flash( $product );
             }
 
-            if ( in_array( 'wc_wine_store_new_vintage_flash', $selected_flashes, true ) ) {
-                wc_wine_store_new_vintage_flash( $product );
+            if ( in_array( 'wc_custom_award_flash', $selected_flashes, true ) ) {
+                wc_custom_award_flash( $product );
             }
 
-            if ( in_array( 'wc_wine_store_category_flash', $selected_flashes, true ) ) {
-                wc_wine_store_category_flash( $product, 'honap-bora' );
+            if ( in_array( 'wc_custom_new_vintage_flash', $selected_flashes, true ) ) {
+                wc_custom_new_vintage_flash( $product );
+            }
+
+            if ( in_array( 'wc_custom_category_flash', $selected_flashes, true ) ) {
+                wc_custom_category_flash( $product, 'honap-bora' );
             }
 
             echo '</div>';
@@ -76,7 +80,7 @@
         }
 
         // Runs when product IS on sale
-        add_filter( 'woocommerce_sale_flash', 'wc_wine_store_sale_flash', 20, 3 );
+        add_filter( 'woocommerce_sale_flash', 'custom_woocommerce_sale_flash', 20, 3 );
 
         // Runs when product is NOT on sale (shop loop + single product)
         add_action( 'woocommerce_before_shop_loop_item_title', function() {
@@ -87,7 +91,7 @@
             }
 
             if ( $product && ! $product->is_on_sale() ) {
-                echo wc_wine_store_sale_flash();
+                echo wc_custom_sale_flash( $product );
             }
         }, 5 );
 
@@ -99,19 +103,19 @@
             }
 
             if ( $product && ! $product->is_on_sale() ) {
-                echo wc_wine_store_sale_flash();
+                echo wc_custom_sale_flash( $product );
             }
         }, 10 );
     }
 
-    if ( ! function_exists( 'wc_wine_store_custom_sale_flash' ) ) {
+    if ( ! function_exists( 'wc_custom_sale_flash' ) ) {
         /**
          * Badge: Sale (default).
          *
          * @param WC_Product $product WooCommerce product.
          * @return void
          */
-        function wc_wine_store_custom_sale_flash( $product ) {
+        function wc_custom_sale_flash( $product ) {
             if ( ! $product instanceof WC_Product ) {
                 return;
             }
@@ -123,14 +127,14 @@
         }
     }
 
-    if ( ! function_exists( 'wc_wine_store_discount_flash' ) ) {
+    if ( ! function_exists( 'wc_custom_discount_flash' ) ) {
         /**
          * Badge: Discount (percentage off).
          *
          * @param WC_Product $product WooCommerce product.
          * @return void
          */
-        function wc_wine_store_discount_flash( $product ) {
+        function wc_custom_discount_flash( $product ) {
             if ( ! $product instanceof WC_Product ) {
                 return;
             }
@@ -149,14 +153,104 @@
         }
     }
 
-    if ( ! function_exists( 'wc_wine_store_award_flash' ) ) {
+    if ( ! function_exists( 'wc_custom_coming_soon_flash' ) ) {
+        /**
+         * Badge: Coming Soon (no price).
+         *
+         * @param WC_Product $product WooCommerce product.
+         * @return void
+         */
+        function wc_custom_coming_soon_flash( $product ) {
+            if ( ! $product instanceof WC_Product ) {
+                return;
+            }
+
+            if ( $product->is_type( 'simple' ) && $product->get_price() === '' ) {
+                echo '<span class="badge badge--coming-soon">' . esc_html__( 'Coming Soon', 'borspirit' ) . '</span>';
+                return;
+            }
+
+            if ( $product->is_type( 'variable' ) ) {
+                $variation_prices = $product->get_variation_prices( true );
+
+                // No variations have price
+                if ( empty( $variation_prices['price'] ) ) {
+                    echo '<span class="badge badge--coming-soon">' . esc_html__( 'Coming Soon', 'borspirit' ) . '</span>';
+                    return;
+                }
+            }
+        }
+    }
+
+    if ( ! function_exists( 'wc_custom_new_flash' ) ) {
+        /**
+         * Badge: New Arrival (last X days).
+         *
+         * @param WC_Product $product WooCommerce product.
+         * @param int        $days_new Days considered as "new".
+         * @return void
+         */
+        function wc_custom_new_flash( $product, $days_new = 30 ) {
+            if ( ! $product instanceof WC_Product ) {
+                return;
+            }
+            
+            $post_date = get_the_date( 'Y-m-d', $product->get_id() );
+            $now       = date( 'Y-m-d' );
+            $datediff  = strtotime( $now ) - strtotime( $post_date );
+
+            if ( $datediff / DAY_IN_SECONDS <= $days_new ) {
+                echo '<span class="badge badge--new">' . esc_html__( 'New Arrival', 'borspirit' ) . '</span>';
+            }
+        }
+    }
+
+    if ( ! function_exists( 'wc_custom_bestseller_flash' ) ) {
+        /**
+         * Badge: Best Seller (sales threshold).
+         *
+         * @param WC_Product $product WooCommerce product.
+         * @param int        $sales_threshold Minimum sales to qualify.
+         * @return void
+         */
+        function wc_custom_bestseller_flash( $product, $sales_threshold = 100 ) {
+            if ( ! $product instanceof WC_Product ) {
+                return;
+            }
+
+            if ( $product->get_total_sales() >= $sales_threshold ) {
+                echo '<span class="badge badge--bestseller">' . esc_html__( 'Best Seller', 'borspirit' ) . '</span>';
+            }
+        }
+    }
+
+    if ( ! function_exists( 'wc_custom_limited_stock_flash' ) ) {
+        /**
+         * Badge: Limited Stock.
+         *
+         * @param WC_Product $product WooCommerce product.
+         * @param int        $stock_limit Max quantity to trigger badge.
+         * @return void
+         */
+        function wc_custom_limited_stock_flash( $product, $stock_limit = 5 ) {
+            if ( ! $product instanceof WC_Product ) {
+                return;
+            }
+
+            if ( $product->managing_stock() && $product->get_stock_quantity() <= $stock_limit ) {
+                echo '<span class="badge badge--limited">' . esc_html__( 'Limited Stock', 'borspirit' ) . '</span>';
+            }
+        }
+    }
+
+    if ( ! function_exists( 'wc_custom_award_flash' ) ) {
         /**
          * Badge: Award Winning (custom field).
          *
          * @param WC_Product $product WooCommerce product.
          * @return void
          */
-        function wc_wine_store_award_flash( $product ) {
+        function wc_custom_award_flash( $product ) {
             if ( ! $product instanceof WC_Product ) {
                 return;
             }
@@ -175,68 +269,7 @@
         }
     }
 
-    if ( ! function_exists( 'wc_wine_store_bestseller_flash' ) ) {
-        /**
-         * Badge: Best Seller (sales threshold).
-         *
-         * @param WC_Product $product WooCommerce product.
-         * @param int        $sales_threshold Minimum sales to qualify.
-         * @return void
-         */
-        function wc_wine_store_bestseller_flash( $product, $sales_threshold = 100 ) {
-            if ( ! $product instanceof WC_Product ) {
-                return;
-            }
-
-            if ( $product->get_total_sales() >= $sales_threshold ) {
-                echo '<span class="badge badge--bestseller">' . esc_html__( 'Best Seller', 'borspirit' ) . '</span>';
-            }
-        }
-    }
-
-    if ( ! function_exists( 'wc_wine_store_limited_stock_flash' ) ) {
-        /**
-         * Badge: Limited Stock.
-         *
-         * @param WC_Product $product WooCommerce product.
-         * @param int        $stock_limit Max quantity to trigger badge.
-         * @return void
-         */
-        function wc_wine_store_limited_stock_flash( $product, $stock_limit = 5 ) {
-            if ( ! $product instanceof WC_Product ) {
-                return;
-            }
-
-            if ( $product->managing_stock() && $product->get_stock_quantity() <= $stock_limit ) {
-                echo '<span class="badge badge--limited">' . esc_html__( 'Limited Stock', 'borspirit' ) . '</span>';
-            }
-        }
-    }
-
-    if ( ! function_exists( 'wc_wine_store_new_flash' ) ) {
-        /**
-         * Badge: New Arrival (last X days).
-         *
-         * @param WC_Product $product WooCommerce product.
-         * @param int        $days_new Days considered as "new".
-         * @return void
-         */
-        function wc_wine_store_new_flash( $product, $days_new = 30 ) {
-            if ( ! $product instanceof WC_Product ) {
-                return;
-            }
-            
-            $post_date = get_the_date( 'Y-m-d', $product->get_id() );
-            $now       = date( 'Y-m-d' );
-            $datediff  = strtotime( $now ) - strtotime( $post_date );
-
-            if ( $datediff / DAY_IN_SECONDS <= $days_new ) {
-                echo '<span class="badge badge--new">' . esc_html__( 'New Arrival', 'borspirit' ) . '</span>';
-            }
-        }
-    }
-
-    if ( ! function_exists( 'wc_wine_store_new_vintage_flash' ) ) {
+    if ( ! function_exists( 'wc_custom_new_vintage_flash' ) ) {
         /**
          * Badge: New Vintage.
          *
@@ -245,7 +278,7 @@
          * @param WC_Product $product WooCommerce product.
          * @return void
          */
-        function wc_wine_store_new_vintage_flash( $product ) {
+        function wc_custom_new_vintage_flash( $product ) {
             if ( ! $product instanceof WC_Product ) {
                 return;
             }
@@ -264,7 +297,7 @@
         }
     }
 
-    if ( ! function_exists( 'wc_wine_store_category_flash' ) ) {
+    if ( ! function_exists( 'wc_custom_category_flash' ) ) {
         /**
          * Badge: Specific Product Category.
          *
@@ -272,7 +305,7 @@
          * @param string $target_category_slug Slug of the category to display badge for.
          * @return void
          */
-        function wc_wine_store_category_flash( $product, $target_category_slug ) {
+        function wc_custom_category_flash( $product, $target_category_slug ) {
             if ( ! $product instanceof WC_Product ) {
                 return;
             }
@@ -291,7 +324,7 @@
         }
     }
 
-    if ( ! function_exists( 'wc_wine_store_tag_flash' ) ) {
+    if ( ! function_exists( 'wc_custom_tag_flash' ) ) {
         /**
          * Badge: Specific Product Tag.
          *
@@ -299,7 +332,7 @@
          * @param string $target_category_slug Slug of the tag to display badge for.
          * @return void
          */
-        function wc_wine_store_tag_flash( $product, $target_category_slug ) {
+        function wc_custom_tag_flash( $product, $target_category_slug ) {
             if ( ! $product instanceof WC_Product ) {
                 return;
             }
@@ -318,14 +351,14 @@
         }
     }
 
-    if ( ! function_exists( 'wc_wine_store_winetype_flash' ) ) {
+    if ( ! function_exists( 'wc_custom_winetype_flash' ) ) {
         /**
          * Badge: Wine Type (custom taxonomy).
          *
          * @param WC_Product $product WooCommerce product.
          * @return void
          */
-        function wc_wine_store_winetype_flash( $product ) {
+        function wc_custom_winetype_flash( $product ) {
             if ( ! $product instanceof WC_Product ) {
                 return;
             }
@@ -340,7 +373,7 @@
         }
     }
 
-    if ( ! function_exists( 'wc_wine_store_organic_flash' ) ) {
+    if ( ! function_exists( 'wc_custom_organic_flash' ) ) {
         /**
          * Badge: Organic (custom field).
          *
@@ -348,7 +381,7 @@
          * @return void
          */
         /*
-        function wc_wine_store_organic_flash( $product ) {
+        function wc_custom_organic_flash( $product ) {
             if ( ! $product instanceof WC_Product ) {
                 return;
             }
@@ -364,7 +397,7 @@
         /**
          * Auto-populate ACF field with available WooCommerce product badge flashes.
          *
-         * This will scan your theme/plugin for existing `wc_wine_store_*_flash` functions
+         * This will scan your theme/plugin for existing `wc_custom_*_flash` functions
          * and add them as selectable choices in an ACF field.
          *
          * Usage:
@@ -379,14 +412,15 @@
 
             // Define all badge flash functions you want available
             $badge_functions = array(
-                'wc_wine_store_custom_sale_flash'   => __( 'Sale Badge', 'borspirit' ),
-                'wc_wine_store_discount_flash'      => __( 'Discount Badge', 'borspirit' ),
-                'wc_wine_store_award_flash'         => __( 'Award Winner Badge', 'borspirit' ),
-                'wc_wine_store_bestseller_flash'    => __( 'Best Seller Badge', 'borspirit' ),
-                'wc_wine_store_limited_stock_flash' => __( 'Limited Stock Badge', 'borspirit' ),
-                'wc_wine_store_new_flash'           => __( 'New Arrival Badge', 'borspirit' ),
-                'wc_wine_store_new_vintage_flash'   => __( 'New Vintage Badge', 'borspirit' ),
-                'wc_wine_store_category_flash'      => __( 'Wine of the month Badge', 'borspirit' ),
+                'wc_custom_sale_flash'          => __( 'Sale Badge', 'borspirit' ),
+                'wc_custom_discount_flash'      => __( 'Discount Badge', 'borspirit' ),
+                'wc_custom_coming_soon_flash'   => __( 'Coming Soon Badge', 'borspirit' ),
+                'wc_custom_award_flash'         => __( 'Award Winner Badge', 'borspirit' ),
+                'wc_custom_bestseller_flash'    => __( 'Best Seller Badge', 'borspirit' ),
+                'wc_custom_limited_stock_flash' => __( 'Limited Stock Badge', 'borspirit' ),
+                'wc_custom_new_flash'           => __( 'New Arrival Badge', 'borspirit' ),
+                'wc_custom_new_vintage_flash'   => __( 'New Vintage Badge', 'borspirit' ),
+                'wc_custom_category_flash'      => __( 'Wine of the month Badge', 'borspirit' ),
             );
 
             // Loop through and only add existing functions (safety check)

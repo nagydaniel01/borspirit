@@ -20,7 +20,7 @@
 
             // Normal widgets (main area)
             remove_meta_box( 'dashboard_right_now', 'dashboard', 'normal' );   // At a Glance (summary of posts, pages, comments)
-            //remove_meta_box( 'dashboard_activity', 'dashboard', 'normal' );    // Activity (recent posts, comments)
+            remove_meta_box( 'dashboard_activity', 'dashboard', 'normal' );    // Activity (recent posts, comments)
         }
         add_action( 'wp_dashboard_setup', 'wpdocs_remove_dashboard_widgets' );
     }
@@ -167,7 +167,7 @@
 
                 body.login h1 a {
                     display: block;
-                    background-image: url('wp-content/themes/borspirit/assets/src/images/borspirit-logo.svg');
+                    background-image: url('wp-content/themes/borspirit/assets/src/images/borspirit-logo.png');
                     background-size: contain;
                     background-position: center center;
                     width: 150px;
@@ -205,7 +205,6 @@
 
             return $redirect; // Default fallback
         }
-
         add_filter( 'woocommerce_login_redirect', 'custom_woocommerce_login_redirect', 10, 2 );
     }
     
@@ -281,7 +280,6 @@
                 }
             }
         }
-
         add_action( 'restrict_manage_posts', 'add_taxonomy_filter_dropdown' );
     }
 
@@ -393,7 +391,6 @@
                 }
             }
         }
-
         add_action( 'restrict_manage_posts', 'add_author_filter_dropdown' );
     }
 
@@ -482,7 +479,6 @@
                 }, 10, 2 );
             }
         }
-
         add_action( 'admin_init', 'add_featured_image_column_to_all_post_types' );
     }
 
@@ -828,7 +824,6 @@
             $columns['user_registration_date'] = __('User Registration Date');
             return $columns;
         }
-
         add_filter( 'manage_users_columns', 'add_custom_user_columns' );
     }
 
@@ -854,7 +849,6 @@
             }
             return $value;
         }
-
         add_action( 'manage_users_custom_column', 'render_custom_user_columns', 10, 3 );
     }
 
@@ -871,7 +865,6 @@
             $columns['user_registration_date'] = 'user_registered';
             return $columns;
         }
-
         add_filter( 'manage_users_sortable_columns', 'make_registration_date_column_sortable' );
     }
 
@@ -893,6 +886,11 @@
                 return $actions; // Prevent switching to self
             }
 
+            // Allow only user ID 1 to switch accounts
+            if ( get_current_user_id() !== 1 ) {
+                return $actions; // Prevent switching to self or if not user 1
+            }
+
             // Create a secure nonce for the URL
             $nonce = wp_create_nonce( 'secure_user_switch' );
             $url   = add_query_arg(
@@ -910,7 +908,6 @@
         }
         add_filter( 'user_row_actions', 'switch_to_user_account', 10, 2 );
     }
-
 
     if ( ! function_exists( 'handle_user_switching' ) ) {
         /**
